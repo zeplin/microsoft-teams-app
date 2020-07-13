@@ -1,3 +1,5 @@
-import React from 'react';
+import React, { FunctionComponent } from "react";
 
-export default () => <div>Home</div>;
+const HomePage: FunctionComponent = () => <div>Home</div>;
+
+export default HomePage;
