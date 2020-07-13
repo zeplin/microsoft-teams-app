@@ -1,0 +1,38 @@
+{
+    "env": {
+        "node": true,
+        "jest": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+        "@zeplin/eslint-config/node",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "settings": {
+        "react": {
+            "version": "detect"
+        },
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-magic-numbers": "off",
+        "@typescript-eslint/no-magic-numbers": ["warn", { "ignore": [-1, 0, 1], "ignoreEnums": true }],
+        "@typescript-eslint/no-unused-vars": "error",
+        "no-unused-vars": "off", // @typescript-eslint/recommended have it
+        "@typescript-eslint/no-for-in-array": "error",
+        "no-console": "error",
+        "@typescript-eslint/interface-name-prefix": ["error", { "prefixWithI": "never" }],
+        "valid-jsdoc": "off",
+        "@typescript-eslint/camelcase": "off",
+        "class-methods-use-this": "off"
+    }
+}

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "eslint \"./**/*{.ts,.tsx}\""
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/zeplin/microsoft-teams-app#readme",
   "dependencies": {
+    "http-status-codes": "^1.4.0",
     "next": "^9.4.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
@@ -26,6 +28,11 @@
   "devDependencies": {
     "@types/node": "^14.0.21",
     "@types/react": "^16.9.42",
+    "@typescript-eslint/eslint-plugin": "^2.5.0",
+    "@typescript-eslint/parser": "^2.5.0",
+    "@zeplin/eslint-config": "^2.2.0",
+    "eslint": "^6.5.1",
+    "eslint-plugin-react": "^7.20.3",
     "typescript": "^3.9.6"
   }
 }

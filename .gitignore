@@ -117,5 +117,4 @@ dist
 .pnp.*
 
 .idea/
-build/
 next-env.d.ts
