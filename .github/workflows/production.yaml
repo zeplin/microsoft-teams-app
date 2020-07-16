@@ -1,0 +1,47 @@
+on:
+  push:
+    branches:
+      - master
+
+name: Deploy Production
+
+env:
+  TARBALL: microsoft-teams-app-prod-${GITHUB_REF}.tar.gz
+  S3_PATH: ${{ secrets.S3_PATH_PROD }}
+  AWS_REGION: ${{ secrets.AWS_REGION_PROD }}
+  AWS_STACK_ID: ${{ secrets.AWS_STACK_ID_PROD }}
+  AWS_LAYER_ID: ${{ secrets.AWS_LAYER_ID_PROD }}
+  AWS_APP_ID: ${{ secrets.AWS_APP_ID_PROD }}
+
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download build
+        uses: actions/download-artifact@v2
+        with:
+          name: ${GITHUB_SHA}
+
+      - name: Create release
+        run: tar -czf $TARBALL ./.next ./node_modules ./package.json ./pm2.json
+
+      - name: Upload release
+        run: aws s3 cp $TARBALL $S3_PATH/
+
+  deploy:
+    name: Deploy
+    needs: release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Change latest release
+        run: aws s3 cp $S3_PATH/$TARBALL $S3_PATH/microsoft-teams-app-prod-latest.tar.gz
+
+      - name: Deploy
+        run: >
+          aws opsworks --region $AWS_REGION create-deployment --stack-id $AWS_STACK_ID --layer-ids $AWS_LAYER_ID --app-id $AWS_APP_ID --command "{\"Name\":\"deploy\"}" --custom-json "{\"zeplin\": {\"app_shortname\":\"microsoft-teams-app\"}}"
+
+

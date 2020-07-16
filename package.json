@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start",
+    "start": "pm2 startOrReload pm2.json --no-daemon",
     "lint": "eslint \"./**/*{.ts,.tsx}\""
   },
   "repository": {
@@ -22,6 +22,7 @@
   "dependencies": {
     "http-status-codes": "^1.4.0",
     "next": "^9.4.4",
+    "pm2": "^4.4.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
@@ -33,6 +34,19 @@
     "@zeplin/eslint-config": "^2.2.0",
     "eslint": "^6.5.1",
     "eslint-plugin-react": "^7.20.3",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
     "typescript": "^3.9.6"
+  },
+  "lint-staged": {
+    "**/*{.ts,.tsx}": [
+      "eslint --fix --max-warnings 0",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }

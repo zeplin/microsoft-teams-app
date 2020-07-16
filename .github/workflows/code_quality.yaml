@@ -1,0 +1,34 @@
+on:
+  push:
+    branches:
+      - '**'
+
+name: Check Code Quality
+
+jobs:
+  code-quality:
+    name: Check Code Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SubscriptionCheckout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Install npm cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint -- --max-warnings 0

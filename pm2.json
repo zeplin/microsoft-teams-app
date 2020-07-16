@@ -1,0 +1,11 @@
+{
+    "apps": [
+        {
+            "script": "./node_modules/next/dist/bin/next-start",
+            "instances": "max",
+            "exec_mode": "cluster",
+            "wait_ready": true,
+            "listen_timeout": 10000
+        }
+    ]
+}
