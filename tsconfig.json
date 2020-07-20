@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "jsx": "preserve",
     "esModuleInterop": true,
     "target": "es5",
