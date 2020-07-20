@@ -4,8 +4,11 @@ import React, {
 import * as microsoftTeams from "@microsoft/teams-js";
 import { Provider, Flex, Input } from "@fluentui/react-northstar";
 
+import { BASE_URL } from "config";
+
 const Home: FunctionComponent = () => {
     const [input, setInput] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
 
     /**
      * Workaround: microsoftTeams.settings.registerOnSaveHandler have to be called only once.
@@ -21,17 +24,16 @@ const Home: FunctionComponent = () => {
     useEffect(() => {
         microsoftTeams.initialize(() => {
             microsoftTeams.appInitialization.notifySuccess();
-            microsoftTeams.settings.getSettings(({
-                entityId
-            }) => {
+            microsoftTeams.settings.getSettings(({ entityId }) => {
                 setInput(entityId);
+                setIsLoading(false);
             });
         });
 
         microsoftTeams.settings.registerOnSaveHandler(event => {
             const settings = {
                 entityId: inputRef.current,
-                contentUrl: "https://591c0b12a354.ngrok.io/?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}",
+                contentUrl: `${BASE_URL}/?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
                 configName: inputRef.current
             };
             microsoftTeams.settings.setSettings(settings);
@@ -48,6 +50,7 @@ const Home: FunctionComponent = () => {
             <Flex fill={true}>
                 <Flex.Item>
                     <Input
+                        disabled={isLoading}
                         value={input}
                         onChange={(ignore, { value }): void => {
                             setInput(value);
