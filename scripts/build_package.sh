@@ -3,7 +3,7 @@
 set -e
 
 echo "Going to project root folder"
-cd $(dirname $0)/..
+cd "$(dirname "$0")/.."
 
 if [ -f .env ]; then
   echo "Adding environment variables from .env file"
@@ -29,10 +29,3 @@ cd ..
 
 echo "Cleaning tmp file"
 rm -rf tmp
-
-
-
-
-
-
-
