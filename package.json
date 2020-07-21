@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
+    "tunnel": "ngrok http 3000 --host-header=localhost:3000",
+    "build:package": "scripts/build_package.sh",
     "start": "next start",
     "lint": "eslint \"./**/*{.ts,.tsx}\""
   },
