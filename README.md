@@ -14,7 +14,7 @@ NPM version: v6.14.5
 - Create [an envrionment at Microsoft Teams](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/build-and-test/prepare-your-o365-tenant). 
 - Run `nvm use` to set node version.
 - Install dependencies via `npm install`.
-- Run `npm run ngrok` to tunnel localhost.
+- Run `npm run tunnel` to tunnel localhost.
 - Create an Office 365 Connector from [Connectors Developer Dashboard](https://aka.ms/ConnectorsDashboard).
   - While creating connector, the value for `Configuration page for your Connector` should be the url of `ngrok` tunnel and the value for `Valid domains` should be domain of `ngrok` tunnel, like in example.
   ![Sample config for connector](sample-config-for-connector.png "Sample config for connector") 
