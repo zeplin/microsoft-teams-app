@@ -2,7 +2,7 @@ import { app } from "./app";
 import { PORT, ENVIRONMENT } from "../config";
 
 async function drive(): Promise<void> {
-    // Initialize environment variables and the app
+    // Initialize NextJS and routes
     await app.init({ dev: ENVIRONMENT !== "production" });
 
     // Listen for the requests
