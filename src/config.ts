@@ -19,7 +19,6 @@ const DEFAULT_PORT = 3000;
 
 export const PORT = getNumberVar("PORT", DEFAULT_PORT);
 export const {
-    NEXT_PRIVATE_APPLICATION_ID: APPLICATION_ID,
     NODE_ENV: ENVIRONMENT,
     NEXT_PUBLIC_BASE_URL: BASE_URL
 } = process.env;
