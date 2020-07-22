@@ -3,8 +3,9 @@ import React, {
 } from "react";
 import * as microsoftTeams from "@microsoft/teams-js";
 import { Provider, Flex, Input } from "@fluentui/react-northstar";
+import { getConfig } from "config";
 
-import { BASE_URL } from "config";
+const { BASE_URL } = getConfig();
 
 const Home: FunctionComponent = () => {
     const [input, setInput] = useState("");
