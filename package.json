@@ -24,6 +24,7 @@
   "dependencies": {
     "@fluentui/react-northstar": "^0.50.0",
     "@microsoft/teams-js": "^1.6.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http-status-codes": "^1.4.0",
     "next": "^9.4.4",
