@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
-    "test": "jest",
+    "test": "NODE_ENV=test jest",
     "build": "next build",
     "tunnel": "ngrok http 3000 --host-header=localhost:3000",
     "build:package": "scripts/build_package.sh",
