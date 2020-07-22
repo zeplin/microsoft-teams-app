@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next",
-    "build": "next build",
+    "dev": "nodemon",
+    "build": "next build && tsc --project tsconfig.server.json",
     "tunnel": "ngrok http 3000 --host-header=localhost:3000",
     "build:package": "scripts/build_package.sh",
-    "start": "next start",
+    "start": "NODE_ENV=production node dist/index.js",
     "lint": "eslint \"./**/*{.ts,.tsx}\""
   },
   "repository": {
@@ -37,6 +37,8 @@
     "@zeplin/eslint-config": "^2.2.0",
     "eslint": "^6.5.1",
     "eslint-plugin-react": "^7.20.3",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
     "typescript": "^3.9.6"
   }
 }
