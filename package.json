@@ -43,10 +43,7 @@
     "typescript": "^3.9.6"
   },
   "lint-staged": {
-    "**/*{.ts,.tsx}": [
-      "eslint --fix --max-warnings 0",
-      "git add"
-    ]
+    "**/*{.ts,.tsx}": "eslint --fix --max-warnings 0"
   },
   "husky": {
     "hooks": {

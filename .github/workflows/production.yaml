@@ -1,7 +1,7 @@
 on:
-  push:
-    branches:
-      - master
+  release:
+    types:
+      - published
 
 name: Deploy Production
 
@@ -12,6 +12,11 @@ env:
   AWS_STACK_ID: ${{ secrets.AWS_STACK_ID_PROD }}
   AWS_LAYER_ID: ${{ secrets.AWS_LAYER_ID_PROD }}
   AWS_APP_ID: ${{ secrets.AWS_APP_ID_PROD }}
+  NEXT_PUBLIC_BASE_URL: ${{ secrets.PRODUCTION_NEXT_PUBLIC_BASE_URL }}
+  NEXT_PUBLIC_DOMAIN: ${{ secrets.PRODUCTION_NEXT_PUBLIC_DOMAIN }}
+  NEXT_PRIVATE_APPLICATION_ID: ${{ secrets.PRODUCTION_NEXT_PRIVATE_APPLICATION_ID }}
+  NEXT_PRIVATE_CONNECTOR_ID: ${{ secrets.PRODUCTION_NEXT_PRIVATE_CONNECTOR_ID }}
+  NEXT_PUBLIC_VERSION: ${GITHUB_REF#v}
 
 
 jobs:
@@ -25,8 +30,11 @@ jobs:
         with:
           name: ${GITHUB_SHA}
 
+      - name: Prepare environmen variables
+        run: env | grep '^NEXT_' > .env
+
       - name: Create release
-        run: tar -czf $TARBALL ./.next ./node_modules ./package.json ./pm2.json
+        run: tar -czf $TARBALL ./.next ./node_modules ./package.json ./pm2.json .env
 
       - name: Upload release
         run: aws s3 cp $TARBALL $S3_PATH/
