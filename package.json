@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
+    "tunnel": "ngrok http 3000 --host-header=localhost:3000",
+    "build:package": "scripts/build_package.sh",
     "start": "pm2 startOrReload pm2.json --no-daemon",
     "lint": "eslint \"./**/*{.ts,.tsx}\""
   },
@@ -20,6 +22,8 @@
   },
   "homepage": "https://github.com/zeplin/microsoft-teams-app#readme",
   "dependencies": {
+    "@fluentui/react-northstar": "^0.50.0",
+    "@microsoft/teams-js": "^1.6.0",
     "http-status-codes": "^1.4.0",
     "next": "^9.4.4",
     "pm2": "^4.4.0",
