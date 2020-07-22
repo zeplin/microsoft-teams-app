@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home should initialize Microsoft Teams 1`] = `
+<div
+  class="ui-provider"
+  data-uses-unhanded-props="true"
+  dir="ltr"
+>
+  <div
+    class="ui-flex"
+    data-uses-unhanded-props="true"
+  >
+    <div
+      aria-disabled="false"
+      class="ui-box ui-input"
+      data-aa-class="Input"
+      data-uses-unhanded-props="true"
+    >
+      <input
+        class="ui-box ui-input__input"
+        data-uses-unhanded-props="true"
+        type="text"
+        value=""
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Home should render initially 1`] = `
+<div
+  class="ui-provider"
+  data-uses-unhanded-props="true"
+  dir="ltr"
+>
+  <div
+    class="ui-flex"
+    data-uses-unhanded-props="true"
+  >
+    <div
+      aria-disabled="true"
+      class="ui-box ui-input"
+      data-aa-class="Input"
+      data-uses-unhanded-props="true"
+    >
+      <input
+        class="ui-box ui-input__input"
+        data-uses-unhanded-props="true"
+        disabled=""
+        type="text"
+        value=""
+      />
+    </div>
+  </div>
+</div>
+`;

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
+    "test": "jest",
     "build": "next build",
     "tunnel": "ngrok http 3000 --host-header=localhost:3000",
     "build:package": "scripts/build_package.sh",
@@ -30,6 +31,8 @@
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
+    "@testing-library/react": "^10.4.7",
+    "@types/jest": "^26.0.5",
     "@types/node": "^14.0.21",
     "@types/react": "^16.9.42",
     "@typescript-eslint/eslint-plugin": "^2.5.0",
@@ -37,6 +40,7 @@
     "@zeplin/eslint-config": "^2.2.0",
     "eslint": "^6.5.1",
     "eslint-plugin-react": "^7.20.3",
+    "jest": "^26.1.0",
     "typescript": "^3.9.6"
   }
 }
