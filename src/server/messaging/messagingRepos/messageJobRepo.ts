@@ -13,11 +13,7 @@ class MessageJobRepo {
 
     async getGroupActiveJobId(groupingKey: string): Promise<string|null> {
         const result = await redis.get(getRedisKey(groupingKey));
-        if (result) {
-            return result;
-        }
-
-        return null;
+        return result || null;
     }
 }
 
