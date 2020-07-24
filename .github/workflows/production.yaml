@@ -3,7 +3,7 @@ on:
     types:
       - published
 
-name: Deploy Production
+name: Release Production
 
 env:
   TARBALL: microsoft-teams-app-prod-${GITHUB_REF}.tar.gz
@@ -19,8 +19,8 @@ env:
 
 
 jobs:
-  release:
-    name: Release
+  create-release-artifact:
+    name: Create artifact of release
     container: zeplin/amazon-linux-ami:cci-node12
 
     steps:

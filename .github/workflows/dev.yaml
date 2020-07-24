@@ -3,7 +3,7 @@ on:
     branches:
       - main
 
-name: Publish Dev
+name: Release Dev
 
 env:
   TARBALL: microsoft-teams-app-dev-${GITHUB_SHA}.tar.gz
@@ -59,8 +59,8 @@ jobs:
             node_modules
             pm2.json
 
-  release:
-    name: Release
+  create-release-artifact:
+    name: Create Artifact of the Release
     needs: build
     container: zeplin/amazon-linux-ami:cci-node12
 
