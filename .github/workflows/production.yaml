@@ -17,12 +17,13 @@ env:
   NEXT_PRIVATE_APPLICATION_ID: ${{ secrets.NEXT_PRIVATE_APPLICATION_ID_PROD }}
   NEXT_PRIVATE_CONNECTOR_ID: ${{ secrets.NEXT_PRIVATE_CONNECTOR_ID_PROD }}
   NEXT_PUBLIC_VERSION: ${GITHUB_REF#v}
+  NEXT_PUBLIC_PORT: ${{ secrets.PORT_PROD }}
 
 
 jobs:
   release:
     name: Release
-    runs-on: ubuntu-latest
+    container: zeplin/amazon-linux-ami:cci-node12
 
     steps:
       - name: Download build
@@ -42,7 +43,7 @@ jobs:
   deploy:
     name: Deploy
     needs: release
-    runs-on: ubuntu-latest
+    container: zeplin/amazon-linux-ami:cci-node12
 
     steps:
       - name: Change latest release

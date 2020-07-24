@@ -21,7 +21,7 @@ function getNumberVar(name: string, defaultValue: number): number {
 
 const DEFAULT_PORT = 3000;
 
-export const PORT = getNumberVar("PORT", DEFAULT_PORT);
+export const PORT = getNumberVar("NEXT_PUBLIC_PORT", DEFAULT_PORT);
 export const {
     NODE_ENV: ENVIRONMENT,
     NEXT_PUBLIC_BASE_URL: BASE_URL
