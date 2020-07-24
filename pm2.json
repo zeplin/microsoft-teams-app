@@ -1,11 +1,14 @@
 {
     "apps": [
         {
-            "script": "./node_modules/next/dist/bin/next-start",
+            "script": "./dist/server/index.js",
             "instances": "max",
             "exec_mode": "cluster",
             "wait_ready": true,
-            "listen_timeout": 10000
+            "listen_timeout": 10000,
+            "env": {
+                "NODE_ENV": "production"
+            }
         }
     ]
 }
