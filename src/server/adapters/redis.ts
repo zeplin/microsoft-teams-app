@@ -5,7 +5,7 @@ class Redis {
     private redis!: RedisClient;
     close!: () => Promise<"OK">;
     get!: (key: string) => Promise<string>;
-    set!: (key: string, val: string, mode?: string, ttl?: number) => Promise<"OK">;
+    set!: (key: string, val: string) => Promise<"OK">;
     flush!: () => Promise<string>;
     lpush!: (key: string, ...args: string[]) => Promise<number>;
 
@@ -16,6 +16,22 @@ class Redis {
         this.set = promisify(this.redis.set).bind(this.redis);
         this.flush = promisify<string>(this.redis.flushall).bind(this.redis);
         this.lpush = promisify(this.redis.lpush).bind(this.redis);
+    }
+
+    /**
+     * @param ttl Time to live in seconds
+     */
+    setWithTTL(key: string, value: string, ttl: number): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.redis.set(key, value, "EX", ttl, err => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                resolve();
+            });
+        });
     }
 
     getAllAndDel(key: string): Promise<string[]> {

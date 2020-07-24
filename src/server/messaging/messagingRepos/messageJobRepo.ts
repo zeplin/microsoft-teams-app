@@ -1,6 +1,6 @@
 import { redis } from "../../adapters";
 
-const ACTIVE_JOB_TTL = 3600; // 1 Hour in seconds
+const ACTIVE_JOB_TTL = 3600; // 1 hour in seconds
 
 function getRedisKey(groupingKey: string): string {
     return `job_ids:${groupingKey}`;
@@ -8,7 +8,7 @@ function getRedisKey(groupingKey: string): string {
 
 class MessageJobRepo {
     async setGroupActiveJobId(groupingKey: string, jobId: string): Promise<void> {
-        await redis.set(getRedisKey(groupingKey), jobId, "EX", ACTIVE_JOB_TTL);
+        await redis.setWithTTL(getRedisKey(groupingKey), jobId, ACTIVE_JOB_TTL);
     }
 
     async getGroupActiveJobId(groupingKey: string): Promise<string|null> {
