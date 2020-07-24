@@ -8,7 +8,7 @@ function getRedisKey(groupingKey: string): string {
 
 class MessageJobRepo {
     async setGroupActiveJobId(groupingKey: string, jobId: string): Promise<void> {
-        await redis.setWithTTL(getRedisKey(groupingKey), jobId, "EX", ACTIVE_JOB_TTL);
+        await redis.set(getRedisKey(groupingKey), jobId, "EX", ACTIVE_JOB_TTL);
     }
 
     async getGroupActiveJobId(groupingKey: string): Promise<string|null> {
