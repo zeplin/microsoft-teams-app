@@ -6,7 +6,7 @@ import { Provider, Flex, Input } from "@fluentui/react-northstar";
 
 import { BASE_URL } from "config";
 
-const Home: FunctionComponent = () => {
+export const Home: FunctionComponent = () => {
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 
@@ -25,7 +25,7 @@ const Home: FunctionComponent = () => {
         microsoftTeams.initialize(() => {
             microsoftTeams.appInitialization.notifySuccess();
             microsoftTeams.settings.getSettings(({ entityId }) => {
-                setInput(entityId);
+                setInput(entityId || "");
                 setIsLoading(false);
             });
         });
@@ -62,5 +62,3 @@ const Home: FunctionComponent = () => {
         </Provider>
     );
 };
-
-export default Home;

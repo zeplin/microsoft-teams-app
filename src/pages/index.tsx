@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import dynamic from "next/dynamic";
 
 const Home = dynamic(
-    () => import("containers/Home"),
+    async () => (await import("containers")).Home,
     { ssr: false }
 );
 
