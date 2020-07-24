@@ -24,5 +24,6 @@ const DEFAULT_PORT = 3000;
 export const PORT = getNumberVar("PORT", DEFAULT_PORT);
 export const {
     NODE_ENV: ENVIRONMENT,
+    REDIS_URL = "redis://localhost:6379",
     NEXT_PUBLIC_BASE_URL: BASE_URL
 } = process.env;
