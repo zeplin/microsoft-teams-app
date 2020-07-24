@@ -1,16 +1,16 @@
 import { redis } from "../../adapters";
 
-function getRedisKey(groupKey: string): string {
-    return `job_ids:${groupKey}`;
+function getRedisKey(groupingKey: string): string {
+    return `job_ids:${groupingKey}`;
 }
 
 class MessageJobRepo {
-    async setGroupJobId(groupKey: string, jobId: string): Promise<void> {
-        await redis.set(getRedisKey(groupKey), jobId);
+    async setGroupJobId(groupingKey: string, jobId: string): Promise<void> {
+        await redis.set(getRedisKey(groupingKey), jobId);
     }
 
-    async getGroupJobId(groupKey: string): Promise<string|null> {
-        const result = await redis.get(getRedisKey(groupKey));
+    async getGroupJobId(groupingKey: string): Promise<string|null> {
+        const result = await redis.get(getRedisKey(groupingKey));
         if (result) {
             return result;
         }

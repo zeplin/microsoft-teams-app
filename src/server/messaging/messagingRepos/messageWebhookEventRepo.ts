@@ -1,18 +1,18 @@
 import { WebhookEvent } from "../messageTypes";
 import { redis } from "../../../server/adapters";
 
-function getRedisKey(groupKey: string): string {
-    return `webhook_events:${groupKey}`;
+function getRedisKey(groupingKey: string): string {
+    return `webhook_events:${groupingKey}`;
 }
 
 class MessageWebhookEventRepo {
-    async addEventToGroup(groupKey: string, event: WebhookEvent): Promise<void> {
-        await redis.lpush(getRedisKey(groupKey), JSON.stringify(event));
+    async addEventToGroup(groupingKey: string, event: WebhookEvent): Promise<void> {
+        await redis.lpush(getRedisKey(groupingKey), JSON.stringify(event));
     }
 
-    async getAndRemoveGroupEvents(groupKey: string): Promise<WebhookEvent[]> {
+    async getAndRemoveGroupEvents(groupingKey: string): Promise<WebhookEvent[]> {
         // TODO: Handle error?
-        const rawEvents = await redis.getAllAndDel(getRedisKey(groupKey));
+        const rawEvents = await redis.getAllAndDel(getRedisKey(groupingKey));
         return rawEvents.map(rawEvent => JSON.parse(rawEvent));
     }
 }
