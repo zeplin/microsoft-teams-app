@@ -3,7 +3,6 @@ import React, {
 } from "react";
 import * as microsoftTeams from "@microsoft/teams-js";
 import { Provider, Flex, Input } from "@fluentui/react-northstar";
-
 import { BASE_URL } from "config";
 
 export const Home: FunctionComponent = () => {
