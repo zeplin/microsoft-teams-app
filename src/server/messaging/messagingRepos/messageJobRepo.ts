@@ -1,15 +1,17 @@
 import { redis } from "../../adapters";
 
+const ACTIVE_JOB_TTL = 3600; // 1 Hour in seconds
+
 function getRedisKey(groupingKey: string): string {
     return `job_ids:${groupingKey}`;
 }
 
 class MessageJobRepo {
-    async setGroupJobId(groupingKey: string, jobId: string): Promise<void> {
-        await redis.set(getRedisKey(groupingKey), jobId);
+    async setGroupActiveJobId(groupingKey: string, jobId: string): Promise<void> {
+        await redis.setWithTTL(getRedisKey(groupingKey), jobId, "EX", ACTIVE_JOB_TTL);
     }
 
-    async getGroupJobId(groupingKey: string): Promise<string|null> {
+    async getGroupActiveJobId(groupingKey: string): Promise<string|null> {
         const result = await redis.get(getRedisKey(groupingKey));
         if (result) {
             return result;

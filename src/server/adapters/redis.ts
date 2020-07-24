@@ -6,6 +6,7 @@ class Redis {
     close!: () => Promise<"OK">;
     get!: (key: string) => Promise<string>;
     set!: (key: string, val: string) => Promise<"OK">;
+    setWithTTL!: (key: string, val: string, mode: "EX" | "PX", ttl: number) => Promise<"OK">;
     flush!: () => Promise<string>;
     lpush!: (key: string, ...args: string[]) => Promise<number>;
 
@@ -14,6 +15,7 @@ class Redis {
         this.close = promisify(this.redis.quit).bind(this.redis);
         this.get = promisify(this.redis.get).bind(this.redis);
         this.set = promisify<string, string, "OK">(this.redis.set).bind(this.redis);
+        this.setWithTTL = promisify<string, string, string, number, "OK">(this.redis.set).bind(this.redis);
         this.flush = promisify<string>(this.redis.flushall).bind(this.redis);
         this.lpush = promisify(this.redis.lpush).bind(this.redis);
     }

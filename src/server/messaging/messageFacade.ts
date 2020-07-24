@@ -9,8 +9,8 @@ function getGroupingKey(event: WebhookEvent): string {
 
 class MessageFacade {
     async processJob(data: MessageJobData): Promise<void> {
-        const groupJobId = await messageJobRepo.getGroupJobId(data.groupingKey);
-        if (!groupJobId || data.id !== groupJobId) {
+        const activeJobId = await messageJobRepo.getGroupActiveJobId(data.groupingKey);
+        if (!activeJobId || data.id !== activeJobId) {
             return;
         }
 
@@ -22,7 +22,7 @@ class MessageFacade {
         const groupingKey = getGroupingKey(event);
         const jobId = event.deliveryId;
 
-        await messageJobRepo.setGroupJobId(groupingKey, jobId);
+        await messageJobRepo.setGroupActiveJobId(groupingKey, jobId);
         await messageWebhookEventRepo.addEventToGroup(groupingKey, event);
 
         // TODO: Get delay depending on the webhook event
