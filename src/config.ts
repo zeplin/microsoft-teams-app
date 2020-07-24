@@ -1,4 +1,8 @@
 /* eslint-disable no-process-env */
+
+// This is a workaround for enabling config variables in server side before the NextJS app is initialized
+// However, we don't want to run `dotenv` in client side since it is not meaningful and erroneous
+// NextJS itself enables environment variable usage in client side
 if (typeof window === "undefined") {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { config } = require("dotenv");
