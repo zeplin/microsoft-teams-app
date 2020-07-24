@@ -3,6 +3,7 @@ import next from "next";
 import { parse } from "url";
 import { REDIS_URL } from "../config";
 import * as messaging from "./messaging";
+import { initAdapters } from "./adapters/adapters";
 
 type AppInitParams = {
     dev: boolean;
@@ -17,7 +18,10 @@ class App {
         const nextApp = next({ dev });
         await nextApp.prepare();
 
-        // Initialize messaging parts
+        // Initialize all adapters
+        initAdapters({ REDIS_URL });
+
+        // Initialize messaging feature
         messaging.initMessaging({ REDIS_URL });
         this.expressApp.get("/webhook", messaging.handleWebhookRequest);
 
