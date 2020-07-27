@@ -1,0 +1,95 @@
+on:
+  push:
+    branches:
+      - main
+
+name: Release Dev
+
+env:
+  TARBALL: microsoft-teams-app-dev-${GITHUB_SHA}.tar.gz
+  S3_PATH: ${{ secrets.S3_PATH_DEV }}
+  AWS_REGION: ${{ secrets.AWS_REGION_DEV }}
+  AWS_STACK_ID: ${{ secrets.AWS_STACK_ID_DEV }}
+  AWS_LAYER_ID: ${{ secrets.AWS_LAYER_ID_DEV }}
+  AWS_APP_ID: ${{ secrets.AWS_APP_ID_DEV }}
+  NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL_DEV }}
+  NEXT_PUBLIC_DOMAIN: ${{ secrets.NEXT_PUBLIC_DOMAIN_DEV }}
+  NEXT_PUBLIC_VERSION: 0.0.0-${GITHUB_SHA}
+  NEXT_PUBLIC_PORT: ${{ secrets.NEXT_PUBLIC_PORT_DEV }}
+
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SubscriptionCheckout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Install npm cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build package
+        run: npm run build
+
+      - name: Install production dependencies
+        run: npm ci --production
+
+      - name: Upload build
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${GITHUB_SHA}
+          path: |
+            .next
+            package.json
+            node_modules
+            pm2.json
+
+  create-release-artifact:
+    name: Create Artifact of the Release
+    needs: build
+    container: zeplin/amazon-linux-ami:cci-node12
+
+    steps:
+      - name: Download build
+        uses: actions/download-artifact@v2
+        with:
+          name: ${GITHUB_SHA}
+
+      - name: Prepare environment variables
+        run: env | grep '^NEXT_' > .env
+
+      - name: Create release
+        run: tar -czf $TARBALL ./.next ./node_modules ./package.json ./pm2.json .env
+
+      - name: Upload release
+        run: aws s3 cp $TARBALL $S3_PATH/
+
+  deploy:
+    name: Deploy
+    needs: release
+    container: zeplin/amazon-linux-ami:cci-node12
+
+    steps:
+      - name: Change latest release
+        run: aws s3 cp $S3_PATH/$TARBALL $S3_PATH/microsoft-teams-app-dev-latest.tar.gz
+
+      - name: Deploy
+        run: >
+          aws opsworks --region $AWS_REGION create-deployment --stack-id $AWS_STACK_ID --layer-ids $AWS_LAYER_ID --app-id $AWS_APP_ID --command "{\"Name\":\"deploy\"}" --custom-json "{\"zeplin\": {\"app_shortname\":\"microsoft_teams_app\"}}"
+
+

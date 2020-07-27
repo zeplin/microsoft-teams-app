@@ -1,0 +1,54 @@
+on:
+  release:
+    types:
+      - published
+
+name: Release Production
+
+env:
+  TARBALL: microsoft-teams-app-prod-${GITHUB_REF}.tar.gz
+  S3_PATH: ${{ secrets.S3_PATH_PROD }}
+  AWS_REGION: ${{ secrets.AWS_REGION_PROD }}
+  AWS_STACK_ID: ${{ secrets.AWS_STACK_ID_PROD }}
+  AWS_LAYER_ID: ${{ secrets.AWS_LAYER_ID_PROD }}
+  AWS_APP_ID: ${{ secrets.AWS_APP_ID_PROD }}
+  NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL_PROD }}
+  NEXT_PUBLIC_DOMAIN: ${{ secrets.NEXT_PUBLIC_DOMAIN_PROD }}
+  NEXT_PUBLIC_VERSION: ${GITHUB_REF#v}
+  NEXT_PUBLIC_PORT: ${{ secrets.NEXT_PUBLIC_PORT_PROD }}
+
+
+jobs:
+  create-release-artifact:
+    name: Create artifact of release
+    container: zeplin/amazon-linux-ami:cci-node12
+
+    steps:
+      - name: Download build
+        uses: actions/download-artifact@v2
+        with:
+          name: ${GITHUB_SHA}
+
+      - name: Prepare environment variables
+        run: env | grep '^NEXT_' > .env
+
+      - name: Create release
+        run: tar -czf $TARBALL ./.next ./node_modules ./package.json ./pm2.json .env
+
+      - name: Upload release
+        run: aws s3 cp $TARBALL $S3_PATH/
+
+  deploy:
+    name: Deploy
+    needs: release
+    container: zeplin/amazon-linux-ami:cci-node12
+
+    steps:
+      - name: Change latest release
+        run: aws s3 cp $S3_PATH/$TARBALL $S3_PATH/microsoft-teams-app-prod-latest.tar.gz
+
+      - name: Deploy
+        run: >
+          aws opsworks --region $AWS_REGION create-deployment --stack-id $AWS_STACK_ID --layer-ids $AWS_LAYER_ID --app-id $AWS_APP_ID --command "{\"Name\":\"deploy\"}" --custom-json "{\"zeplin\": {\"app_shortname\":\"microsoft_teams_app\"}}"
+
+

@@ -9,7 +9,7 @@
     "test": "NODE_ENV=test jest",
     "tunnel": "ngrok http 3000 --host-header=localhost:3000",
     "build:package": "scripts/build_package.sh",
-    "start": "NODE_ENV=production node dist/index.js",
+    "start": "pm2 startOrReload pm2.json --no-daemon",
     "lint": "eslint \"./**/*{.ts,.tsx}\""
   },
   "repository": {
@@ -29,6 +29,7 @@
     "express": "^4.17.1",
     "http-status-codes": "^1.4.0",
     "next": "^9.4.4",
+    "pm2": "^4.4.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
@@ -43,9 +44,20 @@
     "@zeplin/eslint-config": "^2.2.0",
     "eslint": "^6.5.1",
     "eslint-plugin-react": "^7.20.3",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
     "nodemon": "^2.0.4",
     "ts-node": "^8.10.2",
     "jest": "^26.1.0",
     "typescript": "^3.9.6"
+  },
+  "lint-staged": {
+    "**/*{.ts,.tsx}": "eslint --fix --max-warnings 0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run test"
+    }
   }
 }
