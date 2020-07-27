@@ -18,8 +18,8 @@ describe("Redis adapter", () => {
 
         it("should return array with values when key is found and delete key afterwards", async () => {
             const foundKey = "found-key-1";
-            await redis.lpush(foundKey, "val1");
-            await redis.lpush(foundKey, "val2");
+            await redisHelper.lpush(foundKey, "val1");
+            await redisHelper.lpush(foundKey, "val2");
 
             const result = await redis.getAllAndDel(foundKey);
             expect(result.sort()).toEqual(["val1", "val2"]);
@@ -27,7 +27,7 @@ describe("Redis adapter", () => {
 
         it("should delete key after getting the values", async () => {
             const foundKey = "found-key-3";
-            await redis.lpush(foundKey, "val1");
+            await redisHelper.lpush(foundKey, "val1");
 
             const beforeKeys = await redisHelper.keys(foundKey);
             expect(beforeKeys).toEqual([foundKey]);
@@ -46,7 +46,7 @@ describe("Redis adapter", () => {
 
             await redis.setWithTTL(key, value, ttl);
 
-            const foundValue = await redis.get(key);
+            const foundValue = await redisHelper.get(key);
             expect(foundValue).toEqual(value);
 
             const foundTTL = await redisHelper.ttl(key);

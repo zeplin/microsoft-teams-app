@@ -45,6 +45,32 @@ class RedisHelper {
         });
     }
 
+    lpush(key: string, ...args: string[]): Promise<number> {
+        return new Promise((resolve, reject) => {
+            this.redis.lpush(key, ...args, (err, result) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                resolve(result);
+            });
+        });
+    }
+
+    get(key: string): Promise<string|null> {
+        return new Promise((resolve, reject) => {
+            this.redis.get(key, (err, result) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                resolve(result);
+            });
+        });
+    }
+
     close(): Promise<void> {
         return new Promise((resolve, reject) => {
             this.redis.quit(err => {
