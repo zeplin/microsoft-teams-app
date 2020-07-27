@@ -6,7 +6,7 @@ on:
 name: Release Production
 
 env:
-  TARBALL: microsoft-teams-app-prod-${GITHUB_REF}.tar.gz
+  TARBALL: microsoft-teams-app-prod--${{ env.GITHUB_REF }}.tar.gz
   S3_PATH: ${{ secrets.S3_PATH_PROD }}
   AWS_REGION: ${{ secrets.AWS_REGION_PROD }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
@@ -16,7 +16,6 @@ env:
   AWS_APP_ID: ${{ secrets.AWS_APP_ID_PROD }}
   NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL_PROD }}
   NEXT_PUBLIC_DOMAIN: ${{ secrets.NEXT_PUBLIC_DOMAIN_PROD }}
-  NEXT_PUBLIC_VERSION: ${GITHUB_REF#v}
   NEXT_PUBLIC_PORT: ${{ secrets.NEXT_PUBLIC_PORT_PROD }}
 
 
@@ -28,6 +27,9 @@ jobs:
     steps:
       - name: SubscriptionCheckout
         uses: actions/checkout@v2
+
+      - name: Set `NEXT_PUBLIC_VERSION` variable
+        run: echo ::set-env name=NEXT_PUBLIC_VERSION::${GITHUB_REF#v}
 
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
