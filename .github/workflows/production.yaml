@@ -41,7 +41,7 @@ jobs:
 
   deploy:
     name: Deploy
-    needs: release
+    needs: create-release-artifact
     runs-on: ubuntu-latest
     container: zeplin/amazon-linux-ami:cci-node12
 
