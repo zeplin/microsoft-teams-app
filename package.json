@@ -25,30 +25,34 @@
   "dependencies": {
     "@fluentui/react-northstar": "^0.50.0",
     "@microsoft/teams-js": "^1.6.0",
+    "bull": "^3.16.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http-status-codes": "^1.4.0",
     "next": "^9.4.4",
     "pm2": "^4.4.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "redis": "^3.0.2"
   },
   "devDependencies": {
-    "@types/express": "^4.17.7",
     "@testing-library/react": "^10.4.7",
+    "@types/bull": "^3.14.0",
+    "@types/express": "^4.17.7",
     "@types/jest": "^26.0.5",
     "@types/node": "^14.0.21",
     "@types/react": "^16.9.42",
+    "@types/redis": "^2.8.25",
     "@typescript-eslint/eslint-plugin": "^2.5.0",
     "@typescript-eslint/parser": "^2.5.0",
     "@zeplin/eslint-config": "^2.2.0",
     "eslint": "^6.5.1",
     "eslint-plugin-react": "^7.20.3",
+    "jest": "^26.1.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "nodemon": "^2.0.4",
     "ts-node": "^8.10.2",
-    "jest": "^26.1.0",
     "typescript": "^3.9.6"
   },
   "lint-staged": {
