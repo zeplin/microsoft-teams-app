@@ -61,7 +61,7 @@ jobs:
         run: env | grep '^NEXT_' > .env
 
       - name: Create release
-        run: tar -czf $TARBALL ./.next ./node_modules ./package.json ./pm2.json .env
+        run: tar -czf $TARBALL ./.next ./node_modules ./package.json ./pm2.json .env dist
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
