@@ -25,8 +25,8 @@ jobs:
     container: zeplin/amazon-linux-ami:cci-node12
 
     steps:
-     - name: SubscriptionCheckout
-       uses: actions/checkout@v2
+      - name: SubscriptionCheckout
+        uses: actions/checkout@v2
 
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
