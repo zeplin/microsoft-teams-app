@@ -1,6 +1,9 @@
 import express, { Express } from "express";
 import next from "next";
 import { parse } from "url";
+import { REDIS_URL } from "../config";
+import * as messaging from "./messaging";
+import { initAdapters } from "./adapters/adapters";
 
 type AppInitParams = {
     dev: boolean;
@@ -15,6 +18,14 @@ class App {
         const nextApp = next({ dev });
         await nextApp.prepare();
 
+        // Initialize all adapters
+        initAdapters({ REDIS_URL });
+
+        // Initialize messaging feature
+        messaging.initMessaging({ REDIS_URL });
+        this.expressApp.get("/webhook", messaging.handleWebhookRequest);
+
+        // Add health check endpoint
         this.expressApp.get("/health", (_, res) => {
             res.json({ status: "pass" });
         });
