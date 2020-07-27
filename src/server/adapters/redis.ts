@@ -5,15 +5,24 @@ class Redis {
     private redis!: RedisClient;
     close!: () => Promise<"OK">;
     set!: (key: string, val: string) => Promise<"OK">;
-    flush!: () => Promise<string>;
-    lpush!: (key: string, ...args: string[]) => Promise<number>;
 
     init(url: string): void {
         this.redis = createClient(url);
         this.close = promisify(this.redis.quit).bind(this.redis);
         this.set = promisify(this.redis.set).bind(this.redis);
-        this.flush = promisify<string>(this.redis.flushall).bind(this.redis);
-        this.lpush = promisify(this.redis.lpush).bind(this.redis);
+    }
+
+    lpush(key: string, ...args: string[]): Promise<number> {
+        return new Promise((resolve, reject) => {
+            this.redis.lpush(key, ...args, (err, result) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                resolve(result);
+            });
+        });
     }
 
     get(key: string): Promise<string|null> {
