@@ -21,6 +21,7 @@ env:
 jobs:
   create-release-artifact:
     name: Create artifact of release
+    runs-on: ubuntu-latest
     container: zeplin/amazon-linux-ami:cci-node12
 
     steps:
@@ -40,7 +41,8 @@ jobs:
 
   deploy:
     name: Deploy
-    needs: release
+    needs: create-release-artifact
+    runs-on: ubuntu-latest
     container: zeplin/amazon-linux-ami:cci-node12
 
     steps:
