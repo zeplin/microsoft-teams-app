@@ -13,6 +13,17 @@ jest.mock("../messageQueue", () => ({
     }
 }));
 
+jest.mock("../messagingRepos", () => ({
+    messageJobRepo: {
+        setGroupActiveJobId: jest.fn(),
+        getGroupActiveJobId: jest.fn()
+    },
+    messageWebhookEventRepo: {
+        addEventToGroup: jest.fn(),
+        getAndRemoveGroupEvents: jest.fn()
+    }
+}));
+
 const exampleEvent = { webhookId: "webhook-id", deliveryId: "delivery-id" } as WebhookEvent;
 const expectedGroupingKey = `${exampleEvent.webhookId}:others`;
 const expectedJobId = exampleEvent.deliveryId;
@@ -25,25 +36,18 @@ const exampleJobData = {
 
 describe("messageFacade", () => {
     describe("`handleEventArrived` function", () => {
-        let setGroupActiveJobIdSpy: jest.SpyInstance<Promise<void>, [string, string]>;
-        let addEventToGroupSpy: jest.SpyInstance<Promise<void>, [string, WebhookEvent]>;
-        beforeAll(() => {
-            setGroupActiveJobIdSpy = jest.spyOn(messageJobRepo, "setGroupActiveJobId").mockImplementation();
-            addEventToGroupSpy = jest.spyOn(messageWebhookEventRepo, "addEventToGroup").mockImplementation();
-        });
-
         afterEach(() => {
             jest.clearAllMocks();
         });
 
         it("should update active job id for group", async () => {
             await messageFacade.handleEventArrived(exampleEvent);
-            expect(setGroupActiveJobIdSpy).toBeCalledWith(expectedGroupingKey, expectedJobId);
+            expect(messageJobRepo.setGroupActiveJobId).toBeCalledWith(expectedGroupingKey, expectedJobId);
         });
 
         it("should add event to events for group", async () => {
             await messageFacade.handleEventArrived(exampleEvent);
-            expect(addEventToGroupSpy).toBeCalledWith(expectedGroupingKey, exampleEvent);
+            expect(messageWebhookEventRepo.addEventToGroup).toBeCalledWith(expectedGroupingKey, exampleEvent);
         });
 
         it("should add a new job for the event group", async () => {
