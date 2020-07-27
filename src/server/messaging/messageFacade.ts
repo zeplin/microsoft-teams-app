@@ -15,6 +15,7 @@ class MessageFacade {
         }
 
         const events = await messageWebhookEventRepo.getAndRemoveGroupEvents(data.groupingKey);
+        // eslint-disable-next-line no-console
         console.log(events);
     }
 
