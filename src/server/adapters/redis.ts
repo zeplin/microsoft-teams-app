@@ -1,15 +1,23 @@
 import { createClient, RedisClient } from "redis";
-import { promisify } from "util";
 
 class Redis {
     private redis!: RedisClient;
-    close!: () => Promise<"OK">;
-    set!: (key: string, val: string) => Promise<"OK">;
 
     init(url: string): void {
         this.redis = createClient(url);
-        this.close = promisify(this.redis.quit).bind(this.redis);
-        this.set = promisify(this.redis.set).bind(this.redis);
+    }
+
+    close(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.redis.quit(err => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                resolve();
+            });
+        });
     }
 
     lpush(key: string, ...args: string[]): Promise<number> {
@@ -34,6 +42,19 @@ class Redis {
                 }
 
                 resolve(result);
+            });
+        });
+    }
+
+    set(key: string, value: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.redis.set(key, value, err => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                resolve();
             });
         });
     }
