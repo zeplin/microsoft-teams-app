@@ -17,7 +17,7 @@ jest.mock("@microsoft/teams-js", () => ({
     }
 }));
 
-jest.mock("config", () => ({
+jest.mock("../../config", () => ({
     BASE_URL: "https://test.com"
 }));
 

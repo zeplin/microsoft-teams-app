@@ -1,5 +1,4 @@
 module.exports = {
-    moduleDirectories: ["node_modules", "src"],
     coveragePathIgnorePatterns: ["/node_modules/", "/dist/"],
     modulePathIgnorePatterns: ["<rootDir>/dist/"],
     collectCoverageFrom: [
