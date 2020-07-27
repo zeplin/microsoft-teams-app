@@ -30,6 +30,9 @@ jobs:
         with:
           name: ${GITHUB_SHA}
 
+      - name: Install production dependencies
+        run: npm ci --production
+
       - name: Prepare environment variables
         run: env | grep '^NEXT_' > .env
 

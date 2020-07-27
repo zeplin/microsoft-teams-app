@@ -43,11 +43,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install build cache
+        uses: actions/cache@v1
+        with:
+          path: ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}
+
       - name: Build package
         run: npm run build
-
-      - name: Install production dependencies
-        run: npm ci --production
 
       - name: Upload build
         uses: actions/upload-artifact@v2
@@ -56,7 +59,7 @@ jobs:
           path: |
             .next
             package.json
-            node_modules
+            package-lock.json
             pm2.json
 
   create-release-artifact:
@@ -70,6 +73,9 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: ${GITHUB_SHA}
+
+      - name: Install production dependencies
+        run: npm ci --production
 
       - name: Prepare environment variables
         run: env | grep '^NEXT_' > .env
