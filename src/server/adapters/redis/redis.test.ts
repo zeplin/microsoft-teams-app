@@ -48,7 +48,8 @@ describe("Redis adapter", () => {
             expect(foundValue).toEqual(value);
 
             const foundTTL = await redisHelper.ttl(key);
-            expect(ttl - foundTTL < 1).toBe(true);
+            expect(ttl - foundTTL).toBeLessThan(1);
+            expect(ttl - foundTTL).toBeGreaterThanOrEqual(0);
         });
     });
 
