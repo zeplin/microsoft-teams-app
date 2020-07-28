@@ -1,9 +1,9 @@
-import express, { Express } from "express";
+import express, { Express, RequestHandler, Router as createRouter } from "express";
 import next from "next";
 import { parse } from "url";
-import { REDIS_URL } from "../config";
-import * as messaging from "./messaging";
+import * as config from "../config";
 import { initAdapters } from "./adapters/adapters";
+import { initMessaging } from "./messaging";
 
 type AppInitParams = {
     dev: boolean;
@@ -12,23 +12,25 @@ type AppInitParams = {
 class App {
     private expressApp?: Express;
 
+    private handleHealthCheck: RequestHandler = (req, res) => {
+        res.json({ status: "pass" });
+    }
+
     async init({ dev }: AppInitParams): Promise<void> {
         this.expressApp = express();
 
         const nextApp = next({ dev });
         await nextApp.prepare();
 
-        // Initialize all adapters
-        initAdapters({ REDIS_URL });
+        const apiRouter = createRouter();
 
-        // Initialize messaging feature
-        messaging.initMessaging({ REDIS_URL });
-        this.expressApp.get("/webhook", messaging.handleWebhookRequest);
+        initAdapters(config);
 
-        // Add health check endpoint
-        this.expressApp.get("/health", (_, res) => {
-            res.json({ status: "pass" });
-        });
+        initMessaging(apiRouter, config);
+
+        this.expressApp.get("/health", this.handleHealthCheck);
+
+        this.expressApp.use("/api", apiRouter);
 
         // Add NextJS app as the last middleware
         this.expressApp.use((req, res) => {

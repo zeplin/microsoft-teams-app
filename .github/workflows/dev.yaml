@@ -6,7 +6,7 @@ on:
 name: Release Dev
 
 env:
-  TARBALL: microsoft-teams-app-dev-${{ env.GITHUB_SHA }}.tar.gz
+  TARBALL: microsoft-teams-app-dev-${{ github.sha }}.tar.gz
   S3_PATH: ${{ secrets.S3_PATH_DEV }}
   AWS_REGION: ${{ secrets.AWS_REGION_DEV }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
@@ -16,7 +16,7 @@ env:
   AWS_APP_ID: ${{ secrets.AWS_APP_ID_DEV }}
   NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL_DEV }}
   NEXT_PUBLIC_DOMAIN: ${{ secrets.NEXT_PUBLIC_DOMAIN_DEV }}
-  NEXT_PUBLIC_VERSION: 0.0.0-${{ env.GITHUB_SHA }}
+  NEXT_PUBLIC_VERSION: 0.0.0-${{ github.sha }}
   NEXT_PUBLIC_PORT: ${{ secrets.NEXT_PUBLIC_PORT_DEV }}
 
 
@@ -61,7 +61,7 @@ jobs:
         run: env | grep '^NEXT_' > .env
 
       - name: Create release
-        run: tar -czf $TARBALL ./.next ./node_modules ./package.json ./pm2.json .env
+        run: tar -czf $TARBALL ./.next ./node_modules ./package.json ./pm2.json .env dist
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
