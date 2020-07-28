@@ -29,8 +29,6 @@ describe("Redis adapter", () => {
             const foundKey = "found-key-3";
             await redisHelper.lpush(foundKey, "val1");
 
-            const beforeKeys = await redisHelper.keys(foundKey);
-            expect(beforeKeys).toEqual([foundKey]);
             await redis.getAllAndDel(foundKey);
 
             const afterKeys = await redisHelper.keys(foundKey);
