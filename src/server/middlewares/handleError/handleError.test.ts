@@ -39,10 +39,8 @@ describe("handleError", () => {
         const response = await requester.get("/");
         expect(response.status).toBe(UNAUTHORIZED);
         expect(response.body).toStrictEqual({
-            error: {
-                detail: "Case specific message",
-                title: "Title"
-            }
+            detail: "Case specific message",
+            title: "Title"
         });
     });
 
@@ -62,10 +60,8 @@ describe("handleError", () => {
         const response = await requester.get("/");
         expect(response.status).toBe(INTERNAL_SERVER_ERROR);
         expect(response.body).toStrictEqual({
-            error: {
-                detail: "Case specific message",
-                title: "Title"
-            }
+            detail: "Case specific message",
+            title: "Title"
         });
     });
 
@@ -85,10 +81,8 @@ describe("handleError", () => {
         const response = await requester.get("/");
         expect(response.status).toBe(UNAUTHORIZED);
         expect(response.body).toStrictEqual({
-            error: {
-                detail: "Case specific message",
-                title: "Unexpected Error"
-            }
+            detail: "Case specific message",
+            title: "Unexpected Error"
         });
     });
 });
