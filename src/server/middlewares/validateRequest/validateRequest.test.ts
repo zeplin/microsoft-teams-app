@@ -62,7 +62,7 @@ describe("validateRequest middleware", () => {
             expect(response.status).toBe(OK);
         });
 
-        it("should pass when request have incorrect param", async () => {
+        it("should send error when request have incorrect param", async () => {
             const requester = createServer({
                 url: "/:myParam",
                 validationSchema: {
@@ -74,6 +74,23 @@ describe("validateRequest middleware", () => {
             const response = await requester.post("/foo");
             expect(response.status).toBe(BAD_REQUEST);
             expect(response.body).toStrictEqual({ message: '"params.myParam" must be a number' });
+        });
+
+        it("should send error when request have multiple incorrect param", async () => {
+            const requester = createServer({
+                url: "/:myParam/:secondParam",
+                validationSchema: {
+                    params: Joi.object({
+                        myParam: Joi.number(),
+                        secondParam: Joi.number()
+                    })
+                }
+            });
+            const response = await requester.post("/aa/aa");
+            expect(response.status).toBe(BAD_REQUEST);
+            expect(response.body).toStrictEqual({
+                message: '"params.myParam" must be a number. "params.secondParam" must be a number'
+            });
         });
     });
 
@@ -103,7 +120,7 @@ describe("validateRequest middleware", () => {
             expect(response.status).toBe(OK);
         });
 
-        it("should pass when request have incorrect query", async () => {
+        it("should send error when request have incorrect query", async () => {
             const requester = createServer({
                 validationSchema: {
                     query: Joi.object({
@@ -114,6 +131,22 @@ describe("validateRequest middleware", () => {
             const response = await requester.post("/?myQuery=foo");
             expect(response.status).toBe(BAD_REQUEST);
             expect(response.body).toStrictEqual({ message: '"query.myQuery" must be a number' });
+        });
+
+        it("should send error when request have multiple incorrect query", async () => {
+            const requester = createServer({
+                validationSchema: {
+                    query: Joi.object({
+                        myQuery: Joi.number(),
+                        secondQuery: Joi.number()
+                    })
+                }
+            });
+            const response = await requester.post("/?myQuery=foo&secondQuery=bar");
+            expect(response.status).toBe(BAD_REQUEST);
+            expect(response.body).toStrictEqual({
+                message: '"query.myQuery" must be a number. "query.secondQuery" must be a number'
+            });
         });
     });
 
@@ -143,7 +176,7 @@ describe("validateRequest middleware", () => {
             expect(response.status).toBe(OK);
         });
 
-        it("should pass when request have incorrect body", async () => {
+        it("should send error when request have incorrect body", async () => {
             const requester = createServer({
                 validationSchema: {
                     body: Joi.object({
@@ -154,6 +187,22 @@ describe("validateRequest middleware", () => {
             const response = await requester.post("/").send({ myField: "asd" });
             expect(response.status).toBe(BAD_REQUEST);
             expect(response.body).toStrictEqual({ message: '"body.myField" must be a number' });
+        });
+
+        it("should send error when request have incorrect body with multiple field", async () => {
+            const requester = createServer({
+                validationSchema: {
+                    body: Joi.object({
+                        myField: Joi.number(),
+                        secondField: Joi.number()
+                    })
+                }
+            });
+            const response = await requester.post("/").send({ myField: "foo", secondField: "bar" });
+            expect(response.status).toBe(BAD_REQUEST);
+            expect(response.body).toStrictEqual({
+                message: '"body.myField" must be a number. "body.secondField" must be a number'
+            });
         });
     });
 });
