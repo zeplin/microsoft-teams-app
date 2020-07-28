@@ -24,6 +24,7 @@
   "homepage": "https://github.com/zeplin/microsoft-teams-app#readme",
   "dependencies": {
     "@fluentui/react-northstar": "^0.50.0",
+    "@hapi/joi": "^17.1.1",
     "@microsoft/teams-js": "^1.6.0",
     "bull": "^3.16.0",
     "dotenv": "^8.2.0",
