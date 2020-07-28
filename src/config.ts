@@ -1,7 +1,7 @@
 /* eslint-disable no-process-env */
 
 // This is a workaround for enabling config variables in server side before the NextJS app is initialized
-// However, we don't want to run `dotenv` in client side since it is not meaningful and erroneous
+// However, we don't want to run `dotenv` in client side since it is erroneous and not meaningful
 // NextJS itself enables environment variable usage in client side
 if (typeof window === "undefined") {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -24,6 +24,16 @@ const DEFAULT_PORT = 3000;
 export const PORT = getNumberVar("NEXT_PUBLIC_PORT", DEFAULT_PORT);
 export const {
     NODE_ENV: ENVIRONMENT,
-    REDIS_URL = "redis://localhost:6379",
+    NEXT_PRIVATE_REDIS_URL: REDIS_URL = "redis://localhost:6379",
     NEXT_PUBLIC_BASE_URL: BASE_URL
 } = process.env;
+
+export const IS_DEV = ENVIRONMENT !== "production";
+
+export interface Config {
+    ENVIRONMENT: string;
+    REDIS_URL: string;
+    BASE_URL: string;
+    PORT: number;
+    IS_DEV: boolean;
+}

@@ -1,5 +1,5 @@
 import { WebhookEvent } from "../../messageTypes";
-import { redis } from "../../../adapters";
+import { redis } from "../../../../adapters";
 
 function getRedisKey(groupingKey: string): string {
     return `webhook_events:${groupingKey}`;
