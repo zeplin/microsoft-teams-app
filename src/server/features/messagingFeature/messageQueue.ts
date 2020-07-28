@@ -1,11 +1,8 @@
 import Bull from "bull";
 import { MessageJobData } from "./messageTypes";
+import { Config } from "../../../config";
 
 const QUEUE_NAME = "process-events";
-
-type MessageQueueConfig = {
-    REDIS_URL: string;
-}
 
 type AddOptions = {
     delay: number;
@@ -13,7 +10,7 @@ type AddOptions = {
 
 class MessageQueue {
     private bullQueue: Bull.Queue<MessageJobData> | undefined;
-    init(config: MessageQueueConfig): void {
+    init(config: Config): void {
         this.bullQueue = new Bull<MessageJobData>(QUEUE_NAME, config.REDIS_URL);
     }
 

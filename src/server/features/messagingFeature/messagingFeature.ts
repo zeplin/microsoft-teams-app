@@ -2,13 +2,10 @@ import { messageQueue } from "./messageQueue";
 import { messageFacade } from "./messageFacade";
 import { Router } from "express";
 import { messageRouter } from "./messageRouter";
+import { Config } from "../../../config";
 
-type MessagingConfig = {
-    REDIS_URL: string;
-}
-
-export function initMessaging(router: Router, config: MessagingConfig): void {
-    messageQueue.init({ REDIS_URL: config.REDIS_URL });
+export function initMessagingFeature(router: Router, config: Config): void {
+    messageQueue.init(config);
     messageQueue.process(job => messageFacade.processJob(job.data));
     router.use("/webhook", messageRouter);
 }

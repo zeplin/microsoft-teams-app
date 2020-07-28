@@ -1,5 +1,5 @@
 import { messageWebhookEventRepo } from "./messageWebhookEventRepo";
-import { redis } from "../../../adapters";
+import { redis } from "../../../../adapters";
 
 const exampleGroupingKey = "example-grouping-key";
 const exampleEvent = {

@@ -1,13 +1,9 @@
 import express, { Express, RequestHandler, Router as createRouter } from "express";
 import next from "next";
 import { parse } from "url";
-import * as config from "../config";
-import { initAdapters } from "./adapters/adapters";
-import { initMessaging } from "./messaging";
-
-type AppInitParams = {
-    dev: boolean;
-}
+import { Config } from "../config";
+import { initAdapters } from "./adapters";
+import { initFeatures } from "./features";
 
 class App {
     private expressApp?: Express;
@@ -16,17 +12,17 @@ class App {
         res.json({ status: "pass" });
     }
 
-    async init({ dev }: AppInitParams): Promise<void> {
+    async init(config: Config): Promise<void> {
         this.expressApp = express();
 
-        const nextApp = next({ dev });
+        const nextApp = next({ dev: config.IS_DEV });
         await nextApp.prepare();
 
         const apiRouter = createRouter();
 
         initAdapters(config);
 
-        initMessaging(apiRouter, config);
+        initFeatures(apiRouter, config);
 
         this.expressApp.get("/health", this.handleHealthCheck);
 

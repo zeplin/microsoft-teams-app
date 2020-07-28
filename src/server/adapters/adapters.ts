@@ -1,9 +1,6 @@
 import { redis } from "./redis";
+import { Config } from "../../config";
 
-type AdaptersConfig = {
-    REDIS_URL: string;
-}
-
-export function initAdapters(config: AdaptersConfig): void {
+export function initAdapters(config: Config): void {
     redis.init(config.REDIS_URL);
 }
