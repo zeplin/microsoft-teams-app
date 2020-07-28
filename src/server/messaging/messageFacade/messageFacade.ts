@@ -1,7 +1,6 @@
-import { MessageJobData, WebhookEvent } from "./messageTypes";
-import { messageQueue } from "./messageQueue";
-import { messageJobRepo } from "./messagingRepos";
-import { messageWebhookEventRepo } from "./messagingRepos/messageWebhookEventRepo";
+import { MessageJobData, WebhookEvent } from "../messageTypes";
+import { messageQueue } from "../messageQueue";
+import { messageJobRepo, messageWebhookEventRepo } from "../messagingRepos";
 
 function getGroupingKey(event: WebhookEvent): string {
     return `${event.webhookId}:others`;
@@ -23,6 +22,7 @@ class MessageFacade {
         const groupingKey = getGroupingKey(event);
         const jobId = event.deliveryId;
 
+        // TODO: Handle errors (Maybe redis connection is lost)
         await messageJobRepo.setGroupActiveJobId(groupingKey, jobId);
         await messageWebhookEventRepo.addEventToGroup(groupingKey, event);
 
