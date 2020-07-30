@@ -1,15 +1,15 @@
-import { ProjectWebhooks } from "./ProjectWebhooks";
-import { ProjectWebhookEvent } from "../../../enums";
+import { StyleguideWebhooks } from "./StyleguideWebhooks";
+import { StyleguideWebhookEvent } from "../../../enums";
 import { BAD_REQUEST, OK } from "http-status-codes";
 import nock, { Interceptor } from "nock";
 import { ZeplinError } from "../ZeplinError";
 import { Requester } from "../requester";
 
 const token = "authToken";
-const projectId = "projectId";
+const styleguideId = "styleguideId";
 const webhookUrl = "https://webhook.url.com";
 const webhookSecret = "secret";
-const webhookEvents = [ProjectWebhookEvent.ALL];
+const webhookEvents = [StyleguideWebhookEvent.ALL];
 
 const createMockInterceptor = (): Interceptor => nock(
     "http://localhost",
@@ -19,7 +19,7 @@ const createMockInterceptor = (): Interceptor => nock(
         }
     }
 ).post(
-    "/v1/projects/projectId/webhooks",
+    "/v1/styleguides/styleguideId/webhooks",
     {
         url: webhookUrl,
         events: webhookEvents,
@@ -28,9 +28,9 @@ const createMockInterceptor = (): Interceptor => nock(
 );
 
 describe("Zeplin > projectWebhook", () => {
-    let projectWebhooks: ProjectWebhooks;
+    let styleguideWebhooks: StyleguideWebhooks;
     beforeAll(() => {
-        projectWebhooks = new ProjectWebhooks(new Requester({ baseURL: "http://localhost/v1" }), webhookSecret);
+        styleguideWebhooks = new StyleguideWebhooks(new Requester({ baseURL: "http://localhost/v1" }), webhookSecret);
     });
 
     describe("create", () => {
@@ -40,8 +40,8 @@ describe("Zeplin > projectWebhook", () => {
                 { id: "webhookId" }
             );
 
-            const webhookId = await projectWebhooks.create(
-                projectId,
+            const webhookId = await styleguideWebhooks.create(
+                styleguideId,
                 token,
                 {
                     url: webhookUrl,
@@ -57,8 +57,8 @@ describe("Zeplin > projectWebhook", () => {
                 BAD_REQUEST,
                 { message: "Bad request" }
             );
-            await expect(projectWebhooks.create(
-                projectId,
+            await expect(styleguideWebhooks.create(
+                styleguideId,
                 token,
                 {
                     url: webhookUrl,

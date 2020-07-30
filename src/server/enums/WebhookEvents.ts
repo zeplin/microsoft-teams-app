@@ -1,12 +1,21 @@
 export enum ProjectWebhookEvent {
-    PROJECT_ALL = "project.*",
-    PROJECT_COLOR = "project.color",
-    PROJECT_COMPONENT = "project.component",
-    PROJECT_MEMBER = "project.member",
-    PROJECT_NOTE = "project.note",
-    PROJECT_NOTE_COMMENT = "project.note.comment",
-    PROJECT_SCREEN = "project.screen",
-    PROJECT_SCREEN_VERSION = "project.screen.version",
-    PROJECT_SPACING_TOKEN = "project.spacing_token",
-    PROJECT_TEXT_STYLE = "project.text_style",
+    ALL = "project.*",
+    COLOR = "project.color",
+    COMPONENT = "project.component",
+    MEMBER = "project.member",
+    NOTE = "project.note",
+    NOTE_COMMENT = "project.note.comment",
+    SCREEN = "project.screen",
+    SCREEN_VERSION = "project.screen.version",
+    SPACING_TOKEN = "project.spacing_token",
+    TEXT_STYLE = "project.text_style",
+}
+
+export enum StyleguideWebhookEvent {
+    ALL = "styleguide.*",
+    COLOR = "styleguide.color",
+    COMPONENT = "styleguide.component",
+    MEMBER = "styleguide.member",
+    SPACING_TOKEN = "styleguide.spacing_token",
+    TEXT_STYLE = "styleguide.text_style",
 }
