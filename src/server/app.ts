@@ -1,9 +1,10 @@
 import express, { Express, RequestHandler, Router as createRouter } from "express";
 import next from "next";
 import { parse } from "url";
-import { Config } from "../config";
+import { Config } from "./config";
 import { initAdapters } from "./adapters";
 import { initFeatures } from "./features";
+import path from "path";
 
 class App {
     private expressApp?: Express;
@@ -15,7 +16,10 @@ class App {
     async init(config: Config): Promise<void> {
         this.expressApp = express();
 
-        const nextApp = next({ dev: config.IS_DEV });
+        const nextApp = next({
+            dev: config.IS_DEV,
+            dir: path.join(__dirname, "../client")
+        });
         await nextApp.prepare();
 
         const apiRouter = createRouter();

@@ -1,5 +1,5 @@
 import { redis } from "./redis";
-import * as config from "../../../config";
+import * as config from "../../config";
 import { redisHelper } from "../../test/helpers";
 
 describe("Redis adapter", () => {
