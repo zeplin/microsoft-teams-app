@@ -1,13 +1,17 @@
-import axios, { AxiosInstance } from "axios";
-import { ProjectWebhook } from "./ProjectWebhook";
+import { ProjectWebhooks } from "./ProjectWebhooks";
+import { Requester } from "./requester";
+
+interface ZeplinOptions {
+    url?: string;
+    webhookSecret: string;
+}
 
 class Zeplin {
-    private instance: AxiosInstance;
-    public projectWebhook: ProjectWebhook;
+    public projectWebhooks!: ProjectWebhooks;
 
-    init(url: string, webhookSecret: string): void {
-        this.instance = axios.create({ baseURL: `${url}/v1/` });
-        this.projectWebhook = new ProjectWebhook(this.instance, webhookSecret);
+    init({ url = "https://api.zeplin.dev", webhookSecret }: ZeplinOptions): void {
+        const requester = new Requester({ baseURL: `${url}/v1/` });
+        this.projectWebhooks = new ProjectWebhooks(requester, webhookSecret);
     }
 }
 

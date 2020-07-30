@@ -1,9 +1,9 @@
-import axios from "axios";
-import { ProjectWebhook } from "./ProjectWebhook";
+import { ProjectWebhooks } from "./ProjectWebhooks";
 import { ProjectWebhookEvents } from "../../../enums";
 import { BAD_REQUEST, OK } from "http-status-codes";
 import nock, { Interceptor } from "nock";
 import { ZeplinError } from "../ZeplinError";
+import { Requester } from "../requester";
 
 const token = "authToken";
 const projectId = "projectId";
@@ -28,9 +28,9 @@ const createMockInterceptor = (): Interceptor => nock(
 );
 
 describe("Zeplin > projectWebhook", () => {
-    let projectWebhook: ProjectWebhook;
+    let projectWebhooks: ProjectWebhooks;
     beforeAll(() => {
-        projectWebhook = new ProjectWebhook(axios.create({ baseURL: "http://localhost/v1" }), webhookSecret);
+        projectWebhooks = new ProjectWebhooks(new Requester({ baseURL: "http://localhost/v1" }), webhookSecret);
     });
 
     describe("create", () => {
@@ -40,7 +40,7 @@ describe("Zeplin > projectWebhook", () => {
                 { id: "webhookId" }
             );
 
-            const webhookId = await projectWebhook.create(
+            const webhookId = await projectWebhooks.create(
                 projectId,
                 token,
                 {
@@ -57,7 +57,7 @@ describe("Zeplin > projectWebhook", () => {
                 BAD_REQUEST,
                 { message: "Bad request" }
             );
-            await expect(projectWebhook.create(
+            await expect(projectWebhooks.create(
                 projectId,
                 token,
                 {

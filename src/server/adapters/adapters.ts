@@ -4,5 +4,5 @@ import { zeplin } from "./zeplin";
 
 export function initAdapters(config: Config): void {
     redis.init(config.REDIS_URL);
-    zeplin.init(config.ZEPLIN_URL, config.WEBHOOK_SECRET);
+    zeplin.init({ url: config.ZEPLIN_URL, webhookSecret: config.WEBHOOK_SECRET });
 }
