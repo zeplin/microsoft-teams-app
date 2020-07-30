@@ -14,7 +14,7 @@ export class Requester {
             if (error.response) {
                 throw new ZeplinError(error.response.data.message, { statusCode: error.response.status });
             } else {
-                throw new ZeplinError(error.message);
+                throw new ZeplinError(error?.message ?? String(error));
             }
         }
     }
@@ -27,7 +27,7 @@ export class Requester {
             if (error.response) {
                 throw new ZeplinError(error.response.data.message, { statusCode: error.response.status });
             } else {
-                throw new ZeplinError(error.message);
+                throw new ZeplinError(error?.message ?? String(error));
             }
         }
     }
@@ -39,7 +39,7 @@ export class Requester {
             if (error.response) {
                 throw new ZeplinError(error.response.data.message, { statusCode: error.response.status });
             } else {
-                throw new ZeplinError(error.message);
+                throw new ZeplinError(error?.message ?? String(error));
             }
         }
     }
@@ -52,7 +52,7 @@ export class Requester {
             if (error.response) {
                 throw new ZeplinError(error.response.data.message, { statusCode: error.response.status });
             } else {
-                throw new ZeplinError(error.message);
+                throw new ZeplinError(error?.message ?? String(error));
             }
         }
     }
