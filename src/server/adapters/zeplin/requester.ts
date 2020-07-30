@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { ZeplinError } from "./ZeplinError";
-import { INTERNAL_SERVER_ERROR } from "http-status-codes";
 
 export class Requester {
     private instance: AxiosInstance;
@@ -15,7 +14,7 @@ export class Requester {
             if (error.response) {
                 throw new ZeplinError(error.response.data.message, { statusCode: error.response.status });
             } else {
-                throw new ZeplinError(error.message, { statusCode: INTERNAL_SERVER_ERROR });
+                throw new ZeplinError(error.message);
             }
         }
     }
@@ -28,7 +27,7 @@ export class Requester {
             if (error.response) {
                 throw new ZeplinError(error.response.data.message, { statusCode: error.response.status });
             } else {
-                throw new ZeplinError(error.message, { statusCode: INTERNAL_SERVER_ERROR });
+                throw new ZeplinError(error.message);
             }
         }
     }
@@ -40,7 +39,7 @@ export class Requester {
             if (error.response) {
                 throw new ZeplinError(error.response.data.message, { statusCode: error.response.status });
             } else {
-                throw new ZeplinError(error.message, { statusCode: INTERNAL_SERVER_ERROR });
+                throw new ZeplinError(error.message);
             }
         }
     }
