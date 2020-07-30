@@ -1,9 +1,9 @@
-import { ProjectWebhookEvents } from "../../../enums";
+import { ProjectWebhookEvent } from "../../../enums";
 import { Requester } from "../requester";
 
 interface WebhookCreatePayload {
     url: string;
-    events: ProjectWebhookEvents[];
+    events: ProjectWebhookEvent[];
 }
 
 export class ProjectWebhooks {

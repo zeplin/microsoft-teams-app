@@ -1,5 +1,5 @@
 import { ProjectWebhooks } from "./ProjectWebhooks";
-import { ProjectWebhookEvents } from "../../../enums";
+import { ProjectWebhookEvent } from "../../../enums";
 import { BAD_REQUEST, OK } from "http-status-codes";
 import nock, { Interceptor } from "nock";
 import { ZeplinError } from "../ZeplinError";
@@ -9,7 +9,7 @@ const token = "authToken";
 const projectId = "projectId";
 const webhookUrl = "https://webhook.url.com";
 const webhookSecret = "secret";
-const webhookEvents = [ProjectWebhookEvents.PROJECT_ALL];
+const webhookEvents = [ProjectWebhookEvent.PROJECT_ALL];
 
 const createMockInterceptor = (): Interceptor => nock(
     "http://localhost",

@@ -1,4 +1,4 @@
-export enum ProjectWebhookEvents {
+export enum ProjectWebhookEvent {
     PROJECT_ALL = "project.*",
     PROJECT_COLOR = "project.color",
     PROJECT_COMPONENT = "project.component",
