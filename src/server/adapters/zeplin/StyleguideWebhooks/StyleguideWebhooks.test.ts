@@ -30,7 +30,7 @@ const createMockInterceptor = (): Interceptor => nock(
 describe("Zeplin > projectWebhook", () => {
     let styleguideWebhooks: StyleguideWebhooks;
     beforeAll(() => {
-        styleguideWebhooks = new StyleguideWebhooks(new Requester({ baseURL: "http://localhost/v1" }), webhookSecret);
+        styleguideWebhooks = new StyleguideWebhooks(new Requester({ baseURL: "http://localhost/v1" }));
     });
 
     describe("create", () => {
@@ -40,14 +40,15 @@ describe("Zeplin > projectWebhook", () => {
                 { id: "webhookId" }
             );
 
-            const webhookId = await styleguideWebhooks.create(
-                { styleguideId },
-                {
+            const webhookId = await styleguideWebhooks.create({
+                params: { styleguideId },
+                body: {
                     url: webhookUrl,
-                    events: webhookEvents
+                    events: webhookEvents,
+                    secret: webhookSecret
                 },
-                { authToken }
-            );
+                options: { authToken }
+            });
 
             expect(webhookId).toStrictEqual("webhookId");
         });
@@ -57,14 +58,17 @@ describe("Zeplin > projectWebhook", () => {
                 BAD_REQUEST,
                 { message: "Bad request" }
             );
-            await expect(styleguideWebhooks.create(
-                { styleguideId },
-                {
-                    url: webhookUrl,
-                    events: webhookEvents
-                },
-                { authToken }
-            )).rejects.toEqual(new ZeplinError("Bad request", { statusCode: BAD_REQUEST }));
+            await expect(
+                styleguideWebhooks.create({
+                    params: { styleguideId },
+                    body: {
+                        url: webhookUrl,
+                        events: webhookEvents,
+                        secret: webhookSecret
+                    },
+                    options: { authToken }
+                })
+            ).rejects.toEqual(new ZeplinError("Bad request", { statusCode: BAD_REQUEST }));
         });
     });
 });

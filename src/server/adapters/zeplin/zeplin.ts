@@ -4,17 +4,16 @@ import { StyleguideWebhooks } from "./StyleguideWebhooks";
 
 interface ZeplinOptions {
     url: string;
-    webhookSecret: string;
 }
 
 class Zeplin {
     public projectWebhooks!: ProjectWebhooks;
     public styleguideWebhooks!: StyleguideWebhooks;
 
-    init({ url, webhookSecret }: ZeplinOptions): void {
+    init({ url }: ZeplinOptions): void {
         const requester = new Requester({ baseURL: `${url}/v1/` });
-        this.projectWebhooks = new ProjectWebhooks(requester, webhookSecret);
-        this.styleguideWebhooks = new StyleguideWebhooks(requester, webhookSecret);
+        this.projectWebhooks = new ProjectWebhooks(requester);
+        this.styleguideWebhooks = new StyleguideWebhooks(requester);
     }
 }
 
