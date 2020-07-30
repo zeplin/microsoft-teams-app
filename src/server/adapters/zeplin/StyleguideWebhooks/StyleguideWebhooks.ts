@@ -1,9 +1,17 @@
 import { StyleguideWebhookEvent } from "../../../enums";
 import { Requester } from "../requester";
 
-interface WebhookCreatePayload {
+interface StyleguideWebhookCreatePayload {
     url: string;
     events: StyleguideWebhookEvent[];
+}
+
+interface StyleguideWebhookCreateParams {
+    styleguideId: string;
+}
+
+interface StyleguideWebhookCreateOptions {
+    authToken: string;
 }
 
 export class StyleguideWebhooks {
@@ -15,7 +23,11 @@ export class StyleguideWebhooks {
         this.secret = secret;
     }
 
-    create(styleguideId: string, authToken: string, payload: WebhookCreatePayload): Promise<string> {
+    create(
+        { styleguideId }: StyleguideWebhookCreateParams,
+        payload: StyleguideWebhookCreatePayload,
+        { authToken }: StyleguideWebhookCreateOptions
+    ): Promise<string> {
         return this.requester.post(
             `/styleguides/${styleguideId}/webhooks`,
             {

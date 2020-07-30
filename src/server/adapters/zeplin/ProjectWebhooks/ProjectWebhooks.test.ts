@@ -5,7 +5,7 @@ import nock, { Interceptor } from "nock";
 import { ZeplinError } from "../ZeplinError";
 import { Requester } from "../requester";
 
-const token = "authToken";
+const authToken = "authToken";
 const projectId = "projectId";
 const webhookUrl = "https://webhook.url.com";
 const webhookSecret = "secret";
@@ -15,7 +15,7 @@ const createMockInterceptor = (): Interceptor => nock(
     "http://localhost",
     {
         reqheaders: {
-            Authorization: token
+            Authorization: authToken
         }
     }
 ).post(
@@ -41,12 +41,12 @@ describe("Zeplin > projectWebhook", () => {
             );
 
             const webhookId = await projectWebhooks.create(
-                projectId,
-                token,
+                { projectId },
                 {
                     url: webhookUrl,
                     events: webhookEvents
-                }
+                },
+                { authToken }
             );
 
             expect(webhookId).toStrictEqual("webhookId");
@@ -58,12 +58,12 @@ describe("Zeplin > projectWebhook", () => {
                 { message: "Bad request" }
             );
             await expect(projectWebhooks.create(
-                projectId,
-                token,
+                { projectId },
                 {
                     url: webhookUrl,
                     events: webhookEvents
-                }
+                },
+                { authToken }
             )).rejects.toEqual(new ZeplinError("Bad request", { statusCode: BAD_REQUEST }));
         });
     });

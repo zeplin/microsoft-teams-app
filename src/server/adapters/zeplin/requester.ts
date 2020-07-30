@@ -53,7 +53,7 @@ export class Requester {
             if (error.response) {
                 throw new ZeplinError(error.response.data.message, { statusCode: error.response.status });
             } else {
-                throw new ZeplinError(error.message, { statusCode: INTERNAL_SERVER_ERROR });
+                throw new ZeplinError(error.message);
             }
         }
     }

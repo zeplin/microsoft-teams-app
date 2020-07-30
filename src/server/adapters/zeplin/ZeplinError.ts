@@ -1,11 +1,9 @@
-import { INTERNAL_SERVER_ERROR } from "http-status-codes";
-
 interface ZeplinErrorOptions {
     statusCode?: number;
 }
 
 export class ZeplinError extends Error {
-    statusCode: number;
+    statusCode?: number;
     message: string;
 
     constructor(
@@ -14,6 +12,6 @@ export class ZeplinError extends Error {
     ) {
         super(message);
         this.message = message;
-        this.statusCode = statusCode || INTERNAL_SERVER_ERROR;
+        this.statusCode = statusCode;
     }
 }

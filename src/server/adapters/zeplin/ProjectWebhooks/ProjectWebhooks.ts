@@ -1,9 +1,17 @@
 import { ProjectWebhookEvent } from "../../../enums";
 import { Requester } from "../requester";
 
-interface WebhookCreatePayload {
+interface ProjectWebhookCreatePayload {
     url: string;
     events: ProjectWebhookEvent[];
+}
+
+interface ProjectWebhookCreateParams {
+    projectId: string;
+}
+
+interface ProjectWebhookCreateOptions {
+    authToken: string;
 }
 
 export class ProjectWebhooks {
@@ -15,7 +23,11 @@ export class ProjectWebhooks {
         this.secret = secret;
     }
 
-    create(projectId: string, authToken: string, payload: WebhookCreatePayload): Promise<string> {
+    create(
+        { projectId }: ProjectWebhookCreateParams,
+        payload: ProjectWebhookCreatePayload,
+        { authToken }: ProjectWebhookCreateOptions
+    ): Promise<string> {
         return this.requester.post(
             `/projects/${projectId}/webhooks`,
             {
