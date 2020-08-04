@@ -1,5 +1,5 @@
 import { app } from "./app";
-import * as config from "../config";
+import * as config from "./config";
 
 async function drive(): Promise<void> {
     // Initialize NextJS and routes

@@ -1,6 +1,6 @@
 import Bull from "bull";
 import { MessageJobData } from "./messageTypes";
-import { Config } from "../../../config";
+import { Config } from "../../config";
 
 const QUEUE_NAME = "process-events";
 
