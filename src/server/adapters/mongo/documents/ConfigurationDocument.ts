@@ -16,6 +16,7 @@ export interface ConfigurationDocument extends Document {
             name: string;
             id: string;
             url: string;
+            incomingWebhookUrl: string;
         };
         groupId: string;
     };

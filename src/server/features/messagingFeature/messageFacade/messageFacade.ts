@@ -2,6 +2,7 @@ import { MessageJobData, WebhookEvent } from "../messagingTypes";
 import { messageQueue } from "../messageQueue";
 import { messageJobRepo, messageWebhookEventRepo } from "../messagingRepos";
 import { getNotificationHandler } from "./messageFacadeNotificationHandlers";
+import { configurationRepo } from "../../../repos";
 
 class MessageFacade {
     async processJob(data: MessageJobData): Promise<void> {
@@ -20,6 +21,11 @@ class MessageFacade {
         // TODO: Check configuration id etc.
         const notificationHandler = getNotificationHandler(pivotEvent.payload.event);
         const message = notificationHandler.getTeamsMessage(events);
+
+        // eslint-disable-next-line
+        const incomingWebhookURLsForEvent = await configurationRepo.getIncomingWebhookURLsForWebhook(
+            pivotEvent.webhookId
+        );
         // eslint-disable-next-line no-console
         console.log(message);
     }
@@ -28,6 +34,13 @@ class MessageFacade {
         const notificationHandler = getNotificationHandler(event.payload.event);
         const groupingKey = notificationHandler.getGroupingKey(event);
         const jobId = event.deliveryId;
+
+        const eventHasConfiguration = await configurationRepo.existsForWebhook(event.webhookId);
+        if (!eventHasConfiguration) {
+            // TODO: Event doesn't have a configuration set (somehow webhook is not deleted when event is deleted)
+            // TODO: Where will we handle these errors?
+            throw new Error("Event doesn't have configuration");
+        }
 
         // TODO: Handle errors (Maybe redis connection is lost)
         await messageJobRepo.setGroupActiveJobId(groupingKey, jobId);
