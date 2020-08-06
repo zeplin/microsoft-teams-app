@@ -13,6 +13,11 @@ type ProjectColorEventDescriptor = {
     action: "created" | "updated";
 };
 
+type ProjectColorDeletedEventDescriptor = {
+    type: EventType.PROJECT_COLOR;
+    action: "deleted";
+}
+
 type ProjectColorResource = {
     id: string;
     type: ResourceType.COLOR;
@@ -27,18 +32,66 @@ type ProjectColorResource = {
     };
 };
 
+function isDeletedEvents(
+    events:
+        | WebhookEvent<ProjectColorEventPayload>[]
+        | WebhookEvent<ProjectColorDeletedEventPayload>[]
+): events is WebhookEvent<ProjectColorDeletedEventPayload>[] {
+    return events[0].payload.action === "deleted";
+}
+
 class ProjectColorNotificationHandler extends NotificationHandler {
     delay = SHORT_DELAY;
-    getTeamsMessage(events: WebhookEvent<ProjectColorEventPayload>[]): string {
+    private getDeleteMessage(
+        events: WebhookEvent<ProjectColorDeletedEventPayload>[]
+    ): string {
         if (events.length === 1) {
-            const [event] = events;
-            return `Color named ${event.payload.resource.data.name} updated for project ${event.payload.context.project.id}`;
+            return `A color is deleted from project ${events[0].payload.context.project.id}`;
         }
 
         return events.map(event => event.deliveryId).join(" ");
     }
+
+    private getCreateMessage(
+        events: WebhookEvent<ProjectColorEventPayload>[]
+    ): string {
+        if (events.length === 1) {
+            return `Color ${events[0].payload.resource.id} is added to project ${events[0].payload.context.project.id}`;
+        }
+
+        return events.map(event => event.deliveryId).join(" ");
+    }
+
+    private getUpdateMessage(
+        events: WebhookEvent<ProjectColorEventPayload>[]
+    ): string {
+        if (events.length === 1) {
+            return `Color ${events[0].payload.resource.id} is updated in project ${events[0].payload.context.project.id}`;
+        }
+
+        return events.map(event => event.deliveryId).join(" ");
+    }
+
+    getTeamsMessage(
+        events: WebhookEvent<ProjectColorEventPayload>[] | WebhookEvent<ProjectColorDeletedEventPayload>[]
+    ): string {
+        if (isDeletedEvents(events)) {
+            return this.getDeleteMessage(events);
+        }
+
+        if (events[0].payload.action === "created") {
+            return this.getCreateMessage(events);
+        }
+
+        return this.getUpdateMessage(events);
+    }
 }
 
+export type ProjectColorDeletedEventPayload = EventPayload<
+    ProjectColorDeletedEventDescriptor,
+    ProjectContext,
+    { id: string; type: ResourceType.COLOR }
+>;
 export type ProjectColorEventPayload = EventPayload<
     ProjectColorEventDescriptor,
     ProjectContext,
