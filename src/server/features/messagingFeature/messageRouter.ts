@@ -1,6 +1,6 @@
 import { Router as createRouter } from "express";
 import { handleWebhookRequest } from "./messageController";
-import { JSONBodyParser } from "server/middlewares";
+import { JSONBodyParser } from "../../middlewares";
 
 const messageRouter = createRouter();
 messageRouter.post("/",
