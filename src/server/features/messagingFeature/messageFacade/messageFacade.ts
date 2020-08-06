@@ -12,6 +12,11 @@ class MessageFacade {
 
         const events = await messageWebhookEventRepo.getAndRemoveGroupEvents(data.groupingKey);
         const [pivotEvent] = events;
+        if (!pivotEvent) {
+            // TODO: Handle error (maybe log in some general error handler)
+            throw new Error(`There isn't any event found for the grouping key ${data.groupingKey}`);
+        }
+
         // TODO: Check configuration id etc.
         const notificationHandler = getNotificationHandler(pivotEvent.payload.event);
         const message = notificationHandler.getTeamsMessage(events);
