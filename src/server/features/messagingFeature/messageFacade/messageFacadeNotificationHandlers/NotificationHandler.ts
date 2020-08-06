@@ -1,4 +1,4 @@
-import { WebhookEvent } from "../../messageTypes";
+import { WebhookEvent } from "../../messagingTypes";
 
 type EventSourceType = "Project" | "Styleguide";
 function getEventSourceType(eventType: string): EventSourceType {

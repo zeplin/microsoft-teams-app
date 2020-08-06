@@ -4,7 +4,7 @@ import {
     EventPayload,
     ProjectContext,
     EventType
-} from "../../../messageTypes";
+} from "../../../messagingTypes";
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 

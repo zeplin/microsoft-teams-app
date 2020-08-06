@@ -1,4 +1,4 @@
-import { WebhookEvent } from "server/features/messagingFeature/messageTypes";
+import { WebhookEvent } from "../../../messagingTypes";
 import { styleguideColorNotificationHandler, StyleguideColorEventPayload } from "./styleguideColorNotificationHandler";
 
 const dummyEvent = {

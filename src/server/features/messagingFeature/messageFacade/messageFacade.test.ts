@@ -1,7 +1,7 @@
 import { messageFacade } from "./messageFacade";
 import { messageJobRepo, messageWebhookEventRepo } from "../messagingRepos";
 import { messageQueue } from "../messageQueue";
-import { WebhookEvent } from "../messageTypes";
+import { WebhookEvent } from "../messagingTypes";
 import { NotificationHandler } from "./messageFacadeNotificationHandlers/NotificationHandler";
 
 jest.mock("../messageQueue", () => ({

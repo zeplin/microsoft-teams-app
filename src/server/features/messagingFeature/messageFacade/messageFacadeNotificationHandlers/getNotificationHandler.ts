@@ -1,6 +1,6 @@
 import { projectColorNotificationHandler } from "./projectColorNotificationHandler";
 import { NotificationHandler } from "./NotificationHandler";
-import { EventType } from "../../messageTypes";
+import { EventType } from "../../messagingTypes";
 import { styleguideColorNotificationHandler } from "./styleguideColorNotificationHandler";
 
 const notificationMap: Record<EventType, NotificationHandler> = {

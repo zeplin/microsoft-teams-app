@@ -1,4 +1,4 @@
-import { MessageJobData, WebhookEvent } from "../messageTypes";
+import { MessageJobData, WebhookEvent } from "../messagingTypes";
 import { messageQueue } from "../messageQueue";
 import { messageJobRepo, messageWebhookEventRepo } from "../messagingRepos";
 import { getNotificationHandler } from "./messageFacadeNotificationHandlers";

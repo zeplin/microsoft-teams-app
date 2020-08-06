@@ -1,3 +1,6 @@
+import { OrganizationSummary } from "./organizationSummary";
+import { RemPreferences } from "./remPreferences";
+
 type EventDescriptor = {
     type: EventType;
     action: string;
@@ -17,12 +20,48 @@ export enum EventType {
 export interface ProjectContext {
     project: {
         id: string;
+        created: number;
+        name: string;
+        description?: string;
+        thumbnail?: string;
+        platform: "android" | "ios" | "web" | "macos";
+        status: "active" | "archived" | "deleted";
+        organization?: OrganizationSummary;
+        scene_url?: string;
+        updated?: number;
+        rem_preferences?: RemPreferences;
+        number_of_screens: number;
+        number_of_components: number;
+        number_of_text_styles: number;
+        number_of_colors: number;
+        number_of_spacing_tokens: number;
+        number_of_members: number;
+        linked_styleguide?: {
+            id: string;
+        };
     };
 }
 
 export interface StyleguideContext {
     styleguide: {
         id: string;
+        created: number;
+        name: string;
+        description?: string;
+        thumbnail?: string;
+        platform: "base" | "web" | "ios" | "android" | "macos";
+        status: "active" | "archived" | "deleted";
+        organization?: OrganizationSummary;
+        updated?: number;
+        rem_preferences?: RemPreferences;
+        number_of_components: number;
+        number_of_text_styles: number;
+        number_of_colors: number;
+        number_of_spacing_tokens: number;
+        number_of_members: number;
+        parent?: {
+            id: string;
+        };
     };
 }
 
@@ -63,12 +102,15 @@ export interface EventPayload<
         };
     };
 }
+
 export type CommonEventPayload = EventPayload<EventDescriptor, ProjectContext | StyleguideContext, Resource>;
+
 export type WebhookEvent<T extends CommonEventPayload = CommonEventPayload> = {
     webhookId: string;
     deliveryId: string;
     payload: T;
 };
+
 export type MessageJobData = {
     id: string;
     groupingKey: string;
