@@ -3,6 +3,7 @@ import { messageQueue } from "../messageQueue";
 import { messageJobRepo, messageWebhookEventRepo } from "../messagingRepos";
 import { getNotificationHandler } from "./messageFacadeNotificationHandlers";
 import { configurationRepo } from "../../../repos";
+import { requester } from "../../../adapters/requester";
 
 class MessageFacade {
     async processJob(data: MessageJobData): Promise<void> {
@@ -26,8 +27,11 @@ class MessageFacade {
         const incomingWebhookURLsForEvent = await configurationRepo.getIncomingWebhookURLsForWebhook(
             pivotEvent.webhookId
         );
-        // eslint-disable-next-line no-console
-        console.log(message);
+        // TODO: Generate message from events
+        const teamsMessage = { text: message };
+
+        // TODO: Handle errors?
+        await Promise.all(incomingWebhookURLsForEvent.map(url => requester.post(url, teamsMessage)));
     }
 
     async handleEventArrived(event: WebhookEvent): Promise<void> {
@@ -39,6 +43,7 @@ class MessageFacade {
         if (!eventHasConfiguration) {
             // TODO: Event doesn't have a configuration set (somehow webhook is not deleted when event is deleted)
             // TODO: Where will we handle these errors?
+            // TODO: Better error?
             throw new Error("Event doesn't have configuration");
         }
 
