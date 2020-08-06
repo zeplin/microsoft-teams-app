@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`projectColorNotificationHandler getTeamsMessage method for created notification should match snapshot when there is only 1 event 1`] = `"Color colorId is added to project projectId"`;

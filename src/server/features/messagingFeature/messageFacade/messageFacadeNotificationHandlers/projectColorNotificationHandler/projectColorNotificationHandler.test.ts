@@ -1,15 +1,21 @@
 import { WebhookEvent } from "../../../messagingTypes";
-import { projectColorNotificationHandler, ProjectColorEventPayload } from "./projectColorNotificationHandler";
+import {
+    projectColorNotificationHandler,
+    ProjectColorEventPayload
+} from "./projectColorNotificationHandler";
 
 const dummyEvent = {
     payload: {
+        action: "created",
         context: {
             project: {
                 id: "projectId"
             }
         },
         resource: {
+            id: "colorId",
             data: {
+                id: "colorId",
                 name: "ColorName"
             }
         }
@@ -17,9 +23,12 @@ const dummyEvent = {
 } as WebhookEvent<ProjectColorEventPayload>;
 describe("projectColorNotificationHandler", () => {
     describe("getTeamsMessage method", () => {
-        it("should return value start with Color named for 1 event", () => {
-            const result = projectColorNotificationHandler.getTeamsMessage([dummyEvent]);
-            expect(result.startsWith("Color named")).toBe(true);
+        describe("for created notification", () => {
+            it("should match snapshot when there is only 1 event", () => {
+                expect(
+                    projectColorNotificationHandler.getTeamsMessage([dummyEvent])
+                ).toMatchSnapshot();
+            });
         });
     });
 });

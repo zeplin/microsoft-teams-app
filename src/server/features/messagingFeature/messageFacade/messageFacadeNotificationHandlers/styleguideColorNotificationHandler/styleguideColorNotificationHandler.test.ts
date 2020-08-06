@@ -1,15 +1,21 @@
 import { WebhookEvent } from "../../../messagingTypes";
-import { styleguideColorNotificationHandler, StyleguideColorEventPayload } from "./styleguideColorNotificationHandler";
+import {
+    styleguideColorNotificationHandler,
+    StyleguideColorEventPayload
+} from "./styleguideColorNotificationHandler";
 
 const dummyEvent = {
     payload: {
+        action: "created",
         context: {
             styleguide: {
                 id: "styleguideId"
             }
         },
         resource: {
+            id: "colorId",
             data: {
+                id: "colorId",
                 name: "ColorName"
             }
         }
@@ -17,9 +23,12 @@ const dummyEvent = {
 } as WebhookEvent<StyleguideColorEventPayload>;
 describe("styleguideColorNotificationHandler", () => {
     describe("getTeamsMessage method", () => {
-        it("should return value start with Color named for 1 event", () => {
-            const result = styleguideColorNotificationHandler.getTeamsMessage([dummyEvent]);
-            expect(result.startsWith("Color named")).toBe(true);
+        describe("for created notification", () => {
+            it("should match snapshot when there is only 1 event", () => {
+                expect(
+                    styleguideColorNotificationHandler.getTeamsMessage([dummyEvent])
+                ).toMatchSnapshot();
+            });
         });
     });
 });
