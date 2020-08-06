@@ -1,5 +1,5 @@
 type EventDescriptor = {
-    type: string;
+    type: EventType;
     action: string;
 }
 
@@ -7,6 +7,11 @@ type Resource = {
     id: string;
     type: ResourceType;
     data?: object;
+}
+
+export enum EventType {
+    PROJECT_COLOR = "project.color",
+    STYLEGUIDE_COLOR = "styleguide.color"
 }
 
 export interface ProjectContext {

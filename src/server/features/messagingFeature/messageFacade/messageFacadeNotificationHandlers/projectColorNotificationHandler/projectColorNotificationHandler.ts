@@ -1,9 +1,15 @@
-import { ResourceType, WebhookEvent, EventPayload, ProjectContext } from "../../../messageTypes";
+import {
+    ResourceType,
+    WebhookEvent,
+    EventPayload,
+    ProjectContext,
+    EventType
+} from "../../../messageTypes";
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 
 type ProjectColorEventDescriptor = {
-    type: "project.color";
+    type: EventType.PROJECT_COLOR;
     action: "created" | "updated";
 };
 
