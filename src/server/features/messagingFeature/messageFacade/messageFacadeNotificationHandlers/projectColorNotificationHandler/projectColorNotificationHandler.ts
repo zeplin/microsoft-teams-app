@@ -1,5 +1,6 @@
 import { ResourceType, WebhookEvent, EventPayload, ProjectContext } from "../../../messageTypes";
 import { NotificationHandler } from "../NotificationHandler";
+import { SHORT_DELAY } from "../constants";
 
 type ProjectColorEventDescriptor = {
     type: "project.color";
@@ -21,7 +22,7 @@ type ProjectColorResource = {
 };
 
 class ProjectColorNotificationHandler extends NotificationHandler {
-    delay: 1000; // eslint-disable-line
+    delay = SHORT_DELAY;
     getTeamsMessage(events: WebhookEvent<ProjectColorEventPayload>[]): string {
         if (events.length === 1) {
             const [event] = events;
