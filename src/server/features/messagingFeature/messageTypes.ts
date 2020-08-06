@@ -15,6 +15,12 @@ export interface ProjectContext {
     };
 }
 
+export interface StyleguideContext {
+    styleguide: {
+        id: string;
+    };
+}
+
 export enum ResourceType {
     PROJECT = "Project",
     STYLEGUIDE = "Styleguide",
@@ -34,7 +40,7 @@ export enum ResourceType {
 
 export interface EventPayload<
     E extends EventDescriptor,
-    C extends object | undefined,
+    C extends ProjectContext | StyleguideContext,
     R extends Resource,
 > {
     event: E["type"];
@@ -52,7 +58,7 @@ export interface EventPayload<
         };
     };
 }
-export type CommonEventPayload = EventPayload<EventDescriptor, object | undefined, Resource>;
+export type CommonEventPayload = EventPayload<EventDescriptor, ProjectContext | StyleguideContext, Resource>;
 export type WebhookEvent<T extends CommonEventPayload = CommonEventPayload> = {
     webhookId: string;
     deliveryId: string;
