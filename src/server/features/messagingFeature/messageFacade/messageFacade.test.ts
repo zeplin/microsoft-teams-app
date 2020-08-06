@@ -2,6 +2,7 @@ import { messageFacade } from "./messageFacade";
 import { messageJobRepo, messageWebhookEventRepo } from "../messagingRepos";
 import { messageQueue } from "../messageQueue";
 import { WebhookEvent } from "../messageTypes";
+import { NotificationHandler } from "./messageFacadeNotificationHandlers/NotificationHandler";
 
 jest.mock("../messageQueue", () => ({
     messageQueue: {
@@ -24,7 +25,13 @@ jest.mock("../messagingRepos", () => ({
     }
 }));
 
-const exampleEvent = { webhookId: "webhook-id", deliveryId: "delivery-id" } as WebhookEvent;
+const exampleEvent = {
+    webhookId: "webhook-id",
+    deliveryId: "delivery-id",
+    payload: {
+        event: "project.color"
+    }
+} as WebhookEvent;
 const expectedGroupingKey = `${exampleEvent.webhookId}:others`;
 const expectedJobId = exampleEvent.deliveryId;
 const expectedDelay = 5000;
@@ -33,6 +40,16 @@ const exampleJobData = {
     id: "example-job-id",
     groupingKey: "example-grouping-key"
 };
+
+const mockNotificationHandler = {
+    delay: expectedDelay,
+    getGroupingKey: jest.fn().mockReturnValue(expectedGroupingKey),
+    getTeamsMessage: jest.fn().mockReturnValue("a nice messaage")
+};
+
+jest.mock("./messageFacadeNotificationHandlers", () => ({
+    getNotificationHandler: (): NotificationHandler => mockNotificationHandler
+}));
 
 describe("messageFacade", () => {
     describe("`handleEventArrived` function", () => {
@@ -63,8 +80,8 @@ describe("messageFacade", () => {
 
     describe("`processJob` function", () => {
         it("should not get and remove events when there isn't job id for the group", async () => {
-            const getGroupActiveJobIdSpy = jest.spyOn(messageJobRepo, "getGroupActiveJobId").mockImplementation(() => Promise.resolve(null));
-            const getAndRemoveGroupEventsSpy = jest.spyOn(messageWebhookEventRepo, "getAndRemoveGroupEvents").mockImplementation();
+            const getGroupActiveJobIdSpy = jest.spyOn(messageJobRepo, "getGroupActiveJobId").mockReturnValue(Promise.resolve(null));
+            const getAndRemoveGroupEventsSpy = jest.spyOn(messageWebhookEventRepo, "getAndRemoveGroupEvents").mockReturnValue(Promise.resolve([exampleEvent, exampleEvent]));
 
             await messageFacade.processJob(exampleJobData);
             expect(getAndRemoveGroupEventsSpy).not.toBeCalled();
@@ -74,8 +91,8 @@ describe("messageFacade", () => {
         });
 
         it("should not get and remove events when the job is not the active one for the group", async () => {
-            const getGroupActiveJobIdSpy = jest.spyOn(messageJobRepo, "getGroupActiveJobId").mockImplementation(() => Promise.resolve("another-job-id"));
-            const getAndRemoveGroupEventsSpy = jest.spyOn(messageWebhookEventRepo, "getAndRemoveGroupEvents").mockImplementation();
+            const getGroupActiveJobIdSpy = jest.spyOn(messageJobRepo, "getGroupActiveJobId").mockReturnValue(Promise.resolve("another-job-id"));
+            const getAndRemoveGroupEventsSpy = jest.spyOn(messageWebhookEventRepo, "getAndRemoveGroupEvents").mockReturnValue(Promise.resolve([exampleEvent, exampleEvent]));
 
             await messageFacade.processJob(exampleJobData);
             expect(getAndRemoveGroupEventsSpy).not.toBeCalled();
@@ -85,8 +102,8 @@ describe("messageFacade", () => {
         });
 
         it("should get and remove events when the job is the active one for the group", async () => {
-            const getGroupActiveJobIdSpy = jest.spyOn(messageJobRepo, "getGroupActiveJobId").mockImplementation(() => Promise.resolve(exampleJobData.id));
-            const getAndRemoveGroupEventsSpy = jest.spyOn(messageWebhookEventRepo, "getAndRemoveGroupEvents").mockImplementation();
+            const getGroupActiveJobIdSpy = jest.spyOn(messageJobRepo, "getGroupActiveJobId").mockReturnValue(Promise.resolve(exampleJobData.id));
+            const getAndRemoveGroupEventsSpy = jest.spyOn(messageWebhookEventRepo, "getAndRemoveGroupEvents").mockReturnValue(Promise.resolve([exampleEvent, exampleEvent]));
 
             await messageFacade.processJob(exampleJobData);
             expect(getAndRemoveGroupEventsSpy).toBeCalledWith(exampleJobData.groupingKey);

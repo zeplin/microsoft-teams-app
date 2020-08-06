@@ -1,4 +1,21 @@
-enum ResourceType {
+type EventDescriptor = {
+    type: string;
+    action: string;
+}
+
+type Resource = {
+    id: string;
+    type: ResourceType;
+    data?: object;
+}
+
+export interface ProjectContext {
+    project: {
+        id: string;
+    };
+}
+
+export enum ResourceType {
     PROJECT = "Project",
     STYLEGUIDE = "Styleguide",
     COLOR = "Color",
@@ -13,17 +30,6 @@ enum ResourceType {
     ORGANIZATION_MEMBER = "OrganizationMember",
     SCREEN_NOTE = "ScreenNote",
     SCREEN_NOTE_COMMENT = "ScreenNoteComment"
-}
-
-type EventDescriptor = {
-    type: string;
-    action: string;
-}
-
-type Resource = {
-    id: string;
-    type: ResourceType;
-    data?: object;
 }
 
 export interface EventPayload<
