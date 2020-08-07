@@ -20,7 +20,7 @@ exports[`styleguideColorNotificationHandler getTeamsMessage method for created n
     },
     {
       "type": "Container",
-      "spacing": "large",
+      "spacing": "extraLarge",
       "items": [
         {
           "type": "TextBlock",
@@ -31,7 +31,7 @@ exports[`styleguideColorNotificationHandler getTeamsMessage method for created n
     },
     {
       "type": "ActionSet",
-      "spacing": "large",
+      "spacing": "extraLarge",
       "actions": [
         {
           "type": "Action.OpenUrl",
@@ -69,7 +69,7 @@ exports[`styleguideColorNotificationHandler getTeamsMessage method for created n
     },
     {
       "type": "Container",
-      "spacing": "large",
+      "spacing": "extraLarge",
       "items": [
         {
           "type": "TextBlock",
@@ -80,7 +80,7 @@ exports[`styleguideColorNotificationHandler getTeamsMessage method for created n
     },
     {
       "type": "ActionSet",
-      "spacing": "large",
+      "spacing": "extraLarge",
       "actions": [
         {
           "type": "Action.OpenUrl",
@@ -118,7 +118,7 @@ exports[`styleguideColorNotificationHandler getTeamsMessage method for updated n
     },
     {
       "type": "Container",
-      "spacing": "large",
+      "spacing": "extraLarge",
       "items": [
         {
           "type": "TextBlock",
@@ -129,7 +129,7 @@ exports[`styleguideColorNotificationHandler getTeamsMessage method for updated n
     },
     {
       "type": "ActionSet",
-      "spacing": "large",
+      "spacing": "extraLarge",
       "actions": [
         {
           "type": "Action.OpenUrl",
@@ -167,7 +167,7 @@ exports[`styleguideColorNotificationHandler getTeamsMessage method for updated n
     },
     {
       "type": "Container",
-      "spacing": "large",
+      "spacing": "extraLarge",
       "items": [
         {
           "type": "TextBlock",
@@ -178,7 +178,7 @@ exports[`styleguideColorNotificationHandler getTeamsMessage method for updated n
     },
     {
       "type": "ActionSet",
-      "spacing": "large",
+      "spacing": "extraLarge",
       "actions": [
         {
           "type": "Action.OpenUrl",

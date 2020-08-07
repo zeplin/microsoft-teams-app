@@ -19,7 +19,7 @@ function section({ title, text }: { title?: string; text: string }): Container {
 
     return {
         type: "Container",
-        spacing: "large",
+        spacing: "extraLarge",
         items
     };
 }
@@ -61,7 +61,7 @@ export function commonTeamsCard({
     if (images.length > 0) {
         body.push({
             type: "ImageSet",
-            spacing: "large",
+            spacing: "extraLarge",
             imageSize: "large",
             images: images.map(image => ({
                 type: "Image",
@@ -75,7 +75,7 @@ export function commonTeamsCard({
     if (links.length > 0) {
         body.push({
             type: "ActionSet",
-            spacing: "large",
+            spacing: "extraLarge",
             actions: links.map(({ title: linkTitle, url }) => ({
                 type: "Action.OpenUrl",
                 title: linkTitle,

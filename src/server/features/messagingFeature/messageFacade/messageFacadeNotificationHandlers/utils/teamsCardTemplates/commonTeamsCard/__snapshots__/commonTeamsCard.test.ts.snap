@@ -20,7 +20,7 @@ exports[`commonTeamsCard should match snapshot when rendered with all elements 1
     },
     {
       "type": "Container",
-      "spacing": "large",
+      "spacing": "extraLarge",
       "items": [
         {
           "type": "TextBlock",
@@ -37,7 +37,7 @@ exports[`commonTeamsCard should match snapshot when rendered with all elements 1
     },
     {
       "type": "ImageSet",
-      "spacing": "large",
+      "spacing": "extraLarge",
       "imageSize": "large",
       "images": [
         {
@@ -50,7 +50,7 @@ exports[`commonTeamsCard should match snapshot when rendered with all elements 1
     },
     {
       "type": "ActionSet",
-      "spacing": "large",
+      "spacing": "extraLarge",
       "actions": [
         {
           "type": "Action.OpenUrl",
@@ -88,7 +88,7 @@ exports[`commonTeamsCard should match snapshot when rendered with images 1`] = `
     },
     {
       "type": "Container",
-      "spacing": "large",
+      "spacing": "extraLarge",
       "items": [
         {
           "type": "TextBlock",
@@ -105,7 +105,7 @@ exports[`commonTeamsCard should match snapshot when rendered with images 1`] = `
     },
     {
       "type": "ImageSet",
-      "spacing": "large",
+      "spacing": "extraLarge",
       "imageSize": "large",
       "images": [
         {
@@ -140,7 +140,7 @@ exports[`commonTeamsCard should match snapshot when rendered with links 1`] = `
     },
     {
       "type": "Container",
-      "spacing": "large",
+      "spacing": "extraLarge",
       "items": [
         {
           "type": "TextBlock",
@@ -151,7 +151,7 @@ exports[`commonTeamsCard should match snapshot when rendered with links 1`] = `
     },
     {
       "type": "ActionSet",
-      "spacing": "large",
+      "spacing": "extraLarge",
       "actions": [
         {
           "type": "Action.OpenUrl",
@@ -184,7 +184,7 @@ exports[`commonTeamsCard should match snapshot when rendered with only required 
     },
     {
       "type": "Container",
-      "spacing": "large",
+      "spacing": "extraLarge",
       "items": [
         {
           "type": "TextBlock",
@@ -217,7 +217,7 @@ exports[`commonTeamsCard should match snapshot when rendered with section title 
     },
     {
       "type": "Container",
-      "spacing": "large",
+      "spacing": "extraLarge",
       "items": [
         {
           "type": "TextBlock",
