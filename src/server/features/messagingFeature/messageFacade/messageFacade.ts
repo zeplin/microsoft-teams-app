@@ -19,15 +19,14 @@ class MessageFacade {
             throw new Error(`There isn't any event found for the grouping key ${data.groupingKey}`);
         }
 
-        // TODO: Check configuration id etc.
-        const notificationHandler = getNotificationHandler(pivotEvent.payload.event);
-        const message = notificationHandler.getTeamsMessage(events);
-
         // eslint-disable-next-line
         const incomingWebhookURLsForEvent = await configurationRepo.getIncomingWebhookURLsForWebhook(
             pivotEvent.webhookId
         );
-        // TODO: Generate message from events
+
+        const notificationHandler = getNotificationHandler(pivotEvent.payload.event);
+        const message = notificationHandler.getTeamsMessage(events);
+        // TODO: Make `getTeamsMessage` return a formatted message (probably an object)
         const teamsMessage = { text: message };
 
         // TODO: Handle errors?
