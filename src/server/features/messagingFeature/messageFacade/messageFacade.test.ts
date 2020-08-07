@@ -14,6 +14,15 @@ jest.mock("../messageQueue", () => ({
     }
 }));
 
+jest.mock("../../../adapters/requester");
+
+jest.mock("../../../repos", () => ({
+    configurationRepo: {
+        existsForWebhook: jest.fn().mockReturnValue(Promise.resolve(true)),
+        getIncomingWebhookURLsForWebhook: jest.fn().mockReturnValue(Promise.resolve(["https://ergun.sh"]))
+    }
+}));
+
 jest.mock("../messagingRepos", () => ({
     messageJobRepo: {
         setGroupActiveJobId: jest.fn(),
