@@ -1,0 +1,237 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commonTeamsCard should match snapshot when rendered with all elements 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Project name",
+      "size": "large",
+      "weight": "bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "sertac added a new comment on _Manage Zeplin Connector_ screen. 🏃‍♂",
+      "wrap": true,
+      "spacing": "small"
+    },
+    {
+      "type": "Container",
+      "spacing": "large",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Section title",
+          "spacing": "none",
+          "weight": "bolder"
+        },
+        {
+          "type": "TextBlock",
+          "text": "Naptin nettin nettin naptin?",
+          "spacing": "none"
+        }
+      ]
+    },
+    {
+      "type": "ImageSet",
+      "spacing": "large",
+      "imageSize": "large",
+      "images": [
+        {
+          "type": "Image",
+          "url": "http://placehold.it/160",
+          "size": "Large"
+        }
+      ],
+      "separator": false
+    },
+    {
+      "type": "ActionSet",
+      "spacing": "large",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in Web",
+          "url": "https://ergun.sh"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in App",
+          "url": "https://ergun.sh"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`commonTeamsCard should match snapshot when rendered with images 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "title",
+      "size": "large",
+      "weight": "bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "text",
+      "wrap": true,
+      "spacing": "small"
+    },
+    {
+      "type": "Container",
+      "spacing": "large",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "sectionTitle",
+          "spacing": "none",
+          "weight": "bolder"
+        },
+        {
+          "type": "TextBlock",
+          "text": "sectionText",
+          "spacing": "none"
+        }
+      ]
+    },
+    {
+      "type": "ImageSet",
+      "spacing": "large",
+      "imageSize": "large",
+      "images": [
+        {
+          "type": "Image",
+          "url": "http://placehold.it/400",
+          "size": "Large"
+        }
+      ],
+      "separator": false
+    }
+  ]
+}
+`;
+
+exports[`commonTeamsCard should match snapshot when rendered with links 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "title",
+      "size": "large",
+      "weight": "bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "text",
+      "wrap": true,
+      "spacing": "small"
+    },
+    {
+      "type": "Container",
+      "spacing": "large",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "sectionText",
+          "spacing": "none"
+        }
+      ]
+    },
+    {
+      "type": "ActionSet",
+      "spacing": "large",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in me",
+          "url": "https://ergun.sh"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`commonTeamsCard should match snapshot when rendered with only required elements 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "title",
+      "size": "large",
+      "weight": "bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "text",
+      "wrap": true,
+      "spacing": "small"
+    },
+    {
+      "type": "Container",
+      "spacing": "large",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "sectionText",
+          "spacing": "none"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`commonTeamsCard should match snapshot when rendered with section title 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "title",
+      "size": "large",
+      "weight": "bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "text",
+      "wrap": true,
+      "spacing": "small"
+    },
+    {
+      "type": "Container",
+      "spacing": "large",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "sectionTitle",
+          "spacing": "none",
+          "weight": "bolder"
+        },
+        {
+          "type": "TextBlock",
+          "text": "sectionText",
+          "spacing": "none"
+        }
+      ]
+    }
+  ]
+}
+`;

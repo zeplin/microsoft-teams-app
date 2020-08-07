@@ -1,4 +1,4 @@
-import { AdaptiveCard, AdaptiveCardItem, Container } from "./teamsCardTypes";
+import { AdaptiveCard, AdaptiveCardItem, Container } from "../teamsCardTypes";
 
 function section({ title, text }: { title?: string; text: string }): Container {
     const items = [];
@@ -27,15 +27,15 @@ function section({ title, text }: { title?: string; text: string }): Container {
 export function commonTeamsCard({
     title,
     text,
-    sectionTitle,
     sectionText,
+    sectionTitle,
     images = [],
     links = []
 }: {
     title: string;
     text: string;
-    sectionTitle?: string;
     sectionText: string;
+    sectionTitle?: string;
     images?: string[];
     links?: {
         title: string;
@@ -72,15 +72,17 @@ export function commonTeamsCard({
         });
     }
 
-    body.push({
-        type: "ActionSet",
-        spacing: "large",
-        actions: links.map(({ title: linkTitle, url }) => ({
-            type: "Action.OpenUrl",
-            title: linkTitle,
-            url
-        }))
-    });
+    if (links.length > 0) {
+        body.push({
+            type: "ActionSet",
+            spacing: "large",
+            actions: links.map(({ title: linkTitle, url }) => ({
+                type: "Action.OpenUrl",
+                title: linkTitle,
+                url
+            }))
+        });
+    }
 
     return {
         $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
