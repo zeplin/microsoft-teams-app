@@ -3,6 +3,7 @@ import { messageJobRepo, messageWebhookEventRepo } from "../messagingRepos";
 import { messageQueue } from "../messageQueue";
 import { WebhookEvent } from "../messagingTypes";
 import { NotificationHandler } from "./messageFacadeNotificationHandlers/NotificationHandler";
+import { configurationRepo } from "../../../repos";
 
 jest.mock("../messageQueue", () => ({
     messageQueue: {
@@ -66,6 +67,12 @@ describe("messageFacade", () => {
             jest.clearAllMocks();
         });
 
+        // TODO: Check error itself too
+        it("should throw error when there isn't any configuration for the webhook event", async () => {
+            jest.spyOn(configurationRepo, "existsForWebhook").mockReturnValueOnce(Promise.resolve(false));
+            await expect(() => messageFacade.handleEventArrived(exampleEvent)).rejects.toThrow();
+        });
+
         it("should update active job id for group", async () => {
             await messageFacade.handleEventArrived(exampleEvent);
             expect(messageJobRepo.setGroupActiveJobId).toBeCalledWith(expectedGroupingKey, expectedJobId);
@@ -88,6 +95,13 @@ describe("messageFacade", () => {
     });
 
     describe("`processJob` function", () => {
+        // TODO: Check error itself too
+        it("should throw error when there isn't any event for the group", async () => {
+            jest.spyOn(messageWebhookEventRepo, "getAndRemoveGroupEvents").mockResolvedValueOnce([]);
+            jest.spyOn(messageJobRepo, "getGroupActiveJobId").mockResolvedValueOnce(exampleJobData.id);
+            await expect(() => messageFacade.processJob(exampleJobData)).rejects.toThrow();
+        });
+
         it("should not get and remove events when there isn't job id for the group", async () => {
             const getGroupActiveJobIdSpy = jest.spyOn(messageJobRepo, "getGroupActiveJobId").mockReturnValue(Promise.resolve(null));
             const getAndRemoveGroupEventsSpy = jest.spyOn(messageWebhookEventRepo, "getAndRemoveGroupEvents").mockReturnValue(Promise.resolve([exampleEvent, exampleEvent]));
