@@ -1,10 +1,7 @@
-import { MessageJobData, WebhookEvent } from "../messageTypes";
+import { MessageJobData, WebhookEvent } from "../messagingTypes";
 import { messageQueue } from "../messageQueue";
 import { messageJobRepo, messageWebhookEventRepo } from "../messagingRepos";
-
-function getGroupingKey(event: WebhookEvent): string {
-    return `${event.webhookId}:others`;
-}
+import { getNotificationHandler } from "./messageFacadeNotificationHandlers";
 
 class MessageFacade {
     async processJob(data: MessageJobData): Promise<void> {
@@ -14,20 +11,32 @@ class MessageFacade {
         }
 
         const events = await messageWebhookEventRepo.getAndRemoveGroupEvents(data.groupingKey);
+        const [pivotEvent] = events;
+        if (!pivotEvent) {
+            // TODO: Handle error (maybe log in some general error handler)
+            throw new Error(`There isn't any event found for the grouping key ${data.groupingKey}`);
+        }
+
+        // TODO: Check configuration id etc.
+        const notificationHandler = getNotificationHandler(pivotEvent.payload.event);
+        const message = notificationHandler.getTeamsMessage(events);
         // eslint-disable-next-line no-console
-        console.log(events);
+        console.log(message);
     }
 
     async handleEventArrived(event: WebhookEvent): Promise<void> {
-        const groupingKey = getGroupingKey(event);
+        const notificationHandler = getNotificationHandler(event.payload.event);
+        const groupingKey = notificationHandler.getGroupingKey(event);
         const jobId = event.deliveryId;
 
         // TODO: Handle errors (Maybe redis connection is lost)
         await messageJobRepo.setGroupActiveJobId(groupingKey, jobId);
         await messageWebhookEventRepo.addEventToGroup(groupingKey, event);
 
-        // TODO: Get delay depending on the webhook event
-        await messageQueue.add({ id: jobId, groupingKey }, { delay: 5000 });
+        await messageQueue.add(
+            { id: jobId, groupingKey },
+            { delay: notificationHandler.delay }
+        );
     }
 }
 
