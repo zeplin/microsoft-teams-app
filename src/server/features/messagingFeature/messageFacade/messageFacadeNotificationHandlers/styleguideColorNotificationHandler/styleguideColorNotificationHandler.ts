@@ -96,7 +96,7 @@ class StyleguideColorNotificationHandler extends NotificationHandler {
             text: events.length === 1
                 ? `**${pivotColorName}** is ${this.getActionText(action)}! 🏃‍♂`
                 : `**${events.length} new colors** are ${this.getActionText(action)}! 🏃‍♂`,
-            subText: "Make sure your stylesheets are up to date!",
+            sectionText: "Make sure your stylesheets are up to date!",
             links: [{
                 title: "Open in Web",
                 url: this.getWebappURL(events)

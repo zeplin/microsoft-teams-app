@@ -28,18 +28,22 @@ exports[`projectColorNotificationHandler getTeamsMessage method for created noti
           "spacing": "none"
         }
       ]
-    }
-  ],
-  "actions": [
-    {
-      "type": "Action.OpenUrl",
-      "title": "Open in Web",
-      "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&cid=anotherColorId"
     },
     {
-      "type": "Action.OpenUrl",
-      "title": "Open in App",
-      "url": "zpl://colors?pid=projectId&cids=colorId,anotherColorId"
+      "type": "ActionSet",
+      "spacing": "large",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&cid=anotherColorId"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in App",
+          "url": "zpl://colors?pid=projectId&cids=colorId,anotherColorId"
+        }
+      ]
     }
   ]
 }
@@ -73,18 +77,22 @@ exports[`projectColorNotificationHandler getTeamsMessage method for created noti
           "spacing": "none"
         }
       ]
-    }
-  ],
-  "actions": [
-    {
-      "type": "Action.OpenUrl",
-      "title": "Open in Web",
-      "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId"
     },
     {
-      "type": "Action.OpenUrl",
-      "title": "Open in App",
-      "url": "zpl://colors?pid=projectId&cids=colorId"
+      "type": "ActionSet",
+      "spacing": "large",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in App",
+          "url": "zpl://colors?pid=projectId&cids=colorId"
+        }
+      ]
     }
   ]
 }
@@ -118,18 +126,22 @@ exports[`projectColorNotificationHandler getTeamsMessage method for updated noti
           "spacing": "none"
         }
       ]
-    }
-  ],
-  "actions": [
-    {
-      "type": "Action.OpenUrl",
-      "title": "Open in Web",
-      "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&cid=anotherColorId"
     },
     {
-      "type": "Action.OpenUrl",
-      "title": "Open in App",
-      "url": "zpl://colors?pid=projectId&cids=colorId,anotherColorId"
+      "type": "ActionSet",
+      "spacing": "large",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&cid=anotherColorId"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in App",
+          "url": "zpl://colors?pid=projectId&cids=colorId,anotherColorId"
+        }
+      ]
     }
   ]
 }
@@ -163,18 +175,22 @@ exports[`projectColorNotificationHandler getTeamsMessage method for updated noti
           "spacing": "none"
         }
       ]
-    }
-  ],
-  "actions": [
-    {
-      "type": "Action.OpenUrl",
-      "title": "Open in Web",
-      "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId"
     },
     {
-      "type": "Action.OpenUrl",
-      "title": "Open in App",
-      "url": "zpl://colors?pid=projectId&cids=colorId"
+      "type": "ActionSet",
+      "spacing": "large",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in App",
+          "url": "zpl://colors?pid=projectId&cids=colorId"
+        }
+      ]
     }
   ]
 }
