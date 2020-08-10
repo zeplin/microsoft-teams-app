@@ -8,7 +8,7 @@ import {
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, AdaptiveCard } from "../utils";
-import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_BASE_URL } from "../../../../../config";
+import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
 
 type StyleguideColorEventDescriptor = {
@@ -70,7 +70,7 @@ class StyleguideColorNotificationHandler extends NotificationHandler {
                 }
             }
         }] = events;
-        return `${ZEPLIN_MAC_APP_BASE_URL}colors?stid=${styleguideId}&cids=${events.map(event => event.payload.resource.id).join(",")}`;
+        return `${ZEPLIN_MAC_APP_URL_SCHEME}colors?stid=${styleguideId}&cids=${events.map(event => event.payload.resource.id).join(",")}`;
     }
 
     getTeamsMessage(
