@@ -4,6 +4,7 @@ import { messageQueue } from "../messageQueue";
 import { WebhookEvent } from "../messagingTypes";
 import { NotificationHandler } from "./messageFacadeNotificationHandlers/NotificationHandler";
 import { configurationRepo } from "../../../repos";
+import { requester } from "../../../adapters/requester";
 
 jest.mock("../messageQueue", () => ({
     messageQueue: {
@@ -54,7 +55,9 @@ const exampleJobData = {
 const mockNotificationHandler = {
     delay: expectedDelay,
     getGroupingKey: jest.fn().mockReturnValue(expectedGroupingKey),
-    getTeamsMessage: jest.fn().mockReturnValue("a nice messaage")
+    getTeamsMessage: jest.fn().mockReturnValue({
+        text: "gol"
+    })
 };
 
 jest.mock("./messageFacadeNotificationHandlers", () => ({
@@ -125,12 +128,17 @@ describe("messageFacade", () => {
             expect(getAndRemoveGroupEventsSpy).not.toBeCalled();
         });
 
-        it("should get and remove events when the job is the active one for the group", async () => {
+        it("should post message when the job is the active one and there are events for the group", async () => {
+            const incomingWebhookURL = "https://ergun.sh";
+            const message = mockNotificationHandler.getTeamsMessage();
+            jest.spyOn(configurationRepo, "getIncomingWebhookURLForWebhook").mockResolvedValueOnce("https://ergun.sh");
             jest.spyOn(messageJobRepo, "getGroupActiveJobId").mockResolvedValueOnce(exampleJobData.id);
             const getAndRemoveGroupEventsSpy = jest.spyOn(messageWebhookEventRepo, "getAndRemoveGroupEvents").mockResolvedValueOnce([exampleEvent, exampleEvent]);
 
             await messageFacade.processJob(exampleJobData);
             expect(getAndRemoveGroupEventsSpy).toBeCalledWith(exampleJobData.groupingKey);
+            expect(mockNotificationHandler.getTeamsMessage).toBeCalledWith([exampleEvent, exampleEvent]);
+            expect(requester.post).toBeCalledWith(incomingWebhookURL, message);
         });
     });
 });
