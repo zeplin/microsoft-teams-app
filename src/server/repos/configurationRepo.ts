@@ -8,8 +8,8 @@ class ConfigurationRepo {
         }).limit(1).hasNext();
     }
 
-    async getIncomingWebhookURLsForWebhook(webhookId: string): Promise<string[]> {
-        const partialConfigurations = await mongo.configuration.find({
+    async getIncomingWebhookURLForWebhook(webhookId: string): Promise<string|null> {
+        const partialConfiguration = await mongo.configuration.findOne({
             "zeplin.webhookId": webhookId
         }, {
             "microsoftTeams.channel.incomingWebhookUrl": 1
@@ -20,12 +20,13 @@ class ConfigurationRepo {
                     incomingWebhookUrl: string;
                 };
             };
-        }[];
+        };
 
-        return partialConfigurations.map(
-            partialConfiguration =>
-                partialConfiguration.microsoftTeams.channel.incomingWebhookUrl
-        );
+        if (partialConfiguration) {
+            return partialConfiguration.microsoftTeams.channel.incomingWebhookUrl;
+        }
+
+        return null;
     }
 }
 

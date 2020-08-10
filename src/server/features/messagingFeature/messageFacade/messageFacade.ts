@@ -20,7 +20,7 @@ class MessageFacade {
         }
 
         // eslint-disable-next-line
-        const incomingWebhookURLsForEvent = await configurationRepo.getIncomingWebhookURLsForWebhook(
+        const incomingWebhookURLForEvent = await configurationRepo.getIncomingWebhookURLForWebhook(
             pivotEvent.webhookId
         );
 
@@ -30,7 +30,7 @@ class MessageFacade {
         const teamsMessage = { text: message };
 
         // TODO: Handle errors?
-        await Promise.all(incomingWebhookURLsForEvent.map(url => requester.post(url, teamsMessage)));
+        await requester.post(incomingWebhookURLForEvent, teamsMessage);
     }
 
     async handleEventArrived(event: WebhookEvent): Promise<void> {

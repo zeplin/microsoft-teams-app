@@ -20,7 +20,7 @@ jest.mock("../../../adapters/requester");
 jest.mock("../../../repos", () => ({
     configurationRepo: {
         existsForWebhook: jest.fn().mockReturnValue(Promise.resolve(true)),
-        getIncomingWebhookURLsForWebhook: jest.fn().mockReturnValue(Promise.resolve(["https://ergun.sh"]))
+        getIncomingWebhookURLForWebhook: jest.fn().mockReturnValue(Promise.resolve("https://ergun.sh"))
     }
 }));
 
