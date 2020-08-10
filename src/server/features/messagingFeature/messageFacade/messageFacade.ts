@@ -2,6 +2,8 @@ import { MessageJobData, WebhookEvent } from "../messagingTypes";
 import { messageQueue } from "../messageQueue";
 import { messageJobRepo, messageWebhookEventRepo } from "../messagingRepos";
 import { getNotificationHandler } from "./messageFacadeNotificationHandlers";
+import { configurationRepo } from "../../../repos";
+import { requester } from "../../../adapters/requester";
 
 class MessageFacade {
     async processJob(data: MessageJobData): Promise<void> {
@@ -17,17 +19,31 @@ class MessageFacade {
             throw new Error(`There isn't any event found for the grouping key ${data.groupingKey}`);
         }
 
-        // TODO: Check configuration id etc.
+        const incomingWebhookURLForEvent = await configurationRepo.getIncomingWebhookURLForWebhook(
+            pivotEvent.webhookId
+        );
+        if (!incomingWebhookURLForEvent) {
+            throw new Error(`There isn't any incoming webhook URL found for webhook: ${pivotEvent.webhookId}`);
+        }
+
         const notificationHandler = getNotificationHandler(pivotEvent.payload.event);
         const message = notificationHandler.getTeamsMessage(events);
-        // eslint-disable-next-line no-console
-        console.log(message);
+        // TODO: Handle errors?
+        await requester.post(incomingWebhookURLForEvent, message);
     }
 
     async handleEventArrived(event: WebhookEvent): Promise<void> {
         const notificationHandler = getNotificationHandler(event.payload.event);
         const groupingKey = notificationHandler.getGroupingKey(event);
         const jobId = event.deliveryId;
+
+        const eventHasConfiguration = await configurationRepo.existsForWebhook(event.webhookId);
+        if (!eventHasConfiguration) {
+            // TODO: Event doesn't have a configuration set (somehow webhook is not deleted when event is deleted)
+            // TODO: Where will we handle these errors?
+            // TODO: Better error?
+            throw new Error("Event doesn't have configuration");
+        }
 
         // TODO: Handle errors (Maybe redis connection is lost)
         await messageJobRepo.setGroupActiveJobId(groupingKey, jobId);
