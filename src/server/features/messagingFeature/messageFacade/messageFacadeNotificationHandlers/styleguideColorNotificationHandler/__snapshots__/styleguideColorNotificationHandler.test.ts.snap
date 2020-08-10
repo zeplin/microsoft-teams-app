@@ -1,3 +1,197 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`styleguideColorNotificationHandler getTeamsMessage method for created notification should match snapshot when there is only 1 event 1`] = `"Color colorId is added to styleguide styleguideId"`;
+exports[`styleguideColorNotificationHandler getTeamsMessage method for created notification should match snapshot when there are more than 1 events 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "styleguideName",
+      "size": "large",
+      "weight": "bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "**2 new colors** are added! 🏃‍♂",
+      "wrap": true,
+      "spacing": "small"
+    },
+    {
+      "type": "Container",
+      "spacing": "extraLarge",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Make sure your stylesheets are up to date!",
+          "spacing": "none"
+        }
+      ]
+    },
+    {
+      "type": "ActionSet",
+      "spacing": "extraLarge",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/styleguide/styleguideId/styleguide/colors?cid=colorId&cid=anotherColorId"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in App",
+          "url": "zpl://colors?stid=styleguideId&cids=colorId,anotherColorId"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideColorNotificationHandler getTeamsMessage method for created notification should match snapshot when there is only 1 event 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "styleguideName",
+      "size": "large",
+      "weight": "bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "**colorName** is added! 🏃‍♂",
+      "wrap": true,
+      "spacing": "small"
+    },
+    {
+      "type": "Container",
+      "spacing": "extraLarge",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Make sure your stylesheets are up to date!",
+          "spacing": "none"
+        }
+      ]
+    },
+    {
+      "type": "ActionSet",
+      "spacing": "extraLarge",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/styleguide/styleguideId/styleguide/colors?cid=colorId"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in App",
+          "url": "zpl://colors?stid=styleguideId&cids=colorId"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideColorNotificationHandler getTeamsMessage method for updated notification should match snapshot when there are more than 1 events 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "styleguideName",
+      "size": "large",
+      "weight": "bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "**2 new colors** are updated! 🏃‍♂",
+      "wrap": true,
+      "spacing": "small"
+    },
+    {
+      "type": "Container",
+      "spacing": "extraLarge",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Make sure your stylesheets are up to date!",
+          "spacing": "none"
+        }
+      ]
+    },
+    {
+      "type": "ActionSet",
+      "spacing": "extraLarge",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/styleguide/styleguideId/styleguide/colors?cid=colorId&cid=anotherColorId"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in App",
+          "url": "zpl://colors?stid=styleguideId&cids=colorId,anotherColorId"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideColorNotificationHandler getTeamsMessage method for updated notification should match snapshot when there is only 1 event 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "styleguideName",
+      "size": "large",
+      "weight": "bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "**colorName** is updated! 🏃‍♂",
+      "wrap": true,
+      "spacing": "small"
+    },
+    {
+      "type": "Container",
+      "spacing": "extraLarge",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Make sure your stylesheets are up to date!",
+          "spacing": "none"
+        }
+      ]
+    },
+    {
+      "type": "ActionSet",
+      "spacing": "extraLarge",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/styleguide/styleguideId/styleguide/colors?cid=colorId"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in App",
+          "url": "zpl://colors?stid=styleguideId&cids=colorId"
+        }
+      ]
+    }
+  ]
+}
+`;

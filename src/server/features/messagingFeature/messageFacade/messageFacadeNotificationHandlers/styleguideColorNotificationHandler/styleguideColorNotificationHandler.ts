@@ -7,16 +7,14 @@ import {
 } from "../../../messagingTypes";
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
+import { commonTeamsCard, AdaptiveCard } from "../teamsCardTemplates";
+import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
+import { URL } from "url";
 
 type StyleguideColorEventDescriptor = {
     type: EventType.STYLEGUIDE_COLOR;
     action: "created" | "updated";
 };
-
-type StyleguideColorDeletedEventDescriptor = {
-    type: EventType.STYLEGUIDE_COLOR;
-    action: "deleted";
-}
 
 type StyleguideColorResource = {
     id: string;
@@ -32,66 +30,84 @@ type StyleguideColorResource = {
     };
 };
 
-function isDeletedEvents(
-    events:
-        | WebhookEvent<StyleguideColorEventPayload>[]
-        | WebhookEvent<StyleguideColorDeletedEventPayload>[]
-): events is WebhookEvent<StyleguideColorDeletedEventPayload>[] {
-    return events[0].payload.action === "deleted";
-}
-
 class StyleguideColorNotificationHandler extends NotificationHandler {
     delay = SHORT_DELAY;
-    private getDeleteMessage(
-        events: WebhookEvent<StyleguideColorDeletedEventPayload>[]
-    ): string {
-        if (events.length === 1) {
-            return `A color is deleted from styleguide ${events[0].payload.context.styleguide.id}`;
-        }
-
-        return events.map(event => event.deliveryId).join(" ");
+    private getText(events: WebhookEvent<StyleguideColorEventPayload>[]): string {
+        const [{
+            payload: {
+                action,
+                resource: {
+                    data: {
+                        name: pivotColorName
+                    }
+                }
+            }
+        }] = events;
+        const actionText = action === "created" ? "added" : "updated";
+        return events.length === 1
+            ? `**${pivotColorName}** is ${actionText}! 🏃‍♂`
+            : `**${events.length} new colors** are ${actionText}! 🏃‍♂`;
     }
 
-    private getCreateMessage(
+    private getWebappURL(
         events: WebhookEvent<StyleguideColorEventPayload>[]
     ): string {
-        if (events.length === 1) {
-            return `Color ${events[0].payload.resource.id} is added to styleguide ${events[0].payload.context.styleguide.id}`;
-        }
-
-        return events.map(event => event.deliveryId).join(" ");
+        const [{
+            payload: {
+                context: {
+                    styleguide: {
+                        id: styleguideId
+                    }
+                }
+            }
+        }] = events;
+        const webappURL = new URL(ZEPLIN_WEB_APP_BASE_URL);
+        webappURL.pathname = `styleguide/${styleguideId}/styleguide/colors`;
+        events.forEach(event => webappURL.searchParams.append("cid", event.payload.resource.id));
+        return webappURL.toString();
     }
 
-    private getUpdateMessage(
+    private getMacAppURL(
         events: WebhookEvent<StyleguideColorEventPayload>[]
     ): string {
-        if (events.length === 1) {
-            return `Color ${events[0].payload.resource.id} is updated in styleguide ${events[0].payload.context.styleguide.id}`;
-        }
-
-        return events.map(event => event.deliveryId).join(" ");
+        const [{
+            payload: {
+                context: {
+                    styleguide: {
+                        id: styleguideId
+                    }
+                }
+            }
+        }] = events;
+        return `${ZEPLIN_MAC_APP_URL_SCHEME}colors?stid=${styleguideId}&cids=${events.map(event => event.payload.resource.id).join(",")}`;
     }
 
     getTeamsMessage(
-        events: WebhookEvent<StyleguideColorEventPayload>[] | WebhookEvent<StyleguideColorDeletedEventPayload>[]
-    ): string {
-        if (isDeletedEvents(events)) {
-            return this.getDeleteMessage(events);
-        }
+        events: WebhookEvent<StyleguideColorEventPayload>[]
+    ): AdaptiveCard {
+        const [{
+            payload: {
+                context: {
+                    styleguide: { name: styleguideName }
+                }
+            }
+        }] = events;
 
-        if (events[0].payload.action === "created") {
-            return this.getCreateMessage(events);
-        }
-
-        return this.getUpdateMessage(events);
+        return commonTeamsCard({
+            title: styleguideName,
+            text: this.getText(events),
+            sectionText: "Make sure your stylesheets are up to date!",
+            links: [{
+                title: "Open in Web",
+                url: this.getWebappURL(events)
+            }, {
+                title: "Open in App",
+                url: this.getMacAppURL(events)
+            }]
+        });
     }
 }
 
-export type StyleguideColorDeletedEventPayload = EventPayload<
-    StyleguideColorDeletedEventDescriptor,
-    StyleguideContext,
-    { id: string; type: ResourceType.COLOR }
->;
 export type StyleguideColorEventPayload = EventPayload<
     StyleguideColorEventDescriptor,
     StyleguideContext,

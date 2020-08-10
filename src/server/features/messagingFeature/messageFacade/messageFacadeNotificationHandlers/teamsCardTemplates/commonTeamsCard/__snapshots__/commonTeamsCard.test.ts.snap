@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`projectColorNotificationHandler getTeamsMessage method for created notification should match snapshot when there are more than 1 events 1`] = `
+exports[`commonTeamsCard should match snapshot when rendered with all elements 1`] = `
 {
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "type": "AdaptiveCard",
@@ -8,13 +8,13 @@ exports[`projectColorNotificationHandler getTeamsMessage method for created noti
   "body": [
     {
       "type": "TextBlock",
-      "text": "projectName",
+      "text": "Project name",
       "size": "large",
       "weight": "bolder"
     },
     {
       "type": "TextBlock",
-      "text": "**2 new colors** are added! 🏃‍♂",
+      "text": "**sertac 🌮** added a new comment on _Manage Zeplin Connector_ screen. 🏃‍♂",
       "wrap": true,
       "spacing": "small"
     },
@@ -24,10 +24,28 @@ exports[`projectColorNotificationHandler getTeamsMessage method for created noti
       "items": [
         {
           "type": "TextBlock",
-          "text": "Make sure your stylesheets are up to date!",
+          "text": "Section title",
+          "spacing": "none",
+          "weight": "bolder"
+        },
+        {
+          "type": "TextBlock",
+          "text": "Naptin nettin nettin naptin?",
           "spacing": "none"
         }
       ]
+    },
+    {
+      "type": "ImageSet",
+      "spacing": "extraLarge",
+      "imageSize": "large",
+      "images": [
+        {
+          "type": "Image",
+          "url": "http://placehold.it/160"
+        }
+      ],
+      "separator": false
     },
     {
       "type": "ActionSet",
@@ -36,12 +54,12 @@ exports[`projectColorNotificationHandler getTeamsMessage method for created noti
         {
           "type": "Action.OpenUrl",
           "title": "Open in Web",
-          "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&cid=anotherColorId"
+          "url": "https://ergun.sh"
         },
         {
           "type": "Action.OpenUrl",
           "title": "Open in App",
-          "url": "zpl://colors?pid=projectId&cids=colorId,anotherColorId"
+          "url": "https://ergun.sh"
         }
       ]
     }
@@ -49,7 +67,7 @@ exports[`projectColorNotificationHandler getTeamsMessage method for created noti
 }
 `;
 
-exports[`projectColorNotificationHandler getTeamsMessage method for created notification should match snapshot when there is only 1 event 1`] = `
+exports[`commonTeamsCard should match snapshot when rendered with images 1`] = `
 {
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "type": "AdaptiveCard",
@@ -57,13 +75,13 @@ exports[`projectColorNotificationHandler getTeamsMessage method for created noti
   "body": [
     {
       "type": "TextBlock",
-      "text": "projectName",
+      "text": "title",
       "size": "large",
       "weight": "bolder"
     },
     {
       "type": "TextBlock",
-      "text": "**colorName** is added! 🏃‍♂",
+      "text": "text",
       "wrap": true,
       "spacing": "small"
     },
@@ -73,7 +91,58 @@ exports[`projectColorNotificationHandler getTeamsMessage method for created noti
       "items": [
         {
           "type": "TextBlock",
-          "text": "Make sure your stylesheets are up to date!",
+          "text": "sectionTitle",
+          "spacing": "none",
+          "weight": "bolder"
+        },
+        {
+          "type": "TextBlock",
+          "text": "sectionText",
+          "spacing": "none"
+        }
+      ]
+    },
+    {
+      "type": "ImageSet",
+      "spacing": "extraLarge",
+      "imageSize": "large",
+      "images": [
+        {
+          "type": "Image",
+          "url": "http://placehold.it/400"
+        }
+      ],
+      "separator": false
+    }
+  ]
+}
+`;
+
+exports[`commonTeamsCard should match snapshot when rendered with links 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "title",
+      "size": "large",
+      "weight": "bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "text",
+      "wrap": true,
+      "spacing": "small"
+    },
+    {
+      "type": "Container",
+      "spacing": "extraLarge",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "sectionText",
           "spacing": "none"
         }
       ]
@@ -84,13 +153,8 @@ exports[`projectColorNotificationHandler getTeamsMessage method for created noti
       "actions": [
         {
           "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId"
-        },
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://colors?pid=projectId&cids=colorId"
+          "title": "Open in me",
+          "url": "https://ergun.sh"
         }
       ]
     }
@@ -98,7 +162,7 @@ exports[`projectColorNotificationHandler getTeamsMessage method for created noti
 }
 `;
 
-exports[`projectColorNotificationHandler getTeamsMessage method for updated notification should match snapshot when there are more than 1 events 1`] = `
+exports[`commonTeamsCard should match snapshot when rendered with only required elements 1`] = `
 {
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "type": "AdaptiveCard",
@@ -106,13 +170,13 @@ exports[`projectColorNotificationHandler getTeamsMessage method for updated noti
   "body": [
     {
       "type": "TextBlock",
-      "text": "projectName",
+      "text": "title",
       "size": "large",
       "weight": "bolder"
     },
     {
       "type": "TextBlock",
-      "text": "**2 new colors** are updated! 🏃‍♂",
+      "text": "text",
       "wrap": true,
       "spacing": "small"
     },
@@ -122,24 +186,8 @@ exports[`projectColorNotificationHandler getTeamsMessage method for updated noti
       "items": [
         {
           "type": "TextBlock",
-          "text": "Make sure your stylesheets are up to date!",
+          "text": "sectionText",
           "spacing": "none"
-        }
-      ]
-    },
-    {
-      "type": "ActionSet",
-      "spacing": "extraLarge",
-      "actions": [
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&cid=anotherColorId"
-        },
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://colors?pid=projectId&cids=colorId,anotherColorId"
         }
       ]
     }
@@ -147,7 +195,7 @@ exports[`projectColorNotificationHandler getTeamsMessage method for updated noti
 }
 `;
 
-exports[`projectColorNotificationHandler getTeamsMessage method for updated notification should match snapshot when there is only 1 event 1`] = `
+exports[`commonTeamsCard should match snapshot when rendered with section title 1`] = `
 {
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "type": "AdaptiveCard",
@@ -155,13 +203,13 @@ exports[`projectColorNotificationHandler getTeamsMessage method for updated noti
   "body": [
     {
       "type": "TextBlock",
-      "text": "projectName",
+      "text": "title",
       "size": "large",
       "weight": "bolder"
     },
     {
       "type": "TextBlock",
-      "text": "**colorName** is updated! 🏃‍♂",
+      "text": "text",
       "wrap": true,
       "spacing": "small"
     },
@@ -171,24 +219,14 @@ exports[`projectColorNotificationHandler getTeamsMessage method for updated noti
       "items": [
         {
           "type": "TextBlock",
-          "text": "Make sure your stylesheets are up to date!",
-          "spacing": "none"
-        }
-      ]
-    },
-    {
-      "type": "ActionSet",
-      "spacing": "extraLarge",
-      "actions": [
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId"
+          "text": "sectionTitle",
+          "spacing": "none",
+          "weight": "bolder"
         },
         {
-          "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://colors?pid=projectId&cids=colorId"
+          "type": "TextBlock",
+          "text": "sectionText",
+          "spacing": "none"
         }
       ]
     }
