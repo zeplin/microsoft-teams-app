@@ -1,5 +1,5 @@
 import { WebhookEvent } from "../../messagingTypes";
-import { AdaptiveCard } from "./utils";
+import { AdaptiveCard } from "./teamsCardTemplates";
 
 export abstract class NotificationHandler {
     abstract get delay(): number;

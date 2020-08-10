@@ -7,7 +7,7 @@ import {
 } from "../../../messagingTypes";
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
-import { commonTeamsCard, AdaptiveCard } from "../utils";
+import { commonTeamsCard, AdaptiveCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
 
