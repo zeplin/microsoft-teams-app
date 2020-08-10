@@ -44,7 +44,7 @@ export class Requester {
         }
     }
 
-    async post(url: string, data: object, config?: AxiosRequestConfig): Promise<string> {
+    async createResource(url: string, data: object, config?: AxiosRequestConfig): Promise<string> {
         try {
             const { data: { id } } = await this.instance.post<{ id: string }>(url, data, config);
             return id;
@@ -55,5 +55,22 @@ export class Requester {
                 throw new ZeplinError(error?.message ?? String(error));
             }
         }
+    }
+
+    async post<T = object>(url: string, data: object, config?: AxiosRequestConfig): Promise<T> {
+        try {
+            const { data: result } = await this.instance.post<T>(url, data, config);
+            return result;
+        } catch (error) {
+            if (error.response) {
+                throw new ZeplinError(error.response.data.message, { statusCode: error.response.status });
+            } else {
+                throw new ZeplinError(error?.message ?? String(error));
+            }
+        }
+    }
+
+    getUri(config?: AxiosRequestConfig): string {
+        return `${this.instance.defaults.baseURL}${this.instance.getUri(config)}`;
     }
 }

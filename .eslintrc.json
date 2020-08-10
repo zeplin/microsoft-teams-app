@@ -1,5 +1,6 @@
 {
     "env": {
+        "browser": true,
         "node": true,
         "jest": true
     },
@@ -35,6 +36,8 @@
         "@typescript-eslint/interface-name-prefix": ["error", { "prefixWithI": "never" }],
         "valid-jsdoc": "off",
         "@typescript-eslint/camelcase": "off",
-        "class-methods-use-this": "off"
+        "class-methods-use-this": "off",
+        "react/display-name": "off",
+        "react/prop-types": "off"
     }
 }
