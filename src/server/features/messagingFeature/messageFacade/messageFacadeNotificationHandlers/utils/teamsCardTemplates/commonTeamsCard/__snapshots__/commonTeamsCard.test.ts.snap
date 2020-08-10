@@ -14,7 +14,7 @@ exports[`commonTeamsCard should match snapshot when rendered with all elements 1
     },
     {
       "type": "TextBlock",
-      "text": "sertac added a new comment on _Manage Zeplin Connector_ screen. 🏃‍♂",
+      "text": "**sertac 🌮** added a new comment on _Manage Zeplin Connector_ screen. 🏃‍♂",
       "wrap": true,
       "spacing": "small"
     },

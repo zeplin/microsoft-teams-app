@@ -52,7 +52,7 @@ describe("commonTeamsCard", () => {
         expect(
             commonTeamsCard({
                 title: "Project name",
-                text: "sertac added a new comment on _Manage Zeplin Connector_ screen. 🏃‍♂",
+                text: "**sertac 🌮** added a new comment on _Manage Zeplin Connector_ screen. 🏃‍♂",
                 sectionTitle: "Section title",
                 sectionText: "Naptin nettin nettin naptin?",
                 links: [{
