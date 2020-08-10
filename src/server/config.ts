@@ -29,8 +29,8 @@ export const {
     NEXT_PRIVATE_ZEPLIN_URL: ZEPLIN_URL = "https://api.zeplin.dev",
     NEXT_PRIVATE_MONGO_URL: MONGO_URL = "mongodb://localhost:27017/zeplin-msteams-app",
     NEXT_PUBLIC_BASE_URL: BASE_URL,
-    NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL: ZEPLIN_WEB_APP_BASE_URL = "https://app.zeplin.io",
-    NEXT_PUBLIC_ZEPLIN_MAC_APP_BASE_URL: ZEPLIN_MAC_APP_BASE_URL = "zpl://"
+    NEXT_PRIVATE_ZEPLIN_WEB_APP_BASE_URL: ZEPLIN_WEB_APP_BASE_URL = "https://app.zeplin.io",
+    NEXT_PRIVATE_ZEPLIN_MAC_APP_BASE_URL: ZEPLIN_MAC_APP_BASE_URL = "zpl://"
 } = process.env;
 
 export const IS_DEV = ENVIRONMENT !== "production";
