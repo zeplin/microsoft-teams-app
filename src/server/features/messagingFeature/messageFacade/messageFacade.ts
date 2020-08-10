@@ -28,11 +28,8 @@ class MessageFacade {
 
         const notificationHandler = getNotificationHandler(pivotEvent.payload.event);
         const message = notificationHandler.getTeamsMessage(events);
-        // TODO: Make `getTeamsMessage` return a formatted message (probably an object)
-        const teamsMessage = { text: message };
-
         // TODO: Handle errors?
-        await requester.post(incomingWebhookURLForEvent, teamsMessage);
+        await requester.post(incomingWebhookURLForEvent, message);
     }
 
     async handleEventArrived(event: WebhookEvent): Promise<void> {
