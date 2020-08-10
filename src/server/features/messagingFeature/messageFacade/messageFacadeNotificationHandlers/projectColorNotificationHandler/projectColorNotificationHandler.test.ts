@@ -4,26 +4,24 @@ import {
     ProjectColorEventPayload
 } from "./projectColorNotificationHandler";
 
-function getDummyEvent({
-    action = "created",
-    projectId = "projectId",
-    projectName = "projectName",
-    colorId = "colorId",
-    colorName = "colorName"
-}: {
+type GetDummyEventParams = {
     action?: string;
-    projectId?: string;
-    projectName?: string;
     colorId?: string;
     colorName?: string;
-} = {}): WebhookEvent<ProjectColorEventPayload> {
+}
+
+function getDummyEvent({
+    action = "created",
+    colorId = "colorId",
+    colorName = "colorName"
+}: GetDummyEventParams = {}): WebhookEvent<ProjectColorEventPayload> {
     return {
         payload: {
             action,
             context: {
                 project: {
-                    id: projectId,
-                    name: projectName
+                    id: "projectId",
+                    name: "projectName"
                 }
             },
             resource: {
@@ -51,8 +49,6 @@ describe("projectColorNotificationHandler", () => {
                     projectColorNotificationHandler.getTeamsMessage([
                         getDummyEvent(),
                         getDummyEvent({
-                            projectId: "anotherProjectId",
-                            projectName: "anotherProjectName",
                             colorId: "anotherColorId",
                             colorName: "anotherColorName"
                         })
@@ -76,8 +72,6 @@ describe("projectColorNotificationHandler", () => {
                         }),
                         getDummyEvent({
                             action: "updated",
-                            projectId: "anotherProjectId",
-                            projectName: "anotherProjectName",
                             colorId: "anotherColorId",
                             colorName: "anotherColorName"
                         })

@@ -4,26 +4,24 @@ import {
     StyleguideColorEventPayload
 } from "./styleguideColorNotificationHandler";
 
-function getDummyEvent({
-    action = "created",
-    styleguideId = "styleguideId",
-    styleguideName = "styleguideName",
-    colorId = "colorId",
-    colorName = "colorName"
-}: {
+type GetDummyEventParams = {
     action?: string;
-    styleguideId?: string;
-    styleguideName?: string;
     colorId?: string;
     colorName?: string;
-} = {}): WebhookEvent<StyleguideColorEventPayload> {
+}
+
+function getDummyEvent({
+    action = "created",
+    colorId = "colorId",
+    colorName = "colorName"
+}: GetDummyEventParams = {}): WebhookEvent<StyleguideColorEventPayload> {
     return {
         payload: {
             action,
             context: {
                 styleguide: {
-                    id: styleguideId,
-                    name: styleguideName
+                    id: "styleguideId",
+                    name: "styleguideName"
                 }
             },
             resource: {
@@ -51,8 +49,6 @@ describe("styleguideColorNotificationHandler", () => {
                     styleguideColorNotificationHandler.getTeamsMessage([
                         getDummyEvent(),
                         getDummyEvent({
-                            styleguideId: "anotherStyleguideId",
-                            styleguideName: "anotherStyleguideName",
                             colorId: "anotherColorId",
                             colorName: "anotherColorName"
                         })
@@ -76,8 +72,6 @@ describe("styleguideColorNotificationHandler", () => {
                         }),
                         getDummyEvent({
                             action: "updated",
-                            styleguideId: "anotherStyleguideId",
-                            styleguideName: "anotherStyleguideName",
                             colorId: "anotherColorId",
                             colorName: "anotherColorName"
                         })
