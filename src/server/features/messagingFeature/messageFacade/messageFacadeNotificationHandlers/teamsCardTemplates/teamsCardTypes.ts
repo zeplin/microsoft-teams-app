@@ -1,7 +1,6 @@
 // See: https://adaptivecards.io/schemas/adaptive-card.json
-type SpacingStyle = "none" | "small" | "default" | "medium" | "large" | "extraLarge" | "padding";
 type ActionOpenUrl = {
-    type: "Action.OpenUrl";
+    type: ActionType.OPEN_URL;
     url: string;
     title?: string;
     iconUrl?: string;
@@ -10,34 +9,76 @@ type ActionOpenUrl = {
 type Action = ActionOpenUrl;
 
 type TextBlock = {
-    type: "TextBlock";
+    type: CardElementType.TEXT_BLOCK;
     text: string;
     wrap?: boolean;
-    weight?: "ligher" | "default" | "bolder";
-    size?: "small" | "default" | "medium" | "large" | "extraLarge";
+    weight?: TextWeight;
+    size?: TextSize;
     spacing?: SpacingStyle;
+}
+
+export enum SpacingStyle {
+    NONE = "none",
+    SMALL = "small",
+    DEFAULT = "default",
+    MEDIUM = "medium",
+    LARGE = "large",
+    EXTRA_LARGE = "extraLarge",
+    PADDING = "padding"
+}
+
+export enum ActionType {
+    OPEN_URL = "Action.OpenUrl"
+}
+
+export enum CardElementType {
+    TEXT_BLOCK = "TextBlock",
+    ACTION_SET = "ActionSet",
+    CONTAINER = "Container",
+    IMAGE_SET = "ImageSet",
+    IMAGE = "Image"
+}
+
+export enum ImageSize {
+    SMALL = "small",
+    MEDIUM = "medium",
+    LARGE = "large"
+}
+
+export enum TextWeight {
+    LIGHTER = "lighter",
+    DEFAULT = "default",
+    BOLDER = "bolder"
+}
+
+export enum TextSize {
+    SMALL = "small",
+    DEFAULT = "default",
+    MEDIUM = "medium",
+    LARGE = "large",
+    EXTRA_LARGE = "extraLarge"
 }
 
 export type AdaptiveCardItem = TextBlock | ImageSet | ActionSet | Container;
 
 export type ActionSet = {
-    type: "ActionSet";
+    type: CardElementType.ACTION_SET;
     spacing?: SpacingStyle;
     actions: Action[];
 }
 
 export type Container = {
-    type: "Container";
+    type: CardElementType.CONTAINER;
     spacing?: SpacingStyle;
     items: AdaptiveCardItem[];
 }
 
 export type ImageSet = {
-    type: "ImageSet";
+    type: CardElementType.IMAGE_SET;
     spacing: SpacingStyle;
-    imageSize: "small" | "medium" | "large";
+    imageSize: ImageSize;
     images: {
-        type: "Image";
+        type: CardElementType.IMAGE;
         url: string;
     }[];
     separator?: boolean;

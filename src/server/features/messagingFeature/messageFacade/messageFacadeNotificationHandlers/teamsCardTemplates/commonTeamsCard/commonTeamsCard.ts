@@ -1,4 +1,13 @@
-import { AdaptiveCard, Container } from "../teamsCardTypes";
+import {
+    AdaptiveCard,
+    Container,
+    CardElementType,
+    TextSize,
+    SpacingStyle,
+    ImageSize,
+    TextWeight,
+    ActionType
+} from "../teamsCardTypes";
 
 type CommonnTeamsCardParams = {
     title: string;
@@ -19,19 +28,19 @@ type SectionParams = {
 
 function section({ title, text }: SectionParams): Container {
     return {
-        type: "Container",
-        spacing: "extraLarge",
+        type: CardElementType.CONTAINER,
+        spacing: SpacingStyle.EXTRA_LARGE,
         items: [
             ...(title ? [{
-                type: "TextBlock",
+                type: CardElementType.TEXT_BLOCK,
                 text: title,
-                spacing: "none",
-                weight: "bolder"
+                spacing: SpacingStyle.NONE,
+                weight: TextWeight.BOLDER
             } as const] : []),
             {
-                type: "TextBlock",
+                type: CardElementType.TEXT_BLOCK,
                 text,
-                spacing: "none"
+                spacing: SpacingStyle.NONE
             }
         ]
     };
@@ -51,34 +60,33 @@ export function commonTeamsCard({
         version: "1.2",
         body: [
             {
-                type: "TextBlock",
+                type: CardElementType.TEXT_BLOCK,
                 text: title,
-                size: "large",
-                weight: "bolder"
+                size: TextSize.LARGE,
+                weight: TextWeight.BOLDER
             },
             {
-                type: "TextBlock",
+                type: CardElementType.TEXT_BLOCK,
                 text,
                 wrap: true,
-                spacing: "small"
+                spacing: SpacingStyle.SMALL
             },
             section({ title: sectionTitle, text: sectionText }),
             ...(images.length > 0 ? [{
-                type: "ImageSet",
-                spacing: "extraLarge",
-                imageSize: "large",
+                type: CardElementType.IMAGE_SET,
+                spacing: SpacingStyle.EXTRA_LARGE,
+                imageSize: ImageSize.LARGE,
                 images: images.map(image => ({
-                    type: "Image",
-                    url: image,
-                    size: "Large"
+                    type: CardElementType.IMAGE,
+                    url: image
                 } as const)),
                 separator: false
             } as const] : []),
             ...(links.length > 0 ? [{
-                type: "ActionSet",
-                spacing: "extraLarge",
+                type: CardElementType.ACTION_SET,
+                spacing: SpacingStyle.EXTRA_LARGE,
                 actions: links.map(({ title: linkTitle, url }) => ({
-                    type: "Action.OpenUrl",
+                    type: ActionType.OPEN_URL,
                     title: linkTitle,
                     url
                 } as const))

@@ -42,8 +42,7 @@ exports[`commonTeamsCard should match snapshot when rendered with all elements 1
       "images": [
         {
           "type": "Image",
-          "url": "http://placehold.it/160",
-          "size": "Large"
+          "url": "http://placehold.it/160"
         }
       ],
       "separator": false
@@ -110,8 +109,7 @@ exports[`commonTeamsCard should match snapshot when rendered with images 1`] = `
       "images": [
         {
           "type": "Image",
-          "url": "http://placehold.it/400",
-          "size": "Large"
+          "url": "http://placehold.it/400"
         }
       ],
       "separator": false
