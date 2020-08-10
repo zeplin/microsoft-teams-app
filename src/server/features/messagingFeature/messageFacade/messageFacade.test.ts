@@ -102,6 +102,13 @@ describe("messageFacade", () => {
             await expect(() => messageFacade.processJob(exampleJobData)).rejects.toThrow();
         });
 
+        it("should throw error when there isn't any incoming webhook URL for webhook", async () => {
+            jest.spyOn(configurationRepo, "getIncomingWebhookURLForWebhook").mockResolvedValueOnce(null);
+            jest.spyOn(messageJobRepo, "getGroupActiveJobId").mockResolvedValueOnce(exampleJobData.id);
+            jest.spyOn(messageWebhookEventRepo, "getAndRemoveGroupEvents").mockResolvedValueOnce([exampleEvent, exampleEvent]);
+            await expect(() => messageFacade.processJob(exampleJobData)).rejects.toThrow();
+        });
+
         it("should not get and remove events when there isn't job id for the group", async () => {
             jest.spyOn(messageJobRepo, "getGroupActiveJobId").mockResolvedValueOnce(null);
             const getAndRemoveGroupEventsSpy = jest.spyOn(messageWebhookEventRepo, "getAndRemoveGroupEvents").mockResolvedValueOnce([exampleEvent, exampleEvent]);

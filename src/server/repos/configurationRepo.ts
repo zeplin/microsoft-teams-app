@@ -20,7 +20,7 @@ class ConfigurationRepo {
                     incomingWebhookUrl: string;
                 };
             };
-        };
+        } | undefined;
 
         if (partialConfiguration) {
             return partialConfiguration.microsoftTeams.channel.incomingWebhookUrl;

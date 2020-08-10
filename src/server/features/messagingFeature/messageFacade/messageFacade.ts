@@ -19,10 +19,12 @@ class MessageFacade {
             throw new Error(`There isn't any event found for the grouping key ${data.groupingKey}`);
         }
 
-        // eslint-disable-next-line
         const incomingWebhookURLForEvent = await configurationRepo.getIncomingWebhookURLForWebhook(
             pivotEvent.webhookId
         );
+        if (!incomingWebhookURLForEvent) {
+            throw new Error(`There isn't any incoming webhook URL found for webhook: ${pivotEvent.webhookId}`);
+        }
 
         const notificationHandler = getNotificationHandler(pivotEvent.payload.event);
         const message = notificationHandler.getTeamsMessage(events);
