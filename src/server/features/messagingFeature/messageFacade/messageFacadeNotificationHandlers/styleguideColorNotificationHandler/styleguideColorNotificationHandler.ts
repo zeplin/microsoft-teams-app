@@ -32,12 +32,21 @@ type StyleguideColorResource = {
 
 class StyleguideColorNotificationHandler extends NotificationHandler {
     delay = SHORT_DELAY;
-    private getActionText(action: StyleguideColorEventDescriptor["action"]): string {
-        if (action === "created") {
-            return "added";
-        }
-
-        return "updated";
+    private getText(events: WebhookEvent<StyleguideColorEventPayload>[]): string {
+        const [{
+            payload: {
+                action,
+                resource: {
+                    data: {
+                        name: pivotColorName
+                    }
+                }
+            }
+        }] = events;
+        const actionText = action === "created" ? "added" : "updated";
+        return events.length === 1
+            ? `**${pivotColorName}** is ${actionText}! 🏃‍♂`
+            : `**${events.length} new colors** are ${actionText}! 🏃‍♂`;
     }
 
     private getWebappURL(
@@ -76,26 +85,17 @@ class StyleguideColorNotificationHandler extends NotificationHandler {
     getTeamsMessage(
         events: WebhookEvent<StyleguideColorEventPayload>[]
     ): AdaptiveCard {
-        const [pivotEvent] = events;
-        const {
+        const [{
             payload: {
-                action,
                 context: {
                     styleguide: { name: styleguideName }
-                },
-                resource: {
-                    data: {
-                        name: pivotColorName
-                    }
                 }
             }
-        } = pivotEvent;
+        }] = events;
 
         return commonTeamsCard({
             title: styleguideName,
-            text: events.length === 1
-                ? `**${pivotColorName}** is ${this.getActionText(action)}! 🏃‍♂`
-                : `**${events.length} new colors** are ${this.getActionText(action)}! 🏃‍♂`,
+            text: this.getText(events),
             sectionText: "Make sure your stylesheets are up to date!",
             links: [{
                 title: "Open in Web",
