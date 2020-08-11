@@ -93,6 +93,6 @@ jobs:
 
       - name: Deploy
         run: >
-          aws opsworks --region $AWS_REGION create-deployment --stack-id $AWS_STACK_ID --layer-ids $AWS_LAYER_ID --app-id $AWS_APP_ID --command "{\"Name\":\"deploy\"}" --custom-json "{\"zeplin\": {\"app_shortname\":\"microsoft_teams_app\"}}"
+          aws opsworks --region $AWS_REGION create-deployment --stack-id $AWS_STACK_ID --layer-ids $AWS_LAYER_ID --app-id $AWS_APP_ID --command "{\"Name\":\"deploy\"}" --custom-json "{\"zeplin\": {\"app_shortname\":\"zeplin_microsoft_teams_app\"}}"
 
 
