@@ -14,7 +14,9 @@ type Resource = {
 
 export enum EventType {
     PROJECT_COLOR = "project.color",
-    STYLEGUIDE_COLOR = "styleguide.color"
+    PROJECT_SPACING_TOKEN = "project.spacing_token",
+    STYLEGUIDE_COLOR = "styleguide.color",
+    STYLEGUIDE_SPACING_TOKEN = "styleguide.spacing_token"
 }
 
 export interface ProjectContext {
