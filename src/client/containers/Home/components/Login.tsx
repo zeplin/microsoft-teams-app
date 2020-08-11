@@ -21,17 +21,14 @@ export const Login: FunctionComponent<LoginProps> = ({ onTokenReceive }) => (
         </Flex>
         <div>
             <Button
+                content="Log in Zeplin"
                 onClick={(): void => {
                     microsoftTeams.authentication.authenticate({
                         height: 476,
                         successCallback: onTokenReceive,
                         url: `${BASE_URL}/api/auth/authorize`
                     });
-                }}>
-                <Text weight="semibold">
-                    Log in Zeplin
-                </Text>
-            </Button>
+                }} />
         </div>
     </Flex>
 );
