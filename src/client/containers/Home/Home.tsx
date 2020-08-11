@@ -1,63 +1,68 @@
 import React, {
-    FunctionComponent, useEffect, useRef, useState
+    FunctionComponent, Reducer, useEffect, useReducer
 } from "react";
 import * as microsoftTeams from "@microsoft/teams-js";
-import { Provider, Flex, Input } from "@fluentui/react-northstar";
-import { BASE_URL } from "../../config";
+import { Loader } from "@fluentui/react-northstar";
+import { Login } from "./components";
+
+enum Status {
+    LOADING,
+    LOGIN,
+    CONFIGURATION
+}
+
+enum ActionType {
+    COMPLETE_LOADING,
+    GET_TOKEN
+}
+
+type State = {
+    status: Status.LOADING | Status.LOGIN;
+} | {
+    status: Status.CONFIGURATION;
+    accessToken: string;
+}
+
+type Action = {
+    type: ActionType.COMPLETE_LOADING;
+} | {
+    type: ActionType.GET_TOKEN;
+    value: string;
+}
+
+const reducer: Reducer<State, Action> = (state, action) => {
+    switch (action.type) {
+        case ActionType.COMPLETE_LOADING:
+            return { status: Status.LOGIN };
+        case ActionType.GET_TOKEN:
+            return { status: Status.CONFIGURATION, accessToken: action.value };
+        default:
+            throw new Error();
+    }
+};
 
 export const Home: FunctionComponent = () => {
-    const [input, setInput] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
-
-    /**
-     * Workaround: microsoftTeams.settings.registerOnSaveHandler have to be called only once.
-     * When the variable `input` is dependency of the useEffect of register functions, then the sdk produce error
-     * For more info: https://reactjs.org/docs/hooks-faq.html#how-to-read-an-often-changing-value-from-usecallback
-     */
-    const inputRef = useRef(input);
-
-    useEffect(() => {
-        inputRef.current = input;
-    }, [input]);
+    const [state, dispatch] = useReducer(reducer, { status: Status.LOADING });
 
     useEffect(() => {
         microsoftTeams.initialize(() => {
             microsoftTeams.appInitialization.notifySuccess();
-            microsoftTeams.settings.getSettings(({ entityId }) => {
-                setInput(entityId || "");
-                setIsLoading(false);
-            });
-        });
-
-        microsoftTeams.settings.registerOnSaveHandler(event => {
-            const settings = {
-                entityId: inputRef.current,
-                contentUrl: `${BASE_URL}/?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}`,
-                configName: inputRef.current
-            };
-            microsoftTeams.settings.setSettings(settings);
-            event.notifySuccess();
-        });
-
-        microsoftTeams.settings.registerOnRemoveHandler(event => {
-            event.notifySuccess();
+            dispatch({ type: ActionType.COMPLETE_LOADING });
         });
     }, []);
 
-    return (
-        <Provider>
-            <Flex fill={true}>
-                <Flex.Item>
-                    <Input
-                        disabled={isLoading}
-                        value={input}
-                        onChange={(ignore, { value }): void => {
-                            setInput(value);
-                            microsoftTeams.settings.setValidityState(Boolean(value));
-                        }}
-                    />
-                </Flex.Item>
-            </Flex>
-        </Provider>
-    );
+    switch (state.status) {
+        case Status.LOADING:
+            return <Loader id="loader-home"/>;
+        case Status.LOGIN:
+            return <Login onTokenReceive={(value): void => dispatch({ type: ActionType.GET_TOKEN, value })} />;
+        case Status.CONFIGURATION:
+            return (
+                <div>
+                    {state.accessToken}
+                </div>
+            );
+        default:
+            throw new Error();
+    }
 };

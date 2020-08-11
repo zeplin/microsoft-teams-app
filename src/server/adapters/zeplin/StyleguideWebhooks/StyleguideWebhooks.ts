@@ -36,7 +36,7 @@ export class StyleguideWebhooks {
         }: StyleguideWebhookCreateParameter
 
     ): Promise<string> {
-        return this.requester.post(
+        return this.requester.createResource(
             `/styleguides/${styleguideId}/webhooks`,
             body,
             {
