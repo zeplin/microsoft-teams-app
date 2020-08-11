@@ -21,6 +21,7 @@ export const Login: FunctionComponent<LoginProps> = ({ onTokenReceive }) => (
             <Button
                 onClick={(): void => {
                     microsoftTeams.authentication.authenticate({
+                        height: 476,
                         successCallback: onTokenReceive,
                         url: `${BASE_URL}/api/auth/authorize`
                     });
