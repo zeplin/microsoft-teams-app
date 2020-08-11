@@ -8,13 +8,7 @@ exports[`projectColorNotificationHandler getTeamsMessage method for created noti
   "body": [
     {
       "type": "TextBlock",
-      "text": "projectName",
-      "size": "large",
-      "weight": "bolder"
-    },
-    {
-      "type": "TextBlock",
-      "text": "**2 new colors** are added! 🏃‍♂",
+      "text": "**2 new colors** are added in _projectName_! 🏃‍♂",
       "wrap": true,
       "spacing": "small"
     },
@@ -35,13 +29,13 @@ exports[`projectColorNotificationHandler getTeamsMessage method for created noti
       "actions": [
         {
           "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&cid=anotherColorId"
+          "title": "Open in App",
+          "url": "zpl://colors?pid=projectId&cids=colorId,anotherColorId"
         },
         {
           "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://colors?pid=projectId&cids=colorId,anotherColorId"
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&cid=anotherColorId"
         }
       ]
     }
@@ -57,13 +51,7 @@ exports[`projectColorNotificationHandler getTeamsMessage method for created noti
   "body": [
     {
       "type": "TextBlock",
-      "text": "projectName",
-      "size": "large",
-      "weight": "bolder"
-    },
-    {
-      "type": "TextBlock",
-      "text": "**colorName** is added! 🏃‍♂",
+      "text": "**colorName** is added in _projectName_! 🏃‍♂",
       "wrap": true,
       "spacing": "small"
     },
@@ -84,13 +72,13 @@ exports[`projectColorNotificationHandler getTeamsMessage method for created noti
       "actions": [
         {
           "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId"
+          "title": "Open in App",
+          "url": "zpl://colors?pid=projectId&cids=colorId"
         },
         {
           "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://colors?pid=projectId&cids=colorId"
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId"
         }
       ]
     }
@@ -106,13 +94,7 @@ exports[`projectColorNotificationHandler getTeamsMessage method for updated noti
   "body": [
     {
       "type": "TextBlock",
-      "text": "projectName",
-      "size": "large",
-      "weight": "bolder"
-    },
-    {
-      "type": "TextBlock",
-      "text": "**2 new colors** are updated! 🏃‍♂",
+      "text": "**2 new colors** are updated in _projectName_! 🏃‍♂",
       "wrap": true,
       "spacing": "small"
     },
@@ -133,13 +115,13 @@ exports[`projectColorNotificationHandler getTeamsMessage method for updated noti
       "actions": [
         {
           "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&cid=anotherColorId"
+          "title": "Open in App",
+          "url": "zpl://colors?pid=projectId&cids=colorId,anotherColorId"
         },
         {
           "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://colors?pid=projectId&cids=colorId,anotherColorId"
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&cid=anotherColorId"
         }
       ]
     }
@@ -155,13 +137,7 @@ exports[`projectColorNotificationHandler getTeamsMessage method for updated noti
   "body": [
     {
       "type": "TextBlock",
-      "text": "projectName",
-      "size": "large",
-      "weight": "bolder"
-    },
-    {
-      "type": "TextBlock",
-      "text": "**colorName** is updated! 🏃‍♂",
+      "text": "**colorName** is updated in _projectName_! 🏃‍♂",
       "wrap": true,
       "spacing": "small"
     },
@@ -182,13 +158,13 @@ exports[`projectColorNotificationHandler getTeamsMessage method for updated noti
       "actions": [
         {
           "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId"
+          "title": "Open in App",
+          "url": "zpl://colors?pid=projectId&cids=colorId"
         },
         {
           "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://colors?pid=projectId&cids=colorId"
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId"
         }
       ]
     }
