@@ -1,4 +1,4 @@
-import { WebhookEvent } from "../../messageTypes";
+import { WebhookEvent } from "../../messagingTypes";
 import { redis } from "../../../../adapters";
 
 function getRedisKey(groupingKey: string): string {

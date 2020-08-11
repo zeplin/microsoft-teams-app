@@ -1,12 +1,13 @@
 import { messageWebhookEventRepo } from "./messageWebhookEventRepo";
 import { redis } from "../../../../adapters";
+import { WebhookEvent } from "../../messagingTypes";
 
 const exampleGroupingKey = "example-grouping-key";
 const exampleEvent = {
     webhookId: "webhook-id",
     deliveryId: "deliveryId",
     payload: {}
-};
+} as WebhookEvent;
 
 describe("messageWebhookEventRepo", () => {
     describe("addEventToGroup function", () => {

@@ -3,5 +3,6 @@ module.exports = {
     collectCoverageFrom: [
         "<rootDir>/**/*.ts",
         "!<rootDir>/test/**/*.ts"
-    ]
+    ],
+    snapshotSerializers: ["<rootDir>/test/helpers/adaptiveCardSerializer.ts"]
 };

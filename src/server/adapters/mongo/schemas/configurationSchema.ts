@@ -32,6 +32,10 @@ export const configurationSchema = new Schema({
             url: {
                 type: String,
                 required: true
+            },
+            incomingWebhookUrl: {
+                type: String,
+                required: true
             }
         },
         groupId: {
