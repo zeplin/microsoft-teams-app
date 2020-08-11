@@ -22,7 +22,7 @@ export const Login: FunctionComponent<LoginProps> = ({ onTokenReceive }) => (
                 onClick={(): void => {
                     microsoftTeams.authentication.authenticate({
                         successCallback: onTokenReceive,
-                        url: `${BASE_URL}/zeplin/auth/start`
+                        url: `${BASE_URL}/api/auth/authorize`
                     });
                 }}>
                 Log in Zeplin
