@@ -8,13 +8,16 @@ interface LoginProps {
 }
 
 export const Login: FunctionComponent<LoginProps> = ({ onTokenReceive }) => (
-    <Flex fill column gap="gap.small" styles={{ padding: "60px" }}>
-        <Text size="large" content="One more step before finishing connection" weight="semibold" />
+    <Flex fill column gap="gap.large">
+        <div />
         <Flex fill column gap="gap.medium">
+            <Text size="large" content="One more step before finishing connection" weight="semibold" />
             <Text>
                 Once proceeding, we will ask you to authorize Microsoft Teams access through a separate window. Once
                 it’s authorized, you can do more advanced settings on the Teams channel linked with Zeplin.
             </Text>
+        </Flex>
+        <div>
             <Button
                 onClick={(): void => {
                     microsoftTeams.authentication.authenticate({
@@ -24,6 +27,6 @@ export const Login: FunctionComponent<LoginProps> = ({ onTokenReceive }) => (
                 }}>
                 Log in Zeplin
             </Button>
-        </Flex>
+        </div>
     </Flex>
 );
