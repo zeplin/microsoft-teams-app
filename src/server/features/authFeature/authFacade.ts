@@ -6,7 +6,7 @@ const REDIRECT_URI = `${BASE_URL}/zeplin/auth/end`;
 
 class AuthFacade {
     getAuthorizationUrl(): string {
-        return zeplin.auth.getAuthorizeUrl({
+        return zeplin.auth.getAuthorizationUrl({
             query: {
                 redirectUri: REDIRECT_URI,
                 clientId: ZEPLIN_CLIENT_ID

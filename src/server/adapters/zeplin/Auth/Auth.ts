@@ -1,6 +1,6 @@
 import { Requester } from "../requester";
 
-interface AuthAuthorizeUrlGetParameter {
+interface AuthAuthorizationUrlGetParameter {
     query: {
         redirectUri: string;
         clientId: string;
@@ -28,13 +28,13 @@ export class Auth {
         this.requester = requester;
     }
 
-    getAuthorizeUrl(
+    getAuthorizationUrl(
         {
             query: {
                 redirectUri,
                 clientId
             }
-        }: AuthAuthorizeUrlGetParameter
+        }: AuthAuthorizationUrlGetParameter
     ): string {
         return this.requester.getUri({
             url: "/oauth/authorize",

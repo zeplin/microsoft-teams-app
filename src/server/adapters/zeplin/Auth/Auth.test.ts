@@ -26,7 +26,7 @@ describe("Zeplin > auth", () => {
 
     describe("getAuthorizeUrl", () => {
         it("should return authorize url", () => {
-            const url = auth.getAuthorizeUrl({
+            const url = auth.getAuthorizationUrl({
                 query: {
                     clientId: "clientId",
                     redirectUri: "http://redirect.url.com"
