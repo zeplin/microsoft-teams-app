@@ -9,23 +9,28 @@ import { BASE_URL } from "../../config";
 export const ZeplinAuthEnd: FunctionComponent = () => {
     const {
         query: {
-            code
+            code,
+            error
         }
     } = useRouter();
 
     useEffect(() => {
-        microsoftTeams.initialize(async () => {
-            try {
-                const { data: { accessToken } } = await Axios.post(`${BASE_URL}/api/auth/token`, { code });
-                microsoftTeams.authentication.notifySuccess(accessToken);
-            } catch (error) {
-                if (error.response) {
-                    microsoftTeams.authentication.notifyFailure(error.response.data.message);
-                } else {
-                    microsoftTeams.authentication.notifyFailure(error?.message ?? String(error));
+        if (error) {
+            microsoftTeams.authentication.notifyFailure(String(error));
+        } else {
+            microsoftTeams.initialize(async () => {
+                try {
+                    const { data: { accessToken } } = await Axios.post(`${BASE_URL}/api/auth/token`, { code });
+                    microsoftTeams.authentication.notifySuccess(accessToken);
+                } catch (e) {
+                    if (e.response) {
+                        microsoftTeams.authentication.notifyFailure(e.response.data.message);
+                    } else {
+                        microsoftTeams.authentication.notifyFailure(e?.message ?? String(e));
+                    }
                 }
-            }
-        });
+            });
+        }
     }, []);
 
     return <Loader />;
