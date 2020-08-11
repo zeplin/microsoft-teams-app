@@ -7,15 +7,19 @@ export class Requester {
         this.instance = axios.create(config);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    private throwZeplinError(error: any): never {
+        if (error.response) {
+            throw new ZeplinError(error.response.data.message, { statusCode: error.response.status });
+        }
+        throw new ZeplinError(error?.message ?? String(error));
+    }
+
     async delete(url: string, config?: AxiosRequestConfig): Promise<void> {
         try {
             await this.instance.delete(url, config);
         } catch (error) {
-            if (error.response) {
-                throw new ZeplinError(error.response.data.message, { statusCode: error.response.status });
-            } else {
-                throw new ZeplinError(error?.message ?? String(error));
-            }
+            this.throwZeplinError(error);
         }
     }
 
@@ -24,11 +28,7 @@ export class Requester {
             const { data } = await this.instance.get<T>(url, config);
             return data;
         } catch (error) {
-            if (error.response) {
-                throw new ZeplinError(error.response.data.message, { statusCode: error.response.status });
-            } else {
-                throw new ZeplinError(error?.message ?? String(error));
-            }
+            this.throwZeplinError(error);
         }
     }
 
@@ -36,24 +36,29 @@ export class Requester {
         try {
             await this.instance.patch(url, data, config);
         } catch (error) {
-            if (error.response) {
-                throw new ZeplinError(error.response.data.message, { statusCode: error.response.status });
-            } else {
-                throw new ZeplinError(error?.message ?? String(error));
-            }
+            this.throwZeplinError(error);
         }
     }
 
-    async post(url: string, data: object, config?: AxiosRequestConfig): Promise<string> {
+    async createResource(url: string, data: object, config?: AxiosRequestConfig): Promise<string> {
         try {
             const { data: { id } } = await this.instance.post<{ id: string }>(url, data, config);
             return id;
         } catch (error) {
-            if (error.response) {
-                throw new ZeplinError(error.response.data.message, { statusCode: error.response.status });
-            } else {
-                throw new ZeplinError(error?.message ?? String(error));
-            }
+            this.throwZeplinError(error);
         }
+    }
+
+    async post<T = object>(url: string, data: object, config?: AxiosRequestConfig): Promise<T> {
+        try {
+            const { data: result } = await this.instance.post<T>(url, data, config);
+            return result;
+        } catch (error) {
+            this.throwZeplinError(error);
+        }
+    }
+
+    getUri(config?: AxiosRequestConfig): string {
+        return `${this.instance.defaults.baseURL}${this.instance.getUri(config)}`;
     }
 }

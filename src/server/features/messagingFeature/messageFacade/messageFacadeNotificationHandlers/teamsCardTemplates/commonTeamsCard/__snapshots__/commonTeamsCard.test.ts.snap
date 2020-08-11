@@ -75,12 +75,6 @@ exports[`commonTeamsCard should match snapshot when rendered with images 1`] = `
   "body": [
     {
       "type": "TextBlock",
-      "text": "title",
-      "size": "large",
-      "weight": "bolder"
-    },
-    {
-      "type": "TextBlock",
       "text": "text",
       "wrap": true,
       "spacing": "small"
@@ -126,12 +120,6 @@ exports[`commonTeamsCard should match snapshot when rendered with links 1`] = `
   "body": [
     {
       "type": "TextBlock",
-      "text": "title",
-      "size": "large",
-      "weight": "bolder"
-    },
-    {
-      "type": "TextBlock",
       "text": "text",
       "wrap": true,
       "spacing": "small"
@@ -170,12 +158,6 @@ exports[`commonTeamsCard should match snapshot when rendered with only required 
   "body": [
     {
       "type": "TextBlock",
-      "text": "title",
-      "size": "large",
-      "weight": "bolder"
-    },
-    {
-      "type": "TextBlock",
       "text": "text",
       "wrap": true,
       "spacing": "small"
@@ -203,12 +185,6 @@ exports[`commonTeamsCard should match snapshot when rendered with section title 
   "body": [
     {
       "type": "TextBlock",
-      "text": "title",
-      "size": "large",
-      "weight": "bolder"
-    },
-    {
-      "type": "TextBlock",
       "text": "text",
       "wrap": true,
       "spacing": "small"
@@ -223,6 +199,39 @@ exports[`commonTeamsCard should match snapshot when rendered with section title 
           "spacing": "none",
           "weight": "bolder"
         },
+        {
+          "type": "TextBlock",
+          "text": "sectionText",
+          "spacing": "none"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`commonTeamsCard should match snapshot when rendered with title 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "title",
+      "size": "large",
+      "weight": "bolder"
+    },
+    {
+      "type": "TextBlock",
+      "text": "text",
+      "wrap": true,
+      "spacing": "small"
+    },
+    {
+      "type": "Container",
+      "spacing": "extraLarge",
+      "items": [
         {
           "type": "TextBlock",
           "text": "sectionText",

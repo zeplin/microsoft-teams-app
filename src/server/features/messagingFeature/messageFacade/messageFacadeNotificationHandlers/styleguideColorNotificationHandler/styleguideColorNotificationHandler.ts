@@ -36,6 +36,11 @@ class StyleguideColorNotificationHandler extends NotificationHandler {
         const [{
             payload: {
                 action,
+                context: {
+                    styleguide: {
+                        name: styleguideName
+                    }
+                },
                 resource: {
                     data: {
                         name: pivotColorName
@@ -45,8 +50,8 @@ class StyleguideColorNotificationHandler extends NotificationHandler {
         }] = events;
         const actionText = action === "created" ? "added" : "updated";
         return events.length === 1
-            ? `**${pivotColorName}** is ${actionText}! 🏃‍♂`
-            : `**${events.length} new colors** are ${actionText}! 🏃‍♂`;
+            ? `**${pivotColorName}** is ${actionText} in _${styleguideName}_! 🏃‍♂`
+            : `**${events.length} new colors** are ${actionText} in _${styleguideName}_! 🏃‍♂`;
     }
 
     private getWebappURL(
@@ -85,24 +90,15 @@ class StyleguideColorNotificationHandler extends NotificationHandler {
     getTeamsMessage(
         events: WebhookEvent<StyleguideColorEventPayload>[]
     ): AdaptiveCard {
-        const [{
-            payload: {
-                context: {
-                    styleguide: { name: styleguideName }
-                }
-            }
-        }] = events;
-
         return commonTeamsCard({
-            title: styleguideName,
             text: this.getText(events),
             sectionText: "Make sure your stylesheets are up to date!",
             links: [{
-                title: "Open in Web",
-                url: this.getWebappURL(events)
-            }, {
                 title: "Open in App",
                 url: this.getMacAppURL(events)
+            }, {
+                title: "Open in Web",
+                url: this.getWebappURL(events)
             }]
         });
     }

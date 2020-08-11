@@ -36,6 +36,11 @@ class ProjectColorNotificationHandler extends NotificationHandler {
         const [{
             payload: {
                 action,
+                context: {
+                    project: {
+                        name: projectName
+                    }
+                },
                 resource: {
                     data: {
                         name: pivotColorName
@@ -45,8 +50,8 @@ class ProjectColorNotificationHandler extends NotificationHandler {
         }] = events;
         const actionText = action === "created" ? "added" : "updated";
         return events.length === 1
-            ? `**${pivotColorName}** is ${actionText}! 🏃‍♂`
-            : `**${events.length} new colors** are ${actionText}! 🏃‍♂`;
+            ? `**${pivotColorName}** is ${actionText} in _${projectName}_! 🏃‍♂`
+            : `**${events.length} new colors** are ${actionText} in _${projectName}_! 🏃‍♂`;
     }
 
     private getWebappURL(
@@ -85,24 +90,15 @@ class ProjectColorNotificationHandler extends NotificationHandler {
     getTeamsMessage(
         events: WebhookEvent<ProjectColorEventPayload>[]
     ): AdaptiveCard {
-        const [{
-            payload: {
-                context: {
-                    project: { name: projectName }
-                }
-            }
-        }] = events;
-
         return commonTeamsCard({
-            title: projectName,
             text: this.getText(events),
             sectionText: "Make sure your stylesheets are up to date!",
             links: [{
-                title: "Open in Web",
-                url: this.getWebappURL(events)
-            }, {
                 title: "Open in App",
                 url: this.getMacAppURL(events)
+            }, {
+                title: "Open in Web",
+                url: this.getWebappURL(events)
             }]
         });
     }

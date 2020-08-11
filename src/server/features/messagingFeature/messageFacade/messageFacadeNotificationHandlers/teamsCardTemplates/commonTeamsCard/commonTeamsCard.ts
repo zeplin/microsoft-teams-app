@@ -9,8 +9,8 @@ import {
     ActionType
 } from "../teamsCardTypes";
 
-type CommonnTeamsCardParams = {
-    title: string;
+type CommonTeamsCardParams = {
+    title?: string;
     text: string;
     sectionText: string;
     sectionTitle?: string;
@@ -53,18 +53,18 @@ export function commonTeamsCard({
     sectionTitle,
     images = [],
     links = []
-}: CommonnTeamsCardParams): AdaptiveCard {
+}: CommonTeamsCardParams): AdaptiveCard {
     return {
         $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
         type: "AdaptiveCard",
         version: "1.2",
         body: [
-            {
+            ...(title ? [{
                 type: CardElementType.TEXT_BLOCK,
                 text: title,
                 size: TextSize.LARGE,
                 weight: TextWeight.BOLDER
-            },
+            } as const] : []),
             {
                 type: CardElementType.TEXT_BLOCK,
                 text,
