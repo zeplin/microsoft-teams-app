@@ -1,5 +1,4 @@
 import {
-    ResourceType,
     WebhookEvent,
     EventPayload,
     ProjectContext,
@@ -10,24 +9,11 @@ import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, AdaptiveCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
+import { ColorResource } from "../resources";
 
 type ProjectColorEventDescriptor = {
     type: EventType.PROJECT_COLOR;
     action: "created" | "updated";
-};
-
-type ProjectColorResource = {
-    id: string;
-    type: ResourceType.COLOR;
-    data: {
-        id: string;
-        created: number;
-        name: string;
-        r: number;
-        g: number;
-        b: number;
-        a: number;
-    };
 };
 
 class ProjectColorNotificationHandler extends NotificationHandler {
@@ -107,6 +93,6 @@ class ProjectColorNotificationHandler extends NotificationHandler {
 export type ProjectColorEventPayload = EventPayload<
     ProjectColorEventDescriptor,
     ProjectContext,
-    ProjectColorResource
+    ColorResource
 >;
 export const projectColorNotificationHandler = new ProjectColorNotificationHandler();

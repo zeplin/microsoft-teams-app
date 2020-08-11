@@ -1,5 +1,4 @@
 import {
-    ResourceType,
     WebhookEvent,
     EventPayload,
     ProjectContext,
@@ -10,36 +9,11 @@ import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, AdaptiveCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
+import { TextStyleResource } from "../resources/textStyleResource";
 
 type ProjectTextStyleEventDescriptor = {
     type: EventType.PROJECT_TEXT_STYLE;
     action: "created" | "updated";
-};
-
-type ProjectTextStyleResource = {
-    id: string;
-    type: ResourceType.TEXT_STYLE;
-    data: {
-        id: string;
-        created: number;
-        name: string;
-        postscript_name: string;
-        font_family: string;
-        font_size: number;
-        font_weight: number;
-        font_style: string;
-        font_stretch: number;
-        line_height?: number;
-        letter_spacing?: number;
-        text_align?: string;
-        color?: {
-            name?: string;
-            r: number;
-            g: number;
-            b: number;
-            a: number;
-        };
-    };
 };
 
 class ProjectTextStyleNotificationHandler extends NotificationHandler {
@@ -119,6 +93,6 @@ class ProjectTextStyleNotificationHandler extends NotificationHandler {
 export type ProjectTextStyleEventPayload = EventPayload<
     ProjectTextStyleEventDescriptor,
     ProjectContext,
-    ProjectTextStyleResource
+    TextStyleResource
 >;
 export const projectTextStyleNotificationHandler = new ProjectTextStyleNotificationHandler();
