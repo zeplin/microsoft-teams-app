@@ -30,7 +30,7 @@ exports[`projectSpacingTokenNotificationHandler getTeamsMessage method for creat
         {
           "type": "Action.OpenUrl",
           "title": "Open in App",
-          "url": "zpl://spacingTokens?pid=projectId&sptids=spacingTokenId,anotherSpacingTokenId"
+          "url": "zpl://spacing?pid=projectId&sptids=spacingTokenId,anotherSpacingTokenId"
         },
         {
           "type": "Action.OpenUrl",
@@ -73,7 +73,7 @@ exports[`projectSpacingTokenNotificationHandler getTeamsMessage method for creat
         {
           "type": "Action.OpenUrl",
           "title": "Open in App",
-          "url": "zpl://spacingTokens?pid=projectId&sptids=spacingTokenId"
+          "url": "zpl://spacing?pid=projectId&sptids=spacingTokenId"
         },
         {
           "type": "Action.OpenUrl",
@@ -116,7 +116,7 @@ exports[`projectSpacingTokenNotificationHandler getTeamsMessage method for updat
         {
           "type": "Action.OpenUrl",
           "title": "Open in App",
-          "url": "zpl://spacingTokens?pid=projectId&sptids=spacingTokenId,anotherSpacingTokenId"
+          "url": "zpl://spacing?pid=projectId&sptids=spacingTokenId,anotherSpacingTokenId"
         },
         {
           "type": "Action.OpenUrl",
@@ -159,7 +159,7 @@ exports[`projectSpacingTokenNotificationHandler getTeamsMessage method for updat
         {
           "type": "Action.OpenUrl",
           "title": "Open in App",
-          "url": "zpl://spacingTokens?pid=projectId&sptids=spacingTokenId"
+          "url": "zpl://spacing?pid=projectId&sptids=spacingTokenId"
         },
         {
           "type": "Action.OpenUrl",

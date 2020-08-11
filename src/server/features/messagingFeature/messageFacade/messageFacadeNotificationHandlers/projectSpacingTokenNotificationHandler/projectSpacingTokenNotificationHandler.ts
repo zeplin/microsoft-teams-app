@@ -70,7 +70,7 @@ class ProjectSpacingTokenNotificationHandler extends NotificationHandler {
                 }
             }
         }] = events;
-        return `${ZEPLIN_MAC_APP_URL_SCHEME}spacingTokens?pid=${projectId}&sptids=${events.map(event => event.payload.resource.id).join(",")}`;
+        return `${ZEPLIN_MAC_APP_URL_SCHEME}spacing?pid=${projectId}&sptids=${events.map(event => event.payload.resource.id).join(",")}`;
     }
 
     getTeamsMessage(
