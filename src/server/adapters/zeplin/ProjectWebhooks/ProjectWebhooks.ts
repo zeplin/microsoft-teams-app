@@ -35,7 +35,7 @@ export class ProjectWebhooks {
             options: { authToken }
         }: ProjectWebhookCreateParameter
     ): Promise<string> {
-        return this.requester.post(
+        return this.requester.createResource(
             `/projects/${projectId}/webhooks`,
             body,
             {

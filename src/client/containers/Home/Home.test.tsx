@@ -1,7 +1,8 @@
 import React from "react";
 import { Home } from "./Home";
 import * as microsoftTeams from "@microsoft/teams-js";
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent, render, RenderResult } from "@testing-library/react";
+import { Providers } from "../../components";
 
 jest.mock("@microsoft/teams-js", () => ({
     initialize: jest.fn(callback => callback()),
@@ -14,6 +15,9 @@ jest.mock("@microsoft/teams-js", () => ({
         setValidityState: jest.fn(),
         setSettings: jest.fn(),
         getSettings: jest.fn(callback => callback({ entityId: "" }))
+    },
+    authentication: {
+        authenticate: jest.fn(({ successCallback }) => successCallback("accessToken"))
     }
 }));
 
@@ -21,11 +25,19 @@ jest.mock("../../config", () => ({
     BASE_URL: "https://test.com"
 }));
 
+function renderHome(): RenderResult {
+    return render(
+        <Providers>
+            <Home />
+        </Providers>
+    );
+}
+
 describe("Home", () => {
     it("should render initially", () => {
         const spy = jest.spyOn(microsoftTeams, "initialize")
             .mockImplementation(() => undefined);
-        const { container: { firstChild: component } } = render(<Home />);
+        const { container: { firstChild: component } } = renderHome();
         expect(component).toMatchSnapshot();
         spy.mockImplementation(callback => callback());
     });
@@ -33,65 +45,20 @@ describe("Home", () => {
     it("should initialize Microsoft Teams", () => {
         const spy = jest.spyOn(microsoftTeams.appInitialization, "notifySuccess");
 
-        const { container: { firstChild: component } } = render(<Home />);
+        const { container: { firstChild: component } } = renderHome();
+
         expect(component).toMatchSnapshot();
         expect(spy).toBeCalledWith();
     });
 
-    it("should set the validity state on input change", () => {
-        const spy = jest.spyOn(microsoftTeams.settings, "setValidityState");
-        const { container } = render(<Home />);
+    it("should change ui when login flow completed", () => {
+        const spy = jest.spyOn(microsoftTeams.appInitialization, "notifySuccess");
 
-        const input = container.querySelector("input");
+        const { container: { firstChild: component }, getByText } = renderHome();
 
-        expect(input.value).toBe("");
-        fireEvent.change(input, { target: { value: "Good Day" } });
-        expect(input.value).toBe("Good Day");
-        expect(spy).toBeCalledWith(true);
-    });
+        fireEvent.click(getByText("Log in Zeplin"));
 
-    it("should remove successfully", () => {
-        const event = {
-            notifySuccess: jest.fn(),
-            notifyFailure: jest.fn()
-        };
-        const spy = jest.spyOn(microsoftTeams.settings, "registerOnRemoveHandler")
-            .mockImplementation(callback => callback(event));
-
-        render(<Home />);
-
-        expect(event.notifySuccess).toBeCalledWith();
-        expect(event.notifyFailure).not.toBeCalled();
-        spy.mockImplementation();
-    });
-
-    it("should save successfully", () => {
-        const event = {
-            notifySuccess: jest.fn(),
-            notifyFailure: jest.fn()
-        };
-        let saveCallback;
-        const spySaveHandler = jest.spyOn(microsoftTeams.settings, "registerOnSaveHandler")
-            .mockImplementation(callback => {
-                saveCallback = callback;
-            });
-        const spySetSettings = jest.spyOn(microsoftTeams.settings, "setSettings");
-
-        const { container } = render(<Home />);
-        const input = container.querySelector("input");
-
-        fireEvent.change(input, { target: { value: "Good Day" } });
-        expect(input.value).toBe("Good Day");
-        saveCallback(event);
-
-        expect(event.notifySuccess).toBeCalledWith();
-        expect(event.notifyFailure).not.toBeCalled();
-        expect(spySetSettings).toBeCalledWith({
-            configName: "Good Day",
-            contentUrl: "https://test.com/?name={loginHint}&tenant={tid}&group={groupId}&theme={theme}",
-            entityId: "Good Day"
-        });
-
-        spySaveHandler.mockImplementation();
+        expect(component).toMatchSnapshot();
+        expect(spy).toBeCalledWith();
     });
 });
