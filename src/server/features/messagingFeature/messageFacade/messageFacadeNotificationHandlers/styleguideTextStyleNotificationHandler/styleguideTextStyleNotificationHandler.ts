@@ -9,7 +9,7 @@ import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, AdaptiveCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
-import { TextStyleResource } from "../resources/textStyleResource";
+import { TextStyleResource } from "../resources";
 
 type StyleguideTextStyleEventDescriptor = {
     type: EventType.STYLEGUIDE_TEXT_STYLE;
