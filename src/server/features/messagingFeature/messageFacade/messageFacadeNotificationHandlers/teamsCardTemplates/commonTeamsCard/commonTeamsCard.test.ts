@@ -4,7 +4,6 @@ describe("commonTeamsCard", () => {
     it("should match snapshot when rendered with only required elements", () => {
         expect(
             commonTeamsCard({
-                title: "title",
                 text: "text",
                 sectionText: "sectionText"
             })
@@ -14,7 +13,6 @@ describe("commonTeamsCard", () => {
     it("should match snapshot when rendered with section title", () => {
         expect(
             commonTeamsCard({
-                title: "title",
                 text: "text",
                 sectionTitle: "sectionTitle",
                 sectionText: "sectionText"
@@ -25,7 +23,6 @@ describe("commonTeamsCard", () => {
     it("should match snapshot when rendered with images", () => {
         expect(
             commonTeamsCard({
-                title: "title",
                 text: "text",
                 sectionTitle: "sectionTitle",
                 sectionText: "sectionText",
@@ -37,13 +34,22 @@ describe("commonTeamsCard", () => {
     it("should match snapshot when rendered with links", () => {
         expect(
             commonTeamsCard({
-                title: "title",
                 text: "text",
                 sectionText: "sectionText",
                 links: [{
                     title: "Open in me",
                     url: "https://ergun.sh"
                 }]
+            })
+        ).toMatchSnapshot();
+    });
+
+    it("should match snapshot when rendered with title", () => {
+        expect(
+            commonTeamsCard({
+                title: "title",
+                text: "text",
+                sectionText: "sectionText"
             })
         ).toMatchSnapshot();
     });
