@@ -7,13 +7,8 @@ export abstract class NotificationHandler {
     getGroupingKey(event: WebhookEvent): string {
         const {
             event: eventType,
-            action,
-            actor: {
-                user: {
-                    id: userId
-                }
-            }
+            action
         } = event.payload;
-        return `${event.webhookId}:${eventType}:${action}:${userId}`;
+        return `${event.webhookId}:${eventType}:${action}`;
     }
 }
