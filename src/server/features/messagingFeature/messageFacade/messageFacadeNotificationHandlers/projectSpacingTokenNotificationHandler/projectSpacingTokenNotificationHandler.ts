@@ -9,16 +9,16 @@ import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, AdaptiveCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
-import { ColorResource } from "../resources";
+import { SpacingTokenResource } from "../resources";
 
-type ProjectColorEventDescriptor = {
-    type: EventType.PROJECT_COLOR;
+type ProjectSpacingTokenEventDescriptor = {
+    type: EventType.PROJECT_SPACING_TOKEN;
     action: "created" | "updated";
 };
 
-class ProjectColorNotificationHandler extends NotificationHandler {
+class ProjectSpacingTokenNotificationHandler extends NotificationHandler {
     delay = SHORT_DELAY;
-    private getText(events: WebhookEvent<ProjectColorEventPayload>[]): string {
+    private getText(events: WebhookEvent<ProjectSpacingTokenEventPayload>[]): string {
         const [{
             payload: {
                 action,
@@ -29,19 +29,19 @@ class ProjectColorNotificationHandler extends NotificationHandler {
                 },
                 resource: {
                     data: {
-                        name: pivotColorName
+                        name: pivotSpacingTokenName
                     }
                 }
             }
         }] = events;
         const actionText = action === "created" ? "added" : "updated";
         return events.length === 1
-            ? `**${pivotColorName}** is ${actionText} in _${projectName}_! 🏃‍♂`
-            : `**${events.length} new colors** are ${actionText} in _${projectName}_! 🏃‍♂`;
+            ? `**${pivotSpacingTokenName}** is ${actionText} in _${projectName}_! 🏃‍♂`
+            : `**${events.length} spacing tokens** are ${actionText} in _${projectName}_! 🏃‍♂`;
     }
 
     private getWebappURL(
-        events: WebhookEvent<ProjectColorEventPayload>[]
+        events: WebhookEvent<ProjectSpacingTokenEventPayload>[]
     ): string {
         const [{
             payload: {
@@ -53,13 +53,13 @@ class ProjectColorNotificationHandler extends NotificationHandler {
             }
         }] = events;
         const webappURL = new URL(ZEPLIN_WEB_APP_BASE_URL);
-        webappURL.pathname = `project/${projectId}/styleguide/colors`;
-        events.forEach(event => webappURL.searchParams.append("cid", event.payload.resource.id));
+        webappURL.pathname = `project/${projectId}/styleguide/spacing`;
+        events.forEach(event => webappURL.searchParams.append("sptid", event.payload.resource.id));
         return webappURL.toString();
     }
 
     private getMacAppURL(
-        events: WebhookEvent<ProjectColorEventPayload>[]
+        events: WebhookEvent<ProjectSpacingTokenEventPayload>[]
     ): string {
         const [{
             payload: {
@@ -70,7 +70,7 @@ class ProjectColorNotificationHandler extends NotificationHandler {
                 }
             }
         }] = events;
-        return `${ZEPLIN_MAC_APP_URL_SCHEME}colors?pid=${projectId}&cids=${events.map(event => event.payload.resource.id).join(",")}`;
+        return `${ZEPLIN_MAC_APP_URL_SCHEME}spacing?pid=${projectId}&sptids=${events.map(event => event.payload.resource.id).join(",")}`;
     }
 
     shouldHandleEvent(event: WebhookEvent): boolean {
@@ -78,7 +78,7 @@ class ProjectColorNotificationHandler extends NotificationHandler {
     }
 
     getTeamsMessage(
-        events: WebhookEvent<ProjectColorEventPayload>[]
+        events: WebhookEvent<ProjectSpacingTokenEventPayload>[]
     ): AdaptiveCard {
         return commonTeamsCard({
             text: this.getText(events),
@@ -94,9 +94,9 @@ class ProjectColorNotificationHandler extends NotificationHandler {
     }
 }
 
-export type ProjectColorEventPayload = EventPayload<
-    ProjectColorEventDescriptor,
+export type ProjectSpacingTokenEventPayload = EventPayload<
+    ProjectSpacingTokenEventDescriptor,
     ProjectContext,
-    ColorResource
+    SpacingTokenResource
 >;
-export const projectColorNotificationHandler = new ProjectColorNotificationHandler();
+export const projectSpacingTokenNotificationHandler = new ProjectSpacingTokenNotificationHandler();
