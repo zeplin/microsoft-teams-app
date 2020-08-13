@@ -73,6 +73,10 @@ class ProjectTextStyleNotificationHandler extends NotificationHandler {
         return `${ZEPLIN_MAC_APP_URL_SCHEME}textStyles?pid=${projectId}&tsids=${events.map(event => event.payload.resource.id).join(",")}`;
     }
 
+    shouldHandleEvent(event: WebhookEvent): boolean {
+        return event.payload.action !== "deleted";
+    }
+
     getTeamsMessage(
         events: WebhookEvent<ProjectTextStyleEventPayload>[]
     ): AdaptiveCard {
