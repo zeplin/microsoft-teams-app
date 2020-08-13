@@ -3,7 +3,7 @@ import { NotificationHandler } from "./NotificationHandler";
 import { EventType } from "../../messagingTypes";
 import { styleguideColorNotificationHandler } from "./styleguideColorNotificationHandler";
 import { projectNoteNotificationHandler } from "./projectNoteNotificationHandler";
-import { projectNoteCommentNotificationHandler } from "./projectNoteReplyNotificationHandler";
+import { projectNoteCommentNotificationHandler } from "./projectNoteCommentNotificationHandler";
 import { projectTextStyleNotificationHandler } from "./projectTextStyleNotificationHandler";
 import { styleguideTextStyleNotificationHandler } from "./styleguideTextStyleNotificationHandler";
 import { projectSpacingTokenNotificationHandler } from "./projectSpacingTokenNotificationHandler";
