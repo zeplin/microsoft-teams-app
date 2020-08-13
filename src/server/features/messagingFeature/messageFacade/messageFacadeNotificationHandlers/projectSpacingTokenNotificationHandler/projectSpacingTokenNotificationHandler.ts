@@ -73,6 +73,10 @@ class ProjectSpacingTokenNotificationHandler extends NotificationHandler {
         return `${ZEPLIN_MAC_APP_URL_SCHEME}spacing?pid=${projectId}&sptids=${events.map(event => event.payload.resource.id).join(",")}`;
     }
 
+    shouldHandleEvent(event: WebhookEvent): boolean {
+        return event.payload.action !== "deleted";
+    }
+
     getTeamsMessage(
         events: WebhookEvent<ProjectSpacingTokenEventPayload>[]
     ): AdaptiveCard {
