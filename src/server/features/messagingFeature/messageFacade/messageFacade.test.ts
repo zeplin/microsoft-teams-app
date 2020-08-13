@@ -55,6 +55,7 @@ const exampleJobData = {
 const mockNotificationHandler = {
     delay: expectedDelay,
     getGroupingKey: jest.fn().mockReturnValue(expectedGroupingKey),
+    shouldHandleEvent: jest.fn().mockReturnValue(true),
     getTeamsMessage: jest.fn().mockReturnValue({
         text: "gol"
     })
@@ -94,6 +95,12 @@ describe("messageFacade", () => {
             }, {
                 delay: expectedDelay
             });
+        });
+
+        it("should not handle event when notificationHandler.shouldReturnEvent returns false", async () => {
+            mockNotificationHandler.shouldHandleEvent.mockReturnValueOnce(false);
+            await messageFacade.handleEventArrived(exampleEvent);
+            expect(mockNotificationHandler.getGroupingKey).not.toBeCalled();
         });
     });
 

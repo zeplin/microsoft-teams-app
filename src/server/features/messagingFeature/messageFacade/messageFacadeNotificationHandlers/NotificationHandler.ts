@@ -4,16 +4,12 @@ import { AdaptiveCard } from "./teamsCardTemplates";
 export abstract class NotificationHandler {
     abstract get delay(): number;
     abstract getTeamsMessage(events: WebhookEvent[]): AdaptiveCard;
+    abstract shouldHandleEvent(event: WebhookEvent): boolean;
     getGroupingKey(event: WebhookEvent): string {
         const {
             event: eventType,
-            action,
-            actor: {
-                user: {
-                    id: userId
-                }
-            }
+            action
         } = event.payload;
-        return `${event.webhookId}:${eventType}:${action}:${userId}`;
+        return `${event.webhookId}:${eventType}:${action}`;
     }
 }

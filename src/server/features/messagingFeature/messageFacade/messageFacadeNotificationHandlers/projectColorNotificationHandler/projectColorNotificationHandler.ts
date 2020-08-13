@@ -73,6 +73,10 @@ class ProjectColorNotificationHandler extends NotificationHandler {
         return `${ZEPLIN_MAC_APP_URL_SCHEME}colors?pid=${projectId}&cids=${events.map(event => event.payload.resource.id).join(",")}`;
     }
 
+    shouldHandleEvent(event: WebhookEvent): boolean {
+        return event.payload.action !== "deleted";
+    }
+
     getTeamsMessage(
         events: WebhookEvent<ProjectColorEventPayload>[]
     ): AdaptiveCard {
