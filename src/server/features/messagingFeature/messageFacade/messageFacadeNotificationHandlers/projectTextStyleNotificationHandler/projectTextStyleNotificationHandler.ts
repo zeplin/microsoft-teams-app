@@ -9,16 +9,16 @@ import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, AdaptiveCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
-import { ColorResource } from "../resources";
+import { TextStyleResource } from "../resources";
 
-type ProjectColorEventDescriptor = {
-    type: EventType.PROJECT_COLOR;
+type ProjectTextStyleEventDescriptor = {
+    type: EventType.PROJECT_TEXT_STYLE;
     action: "created" | "updated";
 };
 
-class ProjectColorNotificationHandler extends NotificationHandler {
+class ProjectTextStyleNotificationHandler extends NotificationHandler {
     delay = SHORT_DELAY;
-    private getText(events: WebhookEvent<ProjectColorEventPayload>[]): string {
+    private getText(events: WebhookEvent<ProjectTextStyleEventPayload>[]): string {
         const [{
             payload: {
                 action,
@@ -29,19 +29,19 @@ class ProjectColorNotificationHandler extends NotificationHandler {
                 },
                 resource: {
                     data: {
-                        name: pivotColorName
+                        name: pivotTextStyleName
                     }
                 }
             }
         }] = events;
         const actionText = action === "created" ? "added" : "updated";
         return events.length === 1
-            ? `**${pivotColorName}** is ${actionText} in _${projectName}_! 🏃‍♂`
-            : `**${events.length} new colors** are ${actionText} in _${projectName}_! 🏃‍♂`;
+            ? `**${pivotTextStyleName}** is ${actionText} in _${projectName}_! 🏃‍♂`
+            : `**${events.length} text styles** are ${actionText} in _${projectName}_! 🏃‍♂`;
     }
 
     private getWebappURL(
-        events: WebhookEvent<ProjectColorEventPayload>[]
+        events: WebhookEvent<ProjectTextStyleEventPayload>[]
     ): string {
         const [{
             payload: {
@@ -53,13 +53,13 @@ class ProjectColorNotificationHandler extends NotificationHandler {
             }
         }] = events;
         const webappURL = new URL(ZEPLIN_WEB_APP_BASE_URL);
-        webappURL.pathname = `project/${projectId}/styleguide/colors`;
-        events.forEach(event => webappURL.searchParams.append("cid", event.payload.resource.id));
+        webappURL.pathname = `project/${projectId}/styleguide/textstyles`;
+        events.forEach(event => webappURL.searchParams.append("tsid", event.payload.resource.id));
         return webappURL.toString();
     }
 
     private getMacAppURL(
-        events: WebhookEvent<ProjectColorEventPayload>[]
+        events: WebhookEvent<ProjectTextStyleEventPayload>[]
     ): string {
         const [{
             payload: {
@@ -70,7 +70,7 @@ class ProjectColorNotificationHandler extends NotificationHandler {
                 }
             }
         }] = events;
-        return `${ZEPLIN_MAC_APP_URL_SCHEME}colors?pid=${projectId}&cids=${events.map(event => event.payload.resource.id).join(",")}`;
+        return `${ZEPLIN_MAC_APP_URL_SCHEME}textStyles?pid=${projectId}&tsids=${events.map(event => event.payload.resource.id).join(",")}`;
     }
 
     shouldHandleEvent(event: WebhookEvent): boolean {
@@ -78,7 +78,7 @@ class ProjectColorNotificationHandler extends NotificationHandler {
     }
 
     getTeamsMessage(
-        events: WebhookEvent<ProjectColorEventPayload>[]
+        events: WebhookEvent<ProjectTextStyleEventPayload>[]
     ): AdaptiveCard {
         return commonTeamsCard({
             text: this.getText(events),
@@ -94,9 +94,9 @@ class ProjectColorNotificationHandler extends NotificationHandler {
     }
 }
 
-export type ProjectColorEventPayload = EventPayload<
-    ProjectColorEventDescriptor,
+export type ProjectTextStyleEventPayload = EventPayload<
+    ProjectTextStyleEventDescriptor,
     ProjectContext,
-    ColorResource
+    TextStyleResource
 >;
-export const projectColorNotificationHandler = new ProjectColorNotificationHandler();
+export const projectTextStyleNotificationHandler = new ProjectTextStyleNotificationHandler();
