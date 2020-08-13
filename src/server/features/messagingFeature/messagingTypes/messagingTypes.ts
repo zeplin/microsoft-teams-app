@@ -14,7 +14,8 @@ type Resource = {
 
 export enum EventType {
     PROJECT_COLOR = "project.color",
-    STYLEGUIDE_COLOR = "styleguide.color"
+    STYLEGUIDE_COLOR = "styleguide.color",
+    PROJECT_NOTE = "project.note"
 }
 
 export interface ProjectContext {
@@ -39,6 +40,27 @@ export interface ProjectContext {
         linked_styleguide?: {
             id: string;
         };
+    };
+}
+
+export interface ScreenContext {
+    screen: {
+        id: string;
+        created: number;
+        updated?: number;
+        tags: string[];
+        name: string;
+        image: {
+            width: number;
+            height: number;
+            original_url?: string;
+        };
+        section?: {
+            id: string;
+        };
+        description?: string;
+        number_of_versions: number;
+        number_of_notes: number;
     };
 }
 
@@ -82,6 +104,14 @@ export enum ResourceType {
     SCREEN_NOTE_COMMENT = "ScreenNoteComment"
 }
 
+export type User = {
+    id: string;
+    email: string;
+    username: string;
+    emotar?: string;
+    avatar?: string;
+}
+
 export interface EventPayload<
     E extends EventDescriptor,
     C extends ProjectContext | StyleguideContext,
@@ -93,13 +123,7 @@ export interface EventPayload<
     context: C;
     resource: R;
     actor: {
-        user: {
-            id: string;
-            email: string;
-            username?: string;
-            emotar?: string;
-            avatar?: string;
-        };
+        user: User;
     };
 }
 
