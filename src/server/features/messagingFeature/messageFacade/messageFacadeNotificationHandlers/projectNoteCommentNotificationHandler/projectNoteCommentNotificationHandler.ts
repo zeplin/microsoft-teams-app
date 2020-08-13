@@ -103,6 +103,10 @@ class ProjectNoteCommentNotificationHandler extends NotificationHandler {
         return `${ZEPLIN_MAC_APP_URL_SCHEME}dot?pid=${projectId}&sid=${screenId}&did=${noteId}&cmids=${commentId}`;
     }
 
+    shouldHandleEvent(event: WebhookEvent): boolean {
+        return event.payload.action === "created";
+    }
+
     getGroupingKey(event: WebhookEvent): string {
         return event.deliveryId;
     }

@@ -94,6 +94,10 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
         return `${ZEPLIN_MAC_APP_URL_SCHEME}dot?pid=${projectId}&sid=${screenId}&did=${noteId}`;
     }
 
+    shouldHandleEvent(event: WebhookEvent): boolean {
+        return event.payload.action === "created";
+    }
+
     // A unique grouping key so that it won't be grouped with any other events
     getGroupingKey(event: WebhookEvent): string {
         return event.deliveryId;
