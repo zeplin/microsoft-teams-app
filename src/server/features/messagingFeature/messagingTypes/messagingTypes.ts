@@ -1,5 +1,6 @@
 import { OrganizationSummary } from "./organizationSummary";
 import { RemPreferences } from "./remPreferences";
+import { ScreenNoteResource } from "../messageFacade/messageFacadeNotificationHandlers/resources";
 
 type EventDescriptor = {
     type: EventType;
@@ -15,7 +16,8 @@ type Resource = {
 export enum EventType {
     PROJECT_COLOR = "project.color",
     STYLEGUIDE_COLOR = "styleguide.color",
-    PROJECT_NOTE = "project.note"
+    PROJECT_NOTE = "project.note",
+    PROJECT_NOTE_COMMENT = "project.note.comment"
 }
 
 export interface ProjectContext {
@@ -62,6 +64,10 @@ export interface ScreenContext {
         number_of_versions: number;
         number_of_notes: number;
     };
+}
+
+export interface NoteContext {
+    note: ScreenNoteResource["data"];
 }
 
 export interface StyleguideContext {
