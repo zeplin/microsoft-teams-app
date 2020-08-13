@@ -19,9 +19,11 @@ export enum EventType {
     PROJECT_NOTE_COMMENT = "project.note.comment",
     PROJECT_SPACING_TOKEN = "project.spacing_token",
     PROJECT_TEXT_STYLE = "project.text_style",
+    PROJECT_MEMBER = "project.member",
     STYLEGUIDE_COLOR = "styleguide.color",
     STYLEGUIDE_TEXT_STYLE = "styleguide.text_style",
-    STYLEGUIDE_SPACING_TOKEN = "styleguide.spacing_token"
+    STYLEGUIDE_SPACING_TOKEN = "styleguide.spacing_token",
+    STYLEGUIDE_MEMBER = "styleguide.member",
 }
 
 export interface ProjectContext {
