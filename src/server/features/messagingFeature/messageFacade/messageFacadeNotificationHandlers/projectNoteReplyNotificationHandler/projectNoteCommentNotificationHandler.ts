@@ -18,6 +18,42 @@ type ProjectNoteCommentEventDescriptor = {
 
 class ProjectNoteCommentNotificationHandler extends NotificationHandler {
     delay: 0;
+    private getText(event: WebhookEvent<ProjectNoteCommentEventPayload>): string {
+        const {
+            payload: {
+                context: {
+                    project: {
+                        name: projectName
+                    },
+                    screen: {
+                        name: screenName
+                    },
+                    note: {
+                        order
+                    }
+                },
+                actor: {
+                    user: {
+                        username
+                    }
+                }
+            }
+        } = event;
+        return `**${username}** replied to note _#${order}_ on _${screenName}_ screen in _${projectName}_. 🏃‍♂`;
+    }
+
+    private getSectionText(event: WebhookEvent<ProjectNoteCommentEventPayload>): string {
+        const {
+            payload: {
+                resource: {
+                    data: {
+                        content: commentContent
+                    }
+                }
+            }
+        } = event;
+        return commentContent;
+    }
 
     private getWebappURL(event: WebhookEvent<ProjectNoteCommentEventPayload>): string {
         const {
@@ -45,6 +81,28 @@ class ProjectNoteCommentNotificationHandler extends NotificationHandler {
         return webappURL.toString();
     }
 
+    private getMacAppURL(event: WebhookEvent<ProjectNoteCommentEventPayload>): string {
+        const {
+            payload: {
+                context: {
+                    project: {
+                        id: projectId
+                    },
+                    screen: {
+                        id: screenId
+                    },
+                    note: {
+                        id: noteId
+                    }
+                },
+                resource: {
+                    id: commentId
+                }
+            }
+        } = event;
+        return `${ZEPLIN_MAC_APP_URL_SCHEME}dot?pid=${projectId}&sid=${screenId}&did=${noteId}&cmids=${commentId}`;
+    }
+
     getGroupingKey(event: WebhookEvent): string {
         return event.deliveryId;
     }
@@ -55,42 +113,12 @@ class ProjectNoteCommentNotificationHandler extends NotificationHandler {
         }
 
         const [event] = events;
-        const {
-            payload: {
-                context: {
-                    project: {
-                        id: projectId,
-                        name: projectName
-                    },
-                    screen: {
-                        id: screenId,
-                        name: screenName
-                    },
-                    note: {
-                        id: noteId,
-                        order
-                    }
-                },
-                resource: {
-                    id: commentId,
-                    data: {
-                        content: commentContent
-                    }
-                },
-                actor: {
-                    user: {
-                        username
-                    }
-                }
-            }
-        } = event;
-        const cardText = `**${username}** replied to note _#${order}_ on _${screenName}_ screen in _${projectName}_. 🏃‍♂`;
         return commonTeamsCard({
-            text: cardText,
-            sectionText: commentContent,
+            text: this.getText(event),
+            sectionText: this.getSectionText(event),
             links: [{
                 title: "Open in App",
-                url: `${ZEPLIN_MAC_APP_URL_SCHEME}dot?pid=${projectId}&sid=${screenId}&did=${noteId}&cmids=${commentId}`
+                url: this.getMacAppURL(event)
             }, {
                 title: "Open in Web",
                 url: this.getWebappURL(event)

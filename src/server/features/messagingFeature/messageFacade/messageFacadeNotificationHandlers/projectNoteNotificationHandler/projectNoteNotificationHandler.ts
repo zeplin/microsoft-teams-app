@@ -19,6 +19,40 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
     // We want to send project note events immediately
     delay = 0;
 
+    private getText(event: WebhookEvent<ProjectNoteEventPayload>): string {
+        const {
+            payload: {
+                context: {
+                    project: {
+                        name: projectName
+                    },
+                    screen: {
+                        name: screenName
+                    }
+                },
+                actor: {
+                    user: {
+                        username
+                    }
+                }
+            }
+        } = event;
+        return `**${username}** added a note on _${screenName}_ screen in _${projectName}_. 🏃‍♂`;
+    }
+
+    private getSectionText(event: WebhookEvent<ProjectNoteEventPayload>): string {
+        const {
+            payload: {
+                resource: {
+                    data: {
+                        comments: [{ content: commentContent }]
+                    }
+                }
+            }
+        } = event;
+        return commentContent;
+    }
+
     private getWebappURL(event: WebhookEvent<ProjectNoteEventPayload>): string {
         const {
             payload: {
@@ -41,6 +75,25 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
         return webappURL.toString();
     }
 
+    private getMacAppURL(event: WebhookEvent<ProjectNoteEventPayload>): string {
+        const {
+            payload: {
+                context: {
+                    project: {
+                        id: projectId
+                    },
+                    screen: {
+                        id: screenId
+                    }
+                },
+                resource: {
+                    id: noteId
+                }
+            }
+        } = event;
+        return `${ZEPLIN_MAC_APP_URL_SCHEME}dot?pid=${projectId}&sid=${screenId}&did=${noteId}`;
+    }
+
     // A unique grouping key so that it won't be grouped with any other events
     getGroupingKey(event: WebhookEvent): string {
         return event.deliveryId;
@@ -52,38 +105,12 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
         }
 
         const [event] = events;
-        const {
-            payload: {
-                context: {
-                    project: {
-                        id: projectId,
-                        name: projectName
-                    },
-                    screen: {
-                        id: screenId,
-                        name: screenName
-                    }
-                },
-                resource: {
-                    id: noteId,
-                    data: {
-                        comments: [{ content: commentContent }]
-                    }
-                },
-                actor: {
-                    user: {
-                        username
-                    }
-                }
-            }
-        } = event;
-        const cardText = `**${username}** added a note on _${screenName}_ screen in _${projectName}_. 🏃‍♂`;
         return commonTeamsCard({
-            text: cardText,
-            sectionText: commentContent,
+            text: this.getText(event),
+            sectionText: this.getSectionText(event),
             links: [{
                 title: "Open in App",
-                url: `${ZEPLIN_MAC_APP_URL_SCHEME}dot?pid=${projectId}&sid=${screenId}&did=${noteId}`
+                url: this.getMacAppURL(event)
             }, {
                 title: "Open in Web",
                 url: this.getWebappURL(event)
