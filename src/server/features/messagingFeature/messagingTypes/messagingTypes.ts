@@ -25,6 +25,7 @@ export enum EventType {
     STYLEGUIDE_TEXT_STYLE = "styleguide.text_style",
     STYLEGUIDE_SPACING_TOKEN = "styleguide.spacing_token",
     STYLEGUIDE_MEMBER = "styleguide.member",
+    STYLEGUIDE_COMPONENT = "styleguide.component",
 }
 
 export interface ProjectContext {
