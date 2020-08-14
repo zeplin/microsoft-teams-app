@@ -80,23 +80,6 @@ exports[`commonTeamsCard should match snapshot when rendered with images 1`] = `
       "spacing": "small"
     },
     {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
-        {
-          "type": "TextBlock",
-          "text": "sectionTitle",
-          "spacing": "none",
-          "weight": "bolder"
-        },
-        {
-          "type": "TextBlock",
-          "text": "sectionText",
-          "spacing": "none"
-        }
-      ]
-    },
-    {
       "type": "ImageSet",
       "spacing": "extraLarge",
       "imageSize": "large",
@@ -125,17 +108,6 @@ exports[`commonTeamsCard should match snapshot when rendered with links 1`] = `
       "spacing": "small"
     },
     {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
-        {
-          "type": "TextBlock",
-          "text": "sectionText",
-          "spacing": "none"
-        }
-      ]
-    },
-    {
       "type": "ActionSet",
       "spacing": "extraLarge",
       "actions": [
@@ -161,23 +133,12 @@ exports[`commonTeamsCard should match snapshot when rendered with only required 
       "text": "text",
       "wrap": true,
       "spacing": "small"
-    },
-    {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
-        {
-          "type": "TextBlock",
-          "text": "sectionText",
-          "spacing": "none"
-        }
-      ]
     }
   ]
 }
 `;
 
-exports[`commonTeamsCard should match snapshot when rendered with section title 1`] = `
+exports[`commonTeamsCard should match snapshot when rendered with section 1`] = `
 {
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "type": "AdaptiveCard",
@@ -227,17 +188,6 @@ exports[`commonTeamsCard should match snapshot when rendered with title 1`] = `
       "text": "text",
       "wrap": true,
       "spacing": "small"
-    },
-    {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
-        {
-          "type": "TextBlock",
-          "text": "sectionText",
-          "spacing": "none"
-        }
-      ]
     }
   ]
 }

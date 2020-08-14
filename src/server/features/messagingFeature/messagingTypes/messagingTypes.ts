@@ -1,6 +1,7 @@
 import { OrganizationSummary } from "./organizationSummary";
 import { RemPreferences } from "./remPreferences";
 import { ScreenNoteResource } from "../messageFacade/messageFacadeNotificationHandlers/resources";
+import { ScreenResource } from "../messageFacade/messageFacadeNotificationHandlers/resources/screenResource";
 
 type EventDescriptor = {
     type: EventType;
@@ -20,6 +21,8 @@ export enum EventType {
     PROJECT_SPACING_TOKEN = "project.spacing_token",
     PROJECT_TEXT_STYLE = "project.text_style",
     PROJECT_MEMBER = "project.member",
+    PROJECT_SCREEN = "project.screen",
+    PROJECT_SCREEN_VERSION = "project.screen.version",
     STYLEGUIDE_COLOR = "styleguide.color",
     STYLEGUIDE_TEXT_STYLE = "styleguide.text_style",
     STYLEGUIDE_SPACING_TOKEN = "styleguide.spacing_token",
@@ -52,24 +55,7 @@ export interface ProjectContext {
 }
 
 export interface ScreenContext {
-    screen: {
-        id: string;
-        created: number;
-        updated?: number;
-        tags: string[];
-        name: string;
-        image: {
-            width: number;
-            height: number;
-            original_url?: string;
-        };
-        section?: {
-            id: string;
-        };
-        description?: string;
-        number_of_versions: number;
-        number_of_notes: number;
-    };
+    screen: ScreenResource["data"];
 }
 
 export interface NoteContext {
