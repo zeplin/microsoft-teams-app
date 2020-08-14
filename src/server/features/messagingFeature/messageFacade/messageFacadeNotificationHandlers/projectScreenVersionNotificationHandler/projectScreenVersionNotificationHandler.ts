@@ -91,6 +91,22 @@ class ProjectScreenVersionNotificationHandler extends NotificationHandler {
         return `${ZEPLIN_MAC_APP_URL_SCHEME}project?pid=${projectId}&sids=${events.map(event => event.payload.context.screen.id).join(",")}`;
     }
 
+    getGroupingKey(event: WebhookEvent<ProjectScreenVersionEventPayload>): string {
+        const {
+            webhookId,
+            payload: {
+                event: eventType,
+                action,
+                resource: {
+                    data: {
+                        commit
+                    }
+                }
+            }
+        } = event;
+        return `${webhookId}:${commit?.message}:${eventType}:${action}`;
+    }
+
     getTeamsMessage(events: WebhookEvent<ProjectScreenVersionEventPayload>[]): AdaptiveCard {
         return commonTeamsCard({
             text: this.getText(events),
