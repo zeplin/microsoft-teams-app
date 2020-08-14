@@ -8,7 +8,7 @@ import {
 } from "../../../messagingTypes";
 import { MEDIUM_DELAY } from "../constants";
 import { ScreenResource } from "../resources/screenResource";
-import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "server/config";
+import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 
 const IMAGE_LIMIT = 5;
 
@@ -35,7 +35,9 @@ class ProjectScreenNotificationHandler extends NotificationHandler {
                 }
             }
         }] = events;
-        return `**${screenName}** is added in _${projectName}_! 🏃‍♂️`;
+        return events.length === 1
+            ? `**${screenName}** is added in _${projectName}_! 🏃‍♂️`
+            : `**${events.length} new screens** are added in _${projectName}_! 🏃‍♂`;
     }
 
     private getImages(events: WebhookEvent<ProjectScreenEventPayload>[]): string[] {
