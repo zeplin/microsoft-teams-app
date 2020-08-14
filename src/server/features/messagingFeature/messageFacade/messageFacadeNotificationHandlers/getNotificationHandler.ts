@@ -10,6 +10,7 @@ import { projectSpacingTokenNotificationHandler } from "./projectSpacingTokenNot
 import { styleguideSpacingTokenNotificationHandler } from "./styleguideSpacingTokenNotificationHandler";
 import { projectMemberNotificationHandler } from "./projectMemberNotificationHandler";
 import { styleguideMemberNotificationHandler } from "./styleguideMemberNotificationHandler";
+import { projectScreenNotificationHandler } from "./projectScreenNotificationHandler";
 
 const notificationMap: Record<EventType, NotificationHandler> = {
     [EventType.PROJECT_COLOR]: projectColorNotificationHandler,
@@ -21,7 +22,8 @@ const notificationMap: Record<EventType, NotificationHandler> = {
     [EventType.PROJECT_SPACING_TOKEN]: projectSpacingTokenNotificationHandler,
     [EventType.STYLEGUIDE_SPACING_TOKEN]: styleguideSpacingTokenNotificationHandler,
     [EventType.PROJECT_MEMBER]: projectMemberNotificationHandler,
-    [EventType.STYLEGUIDE_MEMBER]: styleguideMemberNotificationHandler
+    [EventType.STYLEGUIDE_MEMBER]: styleguideMemberNotificationHandler,
+    [EventType.PROJECT_SCREEN]: projectScreenNotificationHandler
 } as const;
 
 export function getNotificationHandler(eventType: EventType): NotificationHandler {
