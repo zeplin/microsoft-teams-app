@@ -84,8 +84,6 @@ class ProjectComponentNotificationHandler extends NotificationHandler {
     getTeamsMessage(events: WebhookEvent<ProjectComponentEventPayload>[]): AdaptiveCard {
         return commonTeamsCard({
             text: this.getText(events),
-            // TODO: Delete after screen PR
-            sectionText: "",
             images: this.getImages(events),
             links: [{
                 title: "Open in App",

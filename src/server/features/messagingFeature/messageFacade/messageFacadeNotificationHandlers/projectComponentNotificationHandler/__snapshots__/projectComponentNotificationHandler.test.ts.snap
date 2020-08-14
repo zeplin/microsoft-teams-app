@@ -13,17 +13,6 @@ exports[`projectComponentNotificationHandler getTeamsMessage method for created 
       "spacing": "small"
     },
     {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
-        {
-          "type": "TextBlock",
-          "text": "",
-          "spacing": "none"
-        }
-      ]
-    },
-    {
       "type": "ImageSet",
       "spacing": "extraLarge",
       "imageSize": "large",
@@ -72,17 +61,6 @@ exports[`projectComponentNotificationHandler getTeamsMessage method for created 
       "spacing": "small"
     },
     {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
-        {
-          "type": "TextBlock",
-          "text": "",
-          "spacing": "none"
-        }
-      ]
-    },
-    {
       "type": "ImageSet",
       "spacing": "extraLarge",
       "imageSize": "large",
@@ -125,17 +103,6 @@ exports[`projectComponentNotificationHandler getTeamsMessage method for version_
       "text": "**2 components** are updated in _projectName_! 🏃‍♂️",
       "wrap": true,
       "spacing": "small"
-    },
-    {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
-        {
-          "type": "TextBlock",
-          "text": "",
-          "spacing": "none"
-        }
-      ]
     },
     {
       "type": "ImageSet",
@@ -184,17 +151,6 @@ exports[`projectComponentNotificationHandler getTeamsMessage method for version_
       "text": "**componentName** is updated in _projectName_! 🏃‍♂️",
       "wrap": true,
       "spacing": "small"
-    },
-    {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
-        {
-          "type": "TextBlock",
-          "text": "",
-          "spacing": "none"
-        }
-      ]
     },
     {
       "type": "ImageSet",
