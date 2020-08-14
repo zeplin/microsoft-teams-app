@@ -22,6 +22,7 @@ export enum EventType {
     PROJECT_TEXT_STYLE = "project.text_style",
     PROJECT_MEMBER = "project.member",
     PROJECT_SCREEN = "project.screen",
+    PROJECT_SCREEN_VERSION = "project.screen.version",
     STYLEGUIDE_COLOR = "styleguide.color",
     STYLEGUIDE_TEXT_STYLE = "styleguide.text_style",
     STYLEGUIDE_SPACING_TOKEN = "styleguide.spacing_token",
