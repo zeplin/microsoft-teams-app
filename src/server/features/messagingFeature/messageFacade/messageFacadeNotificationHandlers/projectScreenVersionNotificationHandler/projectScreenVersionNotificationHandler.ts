@@ -108,9 +108,24 @@ class ProjectScreenVersionNotificationHandler extends NotificationHandler {
     }
 
     getTeamsMessage(events: WebhookEvent<ProjectScreenVersionEventPayload>[]): AdaptiveCard {
+        const [{
+            payload: {
+                resource: {
+                    data: {
+                        commit
+                    }
+                }
+            }
+        }] = events;
         return commonTeamsCard({
             text: this.getText(events),
             images: this.getImages(events),
+            ...(commit?.message ? {
+                section: {
+                    title: "Commit message",
+                    text: commit.message
+                }
+            } : null),
             links: [{
                 title: "Open in App",
                 url: this.getMacAppURL(events)

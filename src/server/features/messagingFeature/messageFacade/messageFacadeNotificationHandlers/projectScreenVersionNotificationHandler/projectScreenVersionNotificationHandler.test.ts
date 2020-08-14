@@ -6,6 +6,7 @@ type GetDummyEventParams = {
     screenId?: string;
     screenName?: string;
     imageUrl?: string;
+    commitMessage?: string;
     timestamp?: number;
 }
 
@@ -13,6 +14,7 @@ function getDummyEvent({
     screenId = "screenId",
     screenName = "screenName",
     imageUrl = "http://placehold.it/200",
+    commitMessage = "",
     timestamp = 1
 }: GetDummyEventParams = {}): WebhookEvent<ProjectScreenVersionEventPayload> {
     return {
@@ -30,6 +32,13 @@ function getDummyEvent({
                 project: {
                     id: "projectId",
                     name: "projectName"
+                }
+            },
+            resource: {
+                data: {
+                    commit: {
+                        message: commitMessage
+                    }
                 }
             }
         }
@@ -59,6 +68,14 @@ describe("projectScreenVersionNotificationHandler", () => {
         it("should match snapshot when there is only one event", () => {
             expect(projectScreenVersionNotificationHandler.getTeamsMessage([
                 getDummyEvent()
+            ])).toMatchSnapshot();
+        });
+
+        it("should match snapshot when there is a commit message for event", () => {
+            expect(projectScreenVersionNotificationHandler.getTeamsMessage([
+                getDummyEvent({
+                    commitMessage: "Commit ettim commit eyledim bu ekranlari guncellemeye."
+                })
             ])).toMatchSnapshot();
         });
 

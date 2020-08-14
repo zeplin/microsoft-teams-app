@@ -48,6 +48,67 @@ exports[`projectScreenVersionNotificationHandler getTeamsMessage should match sn
 }
 `;
 
+exports[`projectScreenVersionNotificationHandler getTeamsMessage should match snapshot when there is a commit message for event 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "**screenName** is updated in _projectName_! 🏃‍♂️",
+      "wrap": true,
+      "spacing": "small"
+    },
+    {
+      "type": "Container",
+      "spacing": "extraLarge",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Commit message",
+          "spacing": "none",
+          "weight": "bolder"
+        },
+        {
+          "type": "TextBlock",
+          "text": "Commit ettim commit eyledim bu ekranlari guncellemeye.",
+          "spacing": "none"
+        }
+      ]
+    },
+    {
+      "type": "ImageSet",
+      "spacing": "extraLarge",
+      "imageSize": "large",
+      "images": [
+        {
+          "type": "Image",
+          "url": "http://placehold.it/200"
+        }
+      ],
+      "separator": false
+    },
+    {
+      "type": "ActionSet",
+      "spacing": "extraLarge",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in App",
+          "url": "zpl://screen?pid=projectId&sid=screenId"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/project/projectId/screen/screenId"
+        }
+      ]
+    }
+  ]
+}
+`;
+
 exports[`projectScreenVersionNotificationHandler getTeamsMessage should match snapshot when there is only one event 1`] = `
 {
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
