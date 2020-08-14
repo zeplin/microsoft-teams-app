@@ -1,11 +1,12 @@
 import { Router as createRouter } from "express";
 import { handleWebhookRequest } from "./messageController";
-import { JSONBodyParser } from "../../middlewares";
+import { handleError, JSONBodyParser } from "../../middlewares";
 
 const messageRouter = createRouter();
 messageRouter.post("/",
     JSONBodyParser,
-    handleWebhookRequest
+    handleWebhookRequest,
+    handleError
 );
 
 export {

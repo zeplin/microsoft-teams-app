@@ -2,10 +2,16 @@ import { Router as createRouter } from "express";
 import Joi from "@hapi/joi";
 
 import { handleAuthorize, handleTokenCreate } from "./authController";
-import { JSONBodyParser, validateRequest } from "../../middlewares";
+import { handleError, JSONBodyParser, validateRequest } from "../../middlewares";
 
 const authRouter = createRouter();
-authRouter.get("/authorize", handleAuthorize);
+
+authRouter.get(
+    "/authorize",
+    handleAuthorize,
+    handleError
+);
+
 authRouter.post(
     "/token",
     JSONBodyParser,
@@ -14,7 +20,8 @@ authRouter.post(
             code: Joi.string()
         })
     }),
-    handleTokenCreate
+    handleTokenCreate,
+    handleError
 );
 
 export {

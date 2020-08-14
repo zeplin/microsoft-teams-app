@@ -3,7 +3,7 @@ import React, {
 } from "react";
 import * as microsoftTeams from "@microsoft/teams-js";
 import { Loader } from "@fluentui/react-northstar";
-import { Login } from "./components";
+import { Login, Configuration } from "./components";
 
 enum Status {
     LOADING,
@@ -50,7 +50,6 @@ export const Home: FunctionComponent = () => {
             dispatch({ type: ActionType.COMPLETE_LOADING });
         });
     }, []);
-
     switch (state.status) {
         case Status.LOADING:
             return <Loader id="loader-home"/>;
@@ -58,9 +57,7 @@ export const Home: FunctionComponent = () => {
             return <Login onTokenReceive={(value): void => dispatch({ type: ActionType.GET_TOKEN, value })} />;
         case Status.CONFIGURATION:
             return (
-                <div>
-                    {state.accessToken}
-                </div>
+                <Configuration accessToken={state.accessToken} />
             );
         default:
             throw new Error();

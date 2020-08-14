@@ -6,8 +6,537 @@ exports[`Home should change ui when login flow completed 1`] = `
   data-uses-unhanded-props="true"
   dir="ltr"
 >
-  <div>
-    accessToken
+  <div
+    class="ui-flex am ao bq br bs"
+    data-uses-unhanded-props="true"
+  >
+    <div />
+    <div
+      class="ui-flex am ao bq br fq"
+      data-uses-unhanded-props="true"
+    >
+      <span
+        class="ui-text bu"
+        data-uses-unhanded-props="true"
+      >
+        You are connecting 
+        <span
+          class="ui-text fr"
+          data-uses-unhanded-props="true"
+        >
+          #
+          channel
+        </span>
+         to Zeplin.
+      </span>
+      <span
+        class="ui-text"
+        data-uses-unhanded-props="true"
+      >
+        Can
+        '
+        t find the project/styleguide to connect to?
+         
+        <a
+          class="ui-text fs ft fu"
+          data-uses-unhanded-props="true"
+          dir="auto"
+          href="https://zpl.io/msteams-app-docs"
+        >
+          Learn more about permissions.
+        </a>
+      </span>
+      <div
+        class="ui-flex am bq br fv"
+        data-uses-unhanded-props="true"
+      >
+        <div
+          class="ui-dropdown fw fx fy"
+        >
+          <div
+            class="ui-dropdown__container am fz bb cp cq cr cs ga gb gc gd ck bq ge gf gg gh gi gj gk cz gl gm gn go gp gq"
+          >
+            <div
+              class="ui-dropdown__selected-items am fz gr gs bq gt"
+            >
+              <button
+                aria-haspopup="true"
+                aria-labelledby="dropdown-trigger-button-1"
+                class="ui-button bx by gu b gv cb cc gw al bb cd gx cf gy ch ci cj ck cl cm cn co cp cq cr cs ga gb gc gd gz ha hb gl gm gn go de hc hd he hf hg hh dl hi hj dm hk hl hm hn ho hp hq hr hs ht hu hv hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in dn do dp dq dr ds dt du dv dw dx dy io ip iq ir ed is ef eg eh ei ej ek el em en eo ep eq er es et it iu iv iw ey ix fb fc fd iy iz fe ff fg fh fi fj fk fl bq ar ja jb jc jd ui-dropdown__trigger-button"
+                data-aa-class="Button"
+                data-toggle="true"
+                data-uses-unhanded-props="true"
+                id="dropdown-trigger-button-1"
+                role="button"
+                type="button"
+              >
+                <span
+                  class="ui-button__content ar fm fn fo bu fp"
+                  data-uses-unhanded-props="true"
+                  dir="auto"
+                >
+                  Select Workspace
+                </span>
+              </button>
+            </div>
+            <div
+              aria-hidden="true"
+              class="ui-box al am an je jf jg ci jh ja jb jc jd ji jj br jk ui-dropdown__toggle-indicator"
+              data-aa-class="Box"
+              data-uses-unhanded-props="true"
+              role="img"
+            />
+            <ul
+              aria-hidden="true"
+              aria-labelledby="downshift-0-label"
+              class="ui-list ba jl cd jm cf jn ja jb jc jd ck cp cq cr cs ge gf gg gh ga gb gc gd jo jp gr bq a jq ui-dropdown__items-list"
+              data-aa-class="List"
+              data-uses-unhanded-props="true"
+              id="downshift-0-menu"
+              role="listbox"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+        <div
+          class="ui-dropdown fw fx fy"
+        >
+          <div
+            class="ui-dropdown__container am fz bb cp cq cr cs jr js jt ju ck bq ge gf gg gh gi jv gk cz jw gq jh jx"
+          >
+            <div
+              class="ui-dropdown__selected-items am fz gr gs bq gt"
+            >
+              <button
+                aria-disabled="true"
+                aria-haspopup="true"
+                aria-labelledby="dropdown-trigger-button-2"
+                class="ui-button bx by gu jy gv cb cc gw al bb cd gx cf gy ch jz cj ck cl cm cn co cp cq cr cs ga gb gc gd gz ha hb gl gm gn go de hc hd he hf hg hh dl hi hj dm hk hl hm hn ho hp hq hr hs ht hu hv hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in dn do dp dq dr ds dt du dv dw dx dy io ip iq ir ed is ef eg eh ei ej ek el em en eo ep eq er es et it iu iv iw ey ix fb fc fd iy iz fe ff fg fh fi fj fk fl ka bq ar ja jb jc jd ui-dropdown__trigger-button"
+                data-aa-class="Button"
+                data-toggle="true"
+                data-uses-unhanded-props="true"
+                disabled=""
+                id="dropdown-trigger-button-2"
+                role="button"
+                type="button"
+              >
+                <span
+                  class="ui-button__content ar fm fn fo bu fp"
+                  data-uses-unhanded-props="true"
+                  dir="auto"
+                >
+                  Select Project/Styleguide
+                </span>
+              </button>
+            </div>
+            <div
+              aria-hidden="true"
+              class="ui-box al am an kb jf jg jz jh ja jb jc jd ji jj br jk ui-dropdown__toggle-indicator"
+              data-aa-class="Box"
+              data-uses-unhanded-props="true"
+              role="img"
+            />
+            <ul
+              aria-hidden="true"
+              aria-labelledby="downshift-1-label"
+              class="ui-list ba jl cd jm cf jn ja jb jc jd ck cp cq cr cs ge gf gg gh ga gb gc gd jo jp gr bq a jq ui-dropdown__items-list"
+              data-aa-class="List"
+              data-uses-unhanded-props="true"
+              id="downshift-1-menu"
+              role="listbox"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="ui-flex am ao bq br bt"
+      data-uses-unhanded-props="true"
+    >
+      <span
+        class="ui-text bu"
+        data-uses-unhanded-props="true"
+        dir="auto"
+      >
+        Select the events you want to get a message for:
+      </span>
+      <div
+        class="ui-flex am bq br fv"
+        data-uses-unhanded-props="true"
+      >
+        <div
+          class="ui-flex am ao bq br kc"
+          data-uses-unhanded-props="true"
+        >
+          <div>
+            <div
+              aria-checked="true"
+              class="ui-checkbox bb kd ke kf ci ck b kg kh ki kj ch kk dm ik il im in dn do dp dq dr ds dt kl km kn ko dy dz ea eb ec ed ee ef eg kp ei ej ek el em en eo kq kr ks kt et eu ev ew ex ey ez fb fc ku cy kv kw kx ky kz"
+              data-aa-class="Checkbox"
+              data-is-focusable="true"
+              data-uses-unhanded-props="true"
+              role="checkbox"
+              tabindex="0"
+            >
+              <div
+                class="ui-box la lb lc ld le lf lg lh li lj cp cq cr cs gk lk ll lm ln lo lp jb jc jd lq lr ls lt jh lu jf jg ui-checkbox__indicator"
+                data-uses-unhanded-props="true"
+              />
+              <span
+                class="ui-text ba lv lw ui-checkbox__label"
+                data-uses-unhanded-props="true"
+              >
+                <div
+                  class="ui-flex am ao bq br"
+                  data-uses-unhanded-props="true"
+                >
+                  <span
+                    class="ui-text"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Screens
+                  </span>
+                  <span
+                    class="ui-text lx bw"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Screens added
+                  </span>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              aria-checked="true"
+              class="ui-checkbox bb kd ke kf ci ck b kg kh ki kj ch kk dm ik il im in dn do dp dq dr ds dt kl km kn ko dy dz ea eb ec ed ee ef eg kp ei ej ek el em en eo kq kr ks kt et eu ev ew ex ey ez fb fc ku cy kv kw kx ky kz"
+              data-aa-class="Checkbox"
+              data-is-focusable="true"
+              data-uses-unhanded-props="true"
+              role="checkbox"
+              tabindex="0"
+            >
+              <div
+                class="ui-box la lb lc ld le lf lg lh li lj cp cq cr cs gk lk ll lm ln lo lp jb jc jd lq lr ls lt jh lu jf jg ui-checkbox__indicator"
+                data-uses-unhanded-props="true"
+              />
+              <span
+                class="ui-text ba lv lw ui-checkbox__label"
+                data-uses-unhanded-props="true"
+              >
+                <div
+                  class="ui-flex am ao bq br"
+                  data-uses-unhanded-props="true"
+                >
+                  <span
+                    class="ui-text"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Screen versions
+                  </span>
+                  <span
+                    class="ui-text lx bw"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Versions added to screen
+                  </span>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              aria-checked="true"
+              class="ui-checkbox bb kd ke kf ci ck b kg kh ki kj ch kk dm ik il im in dn do dp dq dr ds dt kl km kn ko dy dz ea eb ec ed ee ef eg kp ei ej ek el em en eo kq kr ks kt et eu ev ew ex ey ez fb fc ku cy kv kw kx ky kz"
+              data-aa-class="Checkbox"
+              data-is-focusable="true"
+              data-uses-unhanded-props="true"
+              role="checkbox"
+              tabindex="0"
+            >
+              <div
+                class="ui-box la lb lc ld le lf lg lh li lj cp cq cr cs gk lk ll lm ln lo lp jb jc jd lq lr ls lt jh lu jf jg ui-checkbox__indicator"
+                data-uses-unhanded-props="true"
+              />
+              <span
+                class="ui-text ba lv lw ui-checkbox__label"
+                data-uses-unhanded-props="true"
+              >
+                <div
+                  class="ui-flex am ao bq br"
+                  data-uses-unhanded-props="true"
+                >
+                  <span
+                    class="ui-text"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Components
+                  </span>
+                  <span
+                    class="ui-text lx bw"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Components added, removed or updated on Styleguide
+                  </span>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              aria-checked="true"
+              class="ui-checkbox bb kd ke kf ci ck b kg kh ki kj ch kk dm ik il im in dn do dp dq dr ds dt kl km kn ko dy dz ea eb ec ed ee ef eg kp ei ej ek el em en eo kq kr ks kt et eu ev ew ex ey ez fb fc ku cy kv kw kx ky kz"
+              data-aa-class="Checkbox"
+              data-is-focusable="true"
+              data-uses-unhanded-props="true"
+              role="checkbox"
+              tabindex="0"
+            >
+              <div
+                class="ui-box la lb lc ld le lf lg lh li lj cp cq cr cs gk lk ll lm ln lo lp jb jc jd lq lr ls lt jh lu jf jg ui-checkbox__indicator"
+                data-uses-unhanded-props="true"
+              />
+              <span
+                class="ui-text ba lv lw ui-checkbox__label"
+                data-uses-unhanded-props="true"
+              >
+                <div
+                  class="ui-flex am ao bq br"
+                  data-uses-unhanded-props="true"
+                >
+                  <span
+                    class="ui-text"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Colors
+                  </span>
+                  <span
+                    class="ui-text lx bw"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Colors added, removed or updated on Styleguide
+                  </span>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              aria-checked="true"
+              class="ui-checkbox bb kd ke kf ci ck b kg kh ki kj ch kk dm ik il im in dn do dp dq dr ds dt kl km kn ko dy dz ea eb ec ed ee ef eg kp ei ej ek el em en eo kq kr ks kt et eu ev ew ex ey ez fb fc ku cy kv kw kx ky kz"
+              data-aa-class="Checkbox"
+              data-is-focusable="true"
+              data-uses-unhanded-props="true"
+              role="checkbox"
+              tabindex="0"
+            >
+              <div
+                class="ui-box la lb lc ld le lf lg lh li lj cp cq cr cs gk lk ll lm ln lo lp jb jc jd lq lr ls lt jh lu jf jg ui-checkbox__indicator"
+                data-uses-unhanded-props="true"
+              />
+              <span
+                class="ui-text ba lv lw ui-checkbox__label"
+                data-uses-unhanded-props="true"
+              >
+                <div
+                  class="ui-flex am ao bq br"
+                  data-uses-unhanded-props="true"
+                >
+                  <span
+                    class="ui-text"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Text styles
+                  </span>
+                  <span
+                    class="ui-text lx bw"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Text styles added, removed or updated on Styleguide
+                  </span>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="ui-flex am ao bq br kc"
+          data-uses-unhanded-props="true"
+        >
+          <div>
+            <div
+              aria-checked="true"
+              class="ui-checkbox bb kd ke kf ci ck b kg kh ki kj ch kk dm ik il im in dn do dp dq dr ds dt kl km kn ko dy dz ea eb ec ed ee ef eg kp ei ej ek el em en eo kq kr ks kt et eu ev ew ex ey ez fb fc ku cy kv kw kx ky kz"
+              data-aa-class="Checkbox"
+              data-is-focusable="true"
+              data-uses-unhanded-props="true"
+              role="checkbox"
+              tabindex="0"
+            >
+              <div
+                class="ui-box la lb lc ld le lf lg lh li lj cp cq cr cs gk lk ll lm ln lo lp jb jc jd lq lr ls lt jh lu jf jg ui-checkbox__indicator"
+                data-uses-unhanded-props="true"
+              />
+              <span
+                class="ui-text ba lv lw ui-checkbox__label"
+                data-uses-unhanded-props="true"
+              >
+                <div
+                  class="ui-flex am ao bq br"
+                  data-uses-unhanded-props="true"
+                >
+                  <span
+                    class="ui-text"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Spacing tokens
+                  </span>
+                  <span
+                    class="ui-text lx bw"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Text styles added, removed or updated on Styleguide
+                  </span>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              aria-checked="true"
+              class="ui-checkbox bb kd ke kf ci ck b kg kh ki kj ch kk dm ik il im in dn do dp dq dr ds dt kl km kn ko dy dz ea eb ec ed ee ef eg kp ei ej ek el em en eo kq kr ks kt et eu ev ew ex ey ez fb fc ku cy kv kw kx ky kz"
+              data-aa-class="Checkbox"
+              data-is-focusable="true"
+              data-uses-unhanded-props="true"
+              role="checkbox"
+              tabindex="0"
+            >
+              <div
+                class="ui-box la lb lc ld le lf lg lh li lj cp cq cr cs gk lk ll lm ln lo lp jb jc jd lq lr ls lt jh lu jf jg ui-checkbox__indicator"
+                data-uses-unhanded-props="true"
+              />
+              <span
+                class="ui-text ba lv lw ui-checkbox__label"
+                data-uses-unhanded-props="true"
+              >
+                <div
+                  class="ui-flex am ao bq br"
+                  data-uses-unhanded-props="true"
+                >
+                  <span
+                    class="ui-text"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Notes
+                  </span>
+                  <span
+                    class="ui-text lx bw"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Note added
+                  </span>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              aria-checked="true"
+              class="ui-checkbox bb kd ke kf ci ck b kg kh ki kj ch kk dm ik il im in dn do dp dq dr ds dt kl km kn ko dy dz ea eb ec ed ee ef eg kp ei ej ek el em en eo kq kr ks kt et eu ev ew ex ey ez fb fc ku cy kv kw kx ky kz"
+              data-aa-class="Checkbox"
+              data-is-focusable="true"
+              data-uses-unhanded-props="true"
+              role="checkbox"
+              tabindex="0"
+            >
+              <div
+                class="ui-box la lb lc ld le lf lg lh li lj cp cq cr cs gk lk ll lm ln lo lp jb jc jd lq lr ls lt jh lu jf jg ui-checkbox__indicator"
+                data-uses-unhanded-props="true"
+              />
+              <span
+                class="ui-text ba lv lw ui-checkbox__label"
+                data-uses-unhanded-props="true"
+              >
+                <div
+                  class="ui-flex am ao bq br"
+                  data-uses-unhanded-props="true"
+                >
+                  <span
+                    class="ui-text"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Replies
+                  </span>
+                  <span
+                    class="ui-text lx bw"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Replied to note
+                  </span>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              aria-checked="true"
+              class="ui-checkbox bb kd ke kf ci ck b kg kh ki kj ch kk dm ik il im in dn do dp dq dr ds dt kl km kn ko dy dz ea eb ec ed ee ef eg kp ei ej ek el em en eo kq kr ks kt et eu ev ew ex ey ez fb fc ku cy kv kw kx ky kz"
+              data-aa-class="Checkbox"
+              data-is-focusable="true"
+              data-uses-unhanded-props="true"
+              role="checkbox"
+              tabindex="0"
+            >
+              <div
+                class="ui-box la lb lc ld le lf lg lh li lj cp cq cr cs gk lk ll lm ln lo lp jb jc jd lq lr ls lt jh lu jf jg ui-checkbox__indicator"
+                data-uses-unhanded-props="true"
+              />
+              <span
+                class="ui-text ba lv lw ui-checkbox__label"
+                data-uses-unhanded-props="true"
+              >
+                <div
+                  class="ui-flex am ao bq br"
+                  data-uses-unhanded-props="true"
+                >
+                  <span
+                    class="ui-text"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Members
+                  </span>
+                  <span
+                    class="ui-text lx bw"
+                    data-uses-unhanded-props="true"
+                    dir="auto"
+                  >
+                    Members invited
+                  </span>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;

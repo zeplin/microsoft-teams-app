@@ -25,6 +25,14 @@ jest.mock("../../config", () => ({
     BASE_URL: "https://test.com"
 }));
 
+jest.mock("next/router", () => ({
+    useRouter: (): object => ({
+        query: {
+            channel: "channel"
+        }
+    })
+}));
+
 function renderHome(): RenderResult {
     return render(
         <Providers>
