@@ -120,12 +120,10 @@ class ProjectScreenVersionNotificationHandler extends NotificationHandler {
         return commonTeamsCard({
             text: this.getText(events),
             images: this.getImages(events),
-            ...(commit?.message ? {
-                section: {
-                    title: "Commit message",
-                    text: commit.message
-                }
-            } : null),
+            section: commit?.message ? {
+                title: "Commit message",
+                text: commit.message
+            } : undefined,
             links: [{
                 title: "Open in App",
                 url: this.getMacAppURL(events)
