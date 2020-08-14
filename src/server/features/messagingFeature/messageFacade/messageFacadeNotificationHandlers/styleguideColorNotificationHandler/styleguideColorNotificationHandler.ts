@@ -82,7 +82,9 @@ class StyleguideColorNotificationHandler extends NotificationHandler {
     ): AdaptiveCard {
         return commonTeamsCard({
             text: this.getText(events),
-            sectionText: "Make sure your stylesheets are up to date!",
+            section: {
+                text: "Make sure your stylesheets are up to date!"
+            },
             links: [{
                 title: "Open in App",
                 url: this.getMacAppURL(events)

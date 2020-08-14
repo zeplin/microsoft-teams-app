@@ -111,7 +111,9 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
         const [event] = events;
         return commonTeamsCard({
             text: this.getText(event),
-            sectionText: this.getSectionText(event),
+            section: {
+                text: this.getSectionText(event)
+            },
             links: [{
                 title: "Open in App",
                 url: this.getMacAppURL(event)

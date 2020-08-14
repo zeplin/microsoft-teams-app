@@ -12,6 +12,8 @@ import { projectMemberNotificationHandler } from "./projectMemberNotificationHan
 import { styleguideMemberNotificationHandler } from "./styleguideMemberNotificationHandler";
 import { projectComponentNotificationHandler } from "./projectComponentNotificationHandler";
 import { styleguideComponentNotificationHandler } from "./styleguideComponentNotificationHandler";
+import { projectScreenNotificationHandler } from "./projectScreenNotificationHandler";
+import { projectScreenVersionNotificationHandler } from "./projectScreenVersionNotificationHandler";
 
 const notificationMap: Record<EventType, NotificationHandler> = {
     [EventType.PROJECT_COLOR]: projectColorNotificationHandler,
@@ -25,7 +27,9 @@ const notificationMap: Record<EventType, NotificationHandler> = {
     [EventType.PROJECT_MEMBER]: projectMemberNotificationHandler,
     [EventType.STYLEGUIDE_MEMBER]: styleguideMemberNotificationHandler,
     [EventType.PROJECT_COMPONENT]: projectComponentNotificationHandler,
-    [EventType.STYLEGUIDE_COMPONENT]: styleguideComponentNotificationHandler
+    [EventType.STYLEGUIDE_COMPONENT]: styleguideComponentNotificationHandler,
+    [EventType.PROJECT_SCREEN]: projectScreenNotificationHandler,
+    [EventType.PROJECT_SCREEN_VERSION]: projectScreenVersionNotificationHandler
 } as const;
 
 export function getNotificationHandler(eventType: EventType): NotificationHandler {

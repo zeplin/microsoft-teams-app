@@ -12,8 +12,7 @@ import {
 type CommonTeamsCardParams = {
     title?: string;
     text: string;
-    sectionText: string;
-    sectionTitle?: string;
+    section?: SectionParams;
     images?: string[];
     links?: {
         title: string;
@@ -26,7 +25,7 @@ type SectionParams = {
     text: string;
 };
 
-function section({ title, text }: SectionParams): Container {
+function sectionElement({ title, text }: SectionParams): Container {
     return {
         type: CardElementType.CONTAINER,
         spacing: SpacingStyle.EXTRA_LARGE,
@@ -49,8 +48,7 @@ function section({ title, text }: SectionParams): Container {
 export function commonTeamsCard({
     title,
     text,
-    sectionText,
-    sectionTitle,
+    section,
     images = [],
     links = []
 }: CommonTeamsCardParams): AdaptiveCard {
@@ -71,7 +69,7 @@ export function commonTeamsCard({
                 wrap: true,
                 spacing: SpacingStyle.SMALL
             },
-            section({ title: sectionTitle, text: sectionText }),
+            ...(section ? [sectionElement(section)] : []),
             ...(images.length > 0 ? [{
                 type: CardElementType.IMAGE_SET,
                 spacing: SpacingStyle.EXTRA_LARGE,

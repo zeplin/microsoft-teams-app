@@ -37,7 +37,9 @@ class StyleguideMemberNotificationHandler extends NotificationHandler {
     getTeamsMessage(events: WebhookEvent<StyleguideMemberEventPayload>[]): AdaptiveCard {
         return commonTeamsCard({
             text: this.getText(events),
-            sectionText: "Say hi 👋"
+            section: {
+                text: "Say hi 👋"
+            }
         });
     }
 
