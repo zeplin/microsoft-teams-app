@@ -37,7 +37,9 @@ class ProjectMemberNotificationHandler extends NotificationHandler {
     getTeamsMessage(events: WebhookEvent<ProjectMemberEventPayload>[]): AdaptiveCard {
         return commonTeamsCard({
             text: this.getText(events),
-            sectionText: "Say hi 👋"
+            section: {
+                text: "Say hi 👋"
+            }
         });
     }
 

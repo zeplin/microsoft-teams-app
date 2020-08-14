@@ -90,7 +90,6 @@ class ProjectScreenNotificationHandler extends NotificationHandler {
         return commonTeamsCard({
             text: this.getText(events),
             images: this.getImages(events),
-            sectionText: "dummyText",
             links: [{
                 title: "Open in App",
                 url: this.getMacAppURL(events)
@@ -105,6 +104,7 @@ class ProjectScreenNotificationHandler extends NotificationHandler {
         return event.payload.action === "created";
     }
 }
+
 export type ProjectScreenEventPayload = EventPayload<
     ProjectScreenEventDescriptor,
     ProjectContext,
