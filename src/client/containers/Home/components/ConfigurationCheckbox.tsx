@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from "react";
 import { Checkbox, Flex, Text } from "@fluentui/react-northstar";
 
-interface ConfigurationCheckbox {
+interface ConfigurationCheckboxProps {
     title: string;
     description: string;
 }
 
-export const ConfigurationCheckbox: FunctionComponent<ConfigurationCheckbox> = ({
+export const ConfigurationCheckbox: FunctionComponent<ConfigurationCheckboxProps> = ({
     title,
     description
 }) => (
