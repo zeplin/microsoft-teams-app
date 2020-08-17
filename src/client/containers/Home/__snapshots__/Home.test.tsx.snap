@@ -42,6 +42,7 @@ exports[`Home should change ui when login flow completed 1`] = `
           data-uses-unhanded-props="true"
           dir="auto"
           href="https://zpl.io/msteams-app-docs"
+          target="_blank"
         >
           Learn more about permissions.
         </a>

@@ -23,11 +23,11 @@ describe("Zeplin > organizations", () => {
 
     describe("findAll", () => {
         it("should return organizations", async () => {
-            const organizationsResponse = [
+            const expectedResult = [
                 {
                     id: "organizationId",
                     name: "organizationName",
-                    url: "http://placekitten.com/300/300"
+                    logo: "http://placekitten.com/300/300"
                 },
 
                 {
@@ -35,20 +35,20 @@ describe("Zeplin > organizations", () => {
                     name: "otherOrganizationName"
                 }
             ];
-            createMockInterceptor().reply(OK, organizationsResponse);
+            createMockInterceptor().reply(OK, expectedResult);
 
-            const webhookId = await organizations.findAll({
+            const result = await organizations.list({
                 options: { authToken }
             });
 
-            expect(webhookId).toStrictEqual(organizationsResponse);
+            expect(result).toStrictEqual(expectedResult);
         });
         it("should return organizations when multiple role filter is used", async () => {
-            const organizationsResponse = [
+            const expectedResult = [
                 {
                     id: "organizationId",
                     name: "organizationName",
-                    url: "http://placekitten.com/300/300"
+                    logo: "http://placekitten.com/300/300"
                 },
 
                 {
@@ -58,22 +58,22 @@ describe("Zeplin > organizations", () => {
             ];
             createMockInterceptor()
                 .query({ "role[]": ["admin", "owner"] })
-                .reply(OK, organizationsResponse);
+                .reply(OK, expectedResult);
 
-            const webhookId = await organizations.findAll({
+            const result = await organizations.list({
                 query: {
                     roles: [OrganizationRole.ADMIN, OrganizationRole.OWNER]
                 },
                 options: { authToken }
             });
 
-            expect(webhookId).toStrictEqual(organizationsResponse);
+            expect(result).toStrictEqual(expectedResult);
         });
 
         it("should throw error when API throw error", async () => {
             createMockInterceptor().reply(BAD_REQUEST, { message: "Bad request" });
             await expect(
-                organizations.findAll({
+                organizations.list({
                     options: { authToken }
                 })
             ).rejects.toEqual(new ZeplinError("Bad request", { statusCode: BAD_REQUEST }));

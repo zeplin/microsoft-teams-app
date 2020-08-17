@@ -36,17 +36,23 @@ export const Configuration: FunctionComponent<ConfigurationProps> = ({
         }
     } = useRouter();
 
-    const { isLoading: isOrganizationsLoading, data: organizations } = useQuery("organizations", async () => {
-        const { data: result } = await Axios.get(
-            `${BASE_URL}/api/organizations`,
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
+    const { isLoading: isOrganizationsLoading, data: organizations } = useQuery(
+        "organizations",
+        async () => {
+            const { data: result } = await Axios.get(
+                `${BASE_URL}/api/organizations`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
                 }
-            }
-        );
-        return result;
-    });
+            );
+            return result;
+        },
+        {
+            initialData: []
+        }
+    );
 
     const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace>();
     const [selectedResource, setSelectedResource] = useState<Resource | undefined>();
@@ -67,6 +73,7 @@ export const Configuration: FunctionComponent<ConfigurationProps> = ({
                         as="a"
                         color="brand"
                         href="https://zpl.io/msteams-app-docs"
+                        target="_blank"
                         styles={{
                             "textDecoration": "none",
                             ":hover": {
@@ -82,26 +89,22 @@ export const Configuration: FunctionComponent<ConfigurationProps> = ({
                             loading={isOrganizationsLoading}
                             fluid
                             checkable
-                            items={
-                                organizations
-                                    ? [
-                                        {
-                                            header: "Personal Workspace",
-                                            onClick: (): void => {
-                                                setSelectedWorkspace({ type: "Personal" });
-                                                setSelectedResource(undefined);
-                                            }
-                                        },
-                                        ...organizations.map(({ name, id }) => ({
-                                            header: `${name}'s Workspace`,
-                                            onClick: (): void => {
-                                                setSelectedWorkspace({ type: "Organization", organizationId: id });
-                                                setSelectedResource(undefined);
-                                            }
-                                        }))
-                                    ]
-                                    : []
-                            }
+                            items={[
+                                {
+                                    header: "Personal Workspace",
+                                    onClick: (): void => {
+                                        setSelectedWorkspace({ type: "Personal" });
+                                        setSelectedResource(undefined);
+                                    }
+                                },
+                                ...organizations.map(({ name, id }) => ({
+                                    header: `${name}'s Workspace`,
+                                    onClick: (): void => {
+                                        setSelectedWorkspace({ type: "Organization", organizationId: id });
+                                        setSelectedResource(undefined);
+                                    }
+                                }))
+                            ]}
                             placeholder="Select Workspace"
                         />
                     </Flex.Item>

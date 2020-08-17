@@ -29,7 +29,7 @@ export class Organizations {
         this.requester = requester;
     }
 
-    findAll({
+    list({
         query: {
             roles
         } = {},

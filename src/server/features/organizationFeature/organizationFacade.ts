@@ -3,7 +3,7 @@ import { zeplin } from "../../adapters/zeplin";
 
 class OrganizationFacade {
     findAll(authToken: string): Promise<OrganizationSummary[]> {
-        return zeplin.organizations.findAll({
+        return zeplin.organizations.list({
             query: {
                 roles: [OrganizationRole.OWNER, OrganizationRole.ADMIN, OrganizationRole.EDITOR]
             },
