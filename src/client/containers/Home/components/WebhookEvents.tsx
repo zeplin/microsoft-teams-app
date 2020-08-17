@@ -64,14 +64,14 @@ export const WebhookEvents: FunctionComponent<WebhookEventsProps> = ({
     const middleIndex = Math.ceil(availableEvents.length / HALF_DIVIDER);
     return (
         <Flex fill gap="gap.small">
-            <Flex fill column gap="gap.smaller">
+            <Flex fill column gap="gap.medium">
                 {
                     availableEvents.slice(0, middleIndex).map(({ title, description }) => (
                         <ConfigurationCheckbox key={title} title={title} description={description} />
                     ))
                 }
             </Flex>
-            <Flex fill column gap="gap.smaller">
+            <Flex fill column gap="gap.medium">
                 {
                     availableEvents.slice(middleIndex).map(({ title, description }) => (
                         <ConfigurationCheckbox key={title} title={title} description={description} />

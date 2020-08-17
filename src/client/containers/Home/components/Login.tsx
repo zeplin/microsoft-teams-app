@@ -21,6 +21,7 @@ export const Login: FunctionComponent<LoginProps> = ({ onTokenReceive }) => (
         </Flex>
         <div>
             <Button
+                primary
                 content="Log in Zeplin"
                 onClick={(): void => {
                     microsoftTeams.authentication.authenticate({

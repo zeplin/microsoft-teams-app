@@ -70,18 +70,22 @@ export const Configuration: FunctionComponent<ConfigurationProps> = ({
                 </Text>
                 <Flex fill gap="gap.small">
                     <Flex.Item grow shrink={0} styles={{ flexBasis: 0 }}>
-                        <WorkspaceDropdown
-                            loading={isOrganizationsLoading}
-                            organizations={organizations}
-                            onChange={(workspace): void => {
-                                setSelectedWorkspace(workspace);
-                                setSelectedResource(undefined);
-                            }} />
+                        <div>
+                            <WorkspaceDropdown
+                                loading={isOrganizationsLoading}
+                                organizations={organizations}
+                                onChange={(workspace): void => {
+                                    setSelectedWorkspace(workspace);
+                                    setSelectedResource(undefined);
+                                }} />
+                        </div>
                     </Flex.Item>
                     <Flex.Item grow shrink={0} styles={{ flexBasis: 0 }}>
-                        <ResourceDropdown
-                            disabled={!selectedWorkspace}
-                            onChange={(resource): void => setSelectedResource(resource)} />
+                        <div>
+                            <ResourceDropdown
+                                disabled={!selectedWorkspace}
+                                onChange={(resource): void => setSelectedResource(resource)} />
+                        </div>
                     </Flex.Item>
                 </Flex>
             </Flex>
