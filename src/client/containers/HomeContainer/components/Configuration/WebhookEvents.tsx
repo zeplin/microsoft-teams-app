@@ -1,9 +1,15 @@
 import React, { FunctionComponent } from "react";
-import { ResourceType, WebhookEvent } from "./types";
 import { Flex } from "@fluentui/react-northstar";
 import { ConfigurationCheckbox } from "./ConfigurationCheckbox";
+import { ResourceType } from "../../../../requester";
 
 const HALF_DIVIDER = 2;
+
+interface WebhookEvent {
+    title: string;
+    description: string;
+    resourceTypes: ResourceType[];
+}
 
 const webhookEvents: WebhookEvent[] = [
     {

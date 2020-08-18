@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login should render correctly 1`] = `
+<div
+  class="ui-provider a b c d e f g h i j k l m n o p q r s t u v w x y z ab ac ae af ag ah ai aj ak"
+  data-uses-unhanded-props="true"
+  dir="ltr"
+>
+  <div
+    class="ui-flex al am an ao ap"
+    data-uses-unhanded-props="true"
+  >
+    <div />
+    <div
+      class="ui-flex al am an ao aq"
+      data-uses-unhanded-props="true"
+    >
+      <span
+        class="ui-text ar as at"
+        data-uses-unhanded-props="true"
+        dir="auto"
+      >
+        One more step before finishing connection
+      </span>
+      <span
+        class="ui-text"
+        data-uses-unhanded-props="true"
+        dir="auto"
+      >
+        Once proceeding, we will ask you to authorize Microsoft Teams access through a separate window. Once it’s authorized, you can do more advanced settings on the Teams channel linked with Zeplin.
+      </span>
+    </div>
+    <div>
+      <button
+        class="ui-button au av aw ax ay az ba bb bc bd be bf bg bh bi bj bk bl bm bn bo bp bq br bs bt bu bv bw bx by bz ca cb cc cd ce cf cg ch ci cj ck cl cm cn co cp cq cr cs ct cu cv cw cx cy cz da db dc dd de df dg dh di dj dk dl dm dn do dp dq dr ds dt du dv dw dx dy"
+        data-aa-class="Button"
+        data-uses-unhanded-props="true"
+      >
+        <span
+          class="ui-button__content dz ea eb ec ar ed"
+          data-uses-unhanded-props="true"
+          dir="auto"
+        >
+          Log in Zeplin
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;

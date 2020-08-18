@@ -21,7 +21,7 @@ describe("Zeplin > organizations", () => {
         organizations = new Organizations(new Requester({ baseURL: "http://localhost/v1" }));
     });
 
-    describe("findAll", () => {
+    describe("list", () => {
         it("should return organizations", async () => {
             const expectedResult = [
                 {

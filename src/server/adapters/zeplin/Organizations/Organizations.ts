@@ -1,6 +1,6 @@
 import { Requester } from "../requester";
 
-interface OrganizationsFindAllParameter {
+interface OrganizationsListParameter {
     query?: {
         roles?: OrganizationRole[];
     };
@@ -34,7 +34,7 @@ export class Organizations {
             roles
         } = {},
         options: { authToken }
-    }: OrganizationsFindAllParameter): Promise<OrganizationSummary[]> {
+    }: OrganizationsListParameter): Promise<OrganizationSummary[]> {
         return this.requester.get<OrganizationSummary[]>("/organizations", {
             params: {
                 role: roles

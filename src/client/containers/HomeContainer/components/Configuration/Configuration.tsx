@@ -1,0 +1,76 @@
+import React, { FunctionComponent } from "react";
+import { Flex, Text } from "@fluentui/react-northstar";
+import { Resource, ResourceType, Workspace } from "../../../../requester";
+import { WorkspaceDropdown } from "./WorkspaceDropdown";
+import { ResourceDropdown } from "./ResourceDropdown";
+import { WebhookEvents } from "./WebhookEvents";
+
+interface ConfigurationProps {
+    channelName: string;
+    isWorkspacesLoading: boolean;
+    workspaces: Workspace[];
+    isWorkspaceSelected: boolean;
+    resourceType: ResourceType;
+    onWorkspaceChange: (value: string) => void;
+    onResourceChange: (value: Resource | undefined) => void;
+}
+
+export const Configuration: FunctionComponent<ConfigurationProps> = ({
+    channelName,
+    isWorkspacesLoading,
+    workspaces,
+    isWorkspaceSelected,
+    resourceType,
+    onWorkspaceChange,
+    onResourceChange
+}) => (
+    <Flex fill column gap="gap.large">
+        <div />
+        <Flex fill column gap="gap.small">
+            <Text weight="semibold">
+                    You are connecting <Text weight="bold">#{channelName}</Text> to Zeplin.
+            </Text>
+            <Text>
+                Can{"'"}t find the project/styleguide to connect to?
+                {" "}
+                <Text
+                    as="a"
+                    color="brand"
+                    href="https://zpl.io/msteams-app-docs"
+                    target="_blank"
+                    styles={{
+                        "textDecoration": "none",
+                        ":hover": {
+                            textDecoration: "underline"
+                        }
+                    }}>
+                        Learn more about permissions.
+                </Text>
+            </Text>
+            <Flex fill gap="gap.small">
+                <Flex.Item grow shrink={0} styles={{ flexBasis: 0 }}>
+                    <div>
+                        <WorkspaceDropdown
+                            loading={isWorkspacesLoading}
+                            workspaces={workspaces}
+                            onChange={onWorkspaceChange}
+                        />
+                    </div>
+                </Flex.Item>
+                <Flex.Item grow shrink={0} styles={{ flexBasis: 0 }}>
+                    <div>
+                        <ResourceDropdown disabled={!isWorkspaceSelected} onChange={onResourceChange} />
+                    </div>
+                </Flex.Item>
+            </Flex>
+        </Flex>
+        <Flex fill column gap="gap.medium">
+            <Text weight="semibold">
+                    Select the events you want to get a message for:
+            </Text>
+            <div>
+                <WebhookEvents resourceType={resourceType} />
+            </div>
+        </Flex>
+    </Flex>
+);
