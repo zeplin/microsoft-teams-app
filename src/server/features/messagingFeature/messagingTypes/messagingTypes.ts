@@ -1,5 +1,7 @@
 import { OrganizationSummary } from "./organizationSummary";
 import { RemPreferences } from "./remPreferences";
+import { ScreenNoteResource } from "../messageFacade/messageFacadeNotificationHandlers/resources";
+import { ScreenResource } from "../messageFacade/messageFacadeNotificationHandlers/resources/screenResource";
 
 type EventDescriptor = {
     type: EventType;
@@ -14,7 +16,19 @@ type Resource = {
 
 export enum EventType {
     PROJECT_COLOR = "project.color",
-    STYLEGUIDE_COLOR = "styleguide.color"
+    PROJECT_NOTE = "project.note",
+    PROJECT_NOTE_COMMENT = "project.note.comment",
+    PROJECT_SPACING_TOKEN = "project.spacing_token",
+    PROJECT_TEXT_STYLE = "project.text_style",
+    PROJECT_MEMBER = "project.member",
+    PROJECT_COMPONENT = "project.component",
+    PROJECT_SCREEN = "project.screen",
+    PROJECT_SCREEN_VERSION = "project.screen.version",
+    STYLEGUIDE_COLOR = "styleguide.color",
+    STYLEGUIDE_TEXT_STYLE = "styleguide.text_style",
+    STYLEGUIDE_SPACING_TOKEN = "styleguide.spacing_token",
+    STYLEGUIDE_MEMBER = "styleguide.member",
+    STYLEGUIDE_COMPONENT = "styleguide.component",
 }
 
 export interface ProjectContext {
@@ -40,6 +54,14 @@ export interface ProjectContext {
             id: string;
         };
     };
+}
+
+export interface ScreenContext {
+    screen: ScreenResource["data"];
+}
+
+export interface NoteContext {
+    note: ScreenNoteResource["data"];
 }
 
 export interface StyleguideContext {
@@ -82,6 +104,14 @@ export enum ResourceType {
     SCREEN_NOTE_COMMENT = "ScreenNoteComment"
 }
 
+export type User = {
+    id: string;
+    email: string;
+    username: string;
+    emotar?: string;
+    avatar?: string;
+}
+
 export interface EventPayload<
     E extends EventDescriptor,
     C extends ProjectContext | StyleguideContext,
@@ -93,13 +123,7 @@ export interface EventPayload<
     context: C;
     resource: R;
     actor: {
-        user: {
-            id: string;
-            email: string;
-            username?: string;
-            emotar?: string;
-            avatar?: string;
-        };
+        user: User;
     };
 }
 

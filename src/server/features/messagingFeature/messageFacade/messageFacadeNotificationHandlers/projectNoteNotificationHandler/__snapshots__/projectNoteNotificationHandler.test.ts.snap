@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`projectNoteNotificationHandler getTeamsMessage should match snapshot 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "**sertac** added a note on _Manage Zeplin Connector_ screen in _Project MS Teams Integration_. 🏃‍♂",
+      "wrap": true,
+      "spacing": "small"
+    },
+    {
+      "type": "Container",
+      "spacing": "extraLarge",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Naptin nettin nettin naptin?",
+          "spacing": "none"
+        }
+      ]
+    },
+    {
+      "type": "ActionSet",
+      "spacing": "extraLarge",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in App",
+          "url": "zpl://dot?pid=projectId&sid=screenId&did=noteId"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/project/projectId/screen/screenId?did=noteId"
+        }
+      ]
+    }
+  ]
+}
+`;

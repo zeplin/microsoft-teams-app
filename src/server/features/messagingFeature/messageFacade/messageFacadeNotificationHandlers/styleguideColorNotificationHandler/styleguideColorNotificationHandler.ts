@@ -1,5 +1,4 @@
 import {
-    ResourceType,
     WebhookEvent,
     EventPayload,
     StyleguideContext,
@@ -10,24 +9,11 @@ import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, AdaptiveCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
+import { ColorResource } from "../resources";
 
 type StyleguideColorEventDescriptor = {
     type: EventType.STYLEGUIDE_COLOR;
     action: "created" | "updated";
-};
-
-type StyleguideColorResource = {
-    id: string;
-    type: ResourceType.COLOR;
-    data: {
-        id: string;
-        created: number;
-        name: string;
-        r: number;
-        g: number;
-        b: number;
-        a: number;
-    };
 };
 
 class StyleguideColorNotificationHandler extends NotificationHandler {
@@ -87,12 +73,18 @@ class StyleguideColorNotificationHandler extends NotificationHandler {
         return `${ZEPLIN_MAC_APP_URL_SCHEME}colors?stid=${styleguideId}&cids=${events.map(event => event.payload.resource.id).join(",")}`;
     }
 
+    shouldHandleEvent(event: WebhookEvent): boolean {
+        return event.payload.action !== "deleted";
+    }
+
     getTeamsMessage(
         events: WebhookEvent<StyleguideColorEventPayload>[]
     ): AdaptiveCard {
         return commonTeamsCard({
             text: this.getText(events),
-            sectionText: "Make sure your stylesheets are up to date!",
+            section: {
+                text: "Make sure your stylesheets are up to date!"
+            },
             links: [{
                 title: "Open in App",
                 url: this.getMacAppURL(events)
@@ -107,6 +99,6 @@ class StyleguideColorNotificationHandler extends NotificationHandler {
 export type StyleguideColorEventPayload = EventPayload<
     StyleguideColorEventDescriptor,
     StyleguideContext,
-    StyleguideColorResource
+    ColorResource
 >;
 export const styleguideColorNotificationHandler = new StyleguideColorNotificationHandler();

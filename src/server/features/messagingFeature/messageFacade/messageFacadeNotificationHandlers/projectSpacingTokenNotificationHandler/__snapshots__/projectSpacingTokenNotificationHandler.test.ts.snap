@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`projectSpacingTokenNotificationHandler getTeamsMessage method for created notification should match snapshot when there are more than 1 events 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "**2 spacing tokens** are added in _projectName_! 🏃‍♂",
+      "wrap": true,
+      "spacing": "small"
+    },
+    {
+      "type": "Container",
+      "spacing": "extraLarge",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Make sure your stylesheets are up to date!",
+          "spacing": "none"
+        }
+      ]
+    },
+    {
+      "type": "ActionSet",
+      "spacing": "extraLarge",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in App",
+          "url": "zpl://spacing?pid=projectId&sptids=spacingTokenId,anotherSpacingTokenId"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/project/projectId/styleguide/spacing?sptid=spacingTokenId&sptid=anotherSpacingTokenId"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`projectSpacingTokenNotificationHandler getTeamsMessage method for created notification should match snapshot when there is only 1 event 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "**spacingTokenName** is added in _projectName_! 🏃‍♂",
+      "wrap": true,
+      "spacing": "small"
+    },
+    {
+      "type": "Container",
+      "spacing": "extraLarge",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Make sure your stylesheets are up to date!",
+          "spacing": "none"
+        }
+      ]
+    },
+    {
+      "type": "ActionSet",
+      "spacing": "extraLarge",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in App",
+          "url": "zpl://spacing?pid=projectId&sptids=spacingTokenId"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/project/projectId/styleguide/spacing?sptid=spacingTokenId"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`projectSpacingTokenNotificationHandler getTeamsMessage method for updated notification should match snapshot when there are more than 1 events 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "**2 spacing tokens** are updated in _projectName_! 🏃‍♂",
+      "wrap": true,
+      "spacing": "small"
+    },
+    {
+      "type": "Container",
+      "spacing": "extraLarge",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Make sure your stylesheets are up to date!",
+          "spacing": "none"
+        }
+      ]
+    },
+    {
+      "type": "ActionSet",
+      "spacing": "extraLarge",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in App",
+          "url": "zpl://spacing?pid=projectId&sptids=spacingTokenId,anotherSpacingTokenId"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/project/projectId/styleguide/spacing?sptid=spacingTokenId&sptid=anotherSpacingTokenId"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`projectSpacingTokenNotificationHandler getTeamsMessage method for updated notification should match snapshot when there is only 1 event 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.2",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "**spacingTokenName** is updated in _projectName_! 🏃‍♂",
+      "wrap": true,
+      "spacing": "small"
+    },
+    {
+      "type": "Container",
+      "spacing": "extraLarge",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Make sure your stylesheets are up to date!",
+          "spacing": "none"
+        }
+      ]
+    },
+    {
+      "type": "ActionSet",
+      "spacing": "extraLarge",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in App",
+          "url": "zpl://spacing?pid=projectId&sptids=spacingTokenId"
+        },
+        {
+          "type": "Action.OpenUrl",
+          "title": "Open in Web",
+          "url": "https://app.zeplin.io/project/projectId/styleguide/spacing?sptid=spacingTokenId"
+        }
+      ]
+    }
+  ]
+}
+`;

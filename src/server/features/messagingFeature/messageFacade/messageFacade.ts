@@ -34,6 +34,10 @@ class MessageFacade {
 
     async handleEventArrived(event: WebhookEvent): Promise<void> {
         const notificationHandler = getNotificationHandler(event.payload.event);
+        if (!notificationHandler.shouldHandleEvent(event)) {
+            return;
+        }
+
         const groupingKey = notificationHandler.getGroupingKey(event);
         const jobId = event.deliveryId;
 

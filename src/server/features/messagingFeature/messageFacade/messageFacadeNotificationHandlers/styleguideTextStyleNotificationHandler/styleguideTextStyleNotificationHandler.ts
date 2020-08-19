@@ -1,7 +1,7 @@
 import {
     WebhookEvent,
     EventPayload,
-    ProjectContext,
+    StyleguideContext,
     EventType
 } from "../../../messagingTypes";
 import { NotificationHandler } from "../NotificationHandler";
@@ -9,68 +9,68 @@ import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, AdaptiveCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
-import { ColorResource } from "../resources";
+import { TextStyleResource } from "../resources";
 
-type ProjectColorEventDescriptor = {
-    type: EventType.PROJECT_COLOR;
+type StyleguideTextStyleEventDescriptor = {
+    type: EventType.STYLEGUIDE_TEXT_STYLE;
     action: "created" | "updated";
 };
 
-class ProjectColorNotificationHandler extends NotificationHandler {
+class StyleguideTextStyleNotificationHandler extends NotificationHandler {
     delay = SHORT_DELAY;
-    private getText(events: WebhookEvent<ProjectColorEventPayload>[]): string {
+    private getText(events: WebhookEvent<StyleguideTextStyleEventPayload>[]): string {
         const [{
             payload: {
                 action,
                 context: {
-                    project: {
-                        name: projectName
+                    styleguide: {
+                        name: styleguideName
                     }
                 },
                 resource: {
                     data: {
-                        name: pivotColorName
+                        name: pivotTextStyleName
                     }
                 }
             }
         }] = events;
         const actionText = action === "created" ? "added" : "updated";
         return events.length === 1
-            ? `**${pivotColorName}** is ${actionText} in _${projectName}_! 🏃‍♂`
-            : `**${events.length} new colors** are ${actionText} in _${projectName}_! 🏃‍♂`;
+            ? `**${pivotTextStyleName}** is ${actionText} in _${styleguideName}_! 🏃‍♂`
+            : `**${events.length} text styles** are ${actionText} in _${styleguideName}_! 🏃‍♂`;
     }
 
     private getWebappURL(
-        events: WebhookEvent<ProjectColorEventPayload>[]
+        events: WebhookEvent<StyleguideTextStyleEventPayload>[]
     ): string {
         const [{
             payload: {
                 context: {
-                    project: {
-                        id: projectId
+                    styleguide: {
+                        id: styleguideId
                     }
                 }
             }
         }] = events;
         const webappURL = new URL(ZEPLIN_WEB_APP_BASE_URL);
-        webappURL.pathname = `project/${projectId}/styleguide/colors`;
-        events.forEach(event => webappURL.searchParams.append("cid", event.payload.resource.id));
+        webappURL.pathname = `styleguide/${styleguideId}/styleguide/textstyles`;
+        events.forEach(event => webappURL.searchParams.append("tsid", event.payload.resource.id));
         return webappURL.toString();
     }
 
     private getMacAppURL(
-        events: WebhookEvent<ProjectColorEventPayload>[]
+        events: WebhookEvent<StyleguideTextStyleEventPayload>[]
     ): string {
         const [{
             payload: {
                 context: {
-                    project: {
-                        id: projectId
+                    styleguide: {
+                        id: styleguideId
                     }
                 }
             }
         }] = events;
-        return `${ZEPLIN_MAC_APP_URL_SCHEME}colors?pid=${projectId}&cids=${events.map(event => event.payload.resource.id).join(",")}`;
+        return `${ZEPLIN_MAC_APP_URL_SCHEME}textStyles?stid=${styleguideId}&tsids=${events.map(event => event.payload.resource.id).join(",")}`;
     }
 
     shouldHandleEvent(event: WebhookEvent): boolean {
@@ -78,7 +78,7 @@ class ProjectColorNotificationHandler extends NotificationHandler {
     }
 
     getTeamsMessage(
-        events: WebhookEvent<ProjectColorEventPayload>[]
+        events: WebhookEvent<StyleguideTextStyleEventPayload>[]
     ): AdaptiveCard {
         return commonTeamsCard({
             text: this.getText(events),
@@ -96,9 +96,9 @@ class ProjectColorNotificationHandler extends NotificationHandler {
     }
 }
 
-export type ProjectColorEventPayload = EventPayload<
-    ProjectColorEventDescriptor,
-    ProjectContext,
-    ColorResource
+export type StyleguideTextStyleEventPayload = EventPayload<
+    StyleguideTextStyleEventDescriptor,
+    StyleguideContext,
+    TextStyleResource
 >;
-export const projectColorNotificationHandler = new ProjectColorNotificationHandler();
+export const styleguideTextStyleNotificationHandler = new StyleguideTextStyleNotificationHandler();

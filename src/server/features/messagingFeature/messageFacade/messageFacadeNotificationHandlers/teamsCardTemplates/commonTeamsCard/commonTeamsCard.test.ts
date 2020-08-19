@@ -4,18 +4,19 @@ describe("commonTeamsCard", () => {
     it("should match snapshot when rendered with only required elements", () => {
         expect(
             commonTeamsCard({
-                text: "text",
-                sectionText: "sectionText"
+                text: "text"
             })
         ).toMatchSnapshot();
     });
 
-    it("should match snapshot when rendered with section title", () => {
+    it("should match snapshot when rendered with section", () => {
         expect(
             commonTeamsCard({
                 text: "text",
-                sectionTitle: "sectionTitle",
-                sectionText: "sectionText"
+                section: {
+                    title: "sectionTitle",
+                    text: "sectionText"
+                }
             })
         ).toMatchSnapshot();
     });
@@ -24,8 +25,6 @@ describe("commonTeamsCard", () => {
         expect(
             commonTeamsCard({
                 text: "text",
-                sectionTitle: "sectionTitle",
-                sectionText: "sectionText",
                 images: ["http://placehold.it/400"]
             })
         ).toMatchSnapshot();
@@ -35,7 +34,6 @@ describe("commonTeamsCard", () => {
         expect(
             commonTeamsCard({
                 text: "text",
-                sectionText: "sectionText",
                 links: [{
                     title: "Open in me",
                     url: "https://ergun.sh"
@@ -48,8 +46,7 @@ describe("commonTeamsCard", () => {
         expect(
             commonTeamsCard({
                 title: "title",
-                text: "text",
-                sectionText: "sectionText"
+                text: "text"
             })
         ).toMatchSnapshot();
     });
@@ -59,8 +56,10 @@ describe("commonTeamsCard", () => {
             commonTeamsCard({
                 title: "Project name",
                 text: "**sertac 🌮** added a new comment on _Manage Zeplin Connector_ screen. 🏃‍♂",
-                sectionTitle: "Section title",
-                sectionText: "Naptin nettin nettin naptin?",
+                section: {
+                    title: "Section title",
+                    text: "Naptin nettin nettin naptin?"
+                },
                 links: [{
                     title: "Open in Web",
                     url: "https://ergun.sh"
