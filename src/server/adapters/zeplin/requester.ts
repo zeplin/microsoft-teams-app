@@ -23,7 +23,7 @@ export class Requester {
         }
     }
 
-    async get<T = object>(url: string, config?: AxiosRequestConfig): Promise<T> {
+    async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
         try {
             const { data } = await this.instance.get<T>(url, config);
             return data;

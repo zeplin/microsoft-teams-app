@@ -3,10 +3,10 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { Loader } from "@fluentui/react-northstar";
 
-import { Providers } from "../../../components";
+import { Providers } from "../../../Providers";
 
 const ZeplinAuthEnd = dynamic(
-    async () => (await import("../../../containers")).ZeplinAuthEnd,
+    async () => (await import("../../../containers")).ZeplinAuthEndContainer,
     {
         ssr: false,
         loading: () => <Loader />

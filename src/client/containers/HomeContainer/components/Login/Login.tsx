@@ -1,13 +1,11 @@
 import React, { FunctionComponent } from "react";
 import { Button, Flex, Text } from "@fluentui/react-northstar";
-import * as microsoftTeams from "@microsoft/teams-js";
-import { BASE_URL } from "../../../config";
 
 interface LoginProps {
-    onTokenReceive: (token: string) => void;
+    onButtonClick: () => void;
 }
 
-export const Login: FunctionComponent<LoginProps> = ({ onTokenReceive }) => (
+export const Login: FunctionComponent<LoginProps> = ({ onButtonClick }) => (
     <Flex fill column gap="gap.large">
         <div />
         <Flex fill column gap="gap.medium">
@@ -21,14 +19,9 @@ export const Login: FunctionComponent<LoginProps> = ({ onTokenReceive }) => (
         </Flex>
         <div>
             <Button
+                primary
                 content="Log in Zeplin"
-                onClick={(): void => {
-                    microsoftTeams.authentication.authenticate({
-                        height: 476,
-                        successCallback: onTokenReceive,
-                        url: `${BASE_URL}/api/auth/authorize`
-                    });
-                }} />
+                onClick={(): void => onButtonClick()} />
         </div>
     </Flex>
 );

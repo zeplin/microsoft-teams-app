@@ -6,7 +6,7 @@ import { Loader } from "@fluentui/react-northstar";
 
 import { BASE_URL } from "../../config";
 
-export const ZeplinAuthEnd: FunctionComponent = () => {
+export const ZeplinAuthEndContainer: FunctionComponent = () => {
     const {
         query: {
             code,

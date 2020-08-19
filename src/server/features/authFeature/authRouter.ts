@@ -5,7 +5,9 @@ import { handleAuthorize, handleTokenCreate } from "./authController";
 import { JSONBodyParser, validateRequest } from "../../middlewares";
 
 const authRouter = createRouter();
+
 authRouter.get("/authorize", handleAuthorize);
+
 authRouter.post(
     "/token",
     JSONBodyParser,

@@ -37,6 +37,7 @@
     "pm2": "^4.4.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-query": "^2.5.14",
     "redis": "^3.0.2"
   },
   "devDependencies": {

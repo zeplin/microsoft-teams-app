@@ -3,10 +3,10 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { Loader } from "@fluentui/react-northstar";
 
-import { Providers } from "../components";
+import { Providers } from "../Providers";
 
 const Home = dynamic(
-    async () => (await import("../containers")).Home,
+    async () => (await import("../containers")).HomeContainer,
     {
         ssr: false,
         loading: () => <Loader />
