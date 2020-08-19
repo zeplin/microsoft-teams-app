@@ -1,5 +1,5 @@
 import { OrganizationRole } from "../../adapters/zeplin/Organizations";
-import { zeplin } from "../../adapters/zeplin";
+import { zeplin } from "../../adapters";
 
 interface Workspace {
     id: string;

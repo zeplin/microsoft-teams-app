@@ -1,14 +1,15 @@
 import React, {
-    FunctionComponent, useEffect, useReducer
+    FunctionComponent,
+    useReducer,
+    useEffect
 } from "react";
 import * as microsoftTeams from "@microsoft/teams-js";
 import { Loader } from "@fluentui/react-northstar";
 import { useRouter } from "next/router";
+import { useQuery } from "react-query";
 
 import { Configuration, Login } from "./components";
-import { BASE_URL } from "../../config";
-import { useQuery } from "react-query";
-import { getWorkspaces, ResourceType } from "../../requester";
+import { getProjects, getStyleguides, getWorkspaces, ResourceType } from "../../requester";
 import { ActionType, homeReducer, Status } from "./homeReducer";
 
 export const HomeContainer: FunctionComponent = () => {
@@ -20,11 +21,35 @@ export const HomeContainer: FunctionComponent = () => {
 
     const [state, dispatch] = useReducer(homeReducer, { status: Status.LOADING });
 
-    const { isLoading: isWorkspacesLoading, data: workspaces } = useQuery(
-        ["workspaces", state.status === Status.CONFIGURATION ? state.accessToken : null],
+    const { isLoading: areWorkspacesLoading, data: workspaces } = useQuery(
+        ["workspaces", state.status === Status.CONFIGURATION && state.accessToken],
         (key, accessToken) => getWorkspaces(accessToken),
         {
             enabled: state.status === Status.CONFIGURATION
+        }
+    );
+
+    const { isLoading: areProjectsLoading, data: projects } = useQuery(
+        [
+            "projects",
+            state.status === Status.CONFIGURATION && state.selectedWorkspace,
+            state.status === Status.CONFIGURATION && state.accessToken
+        ],
+        (key, workspaceId, accessToken) => getProjects(workspaceId, accessToken),
+        {
+            enabled: state.status === Status.CONFIGURATION && state.selectedWorkspace
+        }
+    );
+
+    const { isLoading: areStyleguidesLoading, data: styleguides } = useQuery(
+        [
+            "styleguides",
+            state.status === Status.CONFIGURATION && state.selectedWorkspace,
+            state.status === Status.CONFIGURATION && state.accessToken
+        ],
+        (key, workspaceId, accessToken) => getStyleguides(workspaceId, accessToken),
+        {
+            enabled: state.status === Status.CONFIGURATION && state.selectedWorkspace
         }
     );
 
@@ -43,17 +68,20 @@ export const HomeContainer: FunctionComponent = () => {
                 microsoftTeams.authentication.authenticate({
                     height: 476,
                     successCallback: value => dispatch({ type: ActionType.GET_TOKEN, value }),
-                    url: `${BASE_URL}/api/auth/authorize`
+                    url: "/api/auth/authorize"
                 });
             }} />;
         case Status.CONFIGURATION:
             return (
                 <Configuration
                     channelName={String(channel)}
-                    isWorkspacesLoading={isWorkspacesLoading}
+                    areWorkspacesLoading={areWorkspacesLoading}
                     workspaces={workspaces || []}
                     isWorkspaceSelected={Boolean(state.selectedWorkspace)}
                     resourceType={state.selectedResource?.type ?? ResourceType.PROJECT }
+                    areResourcesLoading={areStyleguidesLoading || areProjectsLoading}
+                    projects={projects || []}
+                    styleguides={styleguides || []}
                     onWorkspaceChange={(value): void => dispatch({ type: ActionType.SET_SELECTED_WORKSPACE, value })}
                     onResourceChange={(value): void => dispatch({ type: ActionType.SET_SELECTED_RESOURCE, value })}
                 />
