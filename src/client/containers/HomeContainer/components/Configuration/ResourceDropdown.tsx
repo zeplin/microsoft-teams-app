@@ -1,63 +1,60 @@
 import React, { FunctionComponent, ReactElement } from "react";
 import { Divider, Dropdown } from "@fluentui/react-northstar";
-import { Resource, ResourceType } from "../../../../requester";
+import { Project, Resource, ResourceType, Styleguide } from "../../../../requester";
 
 interface ResourceDropdownProps {
     disabled: boolean;
+    loading: boolean;
+    projects: Project[];
+    styleguides: Styleguide[];
     onChange: (value: Resource | undefined) => void;
 }
 
 export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
     disabled,
+    loading,
+    projects,
+    styleguides,
     onChange
 }) => (
     <Dropdown
         disabled={disabled}
+        loading={loading}
+        loadingMessage="Loading..."
         fluid
         checkable
         items={ [
-            {
+            projects.length > 0 && {
                 header: "Projects",
                 disabled: true,
                 styles: {
                     "font-weight": "bolder"
                 }
             },
-            {
-                header: "Project 1",
+            ...projects.map(({ id, name }) => ({
+                header: name,
                 onClick: (): void => {
-                    onChange({ type: ResourceType.PROJECT, id: "id1" });
+                    onChange({ type: ResourceType.PROJECT, id });
                 }
-            },
-            {
-                header: "Project 2",
-                onClick: (): void => {
-                    onChange({ type: ResourceType.PROJECT, id: "id2" });
-                }
-            },
-            {
+            })),
+            projects.length > 0 && styleguides.length > 0 && {
+                header: "Seperator",
                 as: (): ReactElement => <Divider />,
                 disabled: true
             },
-            {
+            styleguides.length > 0 && {
                 header: "Styleguides",
                 disabled: true,
                 styles: {
                     "font-weight": "bolder"
                 }
             },
-            {
-                header: "Styleguide 1",
+            ...styleguides.map(({ id, name }) => ({
+                header: name,
                 onClick: (): void => {
-                    onChange({ type: ResourceType.STYLEGUIDE, id: "id1" });
+                    onChange({ type: ResourceType.STYLEGUIDE, id });
                 }
-            },
-            {
-                header: "Styleguide 2",
-                onClick: (): void => {
-                    onChange({ type: ResourceType.STYLEGUIDE, id: "id2" });
-                }
-            }
+            }))
         ]}
         placeholder="Select Project/Styleguide"
     />

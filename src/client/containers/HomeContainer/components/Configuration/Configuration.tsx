@@ -1,26 +1,34 @@
 import React, { FunctionComponent } from "react";
 import { Flex, Text } from "@fluentui/react-northstar";
-import { Resource, ResourceType, Workspace } from "../../../../requester";
+import {
+    Project, Resource, ResourceType, Styleguide, Workspace
+} from "../../../../requester";
 import { WorkspaceDropdown } from "./WorkspaceDropdown";
 import { ResourceDropdown } from "./ResourceDropdown";
 import { WebhookEvents } from "./WebhookEvents";
 
 interface ConfigurationProps {
     channelName: string;
-    isWorkspacesLoading: boolean;
+    areWorkspacesLoading: boolean;
     workspaces: Workspace[];
     isWorkspaceSelected: boolean;
     resourceType: ResourceType;
+    areResourcesLoading: boolean;
+    projects: Project[];
+    styleguides: Styleguide[];
     onWorkspaceChange: (value: string) => void;
     onResourceChange: (value: Resource | undefined) => void;
 }
 
 export const Configuration: FunctionComponent<ConfigurationProps> = ({
     channelName,
-    isWorkspacesLoading,
+    areWorkspacesLoading,
     workspaces,
     isWorkspaceSelected,
     resourceType,
+    areResourcesLoading,
+    projects,
+    styleguides,
     onWorkspaceChange,
     onResourceChange
 }) => (
@@ -51,7 +59,7 @@ export const Configuration: FunctionComponent<ConfigurationProps> = ({
                 <Flex.Item grow shrink={0} styles={{ flexBasis: 0 }}>
                     <div>
                         <WorkspaceDropdown
-                            loading={isWorkspacesLoading}
+                            loading={areWorkspacesLoading}
                             workspaces={workspaces}
                             onChange={onWorkspaceChange}
                         />
@@ -59,7 +67,12 @@ export const Configuration: FunctionComponent<ConfigurationProps> = ({
                 </Flex.Item>
                 <Flex.Item grow shrink={0} styles={{ flexBasis: 0 }}>
                     <div>
-                        <ResourceDropdown disabled={!isWorkspaceSelected} onChange={onResourceChange} />
+                        <ResourceDropdown
+                            loading={areResourcesLoading}
+                            projects={projects}
+                            styleguides={styleguides}
+                            disabled={!isWorkspaceSelected}
+                            onChange={onResourceChange} />
                     </div>
                 </Flex.Item>
             </Flex>
