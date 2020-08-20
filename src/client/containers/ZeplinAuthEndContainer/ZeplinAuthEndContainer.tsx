@@ -1,10 +1,9 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { useRouter } from "next/router";
 import * as microsoftTeams from "@microsoft/teams-js";
-import Axios from "axios";
 import { Loader } from "@fluentui/react-northstar";
 
-import { BASE_URL } from "../../config";
+import { getAccessToken } from "../../requester";
 
 export const ZeplinAuthEndContainer: FunctionComponent = () => {
     const {
@@ -22,7 +21,7 @@ export const ZeplinAuthEndContainer: FunctionComponent = () => {
             }
 
             try {
-                const { data: { accessToken } } = await Axios.post(`${BASE_URL}/api/auth/token`, { code });
+                const accessToken = await getAccessToken(String(code));
                 microsoftTeams.authentication.notifySuccess(accessToken);
             } catch (e) {
                 if (e.response) {
