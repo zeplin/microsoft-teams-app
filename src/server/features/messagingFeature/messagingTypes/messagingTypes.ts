@@ -15,6 +15,7 @@ type Resource = {
 }
 
 export enum EventType {
+    PING = "ping",
     PROJECT_COLOR = "project.color",
     PROJECT_NOTE = "project.note",
     PROJECT_NOTE_COMMENT = "project.note.comment",

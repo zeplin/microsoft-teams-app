@@ -14,8 +14,10 @@ import { projectComponentNotificationHandler } from "./projectComponentNotificat
 import { styleguideComponentNotificationHandler } from "./styleguideComponentNotificationHandler";
 import { projectScreenNotificationHandler } from "./projectScreenNotificationHandler";
 import { projectScreenVersionNotificationHandler } from "./projectScreenVersionNotificationHandler";
+import { pingNotificationHandler } from "./pingNotificationHandler/pingNotificationHandler";
 
 const notificationMap: Record<EventType, NotificationHandler> = {
+    [EventType.PING]: pingNotificationHandler,
     [EventType.PROJECT_COLOR]: projectColorNotificationHandler,
     [EventType.STYLEGUIDE_COLOR]: styleguideColorNotificationHandler,
     [EventType.PROJECT_NOTE]: projectNoteNotificationHandler,
