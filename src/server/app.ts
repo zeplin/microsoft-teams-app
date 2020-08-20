@@ -23,7 +23,7 @@ class App {
         });
         await nextApp.prepare();
 
-        const apiRouter = createRouter();
+        const apiRouter = createRouter({ mergeParams: true });
 
         initAdapters(config);
 

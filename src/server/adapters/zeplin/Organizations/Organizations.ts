@@ -1,25 +1,13 @@
 import { Requester } from "../requester";
+import { OrganizationRole, OrganizationSummary } from "../types";
 
 interface OrganizationsListParameter {
     query?: {
-        roles?: OrganizationRole[];
+        role?: OrganizationRole[];
     };
     options: {
         authToken: string;
     };
-}
-
-export enum OrganizationRole {
-    OWNER = "owner",
-    ADMIN = "admin",
-    EDITOR = "editor",
-    MEMBER = "member"
-}
-
-export interface OrganizationSummary {
-    id: string;
-    name: string;
-    logo?: string;
 }
 
 export class Organizations {
@@ -30,15 +18,11 @@ export class Organizations {
     }
 
     list({
-        query: {
-            roles
-        } = {},
+        query,
         options: { authToken }
     }: OrganizationsListParameter): Promise<OrganizationSummary[]> {
-        return this.requester.get<OrganizationSummary[]>("/organizations", {
-            params: {
-                role: roles
-            },
+        return this.requester.get("/organizations", {
+            params: query,
             headers: {
                 Authorization: authToken
             }

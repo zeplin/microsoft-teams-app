@@ -1,15 +1,88 @@
+import { StyleguideStatus, zeplin } from "../../../adapters";
+
 interface Styleguide {
     id: string;
     name: string;
 }
 
+interface StyleguideFacadeListParams {
+    workspace: string;
+    authToken: string;
+}
+
+interface StyleguideFacadePaginatedListParams {
+    workspace: string;
+    authToken: string;
+    limit: number;
+    offset: number;
+}
+
 class StyleguideFacade {
-    list(): Promise<Styleguide[]> {
-        return Promise.resolve([
-            { id: "507f191e810c19729de860ea", name: "Styleguide X" },
-            { id: "5f3cdb0b9c258b2b085afefe", name: "Styleguide Y" },
-            { id: "5f3cdb11dd66f73edf5a2449", name: "Styleguide Z" }
-        ]);
+    private listPaginated({
+        workspace,
+        authToken,
+        limit,
+        offset
+    }: StyleguideFacadePaginatedListParams): Promise<Styleguide[]> {
+        if (workspace === "personal") {
+            return zeplin.styleguides.listMyStyleguides({
+                query: {
+                    limit,
+                    offset
+                },
+                options: {
+                    authToken
+                }
+            });
+        }
+        return zeplin.styleguides.list({
+            query: {
+                workspace,
+                limit,
+                offset,
+                status: StyleguideStatus.ACTIVE
+            },
+            options: {
+                authToken
+            }
+        });
+    }
+
+    async list({
+        workspace,
+        authToken
+    }: StyleguideFacadeListParams): Promise<Styleguide[]> {
+        const result = new Map<string, Styleguide>();
+
+        const limit = 50;
+        let offset = 0;
+        let styleguides = await this.listPaginated({
+            workspace,
+            limit,
+            offset,
+            authToken
+        });
+
+        while (styleguides.length > 0) {
+            styleguides.reduce(
+                (map, { id, name }) => {
+                    map.set(id, { id, name });
+                    return map;
+                },
+                result
+            );
+            offset += limit;
+
+            // eslint-disable-next-line no-await-in-loop
+            styleguides = await this.listPaginated({
+                workspace,
+                limit,
+                offset,
+                authToken
+            });
+        }
+
+        return Array.from(result.values());
     }
 }
 

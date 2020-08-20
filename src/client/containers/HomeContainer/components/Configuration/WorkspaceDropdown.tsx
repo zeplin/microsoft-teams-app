@@ -18,6 +18,7 @@ export const WorkspaceDropdown: FunctionComponent<WorkspaceDropdownProps> = ({
         fluid
         checkable
         items={workspaces.map(({ name, id }) => ({
+            key: id,
             header: name,
             onClick: (): void => onChange(id)
         }))}
