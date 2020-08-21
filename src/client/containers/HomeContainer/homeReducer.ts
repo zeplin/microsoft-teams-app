@@ -20,17 +20,21 @@ type Action = {
     value: string;
 } | {
     type: ActionType.SET_SELECTED_RESOURCE;
-    value: Resource | undefined;
+    value: ResourceWithName | undefined;
 }| {
     type: ActionType.TOGGLE_SELECTED_WEBHOOK_EVENT;
     value: WebhookEventType;
+}
+
+export interface ResourceWithName extends Resource{
+    name: string;
 }
 
 export interface State {
     status: Status;
     accessToken?: string;
     selectedWorkspace?: string;
-    selectedResource?: Resource;
+    selectedResource?: ResourceWithName;
     selectedWebhookEvents: WebhookEventType[];
 }
 

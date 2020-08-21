@@ -2,7 +2,6 @@ import React, { FunctionComponent } from "react";
 import { Flex, Text } from "@fluentui/react-northstar";
 import {
     Project,
-    Resource,
     ResourceType,
     Styleguide,
     WebhookEventType,
@@ -11,6 +10,7 @@ import {
 import { WorkspaceDropdown } from "./WorkspaceDropdown";
 import { ResourceDropdown } from "./ResourceDropdown";
 import { WebhookEvents } from "./WebhookEvents";
+import { ResourceWithName } from "../../homeReducer";
 
 interface ConfigurationProps {
     channelName: string;
@@ -23,7 +23,7 @@ interface ConfigurationProps {
     styleguides: Styleguide[];
     selectedWebhookEvents: WebhookEventType[];
     onWorkspaceChange: (value: string) => void;
-    onResourceChange: (value: Resource | undefined) => void;
+    onResourceChange: (value: ResourceWithName | undefined) => void;
     onWebhookEventChange: (value: WebhookEventType) => void;
 }
 

@@ -121,7 +121,7 @@ export const HomeContainer: FunctionComponent = () => {
                         contentUrl.searchParams.append("id", result);
                         microsoftTeams.settings.setSettings({
                             entityId: result,
-                            configName: "foooo",
+                            configName: state.selectedResource.name,
                             contentUrl: contentUrl.toString()
                         } as unknown as microsoftTeams.settings.Settings);
                         saveEvent.notifySuccess();
