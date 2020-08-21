@@ -13,6 +13,7 @@ import { WebhookEvents } from "./WebhookEvents";
 import { ResourceWithName } from "../../homeReducer";
 
 interface ConfigurationProps {
+    loading: boolean;
     channelName: string;
     areWorkspacesLoading: boolean;
     workspaces: Workspace[];
@@ -28,6 +29,7 @@ interface ConfigurationProps {
 }
 
 export const Configuration: FunctionComponent<ConfigurationProps> = ({
+    loading,
     channelName,
     areWorkspacesLoading,
     workspaces,
@@ -68,6 +70,7 @@ export const Configuration: FunctionComponent<ConfigurationProps> = ({
                 <Flex.Item grow shrink={0} styles={{ flexBasis: 0 }}>
                     <div>
                         <WorkspaceDropdown
+                            disabled={loading}
                             loading={areWorkspacesLoading}
                             workspaces={workspaces}
                             onChange={onWorkspaceChange}
@@ -80,7 +83,7 @@ export const Configuration: FunctionComponent<ConfigurationProps> = ({
                             loading={areResourcesLoading}
                             projects={projects}
                             styleguides={styleguides}
-                            disabled={!isWorkspaceSelected}
+                            disabled={!isWorkspaceSelected || loading}
                             onChange={onResourceChange} />
                     </div>
                 </Flex.Item>
@@ -92,6 +95,7 @@ export const Configuration: FunctionComponent<ConfigurationProps> = ({
             </Text>
             <div>
                 <WebhookEvents
+                    disabled={loading}
                     resourceType={resourceType}
                     selectedWebhookEvents={selectedWebhookEvents}
                     onWebhookEventChange={onWebhookEventChange} />

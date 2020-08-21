@@ -182,6 +182,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
             <div>
               <div
                 aria-checked="true"
+                aria-disabled="false"
                 class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
@@ -222,6 +223,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
             <div>
               <div
                 aria-checked="true"
+                aria-disabled="false"
                 class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
@@ -262,6 +264,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
             <div>
               <div
                 aria-checked="true"
+                aria-disabled="false"
                 class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
@@ -302,6 +305,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
             <div>
               <div
                 aria-checked="true"
+                aria-disabled="false"
                 class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
@@ -342,6 +346,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
             <div>
               <div
                 aria-checked="true"
+                aria-disabled="false"
                 class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
@@ -387,6 +392,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
             <div>
               <div
                 aria-checked="true"
+                aria-disabled="false"
                 class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
@@ -427,6 +433,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
             <div>
               <div
                 aria-checked="true"
+                aria-disabled="false"
                 class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
@@ -467,6 +474,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
             <div>
               <div
                 aria-checked="true"
+                aria-disabled="false"
                 class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
@@ -507,6 +515,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
             <div>
               <div
                 aria-checked="true"
+                aria-disabled="false"
                 class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
