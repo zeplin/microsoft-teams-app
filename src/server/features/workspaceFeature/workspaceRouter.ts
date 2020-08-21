@@ -6,22 +6,22 @@ import { handleWorkspacesGet } from "./workspaceController";
 import { projectRouter } from "./project";
 import { styleguideRouter } from "./styleguide";
 
-const workspaceRouter = createRouter();
+const workspaceRouter = createRouter({ mergeParams: true });
 workspaceRouter.get("/", handleWorkspacesGet);
 workspaceRouter.use(
-    "/:workspaceId/projects",
+    "/:workspace/projects",
     validateRequest({
         params: Joi.object({
-            workspaceId: Joi.string().regex(/^([0-9a-f]{24}|personal)$/i)
+            workspace: Joi.string().regex(/^([0-9a-f]{24}|personal)$/i)
         })
     }),
     projectRouter
 );
 workspaceRouter.use(
-    "/:workspaceId/styleguides",
+    "/:workspace/styleguides",
     validateRequest({
         params: Joi.object({
-            workspaceId: Joi.string().regex(/^([0-9a-f]{24}|personal)$/i)
+            workspace: Joi.string().regex(/^([0-9a-f]{24}|personal)$/i)
         })
     }),
     styleguideRouter

@@ -25,6 +25,7 @@ export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
         checkable
         items={ [
             projects.length > 0 && {
+                key: "Project Header",
                 header: "Projects",
                 disabled: true,
                 styles: {
@@ -32,17 +33,19 @@ export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
                 }
             },
             ...projects.map(({ id, name }) => ({
+                key: id,
                 header: name,
                 onClick: (): void => {
                     onChange({ type: ResourceType.PROJECT, id });
                 }
             })),
             projects.length > 0 && styleguides.length > 0 && {
-                header: "Seperator",
+                key: "Seperator",
                 as: (): ReactElement => <Divider />,
                 disabled: true
             },
             styleguides.length > 0 && {
+                key: "Styleguide Header",
                 header: "Styleguides",
                 disabled: true,
                 styles: {
@@ -50,6 +53,7 @@ export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
                 }
             },
             ...styleguides.map(({ id, name }) => ({
+                key: id,
                 header: name,
                 onClick: (): void => {
                     onChange({ type: ResourceType.STYLEGUIDE, id });

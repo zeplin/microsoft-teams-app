@@ -4,7 +4,7 @@ import Joi from "@hapi/joi";
 import { handleAuthorize, handleTokenCreate } from "./authController";
 import { JSONBodyParser, validateRequest } from "../../middlewares";
 
-const authRouter = createRouter();
+const authRouter = createRouter({ mergeParams: true });
 
 authRouter.get("/authorize", handleAuthorize);
 

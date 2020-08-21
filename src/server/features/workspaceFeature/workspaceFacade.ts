@@ -1,5 +1,4 @@
-import { OrganizationRole } from "../../adapters/zeplin/Organizations";
-import { zeplin } from "../../adapters";
+import { OrganizationRole, zeplin } from "../../adapters";
 
 interface Workspace {
     id: string;
@@ -10,7 +9,7 @@ class WorkspaceFacade {
     async list(authToken: string): Promise<Workspace[]> {
         const organizations = await zeplin.organizations.list({
             query: {
-                roles: [OrganizationRole.OWNER, OrganizationRole.ADMIN, OrganizationRole.EDITOR]
+                role: [OrganizationRole.OWNER, OrganizationRole.ADMIN, OrganizationRole.EDITOR]
             },
             options: {
                 authToken

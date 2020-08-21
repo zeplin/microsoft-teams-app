@@ -1,8 +1,10 @@
-import { OrganizationRole, Organizations } from "./Organizations";
 import { BAD_REQUEST, OK } from "http-status-codes";
 import nock, { Interceptor } from "nock";
+
 import { ZeplinError } from "../ZeplinError";
 import { Requester } from "../requester";
+import { OrganizationRole } from "../types";
+import { Organizations } from "./Organizations";
 
 const authToken = "authToken";
 
@@ -62,7 +64,7 @@ describe("Zeplin > organizations", () => {
 
             const result = await organizations.list({
                 query: {
-                    roles: [OrganizationRole.ADMIN, OrganizationRole.OWNER]
+                    role: [OrganizationRole.ADMIN, OrganizationRole.OWNER]
                 },
                 options: { authToken }
             });
