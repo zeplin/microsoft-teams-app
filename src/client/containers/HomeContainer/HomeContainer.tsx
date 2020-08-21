@@ -152,7 +152,7 @@ export const HomeContainer: FunctionComponent = () => {
                     projects={projects || []}
                     styleguides={styleguides || []}
                     selectedWebhookEvents={state.selectedWebhookEvents}
-                    loading={isCreateLoading}
+                    disabled={isCreateLoading}
                     onWorkspaceChange={(value): void => dispatch({
                         type: ActionType.SET_SELECTED_WORKSPACE,
                         value
