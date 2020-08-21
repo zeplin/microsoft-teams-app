@@ -18,6 +18,7 @@ interface MyStyleguidesListParameter {
     query?: {
         limit?: number;
         offset?: number;
+        status?: StyleguideStatus.ACTIVE | StyleguideStatus.ARCHIVED;
     };
     options: {
         authToken: string;

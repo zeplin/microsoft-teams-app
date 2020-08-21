@@ -28,7 +28,8 @@ class ProjectFacade {
             return zeplin.projects.listMyProjects({
                 query: {
                     limit,
-                    offset
+                    offset,
+                    status: ProjectStatus.ACTIVE
                 },
                 options: {
                     authToken

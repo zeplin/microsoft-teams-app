@@ -17,6 +17,7 @@ interface MyProjectsListParameter {
     query?: {
         limit?: number;
         offset?: number;
+        status?: ProjectStatus.ACTIVE | ProjectStatus.ARCHIVED;
     };
     options: {
         authToken: string;

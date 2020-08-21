@@ -28,7 +28,8 @@ class StyleguideFacade {
             return zeplin.styleguides.listMyStyleguides({
                 query: {
                     limit,
-                    offset
+                    offset,
+                    status: StyleguideStatus.ACTIVE
                 },
                 options: {
                     authToken

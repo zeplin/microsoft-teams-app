@@ -172,6 +172,23 @@ describe("Zeplin > projects", () => {
             expect(result).toStrictEqual(expectedResult);
         });
 
+        it("should return projects when status filter is used", async () => {
+            const status = ProjectStatus.ACTIVE;
+
+            mockInterceptor
+                .query({ status })
+                .reply(OK, expectedResult);
+
+            const result = await projects.listMyProjects({
+                query: {
+                    status
+                },
+                options: { authToken }
+            });
+
+            expect(result).toStrictEqual(expectedResult);
+        });
+
         it("should throw error when API throw error", async () => {
             mockInterceptor.reply(BAD_REQUEST, { message: "Bad request" });
             await expect(

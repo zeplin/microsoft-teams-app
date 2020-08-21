@@ -189,6 +189,23 @@ describe("Zeplin > styleguides", () => {
             expect(result).toStrictEqual(expectedResult);
         });
 
+        it("should return styleguides when status filter is used", async () => {
+            const status = StyleguideStatus.ACTIVE;
+
+            mockInterceptor
+                .query({ status })
+                .reply(OK, expectedResult);
+
+            const result = await styleguides.listMyStyleguides({
+                query: {
+                    status
+                },
+                options: { authToken }
+            });
+
+            expect(result).toStrictEqual(expectedResult);
+        });
+
         it("should throw error when API throw error", async () => {
             mockInterceptor.reply(BAD_REQUEST, { message: "Bad request" });
             await expect(
