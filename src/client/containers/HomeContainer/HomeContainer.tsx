@@ -6,11 +6,38 @@ import React, {
 import * as microsoftTeams from "@microsoft/teams-js";
 import { Loader } from "@fluentui/react-northstar";
 import { useRouter } from "next/router";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 
+import {
+    createConfiguration,
+    getProjects,
+    getStyleguides,
+    getWorkspaces,
+    resourceBasedEvents,
+    ResourceType
+} from "../../requester";
+import {
+    ActionType,
+    homeReducer,
+    initialState,
+    Status,
+    State
+} from "./homeReducer";
 import { Configuration, Login } from "./components";
-import { getProjects, getStyleguides, getWorkspaces, ResourceType } from "../../requester";
-import { ActionType, homeReducer, Status } from "./homeReducer";
+
+interface WebhookSettings {
+    webhookUrl: string;
+}
+
+function isValidState(state: State): boolean {
+    return state.status === Status.CONFIGURATION &&
+        Boolean(state.accessToken) &&
+        Boolean(state.selectedWorkspace) &&
+        Boolean(state.selectedResource) &&
+        state.selectedWebhookEvents.filter(
+            event => resourceBasedEvents[state.selectedResource.type].includes(event)
+        ).length > 0;
+}
 
 export const HomeContainer: FunctionComponent = () => {
     const {
@@ -19,7 +46,7 @@ export const HomeContainer: FunctionComponent = () => {
         }
     } = useRouter();
 
-    const [state, dispatch] = useReducer(homeReducer, { status: Status.LOADING });
+    const [state, dispatch] = useReducer(homeReducer, initialState);
 
     const { isLoading: areWorkspacesLoading, data: workspaces } = useQuery(
         ["workspaces", state.status === Status.CONFIGURATION && state.accessToken],
@@ -35,7 +62,7 @@ export const HomeContainer: FunctionComponent = () => {
             state.status === Status.CONFIGURATION && state.selectedWorkspace,
             state.status === Status.CONFIGURATION && state.accessToken
         ],
-        (key, workspaceId, accessToken) => getProjects(workspaceId, accessToken),
+        (key, workspace, accessToken) => getProjects(workspace, accessToken),
         {
             enabled: state.status === Status.CONFIGURATION && state.selectedWorkspace
         }
@@ -47,7 +74,7 @@ export const HomeContainer: FunctionComponent = () => {
             state.status === Status.CONFIGURATION && state.selectedWorkspace,
             state.status === Status.CONFIGURATION && state.accessToken
         ],
-        (key, workspaceId, accessToken) => getStyleguides(workspaceId, accessToken),
+        (key, workspace, accessToken) => getStyleguides(workspace, accessToken),
         {
             enabled: state.status === Status.CONFIGURATION && state.selectedWorkspace
         }
@@ -59,6 +86,50 @@ export const HomeContainer: FunctionComponent = () => {
             dispatch({ type: ActionType.COMPLETE_LOADING });
         });
     }, []);
+
+    const isValid = isValidState(state);
+
+    useEffect(() => {
+        microsoftTeams.initialize(() => {
+            microsoftTeams.settings.setValidityState(isValid);
+        });
+    }, [isValid]);
+
+    const [create] = useMutation(createConfiguration);
+
+    useEffect(() => {
+        microsoftTeams.initialize(() => {
+            microsoftTeams.getContext(({
+                channelId,
+                channelName,
+                tid: tenantId
+            }) => {
+                microsoftTeams.settings.getSettings(settings => {
+                    microsoftTeams.settings.registerOnSaveHandler(async saveEvent => {
+                        const { webhookUrl } = settings as unknown as WebhookSettings;
+                        const result = await create({
+                            workspace: state.selectedWorkspace,
+                            resource: state.selectedResource,
+                            webhookEvents: state.selectedWebhookEvents,
+                            channelId,
+                            channelName,
+                            tenantId,
+                            webhookUrl
+                        });
+
+                        const contentUrl = new URL(window.location.href);
+                        contentUrl.searchParams.append("id", result);
+                        microsoftTeams.settings.setSettings({
+                            entityId: result,
+                            configName: "foooo",
+                            contentUrl: contentUrl.toString()
+                        } as unknown as microsoftTeams.settings.Settings);
+                        saveEvent.notifySuccess();
+                    });
+                });
+            });
+        });
+    }, [state.selectedWorkspace, state.selectedResource, state.selectedWebhookEvents]);
 
     switch (state.status) {
         case Status.LOADING:
@@ -82,8 +153,16 @@ export const HomeContainer: FunctionComponent = () => {
                     areResourcesLoading={areStyleguidesLoading || areProjectsLoading}
                     projects={projects || []}
                     styleguides={styleguides || []}
-                    onWorkspaceChange={(value): void => dispatch({ type: ActionType.SET_SELECTED_WORKSPACE, value })}
+                    selectedWebhookEvents={state.selectedWebhookEvents}
+                    onWorkspaceChange={(value): void => dispatch({
+                        type: ActionType.SET_SELECTED_WORKSPACE,
+                        value
+                    })}
                     onResourceChange={(value): void => dispatch({ type: ActionType.SET_SELECTED_RESOURCE, value })}
+                    onWebhookEventChange={(value): void => dispatch({
+                        type: ActionType.TOGGLE_SELECTED_WEBHOOK_EVENT,
+                        value
+                    })}
                 />
             );
         default:

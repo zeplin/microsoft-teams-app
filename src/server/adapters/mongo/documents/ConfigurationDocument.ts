@@ -15,9 +15,8 @@ export interface ConfigurationDocument extends Document {
         channel: {
             name: string;
             id: string;
-            url: string;
             incomingWebhookUrl: string;
         };
-        groupId: string;
+        tenantId: string;
     };
 }

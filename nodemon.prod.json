@@ -1,0 +1,5 @@
+{
+    "watch": ["src/server", "src/client"],
+    "exec": "npm run build && NODE_ENV=production node ./dist/server/index.js",
+    "ext": "ts,tsx"
+}
