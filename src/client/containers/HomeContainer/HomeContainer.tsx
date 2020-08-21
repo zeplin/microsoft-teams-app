@@ -117,12 +117,10 @@ export const HomeContainer: FunctionComponent = () => {
                             webhookUrl
                         });
 
-                        const contentUrl = new URL(window.location.href);
-                        contentUrl.searchParams.append("id", result);
                         microsoftTeams.settings.setSettings({
                             entityId: result,
                             configName: state.selectedResource.name,
-                            contentUrl: contentUrl.toString()
+                            contentUrl: window.location.href
                         } as unknown as microsoftTeams.settings.Settings);
                         saveEvent.notifySuccess();
                     });
