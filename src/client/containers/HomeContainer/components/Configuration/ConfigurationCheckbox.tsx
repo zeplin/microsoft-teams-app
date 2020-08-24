@@ -10,7 +10,6 @@ interface ConfigurationCheckboxProps {
 }
 
 export const ConfigurationCheckbox: FunctionComponent<ConfigurationCheckboxProps> = ({
-    disabled,
     checked,
     title,
     description,
@@ -18,7 +17,6 @@ export const ConfigurationCheckbox: FunctionComponent<ConfigurationCheckboxProps
 }) => (
     <div>
         <Checkbox
-            disabled={disabled}
             checked={checked}
             defaultChecked
             label={

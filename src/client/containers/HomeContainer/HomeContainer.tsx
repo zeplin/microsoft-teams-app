@@ -95,7 +95,7 @@ export const HomeContainer: FunctionComponent = () => {
         });
     }, [isValid]);
 
-    const [create, { isLoading: isCreateLoading }] = useMutation(createConfiguration);
+    const [create] = useMutation(createConfiguration);
 
     useEffect(() => {
         microsoftTeams.initialize(() => {
@@ -152,7 +152,6 @@ export const HomeContainer: FunctionComponent = () => {
                     projects={projects || []}
                     styleguides={styleguides || []}
                     selectedWebhookEvents={state.selectedWebhookEvents}
-                    disabled={isCreateLoading}
                     onWorkspaceChange={(value): void => dispatch({
                         type: ActionType.SET_SELECTED_WORKSPACE,
                         value
