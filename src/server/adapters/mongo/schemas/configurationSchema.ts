@@ -38,7 +38,7 @@ export const configurationSchema = new Schema({
                 required: true
             }
         },
-        groupId: {
+        tenantId: {
             type: String,
             required: true
         }

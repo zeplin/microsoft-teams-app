@@ -1,13 +1,14 @@
 import React, { FunctionComponent, ReactElement } from "react";
 import { Divider, Dropdown } from "@fluentui/react-northstar";
-import { Project, Resource, ResourceType, Styleguide } from "../../../../requester";
+import { Project, ResourceType, Styleguide } from "../../../../requester";
+import { ResourceWithName } from "../../homeReducer";
 
 interface ResourceDropdownProps {
     disabled: boolean;
     loading: boolean;
     projects: Project[];
     styleguides: Styleguide[];
-    onChange: (value: Resource | undefined) => void;
+    onChange: (value: ResourceWithName | undefined) => void;
 }
 
 export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
@@ -36,7 +37,7 @@ export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
                 key: id,
                 header: name,
                 onClick: (): void => {
-                    onChange({ type: ResourceType.PROJECT, id });
+                    onChange({ type: ResourceType.PROJECT, id, name });
                 }
             })),
             projects.length > 0 && styleguides.length > 0 && {
@@ -56,7 +57,7 @@ export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
                 key: id,
                 header: name,
                 onClick: (): void => {
-                    onChange({ type: ResourceType.STYLEGUIDE, id });
+                    onChange({ type: ResourceType.STYLEGUIDE, id, name });
                 }
             }))
         ]}

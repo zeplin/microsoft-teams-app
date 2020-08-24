@@ -16,6 +16,7 @@ jest.mock("@microsoft/teams-js", () => ({
         setSettings: jest.fn(),
         getSettings: jest.fn(callback => callback({ entityId: "" }))
     },
+    getContext: jest.fn(),
     authentication: {
         authenticate: jest.fn(({ successCallback }) => successCallback("accessToken"))
     }

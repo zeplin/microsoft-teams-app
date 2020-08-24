@@ -1,11 +1,16 @@
 import React, { FunctionComponent } from "react";
 import { Flex, Text } from "@fluentui/react-northstar";
 import {
-    Project, Resource, ResourceType, Styleguide, Workspace
+    Project,
+    ResourceType,
+    Styleguide,
+    WebhookEventType,
+    Workspace
 } from "../../../../requester";
 import { WorkspaceDropdown } from "./WorkspaceDropdown";
 import { ResourceDropdown } from "./ResourceDropdown";
 import { WebhookEvents } from "./WebhookEvents";
+import { ResourceWithName } from "../../homeReducer";
 
 interface ConfigurationProps {
     channelName: string;
@@ -16,8 +21,10 @@ interface ConfigurationProps {
     areResourcesLoading: boolean;
     projects: Project[];
     styleguides: Styleguide[];
+    selectedWebhookEvents: WebhookEventType[];
     onWorkspaceChange: (value: string) => void;
-    onResourceChange: (value: Resource | undefined) => void;
+    onResourceChange: (value: ResourceWithName | undefined) => void;
+    onWebhookEventChange: (value: WebhookEventType) => void;
 }
 
 export const Configuration: FunctionComponent<ConfigurationProps> = ({
@@ -29,8 +36,10 @@ export const Configuration: FunctionComponent<ConfigurationProps> = ({
     areResourcesLoading,
     projects,
     styleguides,
+    selectedWebhookEvents,
     onWorkspaceChange,
-    onResourceChange
+    onResourceChange,
+    onWebhookEventChange
 }) => (
     <Flex fill column gap="gap.large">
         <div />
@@ -82,7 +91,10 @@ export const Configuration: FunctionComponent<ConfigurationProps> = ({
                     Select the events you want to get a message for:
             </Text>
             <div>
-                <WebhookEvents resourceType={resourceType} />
+                <WebhookEvents
+                    resourceType={resourceType}
+                    selectedWebhookEvents={selectedWebhookEvents}
+                    onWebhookEventChange={onWebhookEventChange} />
             </div>
         </Flex>
     </Flex>

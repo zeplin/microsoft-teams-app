@@ -1,10 +1,5 @@
 import Axios from "axios";
 
-export const getAccessToken = async (code: string): Promise<string> => {
-    const { data: { accessToken } } = await Axios.post("/api/auth/token", { code });
-    return accessToken;
-};
-
 export interface Workspace {
     id: string;
     name: string;
@@ -27,9 +22,9 @@ export interface Project {
     name: string;
 }
 
-export const getProjects = async (workspaceId: string, accessToken: string): Promise<Project[]> => {
+export const getProjects = async (workspace: string, accessToken: string): Promise<Project[]> => {
     const { data: result } = await Axios.get(
-        `/api/workspaces/${workspaceId}/projects`,
+        `/api/workspaces/${workspace}/projects`,
         {
             headers: {
                 Authorization: `Bearer ${accessToken}`
@@ -44,9 +39,9 @@ export interface Styleguide {
     name: string;
 }
 
-export const getStyleguides = async (workspaceId: string, accessToken: string): Promise<Styleguide[]> => {
+export const getStyleguides = async (workspace: string, accessToken: string): Promise<Styleguide[]> => {
     const { data: result } = await Axios.get(
-        `/api/workspaces/${workspaceId}/styleguides`,
+        `/api/workspaces/${workspace}/styleguides`,
         {
             headers: {
                 Authorization: `Bearer ${accessToken}`
@@ -55,16 +50,3 @@ export const getStyleguides = async (workspaceId: string, accessToken: string): 
     );
     return result;
 };
-
-// TODO: use following types for other POST/PATCH configurations
-
-export enum ResourceType {
-    PROJECT,
-    STYLEGUIDE
-}
-
-export interface Resource {
-    type: ResourceType;
-    id: string;
-}
-
