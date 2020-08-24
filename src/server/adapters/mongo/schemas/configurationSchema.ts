@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { WebhookResourceType } from "../../../enums";
+import { WebhookResourceType } from "../../zeplin";
 
 export const configurationSchema = new Schema({
     zeplin: {
@@ -28,15 +28,11 @@ export const configurationSchema = new Schema({
             id: {
                 type: String,
                 required: true
-            },
-            url: {
-                type: String,
-                required: true
-            },
-            incomingWebhookUrl: {
-                type: String,
-                required: true
             }
+        },
+        incomingWebhookUrl: {
+            type: String,
+            required: true
         },
         tenantId: {
             type: String,

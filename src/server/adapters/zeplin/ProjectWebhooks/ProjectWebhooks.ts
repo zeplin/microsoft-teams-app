@@ -1,4 +1,4 @@
-import { ProjectWebhookEvent } from "../../../enums";
+import { ProjectWebhookEvent } from "../types";
 import { Requester } from "../requester";
 
 interface ProjectWebhookCreateBody {

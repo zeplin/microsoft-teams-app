@@ -2,7 +2,6 @@ import React, { FunctionComponent } from "react";
 import { Checkbox, Flex, Text } from "@fluentui/react-northstar";
 
 interface ConfigurationCheckboxProps {
-    disabled: boolean;
     checked: boolean;
     title: string;
     description: string;

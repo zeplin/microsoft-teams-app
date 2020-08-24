@@ -1,7 +1,8 @@
+import Axios from "axios";
 
 export enum ResourceType {
-    PROJECT = "project",
-    STYLEGUIDE = "styleguide"
+    PROJECT = "Project",
+    STYLEGUIDE = "Styleguide"
 }
 
 export interface Resource {
@@ -43,28 +44,51 @@ export const resourceBasedEvents = {
 };
 
 export interface ConfigurationCreateParameters {
-    channelId: string;
-    channelName: string;
-    tenantId: string;
-    webhookUrl: string;
-    workspace: string;
-    resource: Resource;
-    webhookEvents: WebhookEventType[];
+    accessToken: string;
+    zeplin: {
+        resource: {
+            id: string;
+            type: string;
+        };
+        events: WebhookEventType[];
+    };
+    microsoftTeams: {
+        channel: {
+            id: string;
+            name: string;
+        };
+        incomingWebhookUrl: string;
+        tenantId: string;
+    };
 }
 
-export const createConfiguration = ({
-    resource,
-    webhookEvents,
-    ...configuration
-}: ConfigurationCreateParameters): Promise<string> => {
-    // eslint-disable-next-line no-console
-    console.log({
-        ...configuration,
-        resource,
-        webhookEvents: webhookEvents
-            .filter(webhookEventType => resourceBasedEvents[resource.type].includes(webhookEventType))
-            .map(webhookEventType => `${resource.type}.${webhookEventType}`)
-    });
-    return Promise.resolve("hello world");
+export const createConfiguration = async (
+    {
+        accessToken,
+        zeplin: {
+            resource,
+            events
+        },
+        ...configuration
+    }: ConfigurationCreateParameters
+): Promise<string> => {
+    const { data: { id } } = await Axios.post(
+        "/api/configurations",
+        {
+            ...configuration,
+            zeplin: {
+                resource,
+                events: events
+                    .filter(webhookEventType => resourceBasedEvents[resource.type].includes(webhookEventType))
+                    .map(webhookEventType => `${resource.type.toLowerCase()}.${webhookEventType}`)
+            }
+        },
+        {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        }
+    );
+    return id;
 };
 

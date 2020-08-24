@@ -1,4 +1,4 @@
-import { StyleguideWebhookEvent } from "../../../enums";
+import { StyleguideWebhookEvent } from "../types";
 import { Requester } from "../requester";
 
 interface StyleguideWebhookCreateBody {

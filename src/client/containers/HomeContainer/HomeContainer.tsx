@@ -95,7 +95,7 @@ export const HomeContainer: FunctionComponent = () => {
         });
     }, [isValid]);
 
-    const [create] = useMutation(createConfiguration);
+    const [create] = useMutation(createConfiguration, { throwOnError: true });
 
     useEffect(() => {
         microsoftTeams.initialize(() => {
@@ -107,22 +107,39 @@ export const HomeContainer: FunctionComponent = () => {
                 microsoftTeams.settings.getSettings(settings => {
                     microsoftTeams.settings.registerOnSaveHandler(async saveEvent => {
                         const { webhookUrl } = settings as unknown as WebhookSettings;
-                        const result = await create({
-                            workspace: state.selectedWorkspace,
-                            resource: state.selectedResource,
-                            webhookEvents: state.selectedWebhookEvents,
-                            channelId,
-                            channelName,
-                            tenantId,
-                            webhookUrl
-                        });
+                        try {
+                            const configurationId = await create(
+                                {
+                                    accessToken: state.accessToken,
+                                    zeplin: {
+                                        resource: {
+                                            id: state.selectedResource.id,
+                                            type: state.selectedResource.type
+                                        },
+                                        events: state.selectedWebhookEvents
+                                    },
+                                    microsoftTeams: {
+                                        channel: {
+                                            id: channelId,
+                                            name: channelName
+                                        },
+                                        tenantId,
+                                        incomingWebhookUrl: webhookUrl
+                                    }
+                                });
 
-                        microsoftTeams.settings.setSettings({
-                            entityId: result,
-                            configName: state.selectedResource.name,
-                            contentUrl: window.location.href
-                        } as unknown as microsoftTeams.settings.Settings);
-                        saveEvent.notifySuccess();
+                            const contentURL = new URL(window.location.href);
+                            contentURL.searchParams.append("id", configurationId);
+
+                            microsoftTeams.settings.setSettings({
+                                entityId: configurationId,
+                                configName: state.selectedResource.name,
+                                contentUrl: contentURL.toString()
+                            } as unknown as microsoftTeams.settings.Settings);
+                            saveEvent.notifySuccess();
+                        } catch (error) {
+                            saveEvent.notifyFailure(error?.message ?? error);
+                        }
                     });
                 });
             });

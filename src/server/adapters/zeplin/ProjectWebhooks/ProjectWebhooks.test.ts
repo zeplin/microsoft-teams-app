@@ -1,5 +1,5 @@
 import { ProjectWebhooks } from "./ProjectWebhooks";
-import { ProjectWebhookEvent } from "../../../enums";
+import { ProjectWebhookEvent } from "../types";
 import { BAD_REQUEST, OK } from "http-status-codes";
 import nock, { Interceptor } from "nock";
 import { ZeplinError } from "../ZeplinError";
