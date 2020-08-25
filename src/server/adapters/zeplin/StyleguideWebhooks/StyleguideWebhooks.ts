@@ -21,6 +21,16 @@ interface StyleguideWebhookCreateParameter {
     options: StyleguideWebhookCreateOptions;
 }
 
+interface StyleguideWebhookDeleteParameter {
+    params: {
+        styleguideId: string;
+        webhookId: string;
+    };
+    options: {
+        authToken: string;
+    };
+}
+
 export class StyleguideWebhooks {
     private readonly requester: Requester;
 
@@ -39,6 +49,25 @@ export class StyleguideWebhooks {
         return this.requester.createResource(
             `/styleguides/${styleguideId}/webhooks`,
             body,
+            {
+                headers: {
+                    Authorization: authToken
+                }
+            }
+        );
+    }
+
+    delete(
+        {
+            params: {
+                styleguideId,
+                webhookId
+            },
+            options: { authToken }
+        }: StyleguideWebhookDeleteParameter
+    ): Promise<void> {
+        return this.requester.delete(
+            `/styleguides/${styleguideId}/webhooks/${webhookId}`,
             {
                 headers: {
                     Authorization: authToken

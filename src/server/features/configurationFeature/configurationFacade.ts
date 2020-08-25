@@ -1,8 +1,8 @@
-import { configurationRepo } from "../../repos";
+import { Configuration, configurationRepo } from "../../repos";
 import { ProjectWebhookEvent, StyleguideWebhookEvent, WebhookResourceType, zeplin } from "../../adapters";
 import { BASE_URL, WEBHOOK_SECRET } from "../../config";
 
-interface Configuration {
+interface ConfigurationResponse {
     id: string;
 }
 
@@ -77,10 +77,36 @@ class ConfigurationFacade {
         });
     }
 
+    private deleteWebhook(
+        { zeplin: { resource, webhookId } }: Configuration,
+        authToken: string
+    ): Promise<void> {
+        if (resource.type === WebhookResourceType.PROJECT) {
+            return zeplin.projectWebhooks.delete({
+                params: {
+                    projectId: resource.id,
+                    webhookId
+                },
+                options: {
+                    authToken
+                }
+            });
+        }
+        return zeplin.styleguideWebhooks.delete({
+            params: {
+                styleguideId: resource.id,
+                webhookId
+            },
+            options: {
+                authToken
+            }
+        });
+    }
+
     async create(
         params: ConfigurationCreateParameters,
         options: ConfigurationCreateOptions
-    ): Promise<Configuration> {
+    ): Promise<ConfigurationResponse> {
         const webhookId = await this.createWebhook(params.zeplin, options);
         const { _id } = await configurationRepo.create({
             ...params,
@@ -92,6 +118,17 @@ class ConfigurationFacade {
         return {
             id: _id.toHexString()
         };
+    }
+
+    async delete(
+        configurationId: string,
+        authToken: string
+    ): Promise<void> {
+        const configuration = await configurationRepo.get(configurationId);
+        if (configuration) {
+            await this.deleteWebhook(configuration, authToken);
+            await configurationRepo.delete(configurationId);
+        }
     }
 }
 

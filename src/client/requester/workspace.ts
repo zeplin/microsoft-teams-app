@@ -5,7 +5,7 @@ export interface Workspace {
     name: string;
 }
 
-export const getWorkspaces = async (accessToken: string): Promise<Workspace[]> => {
+export const fetchWorkspaces = async (accessToken: string): Promise<Workspace[]> => {
     const { data: result } = await Axios.get(
         "/api/workspaces",
         {
@@ -22,7 +22,7 @@ export interface Project {
     name: string;
 }
 
-export const getProjects = async (workspace: string, accessToken: string): Promise<Project[]> => {
+export const fetchProjects = async (workspace: string, accessToken: string): Promise<Project[]> => {
     const { data: result } = await Axios.get(
         `/api/workspaces/${workspace}/projects`,
         {
@@ -39,7 +39,7 @@ export interface Styleguide {
     name: string;
 }
 
-export const getStyleguides = async (workspace: string, accessToken: string): Promise<Styleguide[]> => {
+export const fetchStyleguides = async (workspace: string, accessToken: string): Promise<Styleguide[]> => {
     const { data: result } = await Axios.get(
         `/api/workspaces/${workspace}/styleguides`,
         {

@@ -1,6 +1,6 @@
-import { Reducer } from "react";
+import { Dispatch, Reducer, useReducer } from "react";
 
-import { Resource, WebhookEventType } from "../../requester";
+import { Resource, WebhookEventType } from "../../../requester";
 
 const toggleWebhookEvent = (
     webhookEvents: WebhookEventType[],
@@ -13,7 +13,7 @@ const toggleWebhookEvent = (
     return [...webhookEvents.slice(0, index), ...webhookEvents.slice(index + 1)];
 };
 
-type Action = {
+export type Action = {
     type: ActionType.COMPLETE_LOADING;
 } | {
     type: ActionType.GET_TOKEN | ActionType.SET_SELECTED_WORKSPACE;
@@ -95,3 +95,5 @@ export const homeReducer: Reducer<State, Action> = (state, action) => {
             throw new Error();
     }
 };
+
+export const useHomeReducer = (): [State, Dispatch<Action>] => useReducer(homeReducer, initialState);

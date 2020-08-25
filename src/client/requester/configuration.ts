@@ -62,7 +62,7 @@ export interface ConfigurationCreateParameters {
     };
 }
 
-export const createConfiguration = async (
+export const fetchConfigurationCreate = async (
     {
         accessToken,
         zeplin: {
@@ -90,5 +90,26 @@ export const createConfiguration = async (
         }
     );
     return id;
+};
+
+export interface ConfigurationDeleteParameters {
+    accessToken: string;
+    configurationId: string;
+}
+
+export const fetchConfigurationDelete = async (
+    {
+        accessToken,
+        configurationId
+    }: ConfigurationDeleteParameters
+): Promise<void> => {
+    await Axios.delete(
+        `/api/configurations/${configurationId}`,
+        {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        }
+    );
 };
 

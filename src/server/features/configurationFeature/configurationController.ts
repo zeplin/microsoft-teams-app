@@ -14,3 +14,15 @@ export const handleConfigurationCreate: RequestHandler = async (req, res, next) 
         next(error);
     }
 };
+
+export const handleConfigurationDelete: RequestHandler = async (req, res, next) => {
+    try {
+        const result = await configurationFacade.delete(
+            req.params.configurationId,
+            String(req.headers.authorization)
+        );
+        res.json(result);
+    } catch (error) {
+        next(error);
+    }
+};

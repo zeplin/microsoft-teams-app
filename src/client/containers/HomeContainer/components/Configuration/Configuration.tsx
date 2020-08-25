@@ -10,7 +10,7 @@ import {
 import { WorkspaceDropdown } from "./WorkspaceDropdown";
 import { ResourceDropdown } from "./ResourceDropdown";
 import { WebhookEvents } from "./WebhookEvents";
-import { ResourceWithName } from "../../homeReducer";
+import { ResourceWithName } from "../../hooks";
 
 interface ConfigurationProps {
     channelName: string;

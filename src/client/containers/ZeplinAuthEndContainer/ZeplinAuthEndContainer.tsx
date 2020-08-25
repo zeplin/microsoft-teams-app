@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import * as microsoftTeams from "@microsoft/teams-js";
 import { Loader } from "@fluentui/react-northstar";
 
-import { getAccessToken } from "../../requester";
+import { fetchAccessToken } from "../../requester";
 
 export const ZeplinAuthEndContainer: FunctionComponent = () => {
     const {
@@ -21,7 +21,7 @@ export const ZeplinAuthEndContainer: FunctionComponent = () => {
             }
 
             try {
-                const accessToken = await getAccessToken(String(code));
+                const accessToken = await fetchAccessToken(String(code));
                 microsoftTeams.authentication.notifySuccess(accessToken);
             } catch (e) {
                 if (e.response) {
@@ -33,5 +33,5 @@ export const ZeplinAuthEndContainer: FunctionComponent = () => {
         });
     }, []);
 
-    return <Loader />;
+    return <Loader styles={{ height: "100vh" }} />;
 };

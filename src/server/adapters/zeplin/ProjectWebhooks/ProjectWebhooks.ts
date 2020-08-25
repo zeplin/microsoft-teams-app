@@ -21,6 +21,16 @@ interface ProjectWebhookCreateParameter {
     options: ProjectWebhookCreateOptions;
 }
 
+interface ProjectWebhookDeleteParameter {
+    params: {
+        projectId: string;
+        webhookId: string;
+    };
+    options: {
+        authToken: string;
+    };
+}
+
 export class ProjectWebhooks {
     private readonly requester: Requester;
 
@@ -38,6 +48,25 @@ export class ProjectWebhooks {
         return this.requester.createResource(
             `/projects/${projectId}/webhooks`,
             body,
+            {
+                headers: {
+                    Authorization: authToken
+                }
+            }
+        );
+    }
+
+    delete(
+        {
+            params: {
+                projectId,
+                webhookId
+            },
+            options: { authToken }
+        }: ProjectWebhookDeleteParameter
+    ): Promise<void> {
+        return this.requester.delete(
+            `/projects/${projectId}/webhooks/${webhookId}`,
             {
                 headers: {
                     Authorization: authToken

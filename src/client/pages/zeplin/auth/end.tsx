@@ -9,7 +9,7 @@ const ZeplinAuthEnd = dynamic(
     async () => (await import("../../../containers")).ZeplinAuthEndContainer,
     {
         ssr: false,
-        loading: () => <Loader />
+        loading: () => <Loader styles={{ height: "100vh" }} />
     }
 );
 

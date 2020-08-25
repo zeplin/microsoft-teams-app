@@ -7,21 +7,21 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
   dir="ltr"
 >
   <div
-    class="ui-flex am ao bq br bs"
+    class="ui-flex am ao br bs bt"
     data-uses-unhanded-props="true"
   >
     <div />
     <div
-      class="ui-flex am ao bq br fe"
+      class="ui-flex am ao br bs ff"
       data-uses-unhanded-props="true"
     >
       <span
-        class="ui-text bu"
+        class="ui-text bv"
         data-uses-unhanded-props="true"
       >
         You are connecting 
         <span
-          class="ui-text ff"
+          class="ui-text fg"
           data-uses-unhanded-props="true"
         >
           #
@@ -38,7 +38,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
         t find the project/styleguide to connect to?
          
         <a
-          class="ui-text fg fh fi"
+          class="ui-text fh fi fj"
           data-uses-unhanded-props="true"
           dir="auto"
           href="https://zpl.io/msteams-app-docs"
@@ -48,25 +48,25 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
         </a>
       </span>
       <div
-        class="ui-flex am bq br fj"
+        class="ui-flex am br bs fk"
         data-uses-unhanded-props="true"
       >
         <div
-          class="ui-flex__item fk fl fm"
+          class="ui-flex__item fl fm fn"
         >
           <div
             class="ui-dropdown"
           >
             <div
-              class="ui-dropdown__container am fn bb cq cr cs ct cu cv cw cx cl bq fo fp fq fr fs ft fu fv fw fx fy fz ga gb"
+              class="ui-dropdown__container am fo bc cr cs ct cu cv cw cx cy cm br fp fq fr fs ft fu fv fw fx fy fz ga gb gc"
             >
               <div
-                class="ui-dropdown__selected-items am fn gc gd bq ge"
+                class="ui-dropdown__selected-items am fo gd ge br gf"
               >
                 <button
                   aria-haspopup="true"
                   aria-labelledby="dropdown-trigger-button-1"
-                  class="ui-button bx by gf b gg cc cd gh al bb ce gi cg gj ci cj ck cl cm cn co cp cq cr cs ct cu cv cw cx gk gl gm fw fx fy fz db gn go gp gq gr gs dd gt gu de gv gw gx gy gz ha hb hc hd he hf hg hh hi hj hk hl hm hn ho hp hq hr hs ht hu df dg dh di dj dk dl dm dn do dp dq dr ds dt du hv hw hx hy dz hz eb ec ed ee ef eg eh ei ej ek el em en eo ep ia ib ic id eu ie ew ex ey if ig ih ii ij ik il im in io bq ar ip iq ir is ui-dropdown__trigger-button"
+                  class="ui-button by bz gg b gh cd ce gi al bc cf gj ch gk cj ck cl cm cn co cp cq cr cs ct cu cv cw cx cy gl gm gn fx fy fz ga dc go gp gq gr gs gt de gu gv df gw gx gy gz ha hb hc hd he hf hg hh hi hj hk hl hm hn ho hp hq hr hs ht hu hv dg dh di dj dk dl dm dn do dp dq dr ds dt du dv hw hx hy hz ea ia ec ed ee ef eg eh ei ej ek el em en eo ep eq ib ic id ie ev if ex ey ez ig ih ii ij ik il im in io ip br as iq ir is it ui-dropdown__trigger-button"
                   data-aa-class="Button"
                   data-toggle="true"
                   data-uses-unhanded-props="true"
@@ -75,7 +75,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                   type="button"
                 >
                   <span
-                    class="ui-button__content ar ez fb fc bu fd"
+                    class="ui-button__content as fb fc fd bv fe"
                     data-uses-unhanded-props="true"
                     dir="auto"
                   >
@@ -85,7 +85,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
               </div>
               <div
                 aria-hidden="true"
-                class="ui-box al am an it iu iv cj iw ip iq ir is ix iy br iz ui-dropdown__toggle-indicator"
+                class="ui-box al am an iu iv iw ck ix iq ir is it iy iz bs ja ui-dropdown__toggle-indicator"
                 data-aa-class="Box"
                 data-uses-unhanded-props="true"
                 role="img"
@@ -93,7 +93,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
               <ul
                 aria-hidden="true"
                 aria-labelledby="downshift-0-label"
-                class="ui-list ba ja ce jb cg jc ip iq ir is cl cq cr cs ct fo fp fq fr cu cv cw cx jd je gc bq a jf ui-dropdown__items-list"
+                class="ui-list bb jb cf jc ch jd iq ir is it cm cr cs ct cu fp fq fr fs cv cw cx cy je jf gd br a jg ui-dropdown__items-list"
                 data-aa-class="List"
                 data-uses-unhanded-props="true"
                 id="downshift-0-menu"
@@ -104,22 +104,22 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
           </div>
         </div>
         <div
-          class="ui-flex__item fk fl fm"
+          class="ui-flex__item fl fm fn"
         >
           <div
             class="ui-dropdown"
           >
             <div
-              class="ui-dropdown__container am fn bb cq cr cs ct jg jh ji jj cl bq fo fp fq fr fs jk fu fv jl gb iw jm"
+              class="ui-dropdown__container am fo bc cr cs ct cu jh ji jj jk cm br fp fq fr fs ft jl fv fw jm gc ix jn"
             >
               <div
-                class="ui-dropdown__selected-items am fn gc gd bq ge"
+                class="ui-dropdown__selected-items am fo gd ge br gf"
               >
                 <button
                   aria-disabled="true"
                   aria-haspopup="true"
                   aria-labelledby="dropdown-trigger-button-2"
-                  class="ui-button bx by gf jn gg cc cd gh al bb ce gi cg gj ci jo ck cl cm cn co cp cq cr cs ct cu cv cw cx gk gl gm fw fx fy fz db gn go gp gq gr gs dd gt gu de gv gw gx gy gz ha hb hc hd he hf hg hh hi hj hk hl hm hn ho hp hq hr hs ht hu df dg dh di dj dk dl dm dn do dp dq dr ds dt du hv hw hx hy dz hz eb ec ed ee ef eg eh ei ej ek el em en eo ep ia ib ic id eu ie ew ex ey if ig ih ii ij ik il im in io jp bq ar ip iq ir is ui-dropdown__trigger-button"
+                  class="ui-button by bz gg jo gh cd ce gi al bc cf gj ch gk cj jp cl cm cn co cp cq cr cs ct cu cv cw cx cy gl gm gn fx fy fz ga dc go gp gq gr gs gt de gu gv df gw gx gy gz ha hb hc hd he hf hg hh hi hj hk hl hm hn ho hp hq hr hs ht hu hv dg dh di dj dk dl dm dn do dp dq dr ds dt du dv hw hx hy hz ea ia ec ed ee ef eg eh ei ej ek el em en eo ep eq ib ic id ie ev if ex ey ez ig ih ii ij ik il im in io ip jq br as iq ir is it ui-dropdown__trigger-button"
                   data-aa-class="Button"
                   data-toggle="true"
                   data-uses-unhanded-props="true"
@@ -129,7 +129,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                   type="button"
                 >
                   <span
-                    class="ui-button__content ar ez fb fc bu fd"
+                    class="ui-button__content as fb fc fd bv fe"
                     data-uses-unhanded-props="true"
                     dir="auto"
                   >
@@ -139,7 +139,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
               </div>
               <div
                 aria-hidden="true"
-                class="ui-box al am an jq iu iv jo iw ip iq ir is ix iy br iz ui-dropdown__toggle-indicator"
+                class="ui-box al am an jr iv iw jp ix iq ir is it iy iz bs ja ui-dropdown__toggle-indicator"
                 data-aa-class="Box"
                 data-uses-unhanded-props="true"
                 role="img"
@@ -147,7 +147,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
               <ul
                 aria-hidden="true"
                 aria-labelledby="downshift-1-label"
-                class="ui-list ba ja ce jb cg jc ip iq ir is cl cq cr cs ct fo fp fq fr cu cv cw cx jd je gc bq a jf ui-dropdown__items-list"
+                class="ui-list bb jb cf jc ch jd iq ir is it cm cr cs ct cu fp fq fr fs cv cw cx cy je jf gd br a jg ui-dropdown__items-list"
                 data-aa-class="List"
                 data-uses-unhanded-props="true"
                 id="downshift-1-menu"
@@ -160,11 +160,11 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
       </div>
     </div>
     <div
-      class="ui-flex am ao bq br bt"
+      class="ui-flex am ao br bs bu"
       data-uses-unhanded-props="true"
     >
       <span
-        class="ui-text bu"
+        class="ui-text bv"
         data-uses-unhanded-props="true"
         dir="auto"
       >
@@ -172,17 +172,17 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
       </span>
       <div>
         <div
-          class="ui-flex am bq br fj"
+          class="ui-flex am br bs fk"
           data-uses-unhanded-props="true"
         >
           <div
-            class="ui-flex am ao bq br bt"
+            class="ui-flex am ao br bs bu"
             data-uses-unhanded-props="true"
           >
             <div>
               <div
                 aria-checked="true"
-                class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
+                class="ui-checkbox bc js jt ju ck cm b jv jw jx jy cj jz df dg dh di dj dk dl dm dn do dp dq ka kb kc kd dv dw dx dy dz ea eb ec ed ke ef eg eh ei ej ek el kf kg kh ki eq er es et eu ev ew ex ey kj kk kl km kn ko kp"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
                 data-uses-unhanded-props="true"
@@ -190,15 +190,15 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="ui-box kp kq kr ks kt ku kv kw kx ky cq cr cs ct fu kz la lb lc ld le iq ir is lf lg lh li iw lj iu iv ui-checkbox__indicator"
+                  class="ui-box kq kr ks kt ku kv kw kx ky kz cr cs ct cu fv la lb lc ld le lf ir is it lg lh li lj ix lk iv iw ui-checkbox__indicator"
                   data-uses-unhanded-props="true"
                 />
                 <span
-                  class="ui-text ba lk ll ui-checkbox__label"
+                  class="ui-text bb ll lm ui-checkbox__label"
                   data-uses-unhanded-props="true"
                 >
                   <div
-                    class="ui-flex am ao bq br"
+                    class="ui-flex am ao br bs"
                     data-uses-unhanded-props="true"
                   >
                     <span
@@ -209,7 +209,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                       Screens
                     </span>
                     <span
-                      class="ui-text lm bw"
+                      class="ui-text ln bx"
                       data-uses-unhanded-props="true"
                       dir="auto"
                     >
@@ -222,7 +222,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
             <div>
               <div
                 aria-checked="true"
-                class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
+                class="ui-checkbox bc js jt ju ck cm b jv jw jx jy cj jz df dg dh di dj dk dl dm dn do dp dq ka kb kc kd dv dw dx dy dz ea eb ec ed ke ef eg eh ei ej ek el kf kg kh ki eq er es et eu ev ew ex ey kj kk kl km kn ko kp"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
                 data-uses-unhanded-props="true"
@@ -230,15 +230,15 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="ui-box kp kq kr ks kt ku kv kw kx ky cq cr cs ct fu kz la lb lc ld le iq ir is lf lg lh li iw lj iu iv ui-checkbox__indicator"
+                  class="ui-box kq kr ks kt ku kv kw kx ky kz cr cs ct cu fv la lb lc ld le lf ir is it lg lh li lj ix lk iv iw ui-checkbox__indicator"
                   data-uses-unhanded-props="true"
                 />
                 <span
-                  class="ui-text ba lk ll ui-checkbox__label"
+                  class="ui-text bb ll lm ui-checkbox__label"
                   data-uses-unhanded-props="true"
                 >
                   <div
-                    class="ui-flex am ao bq br"
+                    class="ui-flex am ao br bs"
                     data-uses-unhanded-props="true"
                   >
                     <span
@@ -249,7 +249,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                       Screen versions
                     </span>
                     <span
-                      class="ui-text lm bw"
+                      class="ui-text ln bx"
                       data-uses-unhanded-props="true"
                       dir="auto"
                     >
@@ -262,7 +262,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
             <div>
               <div
                 aria-checked="true"
-                class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
+                class="ui-checkbox bc js jt ju ck cm b jv jw jx jy cj jz df dg dh di dj dk dl dm dn do dp dq ka kb kc kd dv dw dx dy dz ea eb ec ed ke ef eg eh ei ej ek el kf kg kh ki eq er es et eu ev ew ex ey kj kk kl km kn ko kp"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
                 data-uses-unhanded-props="true"
@@ -270,15 +270,15 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="ui-box kp kq kr ks kt ku kv kw kx ky cq cr cs ct fu kz la lb lc ld le iq ir is lf lg lh li iw lj iu iv ui-checkbox__indicator"
+                  class="ui-box kq kr ks kt ku kv kw kx ky kz cr cs ct cu fv la lb lc ld le lf ir is it lg lh li lj ix lk iv iw ui-checkbox__indicator"
                   data-uses-unhanded-props="true"
                 />
                 <span
-                  class="ui-text ba lk ll ui-checkbox__label"
+                  class="ui-text bb ll lm ui-checkbox__label"
                   data-uses-unhanded-props="true"
                 >
                   <div
-                    class="ui-flex am ao bq br"
+                    class="ui-flex am ao br bs"
                     data-uses-unhanded-props="true"
                   >
                     <span
@@ -289,7 +289,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                       Components
                     </span>
                     <span
-                      class="ui-text lm bw"
+                      class="ui-text ln bx"
                       data-uses-unhanded-props="true"
                       dir="auto"
                     >
@@ -302,7 +302,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
             <div>
               <div
                 aria-checked="true"
-                class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
+                class="ui-checkbox bc js jt ju ck cm b jv jw jx jy cj jz df dg dh di dj dk dl dm dn do dp dq ka kb kc kd dv dw dx dy dz ea eb ec ed ke ef eg eh ei ej ek el kf kg kh ki eq er es et eu ev ew ex ey kj kk kl km kn ko kp"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
                 data-uses-unhanded-props="true"
@@ -310,15 +310,15 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="ui-box kp kq kr ks kt ku kv kw kx ky cq cr cs ct fu kz la lb lc ld le iq ir is lf lg lh li iw lj iu iv ui-checkbox__indicator"
+                  class="ui-box kq kr ks kt ku kv kw kx ky kz cr cs ct cu fv la lb lc ld le lf ir is it lg lh li lj ix lk iv iw ui-checkbox__indicator"
                   data-uses-unhanded-props="true"
                 />
                 <span
-                  class="ui-text ba lk ll ui-checkbox__label"
+                  class="ui-text bb ll lm ui-checkbox__label"
                   data-uses-unhanded-props="true"
                 >
                   <div
-                    class="ui-flex am ao bq br"
+                    class="ui-flex am ao br bs"
                     data-uses-unhanded-props="true"
                   >
                     <span
@@ -329,7 +329,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                       Colors
                     </span>
                     <span
-                      class="ui-text lm bw"
+                      class="ui-text ln bx"
                       data-uses-unhanded-props="true"
                       dir="auto"
                     >
@@ -342,7 +342,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
             <div>
               <div
                 aria-checked="true"
-                class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
+                class="ui-checkbox bc js jt ju ck cm b jv jw jx jy cj jz df dg dh di dj dk dl dm dn do dp dq ka kb kc kd dv dw dx dy dz ea eb ec ed ke ef eg eh ei ej ek el kf kg kh ki eq er es et eu ev ew ex ey kj kk kl km kn ko kp"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
                 data-uses-unhanded-props="true"
@@ -350,15 +350,15 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="ui-box kp kq kr ks kt ku kv kw kx ky cq cr cs ct fu kz la lb lc ld le iq ir is lf lg lh li iw lj iu iv ui-checkbox__indicator"
+                  class="ui-box kq kr ks kt ku kv kw kx ky kz cr cs ct cu fv la lb lc ld le lf ir is it lg lh li lj ix lk iv iw ui-checkbox__indicator"
                   data-uses-unhanded-props="true"
                 />
                 <span
-                  class="ui-text ba lk ll ui-checkbox__label"
+                  class="ui-text bb ll lm ui-checkbox__label"
                   data-uses-unhanded-props="true"
                 >
                   <div
-                    class="ui-flex am ao bq br"
+                    class="ui-flex am ao br bs"
                     data-uses-unhanded-props="true"
                   >
                     <span
@@ -369,7 +369,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                       Text styles
                     </span>
                     <span
-                      class="ui-text lm bw"
+                      class="ui-text ln bx"
                       data-uses-unhanded-props="true"
                       dir="auto"
                     >
@@ -381,13 +381,13 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
             </div>
           </div>
           <div
-            class="ui-flex am ao bq br bt"
+            class="ui-flex am ao br bs bu"
             data-uses-unhanded-props="true"
           >
             <div>
               <div
                 aria-checked="true"
-                class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
+                class="ui-checkbox bc js jt ju ck cm b jv jw jx jy cj jz df dg dh di dj dk dl dm dn do dp dq ka kb kc kd dv dw dx dy dz ea eb ec ed ke ef eg eh ei ej ek el kf kg kh ki eq er es et eu ev ew ex ey kj kk kl km kn ko kp"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
                 data-uses-unhanded-props="true"
@@ -395,15 +395,15 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="ui-box kp kq kr ks kt ku kv kw kx ky cq cr cs ct fu kz la lb lc ld le iq ir is lf lg lh li iw lj iu iv ui-checkbox__indicator"
+                  class="ui-box kq kr ks kt ku kv kw kx ky kz cr cs ct cu fv la lb lc ld le lf ir is it lg lh li lj ix lk iv iw ui-checkbox__indicator"
                   data-uses-unhanded-props="true"
                 />
                 <span
-                  class="ui-text ba lk ll ui-checkbox__label"
+                  class="ui-text bb ll lm ui-checkbox__label"
                   data-uses-unhanded-props="true"
                 >
                   <div
-                    class="ui-flex am ao bq br"
+                    class="ui-flex am ao br bs"
                     data-uses-unhanded-props="true"
                   >
                     <span
@@ -414,7 +414,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                       Spacing tokens
                     </span>
                     <span
-                      class="ui-text lm bw"
+                      class="ui-text ln bx"
                       data-uses-unhanded-props="true"
                       dir="auto"
                     >
@@ -427,7 +427,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
             <div>
               <div
                 aria-checked="true"
-                class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
+                class="ui-checkbox bc js jt ju ck cm b jv jw jx jy cj jz df dg dh di dj dk dl dm dn do dp dq ka kb kc kd dv dw dx dy dz ea eb ec ed ke ef eg eh ei ej ek el kf kg kh ki eq er es et eu ev ew ex ey kj kk kl km kn ko kp"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
                 data-uses-unhanded-props="true"
@@ -435,15 +435,15 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="ui-box kp kq kr ks kt ku kv kw kx ky cq cr cs ct fu kz la lb lc ld le iq ir is lf lg lh li iw lj iu iv ui-checkbox__indicator"
+                  class="ui-box kq kr ks kt ku kv kw kx ky kz cr cs ct cu fv la lb lc ld le lf ir is it lg lh li lj ix lk iv iw ui-checkbox__indicator"
                   data-uses-unhanded-props="true"
                 />
                 <span
-                  class="ui-text ba lk ll ui-checkbox__label"
+                  class="ui-text bb ll lm ui-checkbox__label"
                   data-uses-unhanded-props="true"
                 >
                   <div
-                    class="ui-flex am ao bq br"
+                    class="ui-flex am ao br bs"
                     data-uses-unhanded-props="true"
                   >
                     <span
@@ -454,7 +454,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                       Notes
                     </span>
                     <span
-                      class="ui-text lm bw"
+                      class="ui-text ln bx"
                       data-uses-unhanded-props="true"
                       dir="auto"
                     >
@@ -467,7 +467,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
             <div>
               <div
                 aria-checked="true"
-                class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
+                class="ui-checkbox bc js jt ju ck cm b jv jw jx jy cj jz df dg dh di dj dk dl dm dn do dp dq ka kb kc kd dv dw dx dy dz ea eb ec ed ke ef eg eh ei ej ek el kf kg kh ki eq er es et eu ev ew ex ey kj kk kl km kn ko kp"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
                 data-uses-unhanded-props="true"
@@ -475,15 +475,15 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="ui-box kp kq kr ks kt ku kv kw kx ky cq cr cs ct fu kz la lb lc ld le iq ir is lf lg lh li iw lj iu iv ui-checkbox__indicator"
+                  class="ui-box kq kr ks kt ku kv kw kx ky kz cr cs ct cu fv la lb lc ld le lf ir is it lg lh li lj ix lk iv iw ui-checkbox__indicator"
                   data-uses-unhanded-props="true"
                 />
                 <span
-                  class="ui-text ba lk ll ui-checkbox__label"
+                  class="ui-text bb ll lm ui-checkbox__label"
                   data-uses-unhanded-props="true"
                 >
                   <div
-                    class="ui-flex am ao bq br"
+                    class="ui-flex am ao br bs"
                     data-uses-unhanded-props="true"
                   >
                     <span
@@ -494,7 +494,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                       Replies
                     </span>
                     <span
-                      class="ui-text lm bw"
+                      class="ui-text ln bx"
                       data-uses-unhanded-props="true"
                       dir="auto"
                     >
@@ -507,7 +507,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
             <div>
               <div
                 aria-checked="true"
-                class="ui-checkbox bb jr js jt cj cl b ju jv jw jx ci jy de df dg dh di dj dk dl dm dn do dp jz ka kb kc du dv dw dx dy dz ea eb ec kd ee ef eg eh ei ej ek ke kf kg kh ep eq er es et eu ev ew ex ki kj kk kl km kn ko"
+                class="ui-checkbox bc js jt ju ck cm b jv jw jx jy cj jz df dg dh di dj dk dl dm dn do dp dq ka kb kc kd dv dw dx dy dz ea eb ec ed ke ef eg eh ei ej ek el kf kg kh ki eq er es et eu ev ew ex ey kj kk kl km kn ko kp"
                 data-aa-class="Checkbox"
                 data-is-focusable="true"
                 data-uses-unhanded-props="true"
@@ -515,15 +515,15 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="ui-box kp kq kr ks kt ku kv kw kx ky cq cr cs ct fu kz la lb lc ld le iq ir is lf lg lh li iw lj iu iv ui-checkbox__indicator"
+                  class="ui-box kq kr ks kt ku kv kw kx ky kz cr cs ct cu fv la lb lc ld le lf ir is it lg lh li lj ix lk iv iw ui-checkbox__indicator"
                   data-uses-unhanded-props="true"
                 />
                 <span
-                  class="ui-text ba lk ll ui-checkbox__label"
+                  class="ui-text bb ll lm ui-checkbox__label"
                   data-uses-unhanded-props="true"
                 >
                   <div
-                    class="ui-flex am ao bq br"
+                    class="ui-flex am ao br bs"
                     data-uses-unhanded-props="true"
                   >
                     <span
@@ -534,7 +534,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
                       Members
                     </span>
                     <span
-                      class="ui-text lm bw"
+                      class="ui-text ln bx"
                       data-uses-unhanded-props="true"
                       dir="auto"
                     >
@@ -559,16 +559,16 @@ exports[`HomeContainer should initialize Microsoft Teams 1`] = `
   dir="ltr"
 >
   <div
-    class="ui-flex am ao bq br bs"
+    class="ui-flex am ao br bs bt"
     data-uses-unhanded-props="true"
   >
     <div />
     <div
-      class="ui-flex am ao bq br bt"
+      class="ui-flex am ao br bs bu"
       data-uses-unhanded-props="true"
     >
       <span
-        class="ui-text bu bv bw"
+        class="ui-text bv bw bx"
         data-uses-unhanded-props="true"
         dir="auto"
       >
@@ -584,12 +584,12 @@ exports[`HomeContainer should initialize Microsoft Teams 1`] = `
     </div>
     <div>
       <button
-        class="ui-button bx by bz ca cb cc cd an al bb ce cf cg ch ci cj ck cl cm cn co cp cq cr cs ct cu cv cw cx cy cz da db dc dd de df dg dh di dj dk dl dm dn do dp dq dr ds dt du dv dw dx dy dz ea eb ec ed ee ef eg eh ei ej ek el em en eo ep eq er es et eu ev ew ex ey"
+        class="ui-button by bz ca cb cc cd ce an al bc cf cg ch ci cj ck cl cm cn co cp cq cr cs ct cu cv cw cx cy cz da db dc dd de df dg dh di dj dk dl dm dn do dp dq dr ds dt du dv dw dx dy dz ea eb ec ed ee ef eg eh ei ej ek el em en eo ep eq er es et eu ev ew ex ey ez"
         data-aa-class="Button"
         data-uses-unhanded-props="true"
       >
         <span
-          class="ui-button__content ar ez fb fc bu fd"
+          class="ui-button__content as fb fc fd bv fe"
           data-uses-unhanded-props="true"
           dir="auto"
         >
@@ -608,18 +608,17 @@ exports[`HomeContainer should render initially 1`] = `
   dir="ltr"
 >
   <div
-    class="ui-loader al am an ao"
+    class="ui-loader al am an ao ap"
     data-aa-class="Loader"
     data-uses-unhanded-props="true"
-    id="loader-home"
     role="progressbar"
   >
     <div
-      class="ui-box ap aq ar ui-loader__indicator"
+      class="ui-box aq ar as ui-loader__indicator"
       data-uses-unhanded-props="true"
     >
       <div
-        class="ui-box as at au av aw ax ay az ba ar bb bc bd be bf bg bh bi bj bk bl bm bn bo bp ui-loader__svg"
+        class="ui-box at au av aw ax ay az ba bb as bc bd be bf bg bh bi bj bk bl bm bn bo bp bq ui-loader__svg"
         data-uses-unhanded-props="true"
       />
     </div>
