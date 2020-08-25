@@ -19,17 +19,17 @@ class MessageFacade {
             throw new Error(`There isn't any event found for the grouping key ${data.groupingKey}`);
         }
 
-        const incomingWebhookURLForEvent = await configurationRepo.getIncomingWebhookURLForWebhook(
+        const configuration = await configurationRepo.getByWebhookId(
             pivotEvent.webhookId
         );
-        if (!incomingWebhookURLForEvent) {
+        if (!configuration) {
             throw new Error(`There isn't any incoming webhook URL found for webhook: ${pivotEvent.webhookId}`);
         }
 
         const notificationHandler = getNotificationHandler(pivotEvent.payload.event);
         const message = notificationHandler.getTeamsMessage(events);
         // TODO: Handle errors?
-        await requester.post(incomingWebhookURLForEvent, message);
+        await requester.post(configuration.microsoftTeams.incomingWebhookUrl, message);
     }
 
     async handleEventArrived(event: WebhookEvent): Promise<void> {
@@ -41,8 +41,8 @@ class MessageFacade {
         const groupingKey = notificationHandler.getGroupingKey(event);
         const jobId = event.deliveryId;
 
-        const eventHasConfiguration = await configurationRepo.existsForWebhook(event.webhookId);
-        if (!eventHasConfiguration) {
+        const configuration = await configurationRepo.getByWebhookId(event.webhookId);
+        if (!configuration) {
             // TODO: Event doesn't have a configuration set (somehow webhook is not deleted when event is deleted)
             // TODO: Where will we handle these errors?
             // TODO: Better error?

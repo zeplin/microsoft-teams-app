@@ -5,6 +5,7 @@ import { WebhookEvent } from "../messagingTypes";
 import { NotificationHandler } from "./messageFacadeNotificationHandlers/NotificationHandler";
 import { configurationRepo } from "../../../repos";
 import { requester } from "../../../adapters/requester";
+import { dummyConfiguration } from "../../../test/helpers";
 
 jest.mock("../messageQueue", () => ({
     messageQueue: {
@@ -17,13 +18,6 @@ jest.mock("../messageQueue", () => ({
 }));
 
 jest.mock("../../../adapters/requester");
-
-jest.mock("../../../repos", () => ({
-    configurationRepo: {
-        existsForWebhook: jest.fn().mockReturnValue(Promise.resolve(true)),
-        getIncomingWebhookURLForWebhook: jest.fn().mockReturnValue(Promise.resolve("https://ergun.sh"))
-    }
-}));
 
 jest.mock("../messagingRepos", () => ({
     messageJobRepo: {
@@ -73,21 +67,24 @@ describe("messageFacade", () => {
     describe("`handleEventArrived` function", () => {
         // TODO: Check error itself too
         it("should throw error when there isn't any configuration for the webhook event", async () => {
-            jest.spyOn(configurationRepo, "existsForWebhook").mockReturnValueOnce(Promise.resolve(false));
+            jest.spyOn(configurationRepo, "getByWebhookId").mockResolvedValueOnce(null);
             await expect(() => messageFacade.handleEventArrived(exampleEvent)).rejects.toThrow();
         });
 
         it("should update active job id for group", async () => {
+            jest.spyOn(configurationRepo, "getByWebhookId").mockResolvedValueOnce(dummyConfiguration);
             await messageFacade.handleEventArrived(exampleEvent);
             expect(messageJobRepo.setGroupActiveJobId).toBeCalledWith(expectedGroupingKey, expectedJobId);
         });
 
         it("should add event to events for group", async () => {
+            jest.spyOn(configurationRepo, "getByWebhookId").mockResolvedValueOnce(dummyConfiguration);
             await messageFacade.handleEventArrived(exampleEvent);
             expect(messageWebhookEventRepo.addEventToGroup).toBeCalledWith(expectedGroupingKey, exampleEvent);
         });
 
         it("should add a new job for the event group", async () => {
+            jest.spyOn(configurationRepo, "getByWebhookId").mockResolvedValueOnce(dummyConfiguration);
             await messageFacade.handleEventArrived(exampleEvent);
             expect(messageQueue.add).toBeCalledWith({
                 id: expectedJobId,
@@ -113,7 +110,7 @@ describe("messageFacade", () => {
         });
 
         it("should throw error when there isn't any incoming webhook URL for webhook", async () => {
-            jest.spyOn(configurationRepo, "getIncomingWebhookURLForWebhook").mockResolvedValueOnce(null);
+            jest.spyOn(configurationRepo, "getByWebhookId").mockResolvedValueOnce(null);
             jest.spyOn(messageJobRepo, "getGroupActiveJobId").mockResolvedValueOnce(exampleJobData.id);
             jest.spyOn(messageWebhookEventRepo, "getAndRemoveGroupEvents").mockResolvedValueOnce([exampleEvent, exampleEvent]);
             await expect(() => messageFacade.processJob(exampleJobData)).rejects.toThrow();
@@ -136,16 +133,15 @@ describe("messageFacade", () => {
         });
 
         it("should post message when the job is the active one and there are events for the group", async () => {
-            const incomingWebhookURL = "https://ergun.sh";
             const message = mockNotificationHandler.getTeamsMessage();
-            jest.spyOn(configurationRepo, "getIncomingWebhookURLForWebhook").mockResolvedValueOnce("https://ergun.sh");
+            jest.spyOn(configurationRepo, "getByWebhookId").mockResolvedValueOnce(dummyConfiguration);
             jest.spyOn(messageJobRepo, "getGroupActiveJobId").mockResolvedValueOnce(exampleJobData.id);
             const getAndRemoveGroupEventsSpy = jest.spyOn(messageWebhookEventRepo, "getAndRemoveGroupEvents").mockResolvedValueOnce([exampleEvent, exampleEvent]);
 
             await messageFacade.processJob(exampleJobData);
             expect(getAndRemoveGroupEventsSpy).toBeCalledWith(exampleJobData.groupingKey);
             expect(mockNotificationHandler.getTeamsMessage).toBeCalledWith([exampleEvent, exampleEvent]);
-            expect(requester.post).toBeCalledWith(incomingWebhookURL, message);
+            expect(requester.post).toBeCalledWith(dummyConfiguration.microsoftTeams.incomingWebhookUrl, message);
         });
     });
 });

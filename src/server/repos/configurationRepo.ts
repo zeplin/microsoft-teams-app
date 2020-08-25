@@ -1,33 +1,37 @@
-import { mongo } from "../adapters";
-import { ObjectId } from "mongodb";
+import { ConfigurationDocument, mongo, WebhookResourceType } from "../adapters";
+
+interface ConfigurationCreateParameters {
+    zeplin: {
+        webhookId: string;
+        resource: {
+            id: string;
+            type: WebhookResourceType;
+        };
+    };
+    microsoftTeams: {
+        channel: {
+            name: string;
+            id: string;
+        };
+        incomingWebhookUrl: string;
+        tenantId: string;
+    };
+}
 
 class ConfigurationRepo {
-    existsForWebhook(webhookId: string): Promise<boolean> {
-        return mongo.configuration.collection.find({
+    async getByWebhookId(webhookId: string): Promise<Configuration | null> {
+        const result = await mongo.configuration.findOne({
             "zeplin.webhookId": webhookId
-        }).limit(1).hasNext();
+        }).lean().exec();
+        return result ?? null;
     }
 
-    async getIncomingWebhookURLForWebhook(webhookId: string): Promise<string|null> {
-        const partialConfiguration = await mongo.configuration.findOne({
-            "zeplin.webhookId": webhookId
-        }, {
-            "microsoftTeams.channel.incomingWebhookUrl": 1
-        }).lean() as {
-            _id: ObjectId;
-            microsoftTeams: {
-                channel: {
-                    incomingWebhookUrl: string;
-                };
-            };
-        } | undefined;
-
-        if (partialConfiguration) {
-            return partialConfiguration.microsoftTeams.channel.incomingWebhookUrl;
-        }
-
-        return null;
+    async create(parameters: ConfigurationCreateParameters): Promise<Configuration> {
+        const { _id, zeplin, microsoftTeams } = await mongo.configuration.create(parameters);
+        return { _id, zeplin, microsoftTeams };
     }
 }
+
+export type Configuration = Pick<ConfigurationDocument, "_id" | "zeplin" | "microsoftTeams">;
 
 export const configurationRepo = new ConfigurationRepo();

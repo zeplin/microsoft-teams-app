@@ -1,5 +1,5 @@
 import { StyleguideWebhooks } from "./StyleguideWebhooks";
-import { StyleguideWebhookEvent } from "../../../enums";
+import { StyleguideWebhookEvent } from "../types";
 import { BAD_REQUEST, OK } from "http-status-codes";
 import nock, { Interceptor } from "nock";
 import { ZeplinError } from "../ZeplinError";

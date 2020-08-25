@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
 import { ObjectId } from "mongodb";
-import { WebhookResourceType } from "../../../enums";
+import { WebhookResourceType } from "../../zeplin";
 
 export interface ConfigurationDocument extends Document {
     _id: ObjectId;
@@ -15,8 +15,8 @@ export interface ConfigurationDocument extends Document {
         channel: {
             name: string;
             id: string;
-            incomingWebhookUrl: string;
         };
+        incomingWebhookUrl: string;
         tenantId: string;
     };
 }
