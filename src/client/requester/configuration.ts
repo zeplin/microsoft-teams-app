@@ -6,6 +6,7 @@ export enum ResourceType {
 }
 
 export interface Resource {
+    name: string;
     type: ResourceType;
     id: string;
 }
@@ -48,7 +49,7 @@ export interface ConfigurationCreateParameters {
     zeplin: {
         resource: {
             id: string;
-            type: string;
+            type: ResourceType;
         };
         events: WebhookEventType[];
     };
@@ -111,5 +112,57 @@ export const fetchConfigurationDelete = async (
             }
         }
     );
+};
+
+export interface ConfigurationParameters {
+    accessToken: string;
+    configurationId: string;
+}
+
+export interface Configuration {
+    resource: Resource;
+    webhook: {
+        events: WebhookEventType[];
+    };
+}
+
+export const fetchConfiguration = async (
+    {
+        accessToken,
+        configurationId
+    }: ConfigurationParameters
+): Promise<Configuration> => {
+    const {
+        data: {
+            zeplin: {
+                resource: {
+                    id,
+                    name,
+                    type
+                },
+                webhook: {
+                    events
+                }
+            }
+        }
+    } = await Axios.get(
+        `/api/configurations/${configurationId}`,
+        {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        }
+    );
+
+    return {
+        resource: {
+            id,
+            name,
+            type
+        },
+        webhook: {
+            events: events.map(event => event.slice(event.indexOf(".") + 1))
+        }
+    };
 };
 

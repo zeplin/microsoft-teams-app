@@ -1,5 +1,6 @@
 import { StyleguideWebhookEvent } from "../types";
 import { Requester } from "../requester";
+import { StyleguideWebhook } from "../types/StyleguideWebhook";
 
 interface StyleguideWebhookCreateBody {
     url: string;
@@ -22,6 +23,16 @@ interface StyleguideWebhookCreateParameter {
 }
 
 interface StyleguideWebhookDeleteParameter {
+    params: {
+        styleguideId: string;
+        webhookId: string;
+    };
+    options: {
+        authToken: string;
+    };
+}
+
+interface StyleguideWebhookGetParameter {
     params: {
         styleguideId: string;
         webhookId: string;
@@ -67,6 +78,25 @@ export class StyleguideWebhooks {
         }: StyleguideWebhookDeleteParameter
     ): Promise<void> {
         return this.requester.delete(
+            `/styleguides/${styleguideId}/webhooks/${webhookId}`,
+            {
+                headers: {
+                    Authorization: authToken
+                }
+            }
+        );
+    }
+
+    get(
+        {
+            params: {
+                styleguideId,
+                webhookId
+            },
+            options: { authToken }
+        }: StyleguideWebhookGetParameter
+    ): Promise<StyleguideWebhook> {
+        return this.requester.get(
             `/styleguides/${styleguideId}/webhooks/${webhookId}`,
             {
                 headers: {

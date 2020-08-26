@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Flex, Text } from "@fluentui/react-northstar";
 import {
-    Project,
+    Project, Resource,
     ResourceType,
     Styleguide,
     WebhookEventType,
@@ -10,28 +10,42 @@ import {
 import { WorkspaceDropdown } from "./WorkspaceDropdown";
 import { ResourceDropdown } from "./ResourceDropdown";
 import { WebhookEvents } from "./WebhookEvents";
-import { ResourceWithName } from "../../hooks";
+
+const resourceTypeToText = (value: ResourceType): string => {
+    switch (value) {
+        case ResourceType.PROJECT:
+            return "project";
+        case ResourceType.STYLEGUIDE:
+            return "styleguide";
+        default:
+            throw new Error();
+    }
+};
 
 interface ConfigurationProps {
+    isConfigurationCreated: boolean;
     channelName: string;
     areWorkspacesLoading: boolean;
     workspaces: Workspace[];
     isWorkspaceSelected: boolean;
     resourceType: ResourceType;
+    resourceName?: string;
     areResourcesLoading: boolean;
     projects: Project[];
     styleguides: Styleguide[];
     selectedWebhookEvents: WebhookEventType[];
     onWorkspaceChange: (value: string) => void;
-    onResourceChange: (value: ResourceWithName | undefined) => void;
+    onResourceChange: (value: Resource | undefined) => void;
     onWebhookEventChange: (value: WebhookEventType) => void;
 }
 
 export const Configuration: FunctionComponent<ConfigurationProps> = ({
+    isConfigurationCreated,
     channelName,
     areWorkspacesLoading,
     workspaces,
     isWorkspaceSelected,
+    resourceName,
     resourceType,
     areResourcesLoading,
     projects,
@@ -44,47 +58,60 @@ export const Configuration: FunctionComponent<ConfigurationProps> = ({
     <Flex fill column gap="gap.large">
         <div />
         <Flex fill column gap="gap.small">
-            <Text weight="semibold">
-                    You are connecting <Text weight="bold">#{channelName}</Text> to Zeplin.
-            </Text>
-            <Text>
-                Can{"'"}t find the project/styleguide to connect to?
-                {" "}
-                <Text
-                    as="a"
-                    color="brand"
-                    href="https://zpl.io/msteams-app-docs"
-                    target="_blank"
-                    styles={{
-                        "textDecoration": "none",
-                        ":hover": {
-                            textDecoration: "underline"
-                        }
-                    }}>
-                        Learn more about permissions.
-                </Text>
-            </Text>
-            <Flex fill gap="gap.small">
-                <Flex.Item grow shrink={0} styles={{ flexBasis: 0 }}>
-                    <div>
-                        <WorkspaceDropdown
-                            loading={areWorkspacesLoading}
-                            workspaces={workspaces}
-                            onChange={onWorkspaceChange}
-                        />
-                    </div>
-                </Flex.Item>
-                <Flex.Item grow shrink={0} styles={{ flexBasis: 0 }}>
-                    <div>
-                        <ResourceDropdown
-                            loading={areResourcesLoading}
-                            projects={projects}
-                            styleguides={styleguides}
-                            disabled={!isWorkspaceSelected}
-                            onChange={onResourceChange} />
-                    </div>
-                </Flex.Item>
-            </Flex>
+            {
+                isConfigurationCreated ? (
+                    <Text weight="semibold">
+                        <Text weight="bold">{resourceName}</Text>
+                        {` ${resourceTypeToText(resourceType)} is connected to `}
+                        <Text weight="bold">#{channelName}</Text>
+                        {" channel."}
+                    </Text>
+                ) : (
+                    <>
+                        <Text weight="semibold">
+                                You are connecting <Text weight="bold">#{channelName}</Text> to Zeplin.
+                        </Text>
+                        <Text>
+                                Can{"'"}t find the project/styleguide to connect to?
+                            {" "}
+                            <Text
+                                as="a"
+                                color="brand"
+                                href="https://zpl.io/msteams-app-docs"
+                                target="_blank"
+                                styles={{
+                                    "textDecoration": "none",
+                                    ":hover": {
+                                        textDecoration: "underline"
+                                    }
+                                }}>
+                                    Learn more about permissions.
+                            </Text>
+                        </Text>
+                        <Flex fill gap="gap.small">
+                            <Flex.Item grow shrink={0} styles={{ flexBasis: 0 }}>
+                                <div>
+                                    <WorkspaceDropdown
+                                        loading={areWorkspacesLoading}
+                                        workspaces={workspaces}
+                                        onChange={onWorkspaceChange}
+                                    />
+                                </div>
+                            </Flex.Item>
+                            <Flex.Item grow shrink={0} styles={{ flexBasis: 0 }}>
+                                <div>
+                                    <ResourceDropdown
+                                        loading={areResourcesLoading}
+                                        projects={projects}
+                                        styleguides={styleguides}
+                                        disabled={!isWorkspaceSelected}
+                                        onChange={onResourceChange} />
+                                </div>
+                            </Flex.Item>
+                        </Flex>
+                    </>
+                )
+            }
         </Flex>
         <Flex fill column gap="gap.medium">
             <Text weight="semibold">

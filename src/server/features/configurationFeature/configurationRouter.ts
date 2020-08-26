@@ -3,7 +3,11 @@ import Joi from "@hapi/joi";
 
 import { validateRequest, JSONBodyParser } from "../../middlewares";
 import { ProjectWebhookEvent, StyleguideWebhookEvent, WebhookResourceType } from "../../adapters";
-import { handleConfigurationCreate, handleConfigurationDelete } from "./configurationController";
+import {
+    handleConfigurationCreate,
+    handleConfigurationDelete,
+    handleConfigurationGet
+} from "./configurationController";
 
 const configurationRouter = createRouter({ mergeParams: true });
 
@@ -44,6 +48,16 @@ configurationRouter.delete(
         })
     }),
     handleConfigurationDelete
+);
+
+configurationRouter.get(
+    "/:configurationId",
+    validateRequest({
+        params: Joi.object({
+            configurationId: Joi.string().regex(/^[0-9a-f]{24}$/i)
+        })
+    }),
+    handleConfigurationGet
 );
 
 export {

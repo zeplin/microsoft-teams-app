@@ -1,14 +1,13 @@
 import React, { FunctionComponent, ReactElement } from "react";
 import { Divider, Dropdown } from "@fluentui/react-northstar";
-import { Project, ResourceType, Styleguide } from "../../../../requester";
-import { ResourceWithName } from "../../hooks";
+import { Project, Resource, ResourceType, Styleguide } from "../../../../requester";
 
 interface ResourceDropdownProps {
     disabled: boolean;
     loading: boolean;
     projects: Project[];
     styleguides: Styleguide[];
-    onChange: (value: ResourceWithName | undefined) => void;
+    onChange: (value: Resource | undefined) => void;
 }
 
 export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({

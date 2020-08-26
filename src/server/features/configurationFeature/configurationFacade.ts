@@ -1,9 +1,34 @@
 import { Configuration, configurationRepo } from "../../repos";
-import { ProjectWebhookEvent, StyleguideWebhookEvent, WebhookResourceType, zeplin } from "../../adapters";
+import {
+    ProjectWebhookEvent,
+    StyleguideWebhookEvent,
+    WebhookResourceType,
+    ProjectWebhook,
+    StyleguideWebhook,
+    zeplin,
+    Project,
+    Styleguide
+} from "../../adapters";
 import { BASE_URL, WEBHOOK_SECRET } from "../../config";
+import { ServiceError } from "../../errors";
+import { NOT_FOUND } from "http-status-codes";
 
 interface ConfigurationResponse {
     id: string;
+    zeplin: {
+        webhook: ProjectWebhook | StyleguideWebhook;
+        resource: (Project | Styleguide) & {
+            type: WebhookResourceType;
+        };
+    };
+    microsoftTeams: {
+        channel: {
+            name: string;
+            id: string;
+        };
+        incomingWebhookUrl: string;
+        tenantId: string;
+    };
 }
 
 interface ProjectParameters {
@@ -103,10 +128,60 @@ class ConfigurationFacade {
         });
     }
 
+    private getWebhook(
+        { zeplin: { resource, webhookId } }: Configuration,
+        authToken: string
+    ): Promise<ProjectWebhook | StyleguideWebhook> {
+        if (resource.type === WebhookResourceType.PROJECT) {
+            return zeplin.projectWebhooks.get({
+                params: {
+                    projectId: resource.id,
+                    webhookId
+                },
+                options: {
+                    authToken
+                }
+            });
+        }
+        return zeplin.styleguideWebhooks.get({
+            params: {
+                styleguideId: resource.id,
+                webhookId
+            },
+            options: {
+                authToken
+            }
+        });
+    }
+
+    private getResource(
+        { zeplin: { resource } }: Configuration,
+        authToken: string
+    ): Promise<Project | Styleguide> {
+        if (resource.type === WebhookResourceType.PROJECT) {
+            return zeplin.projects.get({
+                params: {
+                    projectId: resource.id
+                },
+                options: {
+                    authToken
+                }
+            });
+        }
+        return zeplin.styleguides.get({
+            params: {
+                styleguideId: resource.id
+            },
+            options: {
+                authToken
+            }
+        });
+    }
+
     async create(
         params: ConfigurationCreateParameters,
         options: ConfigurationCreateOptions
-    ): Promise<ConfigurationResponse> {
+    ): Promise<{ id: string }> {
         const webhookId = await this.createWebhook(params.zeplin, options);
         const { _id } = await configurationRepo.create({
             ...params,
@@ -129,6 +204,39 @@ class ConfigurationFacade {
             await this.deleteWebhook(configuration, authToken);
             await configurationRepo.delete(configurationId);
         }
+    }
+
+    async get(
+        configurationId: string,
+        authToken: string
+    ): Promise<ConfigurationResponse> {
+        const configuration = await configurationRepo.get(configurationId);
+
+        if (!configuration) {
+            throw new ServiceError(
+                "Configuration not found",
+                {
+                    statusCode: NOT_FOUND,
+                    title: "Configuration not found"
+                });
+        }
+
+        const [webhook, resource] = await Promise.all([
+            this.getWebhook(configuration, authToken),
+            this.getResource(configuration, authToken)
+        ]);
+
+        return {
+            id: configurationId,
+            zeplin: {
+                webhook,
+                resource: {
+                    ...resource,
+                    type: configuration.zeplin.resource.type
+                }
+            },
+            microsoftTeams: configuration.microsoftTeams
+        };
     }
 }
 

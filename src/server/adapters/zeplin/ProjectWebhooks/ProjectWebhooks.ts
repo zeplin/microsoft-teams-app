@@ -1,4 +1,4 @@
-import { ProjectWebhookEvent } from "../types";
+import { ProjectWebhookEvent, ProjectWebhook } from "../types";
 import { Requester } from "../requester";
 
 interface ProjectWebhookCreateBody {
@@ -22,6 +22,16 @@ interface ProjectWebhookCreateParameter {
 }
 
 interface ProjectWebhookDeleteParameter {
+    params: {
+        projectId: string;
+        webhookId: string;
+    };
+    options: {
+        authToken: string;
+    };
+}
+
+interface ProjectWebhookGetParameter {
     params: {
         projectId: string;
         webhookId: string;
@@ -66,6 +76,25 @@ export class ProjectWebhooks {
         }: ProjectWebhookDeleteParameter
     ): Promise<void> {
         return this.requester.delete(
+            `/projects/${projectId}/webhooks/${webhookId}`,
+            {
+                headers: {
+                    Authorization: authToken
+                }
+            }
+        );
+    }
+
+    get(
+        {
+            params: {
+                projectId,
+                webhookId
+            },
+            options: { authToken }
+        }: ProjectWebhookGetParameter
+    ): Promise<ProjectWebhook> {
+        return this.requester.get(
             `/projects/${projectId}/webhooks/${webhookId}`,
             {
                 headers: {

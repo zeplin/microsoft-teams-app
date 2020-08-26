@@ -8,27 +8,33 @@ import {
     ActionType,
     Status,
     useConfigurationCreate,
+    useConfigurationDelete,
     useHomeReducer,
+    useInitialize,
     useResources,
     useValidate,
-    useInitialize,
-    useConfigurationDelete
+    useStateUpdateFromConfiguration,
+    useWorkspaces
 } from "./hooks";
 import { Configuration, Login } from "./components";
-import { useWorkspaces } from "./hooks/useWorkspaces";
 
 export const HomeContainer: FunctionComponent = () => {
-    const { query: { channel } } = useRouter();
+    const { query: { channel, id } } = useRouter();
 
     const [state, dispatch] = useHomeReducer();
 
     const { areWorkspacesLoading, workspaces } = useWorkspaces(state);
     const { areResourcesLoading, projects, styleguides } = useResources(state);
+    const { isStateUpdateLoading } = useStateUpdateFromConfiguration(state, dispatch);
 
     useInitialize(dispatch);
     useValidate(state);
     useConfigurationCreate(state);
     useConfigurationDelete(state);
+
+    if (isStateUpdateLoading) {
+        return <Loader styles={{ height: "100vh" }} />;
+    }
 
     switch (state.status) {
         case Status.LOADING:
@@ -37,18 +43,22 @@ export const HomeContainer: FunctionComponent = () => {
             return <Login onButtonClick={(): void => {
                 microsoftTeams.authentication.authenticate({
                     height: 476,
-                    successCallback: value => dispatch({ type: ActionType.GET_TOKEN, value }),
+                    successCallback: accessToken => {
+                        dispatch({ type: ActionType.SET_TOKEN, value: accessToken });
+                    },
                     url: "/api/auth/authorize"
                 });
             }} />;
         case Status.CONFIGURATION:
             return (
                 <Configuration
+                    isConfigurationCreated={Boolean(id)}
                     channelName={String(channel)}
                     areWorkspacesLoading={areWorkspacesLoading}
                     workspaces={workspaces || []}
                     isWorkspaceSelected={Boolean(state.selectedWorkspace)}
-                    resourceType={state.selectedResource?.type ?? ResourceType.PROJECT }
+                    resourceType={state.selectedResource?.type ?? ResourceType.PROJECT}
+                    resourceName={state.selectedResource?.name}
                     areResourcesLoading={areResourcesLoading}
                     projects={projects || []}
                     styleguides={styleguides || []}
