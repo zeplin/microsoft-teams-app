@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from "react";
-import * as microsoftTeams from "@microsoft/teams-js";
 import { Loader } from "@fluentui/react-northstar";
 import { useRouter } from "next/router";
 
@@ -14,7 +13,8 @@ import {
     useResources,
     useValidate,
     useStateUpdateFromConfiguration,
-    useWorkspaces
+    useWorkspaces,
+    useAuthenticate
 } from "./hooks";
 import { Configuration, Login } from "./components";
 
@@ -26,6 +26,7 @@ export const HomeContainer: FunctionComponent = () => {
     const { areWorkspacesLoading, workspaces } = useWorkspaces(state);
     const { areResourcesLoading, projects, styleguides } = useResources(state);
     const { isStateUpdateLoading } = useStateUpdateFromConfiguration(state, dispatch);
+    const authenticate = useAuthenticate(dispatch);
 
     useInitialize(dispatch);
     useValidate(state);
@@ -40,15 +41,7 @@ export const HomeContainer: FunctionComponent = () => {
         case Status.LOADING:
             return <Loader styles={{ height: "100vh" }} />;
         case Status.LOGIN:
-            return <Login onButtonClick={(): void => {
-                microsoftTeams.authentication.authenticate({
-                    height: 476,
-                    successCallback: accessToken => {
-                        dispatch({ type: ActionType.SET_TOKEN, value: accessToken });
-                    },
-                    url: "/api/auth/authorize"
-                });
-            }} />;
+            return <Login onButtonClick={authenticate} />;
         case Status.CONFIGURATION:
             return (
                 <Configuration

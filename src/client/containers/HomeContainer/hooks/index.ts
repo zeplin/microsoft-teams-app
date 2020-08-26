@@ -6,3 +6,4 @@ export * from "./useResources";
 export * from "./useValidate";
 export * from "./useStateUpdateFromConfiguration";
 export * from "./useWorkspaces";
+export * from "./useAuthenticate";
