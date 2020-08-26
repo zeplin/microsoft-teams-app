@@ -11,34 +11,35 @@ interface ProjectWebhookCreateParams {
     projectId: string;
 }
 
-interface ProjectWebhookCreateOptions {
+interface ProjectWebhookCommonParams {
+    projectId: string;
+    webhookId: string;
+}
+
+interface ProjectWebhookCommonOptions {
     authToken: string;
 }
 
 interface ProjectWebhookCreateParameter {
     body: ProjectWebhookCreateBody;
     params: ProjectWebhookCreateParams;
-    options: ProjectWebhookCreateOptions;
+    options: ProjectWebhookCommonOptions;
+}
+
+interface ProjectWebhookUpdateParameter {
+    body: Partial<ProjectWebhookCreateBody>;
+    params: ProjectWebhookCommonParams;
+    options: ProjectWebhookCommonOptions;
 }
 
 interface ProjectWebhookDeleteParameter {
-    params: {
-        projectId: string;
-        webhookId: string;
-    };
-    options: {
-        authToken: string;
-    };
+    params: ProjectWebhookCommonParams;
+    options: ProjectWebhookCommonOptions;
 }
 
 interface ProjectWebhookGetParameter {
-    params: {
-        projectId: string;
-        webhookId: string;
-    };
-    options: {
-        authToken: string;
-    };
+    params: ProjectWebhookCommonParams;
+    options: ProjectWebhookCommonOptions;
 }
 
 export class ProjectWebhooks {
@@ -57,6 +58,27 @@ export class ProjectWebhooks {
     ): Promise<string> {
         return this.requester.createResource(
             `/projects/${projectId}/webhooks`,
+            body,
+            {
+                headers: {
+                    Authorization: authToken
+                }
+            }
+        );
+    }
+
+    async update(
+        {
+            params: {
+                projectId,
+                webhookId
+            },
+            body,
+            options: { authToken }
+        }: ProjectWebhookUpdateParameter
+    ): Promise<void> {
+        await this.requester.patch(
+            `/projects/${projectId}/webhooks/${webhookId}`,
             body,
             {
                 headers: {

@@ -1,5 +1,5 @@
 export * from "./useHomeReducer";
-export * from "./useConfigurationCreate";
+export * from "./useConfigurationSave";
 export * from "./useConfigurationDelete";
 export * from "./useInitialize";
 export * from "./useResources";

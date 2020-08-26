@@ -59,7 +59,12 @@ interface ConfigurationCreateParameters {
     };
 }
 
-interface ConfigurationCreateOptions {
+interface ConfigurationUpdateParameters {
+    configurationId: string;
+    zeplin: ProjectParameters | StyleguideParameters;
+}
+
+interface ConfigurationCommonOptions {
     authToken: string;
 }
 
@@ -70,7 +75,7 @@ class ConfigurationFacade {
 
     private createWebhook(
         params: StyleguideParameters | ProjectParameters,
-        { authToken }: ConfigurationCreateOptions
+        { authToken }: ConfigurationCommonOptions
     ): Promise<string> {
         if (this.isProjectParameters(params)) {
             return zeplin.projectWebhooks.create({
@@ -102,9 +107,45 @@ class ConfigurationFacade {
         });
     }
 
+    private async updateWebhook(
+        webhookId: string,
+        params: StyleguideParameters | ProjectParameters,
+        { authToken }: ConfigurationCommonOptions
+    ): Promise<void> {
+        if (this.isProjectParameters(params)) {
+            await zeplin.projectWebhooks.update({
+                params: {
+                    projectId: params.resource.id,
+                    webhookId
+                },
+                body: {
+                    url: `${BASE_URL}/api/webhook`,
+                    secret: WEBHOOK_SECRET,
+                    events: params.events
+                },
+                options: {
+                    authToken
+                }
+            });
+        } else {
+            await zeplin.styleguideWebhooks.update({
+                params: {
+                    styleguideId: params.resource.id,
+                    webhookId
+                },
+                body: {
+                    events: params.events
+                },
+                options: {
+                    authToken
+                }
+            });
+        }
+    }
+
     private deleteWebhook(
         { zeplin: { resource, webhookId } }: Configuration,
-        authToken: string
+        { authToken }: ConfigurationCommonOptions
     ): Promise<void> {
         if (resource.type === WebhookResourceType.PROJECT) {
             return zeplin.projectWebhooks.delete({
@@ -130,7 +171,7 @@ class ConfigurationFacade {
 
     private getWebhook(
         { zeplin: { resource, webhookId } }: Configuration,
-        authToken: string
+        { authToken }: ConfigurationCommonOptions
     ): Promise<ProjectWebhook | StyleguideWebhook> {
         if (resource.type === WebhookResourceType.PROJECT) {
             return zeplin.projectWebhooks.get({
@@ -156,7 +197,7 @@ class ConfigurationFacade {
 
     private getResource(
         { zeplin: { resource } }: Configuration,
-        authToken: string
+        { authToken }: ConfigurationCommonOptions
     ): Promise<Project | Styleguide> {
         if (resource.type === WebhookResourceType.PROJECT) {
             return zeplin.projects.get({
@@ -180,7 +221,7 @@ class ConfigurationFacade {
 
     async create(
         params: ConfigurationCreateParameters,
-        options: ConfigurationCreateOptions
+        options: ConfigurationCommonOptions
     ): Promise<{ id: string }> {
         const webhookId = await this.createWebhook(params.zeplin, options);
         const { _id } = await configurationRepo.create({
@@ -197,18 +238,18 @@ class ConfigurationFacade {
 
     async delete(
         configurationId: string,
-        authToken: string
+        options: ConfigurationCommonOptions
     ): Promise<void> {
         const configuration = await configurationRepo.get(configurationId);
         if (configuration) {
-            await this.deleteWebhook(configuration, authToken);
+            await this.deleteWebhook(configuration, options);
             await configurationRepo.delete(configurationId);
         }
     }
 
     async get(
         configurationId: string,
-        authToken: string
+        options: ConfigurationCommonOptions
     ): Promise<ConfigurationResponse> {
         const configuration = await configurationRepo.get(configurationId);
 
@@ -222,8 +263,8 @@ class ConfigurationFacade {
         }
 
         const [webhook, resource] = await Promise.all([
-            this.getWebhook(configuration, authToken),
-            this.getResource(configuration, authToken)
+            this.getWebhook(configuration, options),
+            this.getResource(configuration, options)
         ]);
 
         return {
@@ -237,6 +278,32 @@ class ConfigurationFacade {
             },
             microsoftTeams: configuration.microsoftTeams
         };
+    }
+
+    async update(
+        parameters: ConfigurationUpdateParameters,
+        options: ConfigurationCommonOptions
+    ): Promise<void> {
+        const configuration = await configurationRepo.get(parameters.configurationId);
+
+        if (
+            !configuration ||
+            parameters.zeplin.resource.id !== configuration.zeplin.resource.id ||
+            parameters.zeplin.resource.type !== configuration.zeplin.resource.type
+        ) {
+            throw new ServiceError(
+                "Configuration not found",
+                {
+                    statusCode: NOT_FOUND,
+                    title: "Configuration not found"
+                });
+        }
+
+        await this.updateWebhook(
+            configuration.zeplin.webhookId,
+            parameters.zeplin,
+            options
+        );
     }
 }
 

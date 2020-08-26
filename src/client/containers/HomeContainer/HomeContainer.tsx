@@ -7,7 +7,7 @@ import { ResourceType } from "../../requester";
 import {
     ActionType,
     Status,
-    useConfigurationCreate,
+    useConfigurationSave,
     useConfigurationDelete,
     useHomeReducer,
     useInitialize,
@@ -29,7 +29,7 @@ export const HomeContainer: FunctionComponent = () => {
 
     useInitialize(dispatch);
     useValidate(state);
-    useConfigurationCreate(state);
+    useConfigurationSave(state);
     useConfigurationDelete(state);
 
     if (isStateUpdateLoading) {
