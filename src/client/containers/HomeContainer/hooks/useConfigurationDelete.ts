@@ -28,7 +28,7 @@ export const useConfigurationDelete = (state: State): void => {
 
     useEffect(() => {
         microsoftTeams.settings.registerOnRemoveHandler(removeEvent => {
-            if (!state.accessToken) {
+            if (!accessTokenRef.current) {
                 removeEvent.notifyFailure("access token not found");
             } else {
                 try {
