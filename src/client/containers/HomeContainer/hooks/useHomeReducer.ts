@@ -1,6 +1,7 @@
 import { Dispatch, Reducer, useReducer } from "react";
 
 import { Configuration, Resource, WebhookEventType } from "../../../requester";
+import { useRouter } from "next/router";
 
 const toggleWebhookEvent = (
     webhookEvents: WebhookEventType[],
@@ -30,11 +31,13 @@ export type Action = {
 }
 
 export interface State {
+    configurationId?: string;
     status: Status;
     accessToken?: string;
     selectedWorkspace?: string;
     selectedResource?: Resource;
     selectedWebhookEvents: WebhookEventType[];
+    initialSelectedWebhookEvents: WebhookEventType[];
 }
 
 export enum Status {
@@ -54,11 +57,13 @@ export enum ActionType {
 }
 
 export const initialState: State = {
+    configurationId: undefined,
     status: Status.LOADING,
     accessToken: undefined,
     selectedWorkspace: undefined,
     selectedResource: undefined,
-    selectedWebhookEvents: Object.values(WebhookEventType)
+    selectedWebhookEvents: Object.values(WebhookEventType),
+    initialSelectedWebhookEvents: Object.values(WebhookEventType)
 };
 
 export const homeReducer: Reducer<State, Action> = (state, action) => {
@@ -72,7 +77,7 @@ export const homeReducer: Reducer<State, Action> = (state, action) => {
         case ActionType.SET_TOKEN:
             return {
                 ...state,
-                status: Status.CONFIGURATION,
+                status: state.configurationId ? Status.LOADING_CONFIGURATION : Status.CONFIGURATION,
                 accessToken: action.value
             };
         case ActionType.SET_FROM_CONFIGURATION:
@@ -80,6 +85,7 @@ export const homeReducer: Reducer<State, Action> = (state, action) => {
                 ...state,
                 status: Status.CONFIGURATION,
                 selectedWebhookEvents: action.value.webhook.events,
+                initialSelectedWebhookEvents: action.value.webhook.events,
                 selectedResource: action.value.resource
             };
         case ActionType.SET_SELECTED_WORKSPACE:
@@ -103,4 +109,18 @@ export const homeReducer: Reducer<State, Action> = (state, action) => {
     }
 };
 
-export const useHomeReducer = (): [State, Dispatch<Action>] => useReducer(homeReducer, initialState);
+export const useHomeReducer = (): [State, Dispatch<Action>] => {
+    const {
+        query: {
+            id
+        }
+    } = useRouter();
+
+    return useReducer(
+        homeReducer,
+        {
+            ...initialState,
+            configurationId: id ? String(id) : undefined
+        }
+    );
+};

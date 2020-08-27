@@ -16,7 +16,7 @@ import {
     useWorkspaces,
     useAuthenticate
 } from "./hooks";
-import { Configuration, Login } from "./components";
+import { ConfigurationCreate, Login, ConfigurationUpdate } from "./components";
 
 export const HomeContainer: FunctionComponent = () => {
     const { query: { channel, id } } = useRouter();
@@ -25,7 +25,7 @@ export const HomeContainer: FunctionComponent = () => {
 
     const { areWorkspacesLoading, workspaces } = useWorkspaces(state);
     const { areResourcesLoading, projects, styleguides } = useResources(state);
-    const { isStateUpdateLoading } = useStateUpdateFromConfiguration(state, dispatch);
+    useStateUpdateFromConfiguration(state, dispatch);
     const authenticate = useAuthenticate(dispatch);
 
     useInitialize(dispatch);
@@ -33,25 +33,33 @@ export const HomeContainer: FunctionComponent = () => {
     useConfigurationSave(state);
     useConfigurationDelete(state);
 
-    if (isStateUpdateLoading) {
-        return <Loader styles={{ height: "100vh" }} />;
-    }
-
     switch (state.status) {
         case Status.LOADING:
+        case Status.LOADING_CONFIGURATION:
             return <Loader styles={{ height: "100vh" }} />;
         case Status.LOGIN:
             return <Login onButtonClick={authenticate} />;
         case Status.CONFIGURATION:
+            if (id) {
+                return (
+                    <ConfigurationUpdate
+                        channelName={String(channel)}
+                        resource={state.selectedResource}
+                        selectedWebhookEvents={state.selectedWebhookEvents}
+                        onWebhookEventChange={(value): void => dispatch({
+                            type: ActionType.TOGGLE_SELECTED_WEBHOOK_EVENT,
+                            value
+                        })} />
+                );
+            }
             return (
-                <Configuration
+                <ConfigurationCreate
                     isConfigurationCreated={Boolean(id)}
                     channelName={String(channel)}
                     areWorkspacesLoading={areWorkspacesLoading}
                     workspaces={workspaces || []}
                     isWorkspaceSelected={Boolean(state.selectedWorkspace)}
                     resourceType={state.selectedResource?.type ?? ResourceType.PROJECT}
-                    resourceName={state.selectedResource?.name}
                     areResourcesLoading={areResourcesLoading}
                     projects={projects || []}
                     styleguides={styleguides || []}

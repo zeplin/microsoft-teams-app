@@ -4,15 +4,8 @@ import * as microsoftTeams from "@microsoft/teams-js";
 
 import { fetchConfigurationDelete } from "../../../requester";
 import { State } from "./useHomeReducer";
-import { useRouter } from "next/router";
 
 export const useConfigurationDelete = (state: State): void => {
-    const {
-        query: {
-            id
-        }
-    } = useRouter();
-
     /**
      * Workaround: microsoftTeams.settings.registerOnRemoveHandler produce error when it's called multiple times.
      * As workaround the function is called once and gets the value of accessToken via useRef
@@ -34,7 +27,7 @@ export const useConfigurationDelete = (state: State): void => {
                 try {
                     deleteConfiguration({
                         accessToken: accessTokenRef.current,
-                        configurationId: String(id)
+                        configurationId: state.configurationId
                     }).then(() => {
                         removeEvent.notifySuccess();
                     }).catch(error => {

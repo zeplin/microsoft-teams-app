@@ -33,10 +33,7 @@ exports[`HomeContainer should change ui when login flow completed 1`] = `
         class="ui-text"
         data-uses-unhanded-props="true"
       >
-        Can
-        '
-        t find the project/styleguide to connect to?
-         
+        Can't find the project/styleguide to connect to? 
         <a
           class="ui-text fh fi fj"
           data-uses-unhanded-props="true"

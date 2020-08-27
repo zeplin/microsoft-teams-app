@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
+
 import { fetchProjects, fetchStyleguides, Project, Styleguide } from "../../../requester";
 import { State } from "./useHomeReducer";
-import { useRouter } from "next/router";
 
 interface UseResourcesResult {
     areResourcesLoading: boolean;
@@ -10,8 +10,6 @@ interface UseResourcesResult {
 }
 
 export const useResources = (state: State): UseResourcesResult => {
-    const { query: { id } } = useRouter();
-
     const { isLoading: areProjectsLoading, data: projects } = useQuery(
         [
             "projects",
@@ -20,7 +18,7 @@ export const useResources = (state: State): UseResourcesResult => {
         ],
         (key, workspace, accessToken) => fetchProjects(workspace, accessToken),
         {
-            enabled: !id && state.selectedWorkspace && state.accessToken
+            enabled: !state.configurationId && state.selectedWorkspace && state.accessToken
         }
     );
 
@@ -32,7 +30,7 @@ export const useResources = (state: State): UseResourcesResult => {
         ],
         (key, workspace, accessToken) => fetchStyleguides(workspace, accessToken),
         {
-            enabled: !id && state.selectedWorkspace && state.accessToken
+            enabled: !state.configurationId && state.selectedWorkspace && state.accessToken
         }
     );
 

@@ -4,14 +4,25 @@ import * as microsoftTeams from "@microsoft/teams-js";
 
 import { fetchConfigurationCreate, fetchConfigurationUpdate } from "../../../requester";
 import { State } from "./useHomeReducer";
-import { useRouter } from "next/router";
 
 interface WebhookSettings {
     webhookUrl: string;
 }
 
+function setSettings(configurationId: string, configurationName: string): void {
+    const contentURL = new URL(window.location.href);
+    contentURL.searchParams.set("id", configurationId);
+    contentURL.searchParams.set("theme", "{theme}");
+    contentURL.searchParams.set("channel", "{channelName}");
+
+    microsoftTeams.settings.setSettings({
+        entityId: configurationId,
+        configName: configurationName,
+        contentUrl: decodeURI(contentURL.toString())
+    } as unknown as microsoftTeams.settings.Settings);
+}
+
 export const useConfigurationSave = (state: State): void => {
-    const { query: { id } } = useRouter();
     const [createConfiguration] = useMutation(fetchConfigurationCreate, { throwOnError: true });
     const [updateConfiguration] = useMutation(fetchConfigurationUpdate, { throwOnError: true });
 
@@ -25,11 +36,11 @@ export const useConfigurationSave = (state: State): void => {
                 microsoftTeams.settings.registerOnSaveHandler(async saveEvent => {
                     const { webhookUrl } = settings as unknown as WebhookSettings;
                     try {
-                        if (id) {
+                        if (state.configurationId) {
                             await updateConfiguration(
                                 {
                                     accessToken: state.accessToken,
-                                    configurationId: String(id),
+                                    configurationId: state.configurationId,
                                     zeplin: {
                                         resource: {
                                             id: state.selectedResource.id,
@@ -38,6 +49,8 @@ export const useConfigurationSave = (state: State): void => {
                                         events: state.selectedWebhookEvents
                                     }
                                 });
+
+                            setSettings(state.configurationId, state.selectedResource.name);
                         } else {
                             const configurationId = await createConfiguration(
                                 {
@@ -59,16 +72,7 @@ export const useConfigurationSave = (state: State): void => {
                                     }
                                 });
 
-                            const contentURL = new URL(window.location.href);
-                            contentURL.searchParams.set("id", configurationId);
-                            contentURL.searchParams.set("theme", "{theme}");
-                            contentURL.searchParams.set("channel", "{channelName}");
-
-                            microsoftTeams.settings.setSettings({
-                                entityId: configurationId,
-                                configName: state.selectedResource.name,
-                                contentUrl: decodeURI(contentURL.toString())
-                            } as unknown as microsoftTeams.settings.Settings);
+                            setSettings(configurationId, state.selectedResource.name);
                         }
 
                         saveEvent.notifySuccess();
