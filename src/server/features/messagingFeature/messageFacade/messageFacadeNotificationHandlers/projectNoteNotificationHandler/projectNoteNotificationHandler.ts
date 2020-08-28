@@ -1,5 +1,5 @@
 import { NotificationHandler } from "../NotificationHandler";
-import { AdaptiveCard, commonTeamsCard } from "../teamsCardTemplates";
+import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import {
     EventPayload,
     EventType,
@@ -103,7 +103,7 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
         return event.deliveryId;
     }
 
-    getTeamsMessage(events: WebhookEvent<ProjectNoteEventPayload>[]): AdaptiveCard {
+    getTeamsMessage(events: WebhookEvent<ProjectNoteEventPayload>[]): MessageCard {
         if (events.length > 1) {
             // TODO: Log this situation since we don't want it to happen
         }

@@ -1,5 +1,5 @@
 import { NotificationHandler } from "../NotificationHandler";
-import { AdaptiveCard, commonTeamsCard } from "../teamsCardTemplates";
+import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { WebhookEvent, EventType, EventPayload, ProjectContext } from "../../../messagingTypes";
 import { LONG_DELAY } from "../constants";
 import { ProjectMemberResource } from "../resources/projectMemberResource";
@@ -34,7 +34,7 @@ class ProjectMemberNotificationHandler extends NotificationHandler {
             : `**${events.length} new users** just joined _${projectName}_`;
     }
 
-    getTeamsMessage(events: WebhookEvent<ProjectMemberEventPayload>[]): AdaptiveCard {
+    getTeamsMessage(events: WebhookEvent<ProjectMemberEventPayload>[]): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
             section: {

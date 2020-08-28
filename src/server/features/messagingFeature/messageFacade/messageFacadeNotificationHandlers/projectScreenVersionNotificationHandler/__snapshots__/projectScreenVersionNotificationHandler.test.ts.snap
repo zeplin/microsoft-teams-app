@@ -2,45 +2,41 @@
 
 exports[`projectScreenVersionNotificationHandler getTeamsMessage should match snapshot when there are more than one events 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**2 screens** are updated in _projectName_! 🏃‍♂",
+  "sections": [
     {
-      "type": "TextBlock",
-      "text": "**2 screens** are updated in _projectName_! 🏃‍♂",
-      "wrap": true,
-      "spacing": "small"
-    },
-    {
-      "type": "ImageSet",
-      "spacing": "extraLarge",
-      "imageSize": "large",
       "images": [
         {
-          "type": "Image",
-          "url": "http://placehold.it/200"
+          "image": "http://placehold.it/200",
+          "title": "Section Image"
         },
         {
-          "type": "Image",
-          "url": "http://placehold.it/200"
+          "image": "http://placehold.it/200",
+          "title": "Section Image"
         }
-      ],
-      "separator": false
+      ]
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "zpl://project?pid=projectId&sids=screenId,screenId2"
+        }
+      ]
     },
     {
-      "type": "ActionSet",
-      "spacing": "extraLarge",
-      "actions": [
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
         {
-          "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://project?pid=projectId&sids=screenId,screenId2"
-        },
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/project/projectId?sid=screenId&sid=screenId2"
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId?sid=screenId&sid=screenId2"
         }
       ]
     }
@@ -50,58 +46,39 @@ exports[`projectScreenVersionNotificationHandler getTeamsMessage should match sn
 
 exports[`projectScreenVersionNotificationHandler getTeamsMessage should match snapshot when there is a commit message for event 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**screenName** is updated in _projectName_! 🏃‍♂️",
+  "sections": [
     {
-      "type": "TextBlock",
-      "text": "**screenName** is updated in _projectName_! 🏃‍♂️",
-      "wrap": true,
-      "spacing": "small"
-    },
+      "title": "**Commit message**",
+      "text": "Commit ettim commit eyledim bu ekranlari guncellemeye.",
+      "images": [
+        {
+          "image": "http://placehold.it/200",
+          "title": "Section Image"
+        }
+      ]
+    }
+  ],
+  "potentialAction": [
     {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
         {
-          "type": "TextBlock",
-          "text": "Commit message",
-          "spacing": "none",
-          "weight": "bolder"
-        },
-        {
-          "type": "TextBlock",
-          "text": "Commit ettim commit eyledim bu ekranlari guncellemeye.",
-          "spacing": "none"
+          "os": "default",
+          "uri": "zpl://screen?pid=projectId&sid=screenId"
         }
       ]
     },
     {
-      "type": "ImageSet",
-      "spacing": "extraLarge",
-      "imageSize": "large",
-      "images": [
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
         {
-          "type": "Image",
-          "url": "http://placehold.it/200"
-        }
-      ],
-      "separator": false
-    },
-    {
-      "type": "ActionSet",
-      "spacing": "extraLarge",
-      "actions": [
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://screen?pid=projectId&sid=screenId"
-        },
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/project/projectId/screen/screenId"
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/screen/screenId"
         }
       ]
     }
@@ -111,41 +88,37 @@ exports[`projectScreenVersionNotificationHandler getTeamsMessage should match sn
 
 exports[`projectScreenVersionNotificationHandler getTeamsMessage should match snapshot when there is only one event 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**screenName** is updated in _projectName_! 🏃‍♂️",
+  "sections": [
     {
-      "type": "TextBlock",
-      "text": "**screenName** is updated in _projectName_! 🏃‍♂️",
-      "wrap": true,
-      "spacing": "small"
-    },
-    {
-      "type": "ImageSet",
-      "spacing": "extraLarge",
-      "imageSize": "large",
       "images": [
         {
-          "type": "Image",
-          "url": "http://placehold.it/200"
+          "image": "http://placehold.it/200",
+          "title": "Section Image"
         }
-      ],
-      "separator": false
+      ]
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "zpl://screen?pid=projectId&sid=screenId"
+        }
+      ]
     },
     {
-      "type": "ActionSet",
-      "spacing": "extraLarge",
-      "actions": [
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
         {
-          "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://screen?pid=projectId&sid=screenId"
-        },
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/project/projectId/screen/screenId"
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/screen/screenId"
         }
       ]
     }

@@ -2,40 +2,33 @@
 
 exports[`projectNoteNotificationHandler getTeamsMessage should match snapshot 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**sertac** added a note on _Manage Zeplin Connector_ screen in _Project MS Teams Integration_. 🏃‍♂",
+  "sections": [
     {
-      "type": "TextBlock",
-      "text": "**sertac** added a note on _Manage Zeplin Connector_ screen in _Project MS Teams Integration_. 🏃‍♂",
-      "wrap": true,
-      "spacing": "small"
-    },
+      "text": "Naptin nettin nettin naptin?",
+      "images": []
+    }
+  ],
+  "potentialAction": [
     {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
         {
-          "type": "TextBlock",
-          "text": "Naptin nettin nettin naptin?",
-          "spacing": "none"
+          "os": "default",
+          "uri": "zpl://dot?pid=projectId&sid=screenId&did=noteId"
         }
       ]
     },
     {
-      "type": "ActionSet",
-      "spacing": "extraLarge",
-      "actions": [
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
         {
-          "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://dot?pid=projectId&sid=screenId&did=noteId"
-        },
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/project/projectId/screen/screenId?did=noteId"
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/screen/screenId?did=noteId"
         }
       ]
     }

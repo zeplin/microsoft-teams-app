@@ -2,26 +2,13 @@
 
 exports[`projectMemberNotificationHandler getTeamsMessage should match snapshot when there are more than one events 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**2 new users** just joined _Project MS Teams Integration_",
+  "sections": [
     {
-      "type": "TextBlock",
-      "text": "**2 new users** just joined _Project MS Teams Integration_",
-      "wrap": true,
-      "spacing": "small"
-    },
-    {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
-        {
-          "type": "TextBlock",
-          "text": "Say hi 👋",
-          "spacing": "none"
-        }
-      ]
+      "text": "Say hi 👋",
+      "images": []
     }
   ]
 }
@@ -29,26 +16,13 @@ exports[`projectMemberNotificationHandler getTeamsMessage should match snapshot 
 
 exports[`projectMemberNotificationHandler getTeamsMessage should match snapshot when there is only one event 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**dirtybit** just joined _Project MS Teams Integration_.",
+  "sections": [
     {
-      "type": "TextBlock",
-      "text": "**dirtybit** just joined _Project MS Teams Integration_.",
-      "wrap": true,
-      "spacing": "small"
-    },
-    {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
-        {
-          "type": "TextBlock",
-          "text": "Say hi 👋",
-          "spacing": "none"
-        }
-      ]
+      "text": "Say hi 👋",
+      "images": []
     }
   ]
 }

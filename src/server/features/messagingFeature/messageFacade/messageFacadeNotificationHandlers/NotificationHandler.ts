@@ -1,9 +1,9 @@
 import { WebhookEvent } from "../../messagingTypes";
-import { AdaptiveCard } from "./teamsCardTemplates";
+import { MessageCard } from "./teamsCardTemplates";
 
 export abstract class NotificationHandler {
     abstract get delay(): number;
-    abstract getTeamsMessage(events: WebhookEvent[]): AdaptiveCard;
+    abstract getTeamsMessage(events: WebhookEvent[]): MessageCard;
     abstract shouldHandleEvent(event: WebhookEvent): boolean;
     getGroupingKey(event: WebhookEvent): string {
         const {

@@ -1,5 +1,5 @@
 import { NotificationHandler } from "../NotificationHandler";
-import { AdaptiveCard, commonTeamsCard } from "../teamsCardTemplates";
+import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import { WebhookEvent, EventType, EventPayload, StyleguideContext } from "../../../messagingTypes";
 import { LONG_DELAY } from "../constants";
 import { StyleguideMemberResource } from "../resources/styleguideMemberResource";
@@ -34,7 +34,7 @@ class StyleguideMemberNotificationHandler extends NotificationHandler {
             : `**${events.length} new users** just joined _${styleguideName}_`;
     }
 
-    getTeamsMessage(events: WebhookEvent<StyleguideMemberEventPayload>[]): AdaptiveCard {
+    getTeamsMessage(events: WebhookEvent<StyleguideMemberEventPayload>[]): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
             section: {

@@ -1,5 +1,5 @@
 import { NotificationHandler } from "../NotificationHandler";
-import { AdaptiveCard, commonTeamsCard } from "../teamsCardTemplates";
+import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import {
     WebhookEvent,
     CommonEventPayload,
@@ -81,7 +81,7 @@ class StyleguideComponentNotificationHandler extends NotificationHandler {
         return `${ZEPLIN_MAC_APP_URL_SCHEME}components?stid=${styleguideId}&coids=${events.map(event => event.payload.resource.id).join(",")}`;
     }
 
-    getTeamsMessage(events: WebhookEvent<StyleguideComponentEventPayload>[]): AdaptiveCard {
+    getTeamsMessage(events: WebhookEvent<StyleguideComponentEventPayload>[]): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
             images: this.getImages(events),
