@@ -6,17 +6,17 @@ import { ResourceType } from "../../requester";
 import {
     ActionType,
     Status,
-    useConfigurationSave,
+    useAuthenticate,
     useConfigurationDelete,
+    useConfigurationSave,
     useHomeReducer,
     useInitialize,
     useResources,
-    useValidate,
     useStateUpdateFromConfiguration,
-    useWorkspaces,
-    useAuthenticate
+    useValidate,
+    useWorkspaces
 } from "./hooks";
-import { ConfigurationCreate, Login, ConfigurationUpdate } from "./components";
+import { ConfigurationCreate, ConfigurationUpdate, Login } from "./components";
 
 export const HomeContainer: FunctionComponent = () => {
     const { query: { channel, id } } = useRouter();
