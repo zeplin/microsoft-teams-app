@@ -3,8 +3,8 @@ import { messageFacade } from "./messageFacade";
 
 export const handleWebhookRequest: RequestHandler = async (req, res, next) => {
     try {
-        const webhookId = req.headers["Zeplin-Webhook-Id"] as string;
-        const deliveryId = req.headers["Zeplin-Delivery-Id"] as string;
+        const webhookId = req.headers["zeplin-webhook-id"] as string;
+        const deliveryId = req.headers["zeplin-delivery-id"] as string;
         await messageFacade.handleEventArrived({
             webhookId,
             deliveryId,
