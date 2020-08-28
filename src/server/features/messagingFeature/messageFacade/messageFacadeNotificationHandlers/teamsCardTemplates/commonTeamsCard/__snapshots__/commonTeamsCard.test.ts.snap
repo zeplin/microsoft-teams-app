@@ -2,64 +2,40 @@
 
 exports[`commonTeamsCard should match snapshot when rendered with all elements 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "title": "Project name",
+  "text": "**sertac 🌮** added a new comment on _Manage Zeplin Connector_ screen. 🏃‍♂",
+  "sections": [
     {
-      "type": "TextBlock",
-      "text": "Project name",
-      "size": "large",
-      "weight": "bolder"
-    },
-    {
-      "type": "TextBlock",
-      "text": "**sertac 🌮** added a new comment on _Manage Zeplin Connector_ screen. 🏃‍♂",
-      "wrap": true,
-      "spacing": "small"
-    },
-    {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
+      "title": "Section title",
+      "text": "Naptin nettin nettin naptin?",
+      "images": [
         {
-          "type": "TextBlock",
-          "text": "Section title",
-          "spacing": "none",
-          "weight": "bolder"
-        },
+          "image": "http://placehold.it/160",
+          "title": "Section Image"
+        }
+      ]
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
         {
-          "type": "TextBlock",
-          "text": "Naptin nettin nettin naptin?",
-          "spacing": "none"
+          "os": "default",
+          "uri": "https://ergun.sh"
         }
       ]
     },
     {
-      "type": "ImageSet",
-      "spacing": "extraLarge",
-      "imageSize": "large",
-      "images": [
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
         {
-          "type": "Image",
-          "url": "http://placehold.it/160"
-        }
-      ],
-      "separator": false
-    },
-    {
-      "type": "ActionSet",
-      "spacing": "extraLarge",
-      "actions": [
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://ergun.sh"
-        },
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "https://ergun.sh"
+          "os": "default",
+          "uri": "https://ergun.sh"
         }
       ]
     }
@@ -69,27 +45,17 @@ exports[`commonTeamsCard should match snapshot when rendered with all elements 1
 
 exports[`commonTeamsCard should match snapshot when rendered with images 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "text",
+  "sections": [
     {
-      "type": "TextBlock",
-      "text": "text",
-      "wrap": true,
-      "spacing": "small"
-    },
-    {
-      "type": "ImageSet",
-      "spacing": "extraLarge",
-      "imageSize": "large",
       "images": [
         {
-          "type": "Image",
-          "url": "http://placehold.it/400"
+          "image": "http://placehold.it/400",
+          "title": "Section Image"
         }
-      ],
-      "separator": false
+      ]
     }
   ]
 }
@@ -97,24 +63,17 @@ exports[`commonTeamsCard should match snapshot when rendered with images 1`] = `
 
 exports[`commonTeamsCard should match snapshot when rendered with links 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "text",
+  "potentialAction": [
     {
-      "type": "TextBlock",
-      "text": "text",
-      "wrap": true,
-      "spacing": "small"
-    },
-    {
-      "type": "ActionSet",
-      "spacing": "extraLarge",
-      "actions": [
+      "@type": "OpenUri",
+      "name": "Open in me",
+      "targets": [
         {
-          "type": "Action.OpenUrl",
-          "title": "Open in me",
-          "url": "https://ergun.sh"
+          "os": "default",
+          "uri": "https://ergun.sh"
         }
       ]
     }
@@ -124,48 +83,22 @@ exports[`commonTeamsCard should match snapshot when rendered with links 1`] = `
 
 exports[`commonTeamsCard should match snapshot when rendered with only required elements 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
-    {
-      "type": "TextBlock",
-      "text": "text",
-      "wrap": true,
-      "spacing": "small"
-    }
-  ]
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "text"
 }
 `;
 
 exports[`commonTeamsCard should match snapshot when rendered with section 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "text",
+  "sections": [
     {
-      "type": "TextBlock",
-      "text": "text",
-      "wrap": true,
-      "spacing": "small"
-    },
-    {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
-        {
-          "type": "TextBlock",
-          "text": "sectionTitle",
-          "spacing": "none",
-          "weight": "bolder"
-        },
-        {
-          "type": "TextBlock",
-          "text": "sectionText",
-          "spacing": "none"
-        }
-      ]
+      "title": "sectionTitle",
+      "text": "sectionText",
+      "images": []
     }
   ]
 }
@@ -173,22 +106,9 @@ exports[`commonTeamsCard should match snapshot when rendered with section 1`] = 
 
 exports[`commonTeamsCard should match snapshot when rendered with title 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
-    {
-      "type": "TextBlock",
-      "text": "title",
-      "size": "large",
-      "weight": "bolder"
-    },
-    {
-      "type": "TextBlock",
-      "text": "text",
-      "wrap": true,
-      "spacing": "small"
-    }
-  ]
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "title": "title",
+  "text": "text"
 }
 `;

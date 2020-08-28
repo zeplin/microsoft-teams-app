@@ -1,2 +1,2 @@
 export * from "./commonTeamsCard";
-export * from "./teamsCardTypes";
+export * from "./messageCardTypes";
