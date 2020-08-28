@@ -6,7 +6,7 @@ import {
 } from "../../../messagingTypes";
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
-import { commonTeamsCard, AdaptiveCard } from "../teamsCardTemplates";
+import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
 import { ColorResource } from "../resources";
@@ -79,7 +79,7 @@ class StyleguideColorNotificationHandler extends NotificationHandler {
 
     getTeamsMessage(
         events: WebhookEvent<StyleguideColorEventPayload>[]
-    ): AdaptiveCard {
+    ): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
             section: {

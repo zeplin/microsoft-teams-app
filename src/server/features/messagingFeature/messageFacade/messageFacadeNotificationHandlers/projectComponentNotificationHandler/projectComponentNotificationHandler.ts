@@ -1,5 +1,5 @@
 import { NotificationHandler } from "../NotificationHandler";
-import { AdaptiveCard, commonTeamsCard } from "../teamsCardTemplates";
+import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import {
     WebhookEvent,
     CommonEventPayload,
@@ -81,7 +81,7 @@ class ProjectComponentNotificationHandler extends NotificationHandler {
         return `${ZEPLIN_MAC_APP_URL_SCHEME}components?pid=${projectId}&coids=${events.map(event => event.payload.resource.id).join(",")}`;
     }
 
-    getTeamsMessage(events: WebhookEvent<ProjectComponentEventPayload>[]): AdaptiveCard {
+    getTeamsMessage(events: WebhookEvent<ProjectComponentEventPayload>[]): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
             images: this.getImages(events),

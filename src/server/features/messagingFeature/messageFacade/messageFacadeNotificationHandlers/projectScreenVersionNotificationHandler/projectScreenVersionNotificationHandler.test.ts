@@ -1,6 +1,5 @@
 import { WebhookEvent } from "server/features/messagingFeature/messagingTypes";
 import { ProjectScreenVersionEventPayload, projectScreenVersionNotificationHandler } from "./projectScreenVersionNotificationHandler";
-import { ImageSet, CardElementType } from "../teamsCardTemplates";
 
 type GetDummyEventParams = {
     screenId?: string;
@@ -58,11 +57,8 @@ describe("projectScreenVersionNotificationHandler", () => {
                 getDummyEvent({ timestamp: 2, imageUrl: "url2" })
             ]);
             const expectedImages = ["url6", "url5", "url4", "url3", "url2"];
-            const imageSet = result.body.find<ImageSet>(
-                (el): el is ImageSet =>
-                    el.type === CardElementType.IMAGE_SET
-            );
-            expect(imageSet.images.map(image => image.url)).toEqual(expectedImages);
+            const { sections: [{ images }] } = result;
+            expect(images.map(image => image.image)).toEqual(expectedImages);
         });
 
         it("should match snapshot when there is only one event", () => {

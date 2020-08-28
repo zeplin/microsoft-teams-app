@@ -2,45 +2,41 @@
 
 exports[`projectComponentNotificationHandler getTeamsMessage method for created event should match snapshot when there are more than one events 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**2 new components** are added in _projectName_! 🏃‍♂️",
+  "sections": [
     {
-      "type": "TextBlock",
-      "text": "**2 new components** are added in _projectName_! 🏃‍♂️",
-      "wrap": true,
-      "spacing": "small"
-    },
-    {
-      "type": "ImageSet",
-      "spacing": "extraLarge",
-      "imageSize": "large",
       "images": [
         {
-          "type": "Image",
-          "url": "http://placehold.it/200"
+          "image": "http://placehold.it/200",
+          "title": "Section Image"
         },
         {
-          "type": "Image",
-          "url": "http://placehold.it/200"
+          "image": "http://placehold.it/200",
+          "title": "Section Image"
         }
-      ],
-      "separator": false
+      ]
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "zpl://components?pid=projectId&coids=componentId,componentId2"
+        }
+      ]
     },
     {
-      "type": "ActionSet",
-      "spacing": "extraLarge",
-      "actions": [
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
         {
-          "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://components?pid=projectId&coids=componentId,componentId2"
-        },
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/project/projectId/styleguide/components?coid=componentId&coid=componentId2"
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/components?coid=componentId&coid=componentId2"
         }
       ]
     }
@@ -50,41 +46,37 @@ exports[`projectComponentNotificationHandler getTeamsMessage method for created 
 
 exports[`projectComponentNotificationHandler getTeamsMessage method for created event should match snapshot when there is only one event 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**componentName** is added in _projectName_! 🏃‍♂️",
+  "sections": [
     {
-      "type": "TextBlock",
-      "text": "**componentName** is added in _projectName_! 🏃‍♂️",
-      "wrap": true,
-      "spacing": "small"
-    },
-    {
-      "type": "ImageSet",
-      "spacing": "extraLarge",
-      "imageSize": "large",
       "images": [
         {
-          "type": "Image",
-          "url": "http://placehold.it/200"
+          "image": "http://placehold.it/200",
+          "title": "Section Image"
         }
-      ],
-      "separator": false
+      ]
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "zpl://components?pid=projectId&coids=componentId"
+        }
+      ]
     },
     {
-      "type": "ActionSet",
-      "spacing": "extraLarge",
-      "actions": [
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
         {
-          "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://components?pid=projectId&coids=componentId"
-        },
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/project/projectId/styleguide/components?coid=componentId"
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/components?coid=componentId"
         }
       ]
     }
@@ -94,45 +86,41 @@ exports[`projectComponentNotificationHandler getTeamsMessage method for created 
 
 exports[`projectComponentNotificationHandler getTeamsMessage method for version_created event should match snapshot when there are more than one events 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**2 components** are updated in _projectName_! 🏃‍♂️",
+  "sections": [
     {
-      "type": "TextBlock",
-      "text": "**2 components** are updated in _projectName_! 🏃‍♂️",
-      "wrap": true,
-      "spacing": "small"
-    },
-    {
-      "type": "ImageSet",
-      "spacing": "extraLarge",
-      "imageSize": "large",
       "images": [
         {
-          "type": "Image",
-          "url": "http://placehold.it/200"
+          "image": "http://placehold.it/200",
+          "title": "Section Image"
         },
         {
-          "type": "Image",
-          "url": "http://placehold.it/200"
+          "image": "http://placehold.it/200",
+          "title": "Section Image"
         }
-      ],
-      "separator": false
+      ]
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "zpl://components?pid=projectId&coids=componentId,componentId2"
+        }
+      ]
     },
     {
-      "type": "ActionSet",
-      "spacing": "extraLarge",
-      "actions": [
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
         {
-          "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://components?pid=projectId&coids=componentId,componentId2"
-        },
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/project/projectId/styleguide/components?coid=componentId&coid=componentId2"
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/components?coid=componentId&coid=componentId2"
         }
       ]
     }
@@ -142,41 +130,37 @@ exports[`projectComponentNotificationHandler getTeamsMessage method for version_
 
 exports[`projectComponentNotificationHandler getTeamsMessage method for version_created event should match snapshot when there is only one event 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**componentName** is updated in _projectName_! 🏃‍♂️",
+  "sections": [
     {
-      "type": "TextBlock",
-      "text": "**componentName** is updated in _projectName_! 🏃‍♂️",
-      "wrap": true,
-      "spacing": "small"
-    },
-    {
-      "type": "ImageSet",
-      "spacing": "extraLarge",
-      "imageSize": "large",
       "images": [
         {
-          "type": "Image",
-          "url": "http://placehold.it/200"
+          "image": "http://placehold.it/200",
+          "title": "Section Image"
         }
-      ],
-      "separator": false
+      ]
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "zpl://components?pid=projectId&coids=componentId"
+        }
+      ]
     },
     {
-      "type": "ActionSet",
-      "spacing": "extraLarge",
-      "actions": [
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
         {
-          "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://components?pid=projectId&coids=componentId"
-        },
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/project/projectId/styleguide/components?coid=componentId"
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/components?coid=componentId"
         }
       ]
     }

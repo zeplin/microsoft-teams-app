@@ -1,5 +1,5 @@
 import { NotificationHandler } from "../NotificationHandler";
-import { AdaptiveCard, commonTeamsCard } from "../teamsCardTemplates";
+import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import {
     WebhookEvent,
     EventType,
@@ -111,7 +111,7 @@ class ProjectNoteCommentNotificationHandler extends NotificationHandler {
         return event.deliveryId;
     }
 
-    getTeamsMessage(events: WebhookEvent<ProjectNoteCommentEventPayload>[]): AdaptiveCard {
+    getTeamsMessage(events: WebhookEvent<ProjectNoteCommentEventPayload>[]): MessageCard {
         if (events.length > 1) {
             // TODO: Log that there was somehow grouping done for this notification
         }

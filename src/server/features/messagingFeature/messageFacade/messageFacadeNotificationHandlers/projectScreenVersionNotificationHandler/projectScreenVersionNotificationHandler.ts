@@ -1,5 +1,5 @@
 import { NotificationHandler } from "../NotificationHandler";
-import { AdaptiveCard, commonTeamsCard } from "../teamsCardTemplates";
+import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import {
     WebhookEvent,
     EventType,
@@ -107,7 +107,7 @@ class ProjectScreenVersionNotificationHandler extends NotificationHandler {
         return `${webhookId}:${commit?.message}:${eventType}:${action}`;
     }
 
-    getTeamsMessage(events: WebhookEvent<ProjectScreenVersionEventPayload>[]): AdaptiveCard {
+    getTeamsMessage(events: WebhookEvent<ProjectScreenVersionEventPayload>[]): MessageCard {
         const [{
             payload: {
                 resource: {
@@ -121,7 +121,7 @@ class ProjectScreenVersionNotificationHandler extends NotificationHandler {
             text: this.getText(events),
             images: this.getImages(events),
             section: commit?.message ? {
-                title: "Commit message",
+                title: "**Commit message**",
                 text: commit.message
             } : undefined,
             links: [{

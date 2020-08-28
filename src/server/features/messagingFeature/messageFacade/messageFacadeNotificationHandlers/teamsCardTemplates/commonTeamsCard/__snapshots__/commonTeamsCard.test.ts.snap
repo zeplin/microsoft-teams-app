@@ -66,6 +66,7 @@ exports[`commonTeamsCard should match snapshot when rendered with links 1`] = `
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
   "text": "text",
+  "sections": [],
   "potentialAction": [
     {
       "@type": "OpenUri",
@@ -85,7 +86,8 @@ exports[`commonTeamsCard should match snapshot when rendered with only required 
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "text"
+  "text": "text",
+  "sections": []
 }
 `;
 
@@ -109,6 +111,7 @@ exports[`commonTeamsCard should match snapshot when rendered with title 1`] = `
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
   "title": "title",
-  "text": "text"
+  "text": "text",
+  "sections": []
 }
 `;
