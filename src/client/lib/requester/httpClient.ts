@@ -3,9 +3,9 @@ import { UNAUTHORIZED } from "http-status-codes";
 import { AuthToken, refreshAuthToken } from "./auth";
 import { getAccessToken, getRefreshToken, setAccessToken, setRefreshToken } from "../storage";
 
-const client = Axios.create();
+const httpClient = Axios.create();
 
-client.interceptors.request.use(config => ({
+httpClient.interceptors.request.use(config => ({
     ...config,
     headers: {
         ...config.headers,
@@ -14,8 +14,9 @@ client.interceptors.request.use(config => ({
 }));
 
 let lastResult: Promise<AuthToken> | null = null;
-const timoutDuration = 60000;
+const timoutDuration = 60000; // In ms which equals to 1 minute
 
+// Throttle the request of refresh token to prevent multiple HTTP calls for concurrent requests
 function throttledRefreshToken(refreshToken: string): Promise<AuthToken> {
     if (lastResult) {
         return lastResult;
@@ -30,7 +31,7 @@ function throttledRefreshToken(refreshToken: string): Promise<AuthToken> {
     return lastResult;
 }
 
-client.interceptors.response.use(
+httpClient.interceptors.response.use(
     value => value,
     async error => {
         if (error.response.status !== UNAUTHORIZED || error.response.data.detail !== "token_expired") {
@@ -52,5 +53,5 @@ client.interceptors.response.use(
 );
 
 export {
-    client
+    httpClient
 };

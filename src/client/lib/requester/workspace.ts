@@ -1,4 +1,4 @@
-import { client } from "./client";
+import { httpClient } from "./httpClient";
 
 export interface Workspace {
     id: string;
@@ -6,7 +6,7 @@ export interface Workspace {
 }
 
 export const fetchWorkspaces = async (): Promise<Workspace[]> => {
-    const { data: result } = await client.get("/api/workspaces");
+    const { data: result } = await httpClient.get("/api/workspaces");
     return result;
 };
 
@@ -16,7 +16,7 @@ export interface Project {
 }
 
 export const fetchProjects = async (workspace: string): Promise<Project[]> => {
-    const { data: result } = await client.get(`/api/workspaces/${workspace}/projects`);
+    const { data: result } = await httpClient.get(`/api/workspaces/${workspace}/projects`);
     return result;
 };
 
@@ -26,6 +26,6 @@ export interface Styleguide {
 }
 
 export const fetchStyleguides = async (workspace: string): Promise<Styleguide[]> => {
-    const { data: result } = await client.get(`/api/workspaces/${workspace}/styleguides`);
+    const { data: result } = await httpClient.get(`/api/workspaces/${workspace}/styleguides`);
     return result;
 };

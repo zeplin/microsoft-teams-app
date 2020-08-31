@@ -1,4 +1,4 @@
-import { client } from "./client";
+import { httpClient } from "./httpClient";
 
 export enum ResourceType {
     PROJECT = "Project",
@@ -71,7 +71,7 @@ export const fetchConfigurationCreate = async (
         ...configuration
     }: ConfigurationCreateParameters
 ): Promise<string> => {
-    const { data: { id } } = await client.post(
+    const { data: { id } } = await httpClient.post(
         "/api/configurations",
         {
             ...configuration,
@@ -106,7 +106,7 @@ export const fetchConfigurationUpdate = async (
         }
     }: ConfigurationUpdateParameters
 ): Promise<string> => {
-    const { data: { id } } = await client.put(
+    const { data: { id } } = await httpClient.put(
         `/api/configurations/${configurationId}`,
         {
             zeplin: {
@@ -121,7 +121,7 @@ export const fetchConfigurationUpdate = async (
 };
 
 export const fetchConfigurationDelete = async (configurationId: string): Promise<void> => {
-    await client.delete(`/api/configurations/${configurationId}`);
+    await httpClient.delete(`/api/configurations/${configurationId}`);
 };
 
 export interface Configuration {
@@ -145,7 +145,7 @@ export const fetchConfiguration = async (configurationId: string): Promise<Confi
                 }
             }
         }
-    } = await client.get(`/api/configurations/${configurationId}`);
+    } = await httpClient.get(`/api/configurations/${configurationId}`);
 
     return {
         resource: {
