@@ -1,7 +1,7 @@
 import { Router as createRouter } from "express";
 import Joi from "@hapi/joi";
 
-import { handleAuthorize, handleTokenCreate } from "./authController";
+import { handleAuthorize, handleTokenCreate, handleTokenRefresh } from "./authController";
 import { JSONBodyParser, validateRequest } from "../../middlewares";
 
 const authRouter = createRouter({ mergeParams: true });
@@ -17,6 +17,17 @@ authRouter.post(
         })
     }),
     handleTokenCreate
+);
+
+authRouter.put(
+    "/token",
+    JSONBodyParser,
+    validateRequest({
+        body: Joi.object({
+            refreshToken: Joi.string()
+        })
+    }),
+    handleTokenRefresh
 );
 
 export {

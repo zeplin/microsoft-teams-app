@@ -24,6 +24,16 @@ class AuthFacade {
             }
         });
     }
+
+    refreshToken(refreshToken: string): Promise<AuthToken> {
+        return zeplin.auth.refreshToken({
+            body: {
+                refreshToken,
+                clientId: ZEPLIN_CLIENT_ID,
+                clientSecret: ZEPLIN_CLIENT_SECRET
+            }
+        });
+    }
 }
 
 export const authFacade = new AuthFacade();

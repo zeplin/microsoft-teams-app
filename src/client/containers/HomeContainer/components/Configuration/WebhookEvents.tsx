@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactElement } from "react";
 import { Flex } from "@fluentui/react-northstar";
 import { ConfigurationCheckbox } from "./ConfigurationCheckbox";
-import { resourceBasedEvents, ResourceType, WebhookEventType } from "../../../../requester";
+import { resourceBasedEvents, ResourceType, WebhookEventType } from "../../../../lib/requester";
 
 const HALF_DIVIDER = 2;
 
