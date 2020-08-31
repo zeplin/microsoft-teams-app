@@ -2,40 +2,33 @@
 
 exports[`styleguideTextStyleNotificationHandler getTeamsMessage method for created notification should match snapshot when there are more than 1 events 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**2 text styles** are added in _styleguideName_! 🏃‍♂",
+  "sections": [
     {
-      "type": "TextBlock",
-      "text": "**2 text styles** are added in _styleguideName_! 🏃‍♂",
-      "wrap": true,
-      "spacing": "small"
-    },
+      "text": "Make sure your stylesheets are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
     {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
         {
-          "type": "TextBlock",
-          "text": "Make sure your stylesheets are up to date!",
-          "spacing": "none"
+          "os": "default",
+          "uri": "zpl://textStyles?stid=styleguideId&tsids=textStyleId,anotherTextStyleId"
         }
       ]
     },
     {
-      "type": "ActionSet",
-      "spacing": "extraLarge",
-      "actions": [
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
         {
-          "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://textStyles?stid=styleguideId&tsids=textStyleId,anotherTextStyleId"
-        },
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/styleguide/styleguideId/styleguide/textstyles?tsid=textStyleId&tsid=anotherTextStyleId"
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/styleguide/textstyles?tsid=textStyleId&tsid=anotherTextStyleId"
         }
       ]
     }
@@ -45,40 +38,33 @@ exports[`styleguideTextStyleNotificationHandler getTeamsMessage method for creat
 
 exports[`styleguideTextStyleNotificationHandler getTeamsMessage method for created notification should match snapshot when there is only 1 event 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**textStyleName** is added in _styleguideName_! 🏃‍♂",
+  "sections": [
     {
-      "type": "TextBlock",
-      "text": "**textStyleName** is added in _styleguideName_! 🏃‍♂",
-      "wrap": true,
-      "spacing": "small"
-    },
+      "text": "Make sure your stylesheets are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
     {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
         {
-          "type": "TextBlock",
-          "text": "Make sure your stylesheets are up to date!",
-          "spacing": "none"
+          "os": "default",
+          "uri": "zpl://textStyles?stid=styleguideId&tsids=textStyleId"
         }
       ]
     },
     {
-      "type": "ActionSet",
-      "spacing": "extraLarge",
-      "actions": [
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
         {
-          "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://textStyles?stid=styleguideId&tsids=textStyleId"
-        },
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/styleguide/styleguideId/styleguide/textstyles?tsid=textStyleId"
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/styleguide/textstyles?tsid=textStyleId"
         }
       ]
     }
@@ -88,40 +74,33 @@ exports[`styleguideTextStyleNotificationHandler getTeamsMessage method for creat
 
 exports[`styleguideTextStyleNotificationHandler getTeamsMessage method for updated notification should match snapshot when there are more than 1 events 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**2 text styles** are updated in _styleguideName_! 🏃‍♂",
+  "sections": [
     {
-      "type": "TextBlock",
-      "text": "**2 text styles** are updated in _styleguideName_! 🏃‍♂",
-      "wrap": true,
-      "spacing": "small"
-    },
+      "text": "Make sure your stylesheets are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
     {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
         {
-          "type": "TextBlock",
-          "text": "Make sure your stylesheets are up to date!",
-          "spacing": "none"
+          "os": "default",
+          "uri": "zpl://textStyles?stid=styleguideId&tsids=textStyleId,anotherTextStyleId"
         }
       ]
     },
     {
-      "type": "ActionSet",
-      "spacing": "extraLarge",
-      "actions": [
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
         {
-          "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://textStyles?stid=styleguideId&tsids=textStyleId,anotherTextStyleId"
-        },
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/styleguide/styleguideId/styleguide/textstyles?tsid=textStyleId&tsid=anotherTextStyleId"
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/styleguide/textstyles?tsid=textStyleId&tsid=anotherTextStyleId"
         }
       ]
     }
@@ -131,40 +110,33 @@ exports[`styleguideTextStyleNotificationHandler getTeamsMessage method for updat
 
 exports[`styleguideTextStyleNotificationHandler getTeamsMessage method for updated notification should match snapshot when there is only 1 event 1`] = `
 {
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.2",
-  "body": [
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**textStyleName** is updated in _styleguideName_! 🏃‍♂",
+  "sections": [
     {
-      "type": "TextBlock",
-      "text": "**textStyleName** is updated in _styleguideName_! 🏃‍♂",
-      "wrap": true,
-      "spacing": "small"
-    },
+      "text": "Make sure your stylesheets are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
     {
-      "type": "Container",
-      "spacing": "extraLarge",
-      "items": [
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
         {
-          "type": "TextBlock",
-          "text": "Make sure your stylesheets are up to date!",
-          "spacing": "none"
+          "os": "default",
+          "uri": "zpl://textStyles?stid=styleguideId&tsids=textStyleId"
         }
       ]
     },
     {
-      "type": "ActionSet",
-      "spacing": "extraLarge",
-      "actions": [
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
         {
-          "type": "Action.OpenUrl",
-          "title": "Open in App",
-          "url": "zpl://textStyles?stid=styleguideId&tsids=textStyleId"
-        },
-        {
-          "type": "Action.OpenUrl",
-          "title": "Open in Web",
-          "url": "https://app.zeplin.io/styleguide/styleguideId/styleguide/textstyles?tsid=textStyleId"
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/styleguide/textstyles?tsid=textStyleId"
         }
       ]
     }
