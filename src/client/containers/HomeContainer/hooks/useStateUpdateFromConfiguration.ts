@@ -1,26 +1,24 @@
-import { Dispatch, useEffect } from "react";
-import { useMutation } from "react-query";
+import { Dispatch } from "react";
+import { useQuery } from "react-query";
 
-import { fetchConfiguration } from "../../../requester";
+import { Configuration, fetchConfiguration } from "../../../requester";
 import { Action, ActionType, State } from "./useHomeReducer";
 
 export const useStateUpdateFromConfiguration = (
     state: State,
     dispatch: Dispatch<Action>
 ): void => {
-    const [update] = useMutation(
-        fetchConfiguration,
+    useQuery(
+        ["configuration", String(state.configurationId), state.accessToken],
+        (key, configurationId, accessToken): Promise<Configuration> => fetchConfiguration({
+            accessToken,
+            configurationId
+        }),
         {
-            onSuccess: value => dispatch({ type: ActionType.SET_FROM_CONFIGURATION, value })
+            enabled: state.accessToken && state.configurationId,
+            cacheTime: Infinity,
+            refetchOnWindowFocus: false,
+            onSuccess: (value: Configuration): void => dispatch({ type: ActionType.SET_FROM_CONFIGURATION, value })
         }
     );
-
-    useEffect(() => {
-        if (state.configurationId && state.accessToken) {
-            update({
-                accessToken: state.accessToken,
-                configurationId: String(state.configurationId)
-            });
-        }
-    }, [state.accessToken]);
 };
