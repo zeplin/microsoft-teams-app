@@ -11,6 +11,7 @@ import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../
 import { URL } from "url";
 import { TextStyleResource } from "../resources";
 import { MessageCard } from "../teamsCardTemplates/messageCardTypes";
+import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
 type StyleguideTextStyleEventDescriptor = {
     type: EventType.STYLEGUIDE_TEXT_STYLE;
@@ -71,7 +72,7 @@ class StyleguideTextStyleNotificationHandler extends NotificationHandler {
                 }
             }
         }] = events;
-        return `${ZEPLIN_MAC_APP_URL_SCHEME}textStyles?stid=${styleguideId}&tsids=${events.map(event => event.payload.resource.id).join(",")}`;
+        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}textStyles?stid=${styleguideId}&tsids=${events.map(event => event.payload.resource.id).join(",")}`);
     }
 
     shouldHandleEvent(event: WebhookEvent): boolean {

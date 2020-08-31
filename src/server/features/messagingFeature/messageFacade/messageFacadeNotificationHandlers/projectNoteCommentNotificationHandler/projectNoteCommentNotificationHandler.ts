@@ -10,6 +10,7 @@ import {
 } from "../../../messagingTypes";
 import { ScreenNoteCommentResource } from "../resources/screenNoteCommentResource";
 import { ZEPLIN_MAC_APP_URL_SCHEME, ZEPLIN_WEB_APP_BASE_URL } from "../../../../../config";
+import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
 type ProjectNoteCommentEventDescriptor = {
     type: EventType.PROJECT_NOTE_COMMENT;
@@ -100,7 +101,7 @@ class ProjectNoteCommentNotificationHandler extends NotificationHandler {
                 }
             }
         } = event;
-        return `${ZEPLIN_MAC_APP_URL_SCHEME}dot?pid=${projectId}&sid=${screenId}&did=${noteId}&cmids=${commentId}`;
+        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}dot?pid=${projectId}&sid=${screenId}&did=${noteId}&cmids=${commentId}`);
     }
 
     shouldHandleEvent(event: WebhookEvent): boolean {

@@ -10,6 +10,7 @@ import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
 import { ColorResource } from "../resources";
+import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
 type StyleguideColorEventDescriptor = {
     type: EventType.STYLEGUIDE_COLOR;
@@ -70,7 +71,7 @@ class StyleguideColorNotificationHandler extends NotificationHandler {
                 }
             }
         }] = events;
-        return `${ZEPLIN_MAC_APP_URL_SCHEME}colors?stid=${styleguideId}&cids=${events.map(event => event.payload.resource.id).join(",")}`;
+        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}colors?stid=${styleguideId}&cids=${events.map(event => event.payload.resource.id).join(",")}`);
     }
 
     shouldHandleEvent(event: WebhookEvent): boolean {
