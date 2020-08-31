@@ -2,7 +2,7 @@ import { ProjectWebhookEvent } from "./WebhookEvents";
 import { WebhookStatus } from "./WebhookStatus";
 import { WebhookUrlHealth } from "./WebhookUrlHealth";
 import { User } from "./User";
-import { OAuthApplication } from "./OAuthApplication";
+import { ZeplinApplication } from "./ZeplinApplication";
 
 export interface ProjectWebhook {
     id: string;
@@ -14,6 +14,6 @@ export interface ProjectWebhook {
     updated: number;
     created_by: User;
     updated_by: User;
-    zeplin_app?: OAuthApplication;
+    zeplin_app?: ZeplinApplication;
     events: ProjectWebhookEvent[];
 }

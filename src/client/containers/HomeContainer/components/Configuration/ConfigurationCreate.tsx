@@ -12,7 +12,6 @@ import { ResourceDropdown } from "./ResourceDropdown";
 import { WebhookEvents } from "./WebhookEvents";
 
 interface ConfigurationCreateProps {
-    isConfigurationCreated: boolean;
     channelName: string;
     areWorkspacesLoading: boolean;
     workspaces: Workspace[];

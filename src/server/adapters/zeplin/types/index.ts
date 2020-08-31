@@ -4,7 +4,7 @@ export * from "./Styleguide";
 export * from "./RemPreferences";
 export * from "./WebhookEvents";
 export * from "./WebhookResourceType";
-export * from "./OAuthApplication";
+export * from "./ZeplinApplication";
 export * from "./ProjectWebhook";
 export * from "./StyleguideWebhook";
 export * from "./User";

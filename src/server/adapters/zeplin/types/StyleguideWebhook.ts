@@ -2,7 +2,7 @@ import { StyleguideWebhookEvent } from "./WebhookEvents";
 import { WebhookStatus } from "./WebhookStatus";
 import { WebhookUrlHealth } from "./WebhookUrlHealth";
 import { User } from "./User";
-import { OAuthApplication } from "./OAuthApplication";
+import { ZeplinApplication } from "./ZeplinApplication";
 
 export interface StyleguideWebhook {
     id: string;
@@ -14,6 +14,6 @@ export interface StyleguideWebhook {
     updated: number;
     created_by: User;
     updated_by: User;
-    zeplin_app?: OAuthApplication;
+    zeplin_app?: ZeplinApplication;
     events: StyleguideWebhookEvent[];
 }

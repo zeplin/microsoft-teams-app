@@ -1,4 +1,4 @@
-export interface OAuthApplication {
+export interface ZeplinApplication {
     id: string;
     name: string;
     description?: string;

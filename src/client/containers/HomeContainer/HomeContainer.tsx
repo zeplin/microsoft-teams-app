@@ -54,7 +54,6 @@ export const HomeContainer: FunctionComponent = () => {
             }
             return (
                 <ConfigurationCreate
-                    isConfigurationCreated={Boolean(id)}
                     channelName={String(channel)}
                     areWorkspacesLoading={areWorkspacesLoading}
                     workspaces={workspaces || []}

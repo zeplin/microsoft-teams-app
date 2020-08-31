@@ -119,8 +119,6 @@ class ConfigurationFacade {
                     webhookId
                 },
                 body: {
-                    url: `${BASE_URL}/api/webhook`,
-                    secret: WEBHOOK_SECRET,
                     events: params.events
                 },
                 options: {
@@ -291,6 +289,7 @@ class ConfigurationFacade {
             parameters.zeplin.resource.id !== configuration.zeplin.resource.id ||
             parameters.zeplin.resource.type !== configuration.zeplin.resource.type
         ) {
+            // TODO: log the case and create alert when resource mismatch
             throw new ServiceError(
                 "Configuration not found",
                 {

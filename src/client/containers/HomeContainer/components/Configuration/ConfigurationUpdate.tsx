@@ -7,16 +7,12 @@ import {
 } from "../../../../requester";
 import { WebhookEvents } from "./WebhookEvents";
 
-const resourceTypeToText = (value: ResourceType): string => {
-    switch (value) {
-        case ResourceType.PROJECT:
-            return "project";
-        case ResourceType.STYLEGUIDE:
-            return "styleguide";
-        default:
-            throw new Error();
-    }
+const resourceTypeTextMap: Record<ResourceType, string> = {
+    [ResourceType.PROJECT]: "project",
+    [ResourceType.STYLEGUIDE]: "styleguide"
 };
+
+const resourceTypeToText = (value: ResourceType): string => resourceTypeTextMap[value];
 
 interface ConfigurationUpdateProps {
     channelName: string;
