@@ -1,4 +1,4 @@
-import { StyleguideWebhookEvent } from "../types";
+import { StyleguideWebhookEvent, StyleguideWebhook } from "../types";
 import { Requester } from "../requester";
 
 interface StyleguideWebhookCreateBody {
@@ -11,14 +11,35 @@ interface StyleguideWebhookCreateParams {
     styleguideId: string;
 }
 
-interface StyleguideWebhookCreateOptions {
+interface StyleguideWebhookCommonParams {
+    styleguideId: string;
+    webhookId: string;
+}
+
+interface StyleguideWebhookCommonOptions {
     authToken: string;
 }
 
 interface StyleguideWebhookCreateParameter {
     body: StyleguideWebhookCreateBody;
     params: StyleguideWebhookCreateParams;
-    options: StyleguideWebhookCreateOptions;
+    options: StyleguideWebhookCommonOptions;
+}
+
+interface StyleguideWebhookUpdateParameter {
+    body: Partial<StyleguideWebhookCreateBody>;
+    params: StyleguideWebhookCommonParams;
+    options: StyleguideWebhookCommonOptions;
+}
+
+interface StyleguideWebhookDeleteParameter {
+    params: StyleguideWebhookCommonParams;
+    options: StyleguideWebhookCommonOptions;
+}
+
+interface StyleguideWebhookGetParameter {
+    params: StyleguideWebhookCommonParams;
+    options: StyleguideWebhookCommonOptions;
 }
 
 export class StyleguideWebhooks {
@@ -34,11 +55,69 @@ export class StyleguideWebhooks {
             body,
             options: { authToken }
         }: StyleguideWebhookCreateParameter
-
     ): Promise<string> {
         return this.requester.createResource(
             `/styleguides/${styleguideId}/webhooks`,
             body,
+            {
+                headers: {
+                    Authorization: authToken
+                }
+            }
+        );
+    }
+
+    async update(
+        {
+            params: {
+                styleguideId,
+                webhookId
+            },
+            body,
+            options: { authToken }
+        }: StyleguideWebhookUpdateParameter
+    ): Promise<void> {
+        await this.requester.patch(
+            `/styleguides/${styleguideId}/webhooks/${webhookId}`,
+            body,
+            {
+                headers: {
+                    Authorization: authToken
+                }
+            }
+        );
+    }
+
+    delete(
+        {
+            params: {
+                styleguideId,
+                webhookId
+            },
+            options: { authToken }
+        }: StyleguideWebhookDeleteParameter
+    ): Promise<void> {
+        return this.requester.delete(
+            `/styleguides/${styleguideId}/webhooks/${webhookId}`,
+            {
+                headers: {
+                    Authorization: authToken
+                }
+            }
+        );
+    }
+
+    get(
+        {
+            params: {
+                styleguideId,
+                webhookId
+            },
+            options: { authToken }
+        }: StyleguideWebhookGetParameter
+    ): Promise<StyleguideWebhook> {
+        return this.requester.get(
+            `/styleguides/${styleguideId}/webhooks/${webhookId}`,
             {
                 headers: {
                     Authorization: authToken

@@ -25,6 +25,15 @@ interface MyStyleguidesListParameter {
     };
 }
 
+interface StyleguideGetParameter {
+    params: {
+        styleguideId: string;
+    };
+    options: {
+        authToken: string;
+    };
+}
+
 export class Styleguides {
     private readonly requester: Requester;
 
@@ -59,6 +68,24 @@ export class Styleguides {
             "/users/me/styleguides",
             {
                 params: query,
+                headers: {
+                    Authorization: authToken
+                }
+            }
+        );
+    }
+
+    get(
+        {
+            params: {
+                styleguideId
+            },
+            options: { authToken }
+        }: StyleguideGetParameter
+    ): Promise<Styleguide> {
+        return this.requester.get(
+            `/styleguides/${styleguideId}`,
+            {
                 headers: {
                     Authorization: authToken
                 }

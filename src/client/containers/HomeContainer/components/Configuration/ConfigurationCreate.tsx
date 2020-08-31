@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Flex, Text } from "@fluentui/react-northstar";
 import {
-    Project,
+    Project, Resource,
     ResourceType,
     Styleguide,
     WebhookEventType,
@@ -10,9 +10,8 @@ import {
 import { WorkspaceDropdown } from "./WorkspaceDropdown";
 import { ResourceDropdown } from "./ResourceDropdown";
 import { WebhookEvents } from "./WebhookEvents";
-import { ResourceWithName } from "../../homeReducer";
 
-interface ConfigurationProps {
+interface ConfigurationCreateProps {
     channelName: string;
     areWorkspacesLoading: boolean;
     workspaces: Workspace[];
@@ -23,11 +22,11 @@ interface ConfigurationProps {
     styleguides: Styleguide[];
     selectedWebhookEvents: WebhookEventType[];
     onWorkspaceChange: (value: string) => void;
-    onResourceChange: (value: ResourceWithName | undefined) => void;
+    onResourceChange: (value: Resource | undefined) => void;
     onWebhookEventChange: (value: WebhookEventType) => void;
 }
 
-export const Configuration: FunctionComponent<ConfigurationProps> = ({
+export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = ({
     channelName,
     areWorkspacesLoading,
     workspaces,
@@ -45,11 +44,10 @@ export const Configuration: FunctionComponent<ConfigurationProps> = ({
         <div />
         <Flex fill column gap="gap.small">
             <Text weight="semibold">
-                    You are connecting <Text weight="bold">#{channelName}</Text> to Zeplin.
+                You are connecting <Text weight="bold">#{channelName}</Text> to Zeplin.
             </Text>
             <Text>
-                Can{"'"}t find the project/styleguide to connect to?
-                {" "}
+                {"Can't find the project/styleguide to connect to? "}
                 <Text
                     as="a"
                     color="brand"
@@ -61,7 +59,7 @@ export const Configuration: FunctionComponent<ConfigurationProps> = ({
                             textDecoration: "underline"
                         }
                     }}>
-                        Learn more about permissions.
+                    Learn more about permissions.
                 </Text>
             </Text>
             <Flex fill gap="gap.small">
@@ -88,7 +86,7 @@ export const Configuration: FunctionComponent<ConfigurationProps> = ({
         </Flex>
         <Flex fill column gap="gap.medium">
             <Text weight="semibold">
-                    Select the events you want to get a message for:
+                Select the events you want to get a message for:
             </Text>
             <div>
                 <WebhookEvents

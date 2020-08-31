@@ -1,171 +1,65 @@
-import React, {
-    FunctionComponent,
-    useReducer,
-    useEffect
-} from "react";
-import * as microsoftTeams from "@microsoft/teams-js";
+import React, { FunctionComponent } from "react";
 import { Loader } from "@fluentui/react-northstar";
 import { useRouter } from "next/router";
-import { useMutation, useQuery } from "react-query";
 
-import {
-    createConfiguration,
-    getProjects,
-    getStyleguides,
-    getWorkspaces,
-    resourceBasedEvents,
-    ResourceType
-} from "../../requester";
+import { ResourceType } from "../../requester";
 import {
     ActionType,
-    homeReducer,
-    initialState,
     Status,
-    State
-} from "./homeReducer";
-import { Configuration, Login } from "./components";
-
-interface WebhookSettings {
-    webhookUrl: string;
-}
-
-function isValidState(state: State): boolean {
-    return state.status === Status.CONFIGURATION &&
-        Boolean(state.accessToken) &&
-        Boolean(state.selectedWorkspace) &&
-        Boolean(state.selectedResource) &&
-        state.selectedWebhookEvents.filter(
-            event => resourceBasedEvents[state.selectedResource.type].includes(event)
-        ).length > 0;
-}
+    useAuthenticate,
+    useConfigurationDelete,
+    useConfigurationSave,
+    useHomeReducer,
+    useInitialize,
+    useResources,
+    useStateUpdateFromConfiguration,
+    useValidate,
+    useWorkspaces
+} from "./hooks";
+import { ConfigurationCreate, ConfigurationUpdate, Login } from "./components";
 
 export const HomeContainer: FunctionComponent = () => {
-    const {
-        query: {
-            channel
-        }
-    } = useRouter();
+    const { query: { channel, id } } = useRouter();
 
-    const [state, dispatch] = useReducer(homeReducer, initialState);
+    const [state, dispatch] = useHomeReducer();
 
-    const { isLoading: areWorkspacesLoading, data: workspaces } = useQuery(
-        ["workspaces", state.status === Status.CONFIGURATION && state.accessToken],
-        (key, accessToken) => getWorkspaces(accessToken),
-        {
-            enabled: state.status === Status.CONFIGURATION
-        }
-    );
+    const { areWorkspacesLoading, workspaces } = useWorkspaces(state);
+    const { areResourcesLoading, projects, styleguides } = useResources(state);
+    useStateUpdateFromConfiguration(state, dispatch);
+    const authenticate = useAuthenticate(dispatch);
 
-    const { isLoading: areProjectsLoading, data: projects } = useQuery(
-        [
-            "projects",
-            state.status === Status.CONFIGURATION && state.selectedWorkspace,
-            state.status === Status.CONFIGURATION && state.accessToken
-        ],
-        (key, workspace, accessToken) => getProjects(workspace, accessToken),
-        {
-            enabled: state.status === Status.CONFIGURATION && state.selectedWorkspace
-        }
-    );
-
-    const { isLoading: areStyleguidesLoading, data: styleguides } = useQuery(
-        [
-            "styleguides",
-            state.status === Status.CONFIGURATION && state.selectedWorkspace,
-            state.status === Status.CONFIGURATION && state.accessToken
-        ],
-        (key, workspace, accessToken) => getStyleguides(workspace, accessToken),
-        {
-            enabled: state.status === Status.CONFIGURATION && state.selectedWorkspace
-        }
-    );
-
-    useEffect(() => {
-        microsoftTeams.initialize(() => {
-            microsoftTeams.appInitialization.notifySuccess();
-            dispatch({ type: ActionType.COMPLETE_LOADING });
-        });
-    }, []);
-
-    const isValid = isValidState(state);
-
-    useEffect(() => {
-        microsoftTeams.initialize(() => {
-            microsoftTeams.settings.setValidityState(isValid);
-        });
-    }, [isValid]);
-
-    const [create] = useMutation(createConfiguration, { throwOnError: true });
-
-    useEffect(() => {
-        microsoftTeams.initialize(() => {
-            microsoftTeams.getContext(({
-                channelId,
-                channelName,
-                tid: tenantId
-            }) => {
-                microsoftTeams.settings.getSettings(settings => {
-                    microsoftTeams.settings.registerOnSaveHandler(async saveEvent => {
-                        const { webhookUrl } = settings as unknown as WebhookSettings;
-                        try {
-                            const configurationId = await create(
-                                {
-                                    accessToken: state.accessToken,
-                                    zeplin: {
-                                        resource: {
-                                            id: state.selectedResource.id,
-                                            type: state.selectedResource.type
-                                        },
-                                        events: state.selectedWebhookEvents
-                                    },
-                                    microsoftTeams: {
-                                        channel: {
-                                            id: channelId,
-                                            name: channelName
-                                        },
-                                        tenantId,
-                                        incomingWebhookUrl: webhookUrl
-                                    }
-                                });
-
-                            const contentURL = new URL(window.location.href);
-                            contentURL.searchParams.append("id", configurationId);
-
-                            microsoftTeams.settings.setSettings({
-                                entityId: configurationId,
-                                configName: state.selectedResource.name,
-                                contentUrl: contentURL.toString()
-                            } as unknown as microsoftTeams.settings.Settings);
-                            saveEvent.notifySuccess();
-                        } catch (error) {
-                            saveEvent.notifyFailure(error?.message ?? error);
-                        }
-                    });
-                });
-            });
-        });
-    }, [state.selectedWorkspace, state.selectedResource, state.selectedWebhookEvents]);
+    useInitialize(dispatch);
+    useValidate(state);
+    useConfigurationSave(state);
+    useConfigurationDelete(state);
 
     switch (state.status) {
         case Status.LOADING:
-            return <Loader id="loader-home"/>;
+        case Status.LOADING_CONFIGURATION:
+            return <Loader styles={{ height: "100vh" }} />;
         case Status.LOGIN:
-            return <Login onButtonClick={(): void => {
-                microsoftTeams.authentication.authenticate({
-                    height: 476,
-                    successCallback: value => dispatch({ type: ActionType.GET_TOKEN, value }),
-                    url: "/api/auth/authorize"
-                });
-            }} />;
+            return <Login onButtonClick={authenticate} />;
         case Status.CONFIGURATION:
+            if (id) {
+                return (
+                    <ConfigurationUpdate
+                        channelName={String(channel)}
+                        resource={state.selectedResource}
+                        selectedWebhookEvents={state.selectedWebhookEvents}
+                        onWebhookEventChange={(value): void => dispatch({
+                            type: ActionType.TOGGLE_SELECTED_WEBHOOK_EVENT,
+                            value
+                        })} />
+                );
+            }
             return (
-                <Configuration
+                <ConfigurationCreate
                     channelName={String(channel)}
                     areWorkspacesLoading={areWorkspacesLoading}
                     workspaces={workspaces || []}
                     isWorkspaceSelected={Boolean(state.selectedWorkspace)}
-                    resourceType={state.selectedResource?.type ?? ResourceType.PROJECT }
-                    areResourcesLoading={areStyleguidesLoading || areProjectsLoading}
+                    resourceType={state.selectedResource?.type ?? ResourceType.PROJECT}
+                    areResourcesLoading={areResourcesLoading}
                     projects={projects || []}
                     styleguides={styleguides || []}
                     selectedWebhookEvents={state.selectedWebhookEvents}

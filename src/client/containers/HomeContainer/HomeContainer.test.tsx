@@ -39,36 +39,23 @@ function renderHome(): RenderResult {
 }
 
 describe("HomeContainer", () => {
-    it("should render initially", () => {
-        const spy = jest.spyOn(microsoftTeams, "initialize")
-            .mockImplementation(() => undefined);
-
-        const { container: { firstChild: component } } = renderHome();
-
-        expect(component).toMatchSnapshot();
-
-        spy.mockImplementation(callback => callback());
-    });
-
     it("should initialize Microsoft Teams", () => {
         const spy = jest.spyOn(microsoftTeams.appInitialization, "notifySuccess");
 
-        const { container: { firstChild: component } } = renderHome();
+        renderHome();
 
-        expect(component).toMatchSnapshot();
         expect(spy).toBeCalledWith();
     });
 
     it("should change ui when login flow completed", () => {
         const spy = jest.spyOn(microsoftTeams.authentication, "authenticate");
 
-        const { container: { firstChild: component }, getByText } = renderHome();
+        const { getByText } = renderHome();
 
         expect(spy).not.toBeCalled();
 
         fireEvent.click(getByText("Log in Zeplin"));
 
-        expect(component).toMatchSnapshot();
         expect(spy).toBeCalled();
     });
 });

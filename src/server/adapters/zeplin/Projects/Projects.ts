@@ -24,6 +24,15 @@ interface MyProjectsListParameter {
     };
 }
 
+interface ProjectGetParameter {
+    params: {
+        projectId: string;
+    };
+    options: {
+        authToken: string;
+    };
+}
+
 export class Projects {
     private readonly requester: Requester;
 
@@ -58,6 +67,24 @@ export class Projects {
             "/users/me/projects",
             {
                 params: query,
+                headers: {
+                    Authorization: authToken
+                }
+            }
+        );
+    }
+
+    get(
+        {
+            params: {
+                projectId
+            },
+            options: { authToken }
+        }: ProjectGetParameter
+    ): Promise<Project> {
+        return this.requester.get(
+            `/projects/${projectId}`,
+            {
                 headers: {
                     Authorization: authToken
                 }

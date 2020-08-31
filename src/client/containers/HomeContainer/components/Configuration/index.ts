@@ -1,1 +1,2 @@
-export * from "./Configuration";
+export * from "./ConfigurationCreate";
+export * from "./ConfigurationUpdate";

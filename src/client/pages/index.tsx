@@ -9,7 +9,7 @@ const Home = dynamic(
     async () => (await import("../containers")).HomeContainer,
     {
         ssr: false,
-        loading: () => <Loader />
+        loading: () => <Loader styles={{ height: "100vh" }} />
     }
 );
 

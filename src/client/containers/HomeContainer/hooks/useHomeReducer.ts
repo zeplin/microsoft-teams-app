@@ -1,6 +1,7 @@
-import { Reducer } from "react";
+import { Dispatch, Reducer, useReducer } from "react";
 
-import { Resource, WebhookEventType } from "../../requester";
+import { Configuration, Resource, WebhookEventType } from "../../../requester";
+import { useRouter } from "next/router";
 
 const toggleWebhookEvent = (
     webhookEvents: WebhookEventType[],
@@ -13,52 +14,56 @@ const toggleWebhookEvent = (
     return [...webhookEvents.slice(0, index), ...webhookEvents.slice(index + 1)];
 };
 
-type Action = {
+export type Action = {
     type: ActionType.COMPLETE_LOADING;
 } | {
-    type: ActionType.GET_TOKEN | ActionType.SET_SELECTED_WORKSPACE;
+    type: ActionType.SET_TOKEN | ActionType.SET_SELECTED_WORKSPACE;
     value: string;
 } | {
     type: ActionType.SET_SELECTED_RESOURCE;
-    value: ResourceWithName | undefined;
-}| {
+    value: Resource | undefined;
+} | {
     type: ActionType.TOGGLE_SELECTED_WEBHOOK_EVENT;
     value: WebhookEventType;
-}
-
-export interface ResourceWithName extends Resource{
-    name: string;
+} | {
+    type: ActionType.SET_FROM_CONFIGURATION;
+    value: Configuration;
 }
 
 export interface State {
+    configurationId?: string;
     status: Status;
     accessToken?: string;
     selectedWorkspace?: string;
-    selectedResource?: ResourceWithName;
+    selectedResource?: Resource;
     selectedWebhookEvents: WebhookEventType[];
+    initialSelectedWebhookEvents: WebhookEventType[];
 }
 
 export enum Status {
     LOADING,
     LOGIN,
+    LOADING_CONFIGURATION,
     CONFIGURATION
 }
 
 export enum ActionType {
     COMPLETE_LOADING,
-    GET_TOKEN,
+    SET_TOKEN,
+    SET_FROM_CONFIGURATION,
     SET_SELECTED_WORKSPACE,
     SET_SELECTED_RESOURCE,
     TOGGLE_SELECTED_WEBHOOK_EVENT
 }
 
-export const initialState = {
+export const initialState: State = {
+    configurationId: undefined,
     status: Status.LOADING,
     accessToken: undefined,
     selectedWorkspace: undefined,
     selectedResource: undefined,
-    isValid: false,
-    selectedWebhookEvents: Object.values(WebhookEventType)
+    selectedWebhookEvents: Object.values(WebhookEventType),
+    initialSelectedWebhookEvents: Object.values(WebhookEventType)
 };
 
 export const homeReducer: Reducer<State, Action> = (state, action) => {
@@ -69,11 +74,19 @@ export const homeReducer: Reducer<State, Action> = (state, action) => {
                 status: Status.LOGIN,
                 accessToken: undefined
             };
-        case ActionType.GET_TOKEN:
+        case ActionType.SET_TOKEN:
+            return {
+                ...state,
+                status: state.configurationId ? Status.LOADING_CONFIGURATION : Status.CONFIGURATION,
+                accessToken: action.value
+            };
+        case ActionType.SET_FROM_CONFIGURATION:
             return {
                 ...state,
                 status: Status.CONFIGURATION,
-                accessToken: action.value
+                selectedWebhookEvents: action.value.webhook.events,
+                initialSelectedWebhookEvents: action.value.webhook.events,
+                selectedResource: action.value.resource
             };
         case ActionType.SET_SELECTED_WORKSPACE:
             return {
@@ -94,4 +107,20 @@ export const homeReducer: Reducer<State, Action> = (state, action) => {
         default:
             throw new Error();
     }
+};
+
+export const useHomeReducer = (): [State, Dispatch<Action>] => {
+    const {
+        query: {
+            id
+        }
+    } = useRouter();
+
+    return useReducer(
+        homeReducer,
+        {
+            ...initialState,
+            configurationId: id ? String(id) : undefined
+        }
+    );
 };
