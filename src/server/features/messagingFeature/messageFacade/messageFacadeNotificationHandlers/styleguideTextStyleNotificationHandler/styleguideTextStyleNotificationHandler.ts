@@ -72,7 +72,7 @@ class StyleguideTextStyleNotificationHandler extends NotificationHandler {
                 }
             }
         }] = events;
-        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}textStyles?stid=${styleguideId}&tsids=${events.map(event => event.payload.resource.id).join(",")}`);
+        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://textStyles?stid=${styleguideId}&tsids=${events.map(event => event.payload.resource.id).join(",")}`);
     }
 
     shouldHandleEvent(event: WebhookEvent): boolean {

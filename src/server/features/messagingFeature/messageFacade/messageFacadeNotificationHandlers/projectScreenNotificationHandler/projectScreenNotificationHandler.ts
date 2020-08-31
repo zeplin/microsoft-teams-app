@@ -84,10 +84,10 @@ class ProjectScreenNotificationHandler extends NotificationHandler {
             }
         }] = events;
         if (events.length === 1) {
-            return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}screen?pid=${projectId}&sid=${events[0].payload.resource.id}`);
+            return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://screen?pid=${projectId}&sid=${events[0].payload.resource.id}`);
         }
 
-        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}project?pid=${projectId}&sids=${events.map(event => event.payload.resource.id).join(",")}`);
+        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://project?pid=${projectId}&sids=${events.map(event => event.payload.resource.id).join(",")}`);
     }
 
     getTeamsMessage(events: WebhookEvent<ProjectScreenEventPayload>[]): MessageCard {

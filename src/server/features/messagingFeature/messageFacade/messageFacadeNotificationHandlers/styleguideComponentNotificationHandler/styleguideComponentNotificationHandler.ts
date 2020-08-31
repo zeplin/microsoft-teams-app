@@ -79,7 +79,7 @@ class StyleguideComponentNotificationHandler extends NotificationHandler {
                 }
             }
         }] = events;
-        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}components?stid=${styleguideId}&coids=${events.map(event => event.payload.resource.id).join(",")}`);
+        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://components?stid=${styleguideId}&coids=${events.map(event => event.payload.resource.id).join(",")}`);
     }
 
     getTeamsMessage(events: WebhookEvent<StyleguideComponentEventPayload>[]): MessageCard {

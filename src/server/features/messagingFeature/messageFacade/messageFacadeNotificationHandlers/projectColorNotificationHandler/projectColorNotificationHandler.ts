@@ -71,7 +71,7 @@ class ProjectColorNotificationHandler extends NotificationHandler {
                 }
             }
         }] = events;
-        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}colors?pid=${projectId}&cids=${events.map(event => event.payload.resource.id).join(",")}`);
+        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://colors?pid=${projectId}&cids=${events.map(event => event.payload.resource.id).join(",")}`);
     }
 
     shouldHandleEvent(event: WebhookEvent): boolean {

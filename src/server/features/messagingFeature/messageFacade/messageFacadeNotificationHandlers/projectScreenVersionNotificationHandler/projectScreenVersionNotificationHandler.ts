@@ -87,10 +87,10 @@ class ProjectScreenVersionNotificationHandler extends NotificationHandler {
         }] = events;
 
         if (events.length === 1) {
-            return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}screen?pid=${projectId}&sid=${screenId}`);
+            return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://screen?pid=${projectId}&sid=${screenId}`);
         }
 
-        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}project?pid=${projectId}&sids=${events.map(event => event.payload.context.screen.id).join(",")}`);
+        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://project?pid=${projectId}&sids=${events.map(event => event.payload.context.screen.id).join(",")}`);
     }
 
     getGroupingKey(event: WebhookEvent<ProjectScreenVersionEventPayload>): string {

@@ -32,7 +32,7 @@ describe("macAppRedirectLinksFeature", () => {
         });
 
         it(`should return 308 when uri query param's scheme is ${ZEPLIN_MAC_APP_URL_SCHEME}`, async () => {
-            const result = await requester.get(`/app-redirect?uri=${encodeURIComponent(`${ZEPLIN_MAC_APP_URL_SCHEME}colors?pid=pid&cids=cid1,cid2`)}`);
+            const result = await requester.get(`/app-redirect?uri=${encodeURIComponent(`${ZEPLIN_MAC_APP_URL_SCHEME}://colors?pid=pid&cids=cid1,cid2`)}`);
             expect(result.status).toBe(PERMANENT_REDIRECT);
         });
     });

@@ -92,7 +92,7 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
                 }
             }
         } = event;
-        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}dot?pid=${projectId}&sid=${screenId}&did=${noteId}`);
+        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://dot?pid=${projectId}&sid=${screenId}&did=${noteId}`);
     }
 
     shouldHandleEvent(event: WebhookEvent): boolean {
