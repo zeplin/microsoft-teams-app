@@ -112,10 +112,6 @@ class ProjectNoteCommentNotificationHandler extends NotificationHandler {
     }
 
     getTeamsMessage(events: WebhookEvent<ProjectNoteCommentEventPayload>[]): MessageCard {
-        if (events.length > 1) {
-            // TODO: Log that there was somehow grouping done for this notification
-        }
-
         const [event] = events;
         return commonTeamsCard({
             text: this.getText(event),
