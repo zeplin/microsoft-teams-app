@@ -105,10 +105,6 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
     }
 
     getTeamsMessage(events: WebhookEvent<ProjectNoteEventPayload>[]): MessageCard {
-        if (events.length > 1) {
-            // TODO: Log this situation since we don't want it to happen
-        }
-
         const [event] = events;
         return commonTeamsCard({
             text: this.getText(event),
