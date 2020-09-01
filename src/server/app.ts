@@ -7,6 +7,7 @@ import { initFeatures } from "./features";
 import path from "path";
 import { handleError } from "./middlewares";
 import { ServiceError } from "./errors";
+import { sentry } from "./adapters/sentry";
 
 class App {
     private expressApp?: Express;
@@ -32,7 +33,13 @@ class App {
 
         this.expressApp.get("/health", this.handleHealthCheck);
 
-        this.expressApp.use("/api", apiRouter, handleError);
+        this.expressApp.use(
+            "/api",
+            sentry.requestHandler,
+            apiRouter,
+            sentry.errorHandler,
+            handleError
+        );
 
         // Add NextJS app as the last middleware
         this.expressApp.use((req, res) => {

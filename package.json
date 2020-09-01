@@ -27,6 +27,7 @@
     "@fluentui/react-northstar": "^0.50.0",
     "@hapi/joi": "^17.1.1",
     "@microsoft/teams-js": "^1.6.0",
+    "@sentry/node": "^5.22.3",
     "axios": "^0.19.2",
     "bull": "^3.16.0",
     "dotenv": "^8.2.0",

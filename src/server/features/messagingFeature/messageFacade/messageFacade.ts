@@ -4,7 +4,7 @@ import { messageJobRepo, messageWebhookEventRepo } from "../messagingRepos";
 import { getNotificationHandler } from "./messageFacadeNotificationHandlers";
 import { configurationRepo } from "../../../repos";
 import { requester } from "../../../adapters/requester";
-import { ServiceError } from "server/errors";
+import { ServiceError } from "../../../errors";
 
 class MessageFacade {
     async processJob(data: MessageJobData): Promise<void> {

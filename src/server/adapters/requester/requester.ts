@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ServiceError } from "server/errors";
+import { ServiceError } from "../../errors";
 
 class Requester {
     async post(url: string, payload: object): Promise<void> {

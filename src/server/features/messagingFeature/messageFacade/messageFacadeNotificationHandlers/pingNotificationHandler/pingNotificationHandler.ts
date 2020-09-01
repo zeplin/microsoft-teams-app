@@ -1,5 +1,5 @@
 import { NotificationHandler } from "../NotificationHandler";
-import { ServiceError } from "server/errors";
+import { ServiceError } from "../../../../../errors";
 
 class PingNotificationHandler extends NotificationHandler {
     delay = 0;
