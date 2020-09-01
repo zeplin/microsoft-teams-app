@@ -11,7 +11,7 @@ export const fetchAuthToken = async (code: string): Promise<AuthToken> => {
 };
 
 export const refreshAuthToken = async (refreshToken: string): Promise<AuthToken> => {
-    const { data } = await Axios.put("/api/auth/token", { refreshToken });
+    const { data } = await Axios.post("/api/auth/token", { refreshToken });
     return data;
 };
 

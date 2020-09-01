@@ -4,6 +4,12 @@ import { AuthToken } from "../../adapters/zeplin/Auth";
 
 const REDIRECT_URI = `${BASE_URL}/zeplin/auth/end`;
 
+type TokenCreateParams = {
+    code: string;
+} | {
+    refreshToken: string;
+}
+
 class AuthFacade {
     getAuthorizationUrl(): string {
         return zeplin.auth.getAuthorizationUrl({
@@ -14,21 +20,20 @@ class AuthFacade {
         });
     }
 
-    createToken(code: string): Promise<AuthToken> {
-        return zeplin.auth.createToken({
-            body: {
-                code,
-                clientId: ZEPLIN_CLIENT_ID,
-                clientSecret: ZEPLIN_CLIENT_SECRET,
-                redirectUri: REDIRECT_URI
-            }
-        });
-    }
-
-    refreshToken(refreshToken: string): Promise<AuthToken> {
+    createToken(params: TokenCreateParams): Promise<AuthToken> {
+        if ("code" in params) {
+            return zeplin.auth.createToken({
+                body: {
+                    code: params.code,
+                    clientId: ZEPLIN_CLIENT_ID,
+                    clientSecret: ZEPLIN_CLIENT_SECRET,
+                    redirectUri: REDIRECT_URI
+                }
+            });
+        }
         return zeplin.auth.refreshToken({
             body: {
-                refreshToken,
+                refreshToken: params.refreshToken,
                 clientId: ZEPLIN_CLIENT_ID,
                 clientSecret: ZEPLIN_CLIENT_SECRET
             }
