@@ -47,7 +47,9 @@ class MessageFacade {
         const configuration = await configurationRepo.getByWebhookId(event.webhookId);
         if (!configuration) {
             throw new ServiceError("Event doesn't have configuration", {
-                extra: { event }
+                extra: {
+                    event: JSON.stringify(event)
+                }
             });
         }
 

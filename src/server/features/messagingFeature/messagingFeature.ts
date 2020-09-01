@@ -3,6 +3,7 @@ import { messageFacade } from "./messageFacade";
 import { Router } from "express";
 import { messageRouter } from "./messageRouter";
 import { Config } from "../../config";
+import { sentry } from "../../adapters";
 
 export function initMessagingFeature(router: Router, config: Config): void {
     messageQueue.init(config);
@@ -10,9 +11,7 @@ export function initMessagingFeature(router: Router, config: Config): void {
         try {
             await messageFacade.processJob(job.data);
         } catch (err) {
-            // TODO: Send to sentry
-            // eslint-disable-next-line no-console
-            console.error(err);
+            sentry.captureException(err);
         }
     });
     router.use("/webhook", messageRouter);

@@ -29,6 +29,18 @@ class Sentry {
         });
     }
 
+    captureException(error: Error): void {
+        if (error instanceof ServiceError && error.extra) {
+            SentryClient.withScope(scope => {
+                scope.setExtra("extra", error.extra);
+                SentryClient.captureException(error);
+            });
+            return;
+        }
+
+        SentryClient.captureException(error);
+    }
+
     get requestHandler(): RequestHandler {
         return SentryClient.Handlers.requestHandler();
     }
