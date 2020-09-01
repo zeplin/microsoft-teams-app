@@ -2,7 +2,7 @@ import { Dispatch, Reducer, useReducer } from "react";
 
 import { Configuration, Resource, WebhookEventType } from "../../../lib/requester";
 import { useRouter } from "next/router";
-import { getAccessToken } from "../../../lib/storage";
+import { storage } from "../../../lib/storage";
 
 const toggleWebhookEvent = (
     webhookEvents: WebhookEventType[],
@@ -17,7 +17,7 @@ const toggleWebhookEvent = (
 
 // TODO will be removed when refactor
 function getNextStatusWhenLoadingComplete(state: State): Status {
-    if (!getAccessToken()) {
+    if (!storage.getAccessToken()) {
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
         return Status.LOGIN;
     }

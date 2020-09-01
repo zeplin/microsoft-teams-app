@@ -1,7 +1,7 @@
 import Axios from "axios";
 import { UNAUTHORIZED } from "http-status-codes";
 import { AuthToken, refreshAuthToken } from "./auth";
-import { getAccessToken, getRefreshToken, setAccessToken, setRefreshToken } from "../storage";
+import { storage } from "../storage";
 
 const httpClient = Axios.create();
 
@@ -9,7 +9,7 @@ httpClient.interceptors.request.use(config => ({
     ...config,
     headers: {
         ...config.headers,
-        Authorization: `Bearer ${getAccessToken()}`
+        Authorization: `Bearer ${storage.getAccessToken()}`
     }
 }));
 
@@ -38,15 +38,15 @@ httpClient.interceptors.response.use(
             throw error;
         }
 
-        const { accessToken, refreshToken } = await throttledRefreshToken(getRefreshToken());
-        setAccessToken(accessToken);
-        setRefreshToken(refreshToken);
+        const { accessToken, refreshToken } = await throttledRefreshToken(storage.getRefreshToken());
+        storage.setAccessToken(accessToken);
+        storage.setRefreshToken(refreshToken);
 
         return Axios.request({
             ...error.config,
             headers: {
                 ...error.config.headers,
-                Authorization: `Bearer ${getAccessToken()}`
+                Authorization: `Bearer ${storage.getAccessToken()}`
             }
         });
     }

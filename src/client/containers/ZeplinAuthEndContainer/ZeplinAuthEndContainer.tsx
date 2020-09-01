@@ -4,7 +4,7 @@ import * as microsoftTeams from "@microsoft/teams-js";
 import { Loader } from "@fluentui/react-northstar";
 
 import { fetchAuthToken } from "../../lib/requester";
-import { setAccessToken, setRefreshToken } from "../../lib/storage";
+import { storage } from "../../lib/storage";
 
 export const ZeplinAuthEndContainer: FunctionComponent = () => {
     const {
@@ -23,8 +23,8 @@ export const ZeplinAuthEndContainer: FunctionComponent = () => {
 
             try {
                 const { accessToken, refreshToken } = await fetchAuthToken(String(code));
-                setAccessToken(accessToken);
-                setRefreshToken(refreshToken);
+                storage.setAccessToken(accessToken);
+                storage.setRefreshToken(refreshToken);
                 microsoftTeams.authentication.notifySuccess();
             } catch (e) {
                 if (e.response) {

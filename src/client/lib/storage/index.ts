@@ -1,1 +1,3 @@
-export * from "./storage";
+import * as storage from "./storage";
+
+export { storage };
