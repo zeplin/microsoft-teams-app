@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { Loader } from "@fluentui/react-northstar";
 import { useRouter } from "next/router";
 
-import { ResourceType } from "../../requester";
+import { ResourceType } from "../../lib/requester";
 import {
     ActionType,
     Status,

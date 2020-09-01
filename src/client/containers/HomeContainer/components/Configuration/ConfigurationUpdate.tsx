@@ -4,7 +4,7 @@ import {
     Resource,
     ResourceType,
     WebhookEventType
-} from "../../../../requester";
+} from "../../../../lib/requester";
 import { WebhookEvents } from "./WebhookEvents";
 
 const resourceTypeTextMap: Record<ResourceType, string> = {

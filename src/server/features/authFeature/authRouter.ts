@@ -13,8 +13,9 @@ authRouter.post(
     JSONBodyParser,
     validateRequest({
         body: Joi.object({
-            code: Joi.string()
-        })
+            code: Joi.string().optional(),
+            refreshToken: Joi.string().optional()
+        }).xor("code", "refreshToken")
     }),
     handleTokenCreate
 );

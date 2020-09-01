@@ -1,7 +1,8 @@
 import { Dispatch, Reducer, useReducer } from "react";
 
-import { Configuration, Resource, WebhookEventType } from "../../../requester";
+import { Configuration, Resource, WebhookEventType } from "../../../lib/requester";
 import { useRouter } from "next/router";
+import { storage } from "../../../lib/storage";
 
 const toggleWebhookEvent = (
     webhookEvents: WebhookEventType[],
@@ -14,10 +15,24 @@ const toggleWebhookEvent = (
     return [...webhookEvents.slice(0, index), ...webhookEvents.slice(index + 1)];
 };
 
+// TODO will be removed when refactor
+function getNextStatusWhenLoadingComplete(state: State): Status {
+    if (!storage.getAccessToken()) {
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        return Status.LOGIN;
+    }
+    if (state.configurationId) {
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        return Status.LOADING_CONFIGURATION;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    return Status.CONFIGURATION;
+}
+
 export type Action = {
-    type: ActionType.COMPLETE_LOADING;
+    type: ActionType.LOGIN_COMPLETE | ActionType.COMPLETE_LOADING;
 } | {
-    type: ActionType.SET_TOKEN | ActionType.SET_SELECTED_WORKSPACE;
+    type: ActionType.SET_SELECTED_WORKSPACE;
     value: string;
 } | {
     type: ActionType.SET_SELECTED_RESOURCE;
@@ -33,7 +48,6 @@ export type Action = {
 export interface State {
     configurationId?: string;
     status: Status;
-    accessToken?: string;
     selectedWorkspace?: string;
     selectedResource?: Resource;
     selectedWebhookEvents: WebhookEventType[];
@@ -49,7 +63,7 @@ export enum Status {
 
 export enum ActionType {
     COMPLETE_LOADING,
-    SET_TOKEN,
+    LOGIN_COMPLETE,
     SET_FROM_CONFIGURATION,
     SET_SELECTED_WORKSPACE,
     SET_SELECTED_RESOURCE,
@@ -59,7 +73,6 @@ export enum ActionType {
 export const initialState: State = {
     configurationId: undefined,
     status: Status.LOADING,
-    accessToken: undefined,
     selectedWorkspace: undefined,
     selectedResource: undefined,
     selectedWebhookEvents: Object.values(WebhookEventType),
@@ -71,14 +84,12 @@ export const homeReducer: Reducer<State, Action> = (state, action) => {
         case ActionType.COMPLETE_LOADING:
             return {
                 ...state,
-                status: Status.LOGIN,
-                accessToken: undefined
+                status: getNextStatusWhenLoadingComplete(state)
             };
-        case ActionType.SET_TOKEN:
+        case ActionType.LOGIN_COMPLETE:
             return {
                 ...state,
-                status: state.configurationId ? Status.LOADING_CONFIGURATION : Status.CONFIGURATION,
-                accessToken: action.value
+                status: state.configurationId ? Status.LOADING_CONFIGURATION : Status.CONFIGURATION
             };
         case ActionType.SET_FROM_CONFIGURATION:
             return {

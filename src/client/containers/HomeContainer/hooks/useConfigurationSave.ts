@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useMutation } from "react-query";
 import * as microsoftTeams from "@microsoft/teams-js";
 
-import { fetchConfigurationCreate, fetchConfigurationUpdate } from "../../../requester";
+import { fetchConfigurationCreate, fetchConfigurationUpdate } from "../../../lib/requester";
 import { State, Status } from "./useHomeReducer";
 
 interface WebhookSettings {
@@ -40,7 +40,7 @@ export const useConfigurationSave = (state: State): void => {
                             if (state.configurationId) {
                                 await updateConfiguration(
                                     {
-                                        accessToken: state.accessToken,
+
                                         configurationId: state.configurationId,
                                         zeplin: {
                                             resource: {
@@ -55,7 +55,6 @@ export const useConfigurationSave = (state: State): void => {
                             } else {
                                 const configurationId = await createConfiguration(
                                     {
-                                        accessToken: state.accessToken,
                                         zeplin: {
                                             resource: {
                                                 id: state.selectedResource.id,
