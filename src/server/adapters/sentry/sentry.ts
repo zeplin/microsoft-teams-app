@@ -1,5 +1,6 @@
 import * as SentryClient from "@sentry/node";
 import { RequestHandler, ErrorRequestHandler } from "express";
+import { ServiceError } from "../../errors";
 
 type SentryInitParams = {
     sentryDsn: string;
@@ -33,7 +34,15 @@ class Sentry {
     }
 
     get errorHandler(): ErrorRequestHandler {
-        return SentryClient.Handlers.errorHandler();
+        return SentryClient.Handlers.errorHandler({
+            shouldHandleError: (error: Error) => {
+                if (error instanceof ServiceError) {
+                    return error.shouldCapture;
+                }
+
+                return true;
+            }
+        });
     }
 }
 
