@@ -3,7 +3,6 @@ import { Config } from "../config";
 import { zeplin } from "./zeplin";
 import { mongo } from "./mongo";
 import { sentry } from "./sentry";
-import * as pack from "../../../package.json";
 
 export function initAdapters(config: Config): void {
     redis.init(config.REDIS_URL);
@@ -12,6 +11,6 @@ export function initAdapters(config: Config): void {
     sentry.init({
         sentryDsn: config.SENTRY_DSN,
         environment: config.ENVIRONMENT,
-        version: pack.version
+        version: config.VERSION
     });
 }

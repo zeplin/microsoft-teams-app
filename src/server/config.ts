@@ -24,6 +24,7 @@ const DEFAULT_PORT = 3000;
 export const PORT = getNumberVariable("NEXT_PUBLIC_PORT", DEFAULT_PORT);
 export const {
     NODE_ENV: ENVIRONMENT,
+    NEXT_PUBLIC_VERSION: VERSION = "1.0.0-local",
     NEXT_PRIVATE_REDIS_URL: REDIS_URL = "redis://localhost:6379",
     NEXT_PRIVATE_WEBHOOK_SECRET: WEBHOOK_SECRET = "dummy-secret",
     NEXT_PRIVATE_ZEPLIN_URL: ZEPLIN_URL = "https://api.zeplin.dev",
@@ -50,4 +51,5 @@ export interface Config {
     WEBHOOK_SECRET: string;
     ZEPLIN_URL: string;
     SENTRY_DSN: string;
+    VERSION: string;
 }
