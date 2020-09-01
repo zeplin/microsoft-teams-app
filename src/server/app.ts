@@ -6,7 +6,7 @@ import { initAdapters } from "./adapters";
 import { initFeatures } from "./features";
 import path from "path";
 import { handleError } from "./middlewares";
-import { ServiceError } from "./errors";
+import { ServerError } from "./errors";
 import { sentry } from "./adapters/sentry";
 
 class App {
@@ -50,7 +50,7 @@ class App {
 
     listen(port: number): Promise<void> {
         if (!this.expressApp) {
-            throw new ServiceError("App is tried to be listened before initialized");
+            throw new ServerError("App is tried to be listened before initialized");
         }
 
         return new Promise((resolve, reject) => {

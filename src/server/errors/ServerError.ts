@@ -1,13 +1,13 @@
 import { INTERNAL_SERVER_ERROR } from "http-status-codes";
 
-interface ServiceErrorOptions {
+interface ServerErrorOptions {
     statusCode?: number;
     title?: string;
     extra?: object;
     shouldCapture?: boolean;
 }
 
-export class ServiceError extends Error {
+export class ServerError extends Error {
     statusCode: number;
     title?: string;
     extra?: object;
@@ -20,7 +20,7 @@ export class ServiceError extends Error {
             title,
             extra,
             shouldCapture = true
-        }: ServiceErrorOptions = {}
+        }: ServerErrorOptions = {}
     ) {
         super(message);
         this.statusCode = statusCode || INTERNAL_SERVER_ERROR;

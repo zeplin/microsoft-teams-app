@@ -4,7 +4,7 @@ import { messageJobRepo, messageWebhookEventRepo } from "../messagingRepos";
 import { getNotificationHandler } from "./messageFacadeNotificationHandlers";
 import { configurationRepo } from "../../../repos";
 import { requester } from "../../../adapters/requester";
-import { ServiceError } from "../../../errors";
+import { ServerError } from "../../../errors";
 
 class MessageFacade {
     async processJob(data: MessageJobData): Promise<void> {
@@ -16,7 +16,7 @@ class MessageFacade {
         const events = await messageWebhookEventRepo.getAndRemoveGroupEvents(data.groupingKey);
         const [pivotEvent] = events;
         if (!pivotEvent) {
-            throw new ServiceError("There isn't any event found for the grouping key", {
+            throw new ServerError("There isn't any event found for the grouping key", {
                 extra: { data }
             });
         }
@@ -25,7 +25,7 @@ class MessageFacade {
             pivotEvent.webhookId
         );
         if (!configuration) {
-            throw new ServiceError("There isn't any incoming webhook URL found for webhook", {
+            throw new ServerError("There isn't any incoming webhook URL found for webhook", {
                 extra: { data, pivotEvent }
             });
         }
@@ -46,7 +46,7 @@ class MessageFacade {
 
         const configuration = await configurationRepo.getByWebhookId(event.webhookId);
         if (!configuration) {
-            throw new ServiceError("Event doesn't have configuration", {
+            throw new ServerError("Event doesn't have configuration", {
                 extra: {
                     event: JSON.stringify(event)
                 }

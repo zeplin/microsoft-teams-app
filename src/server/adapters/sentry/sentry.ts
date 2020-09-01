@@ -1,6 +1,6 @@
 import * as SentryClient from "@sentry/node";
 import { RequestHandler, ErrorRequestHandler } from "express";
-import { ServiceError } from "../../errors";
+import { ServerError } from "../../errors";
 
 type SentryInitParams = {
     sentryDsn: string;
@@ -30,7 +30,7 @@ class Sentry {
     }
 
     captureException(error: Error): void {
-        if (error instanceof ServiceError && error.extra) {
+        if (error instanceof ServerError && error.extra) {
             SentryClient.withScope(scope => {
                 scope.setExtra("extra", error.extra);
                 SentryClient.captureException(error);
@@ -48,7 +48,7 @@ class Sentry {
     get errorHandler(): ErrorRequestHandler {
         const sentryErrorHandler = SentryClient.Handlers.errorHandler({
             shouldHandleError: (error: Error) => {
-                if (error instanceof ServiceError) {
+                if (error instanceof ServerError) {
                     return error.shouldCapture;
                 }
 
@@ -57,7 +57,7 @@ class Sentry {
         });
 
         return (error, req, res, next): void => {
-            if (error instanceof ServiceError && error.extra) {
+            if (error instanceof ServerError && error.extra) {
                 SentryClient.configureScope(scope => {
                     scope.setExtra("extra", error.extra);
                 });

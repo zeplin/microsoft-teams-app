@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { ServiceError } from "../../errors";
+import { ServerError } from "../../errors";
 
 class Requester {
     async post(url: string, payload: object): Promise<void> {
@@ -15,7 +15,7 @@ class Requester {
             };
 
             if (error.response) {
-                throw new ServiceError("Request did not succeed", {
+                throw new ServerError("Request did not succeed", {
                     extra: {
                         message: error.message,
                         response: {
@@ -29,12 +29,12 @@ class Requester {
             }
 
             if (error.request) {
-                throw new ServiceError("Request was made but no response is received", {
+                throw new ServerError("Request was made but no response is received", {
                     extra: { config: configExtra }
                 });
             }
 
-            throw new ServiceError("Unexpected error", {
+            throw new ServerError("Unexpected error", {
                 extra: { message: error.message }
             });
         }

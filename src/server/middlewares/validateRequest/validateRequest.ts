@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import * as Joi from "@hapi/joi";
-import { ServiceError } from "../../errors";
+import { ServerError } from "../../errors";
 import { BAD_REQUEST } from "http-status-codes";
 
 interface ValidationSchema {
@@ -28,7 +28,7 @@ export const validateRequest = (
 
     next(
         error
-            ? new ServiceError(error.message, { title: "Invalid Request", statusCode: BAD_REQUEST })
+            ? new ServerError(error.message, { title: "Invalid Request", statusCode: BAD_REQUEST })
             : undefined
     );
 };
