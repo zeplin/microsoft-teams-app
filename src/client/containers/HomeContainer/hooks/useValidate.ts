@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import * as microsoftTeams from "@microsoft/teams-js";
 
-import { resourceBasedEvents } from "../../../requester";
+import { resourceBasedEvents } from "../../../lib/requester";
 import { State, Status } from "./useHomeReducer";
 import { useRouter } from "next/router";
 
@@ -11,7 +11,6 @@ function areDifferent<T>(left: T[], right: T[]): boolean {
 
 function isValidStateForCreate(state: State): boolean {
     return state.status === Status.CONFIGURATION &&
-        Boolean(state.accessToken) &&
         Boolean(state.selectedWorkspace) &&
         Boolean(state.selectedResource) &&
         state.selectedWebhookEvents.filter(
@@ -20,7 +19,7 @@ function isValidStateForCreate(state: State): boolean {
 }
 
 function isValidStateForUpdate(state: State): boolean {
-    if (state.status !== Status.CONFIGURATION || !state.accessToken || !state.selectedResource) {
+    if (state.status !== Status.CONFIGURATION || !state.selectedResource) {
         return false;
     }
     const currentEvents = state.selectedWebhookEvents.filter(

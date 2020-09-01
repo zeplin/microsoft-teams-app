@@ -1,12 +1,14 @@
 import React, { FunctionComponent } from "react";
 import { Flex, Text } from "@fluentui/react-northstar";
+
 import {
-    Project, Resource,
+    Project,
+    Resource,
     ResourceType,
     Styleguide,
     WebhookEventType,
     Workspace
-} from "../../../../requester";
+} from "../../../../lib/requester";
 import { WorkspaceDropdown } from "./WorkspaceDropdown";
 import { ResourceDropdown } from "./ResourceDropdown";
 import { WebhookEvents } from "./WebhookEvents";

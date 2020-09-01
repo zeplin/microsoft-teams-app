@@ -7,11 +7,19 @@ interface AuthAuthorizationUrlGetParameter {
     };
 }
 
-interface AuthAccessTokenCreateParameter {
+interface AuthTokenCreateParameter {
     body: {
         code: string;
         clientSecret: string;
         redirectUri: string;
+        clientId: string;
+    };
+}
+
+interface AuthTokenRefreshParameter {
+    body: {
+        refreshToken: string;
+        clientSecret: string;
         clientId: string;
     };
 }
@@ -53,7 +61,7 @@ export class Auth {
             clientSecret,
             redirectUri
         }
-    }: AuthAccessTokenCreateParameter): Promise<AuthToken> {
+    }: AuthTokenCreateParameter): Promise<AuthToken> {
         const { access_token: accessToken, refresh_token: refreshToken } = await this.requester.post(
             "/oauth/token",
             {
@@ -67,6 +75,28 @@ export class Auth {
         return {
             accessToken,
             refreshToken
+        };
+    }
+
+    async refreshToken({
+        body: {
+            refreshToken,
+            clientId,
+            clientSecret
+        }
+    }: AuthTokenRefreshParameter): Promise<AuthToken> {
+        const { access_token, refresh_token } = await this.requester.post(
+            "/oauth/token",
+            {
+                grant_type: "refresh_token",
+                refresh_token: refreshToken,
+                client_id: clientId,
+                client_secret: clientSecret
+            }
+        );
+        return {
+            accessToken: access_token,
+            refreshToken: refresh_token
         };
     }
 }

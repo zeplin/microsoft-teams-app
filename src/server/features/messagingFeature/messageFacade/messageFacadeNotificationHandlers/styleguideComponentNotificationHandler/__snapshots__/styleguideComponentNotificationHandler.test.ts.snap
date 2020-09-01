@@ -26,7 +26,7 @@ exports[`styleguideComponentNotificationHandler getTeamsMessage method for creat
       "targets": [
         {
           "os": "default",
-          "uri": "zpl://components?stid=styleguideId&coids=componentId,componentId2"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fstid%3DstyleguideId%26coids%3DcomponentId%2CcomponentId2"
         }
       ]
     },
@@ -66,7 +66,7 @@ exports[`styleguideComponentNotificationHandler getTeamsMessage method for creat
       "targets": [
         {
           "os": "default",
-          "uri": "zpl://components?stid=styleguideId&coids=componentId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fstid%3DstyleguideId%26coids%3DcomponentId"
         }
       ]
     },
@@ -110,7 +110,7 @@ exports[`styleguideComponentNotificationHandler getTeamsMessage method for versi
       "targets": [
         {
           "os": "default",
-          "uri": "zpl://components?stid=styleguideId&coids=componentId,componentId2"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fstid%3DstyleguideId%26coids%3DcomponentId%2CcomponentId2"
         }
       ]
     },
@@ -150,7 +150,7 @@ exports[`styleguideComponentNotificationHandler getTeamsMessage method for versi
       "targets": [
         {
           "os": "default",
-          "uri": "zpl://components?stid=styleguideId&coids=componentId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fstid%3DstyleguideId%26coids%3DcomponentId"
         }
       ]
     },
