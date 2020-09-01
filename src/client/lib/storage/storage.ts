@@ -13,7 +13,7 @@ const setItem = (key: string, value: string): void => {
     }
 };
 
-const getIem = (key: string): string|undefined => {
+const getItem = (key: string): string|undefined => {
     try {
         return memoryStorage[key] || localStorage.getItem(key);
     } catch (e) {
@@ -21,8 +21,8 @@ const getIem = (key: string): string|undefined => {
     }
 };
 
-export const getAccessToken = (): string|undefined => getIem(accessTokenKey);
+export const getAccessToken = (): string|undefined => getItem(accessTokenKey);
 export const setAccessToken = (value: string): void => setItem(accessTokenKey, value);
 
-export const getRefreshToken = (): string|undefined => getIem(refreshTokenKey);
+export const getRefreshToken = (): string|undefined => getItem(refreshTokenKey);
 export const setRefreshToken = (value: string): void => setItem(refreshTokenKey, value);
