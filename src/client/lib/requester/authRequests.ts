@@ -1,11 +1,7 @@
 import Axios from "axios";
+import { AuthToken } from "../../constants";
 
-export interface AuthToken {
-    accessToken: string;
-    refreshToken: string;
-}
-
-export const fetchAuthToken = async (code: string): Promise<AuthToken> => {
+export const getAuthToken = async (code: string): Promise<AuthToken> => {
     const { data } = await Axios.post("/api/auth/token", { code });
     return data;
 };

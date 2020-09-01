@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useMutation } from "react-query";
 import * as microsoftTeams from "@microsoft/teams-js";
 
-import { fetchConfigurationCreate, fetchConfigurationUpdate } from "../../../lib/requester";
-import { State, Status } from "./useHomeReducer";
+import { requester } from "../../../lib";
+import { Resource, WebhookEventType } from "../../../constants";
 
 interface WebhookSettings {
     webhookUrl: string;
@@ -22,12 +22,24 @@ function setSettings(configurationId: string, configurationName: string): void {
     } as unknown as microsoftTeams.settings.Settings);
 }
 
-export const useConfigurationSave = (state: State): void => {
-    const [createConfiguration] = useMutation(fetchConfigurationCreate, { throwOnError: true });
-    const [updateConfiguration] = useMutation(fetchConfigurationUpdate, { throwOnError: true });
+interface UseConfigurationSaveParams {
+    enabled: boolean;
+    configurationId?: string;
+    resource?: Resource;
+    events?: WebhookEventType[];
+}
+
+export const useConfigurationSave = ({
+    enabled,
+    configurationId,
+    resource,
+    events
+}: UseConfigurationSaveParams): void => {
+    const [createConfiguration] = useMutation(requester.createConfiguration, { throwOnError: true });
+    const [updateConfiguration] = useMutation(requester.updateConfiguration, { throwOnError: true });
 
     useEffect(() => {
-        if (state.status === Status.CONFIGURATION) {
+        if (enabled) {
             microsoftTeams.getContext(({
                 channelId,
                 channelName,
@@ -37,30 +49,29 @@ export const useConfigurationSave = (state: State): void => {
                     microsoftTeams.settings.registerOnSaveHandler(async saveEvent => {
                         const { webhookUrl } = settings as unknown as WebhookSettings;
                         try {
-                            if (state.configurationId) {
+                            if (configurationId) {
                                 await updateConfiguration(
                                     {
-
-                                        configurationId: state.configurationId,
+                                        configurationId,
                                         zeplin: {
                                             resource: {
-                                                id: state.selectedResource.id,
-                                                type: state.selectedResource.type
+                                                id: resource.id,
+                                                type: resource.type
                                             },
-                                            events: state.selectedWebhookEvents
+                                            events
                                         }
                                     });
 
-                                setSettings(state.configurationId, state.selectedResource.name);
+                                setSettings(configurationId, resource.name);
                             } else {
-                                const configurationId = await createConfiguration(
+                                const newConfigurationId = await createConfiguration(
                                     {
                                         zeplin: {
                                             resource: {
-                                                id: state.selectedResource.id,
-                                                type: state.selectedResource.type
+                                                id: resource.id,
+                                                type: resource.type
                                             },
-                                            events: state.selectedWebhookEvents
+                                            events
                                         },
                                         microsoftTeams: {
                                             channel: {
@@ -72,7 +83,7 @@ export const useConfigurationSave = (state: State): void => {
                                         }
                                     });
 
-                                setSettings(configurationId, state.selectedResource.name);
+                                setSettings(newConfigurationId, resource.name);
                             }
 
                             saveEvent.notifySuccess();
@@ -83,5 +94,5 @@ export const useConfigurationSave = (state: State): void => {
                 });
             });
         }
-    }, [state.selectedWorkspace, state.selectedResource, state.selectedWebhookEvents]);
+    }, [resource, events, enabled]);
 };

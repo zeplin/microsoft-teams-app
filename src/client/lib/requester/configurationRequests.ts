@@ -1,50 +1,7 @@
 import { httpClient } from "./httpClient";
+import { ConfigurationConstants, resourceBasedEvents, ResourceType, WebhookEventType } from "../../constants";
 
-export enum ResourceType {
-    PROJECT = "Project",
-    STYLEGUIDE = "Styleguide"
-}
-
-export interface Resource {
-    name: string;
-    type: ResourceType;
-    id: string;
-}
-
-export enum WebhookEventType {
-    SCREEN = "screen",
-    SCREEN_VERSION = "screen.version",
-    COMPONENT = "component",
-    COLOR = "color",
-    TEXT_STYLE = "text_style",
-    SPACING_TOKEN = "spacing_token",
-    NOTE = "note",
-    NOTE_COMMENT = "note.comment",
-    MEMBER = "member",
-}
-
-export const resourceBasedEvents = {
-    [ResourceType.PROJECT]: [
-        WebhookEventType.SCREEN,
-        WebhookEventType.SCREEN_VERSION,
-        WebhookEventType.COMPONENT,
-        WebhookEventType.COLOR,
-        WebhookEventType.TEXT_STYLE,
-        WebhookEventType.SPACING_TOKEN,
-        WebhookEventType.NOTE,
-        WebhookEventType.NOTE_COMMENT,
-        WebhookEventType.MEMBER
-    ],
-    [ResourceType.STYLEGUIDE]: [
-        WebhookEventType.COMPONENT,
-        WebhookEventType.COLOR,
-        WebhookEventType.TEXT_STYLE,
-        WebhookEventType.SPACING_TOKEN,
-        WebhookEventType.MEMBER
-    ]
-};
-
-export interface ConfigurationCreateParameters {
+interface ConfigurationCreateParameters {
     zeplin: {
         resource: {
             id: string;
@@ -62,7 +19,18 @@ export interface ConfigurationCreateParameters {
     };
 }
 
-export const fetchConfigurationCreate = async (
+interface ConfigurationUpdateParameters {
+    configurationId: string;
+    zeplin: {
+        resource: {
+            id: string;
+            type: ResourceType;
+        };
+        events: WebhookEventType[];
+    };
+}
+
+export const createConfiguration = async (
     {
         zeplin: {
             resource,
@@ -86,18 +54,7 @@ export const fetchConfigurationCreate = async (
     return id;
 };
 
-export interface ConfigurationUpdateParameters {
-    configurationId: string;
-    zeplin: {
-        resource: {
-            id: string;
-            type: ResourceType;
-        };
-        events: WebhookEventType[];
-    };
-}
-
-export const fetchConfigurationUpdate = async (
+export const updateConfiguration = async (
     {
         configurationId,
         zeplin: {
@@ -120,18 +77,11 @@ export const fetchConfigurationUpdate = async (
     return id;
 };
 
-export const fetchConfigurationDelete = async (configurationId: string): Promise<void> => {
+export const deleteConfiguration = async (configurationId: string): Promise<void> => {
     await httpClient.delete(`/api/configurations/${configurationId}`);
 };
 
-export interface Configuration {
-    resource: Resource;
-    webhook: {
-        events: WebhookEventType[];
-    };
-}
-
-export const fetchConfiguration = async (configurationId: string): Promise<Configuration> => {
+export const getConfiguration = async (configurationId: string): Promise<ConfigurationConstants> => {
     const {
         data: {
             zeplin: {

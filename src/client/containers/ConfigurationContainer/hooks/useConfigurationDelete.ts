@@ -2,17 +2,20 @@ import { useEffect } from "react";
 import { useMutation } from "react-query";
 import * as microsoftTeams from "@microsoft/teams-js";
 
-import { fetchConfigurationDelete } from "../../../lib/requester";
-import { State } from "./useHomeReducer";
+import { requester } from "../../../lib";
 
-export const useConfigurationDelete = (state: State): void => {
-    const [deleteConfiguration] = useMutation(fetchConfigurationDelete, { throwOnError: true });
+interface UseConfigurationDeleteParams {
+    configurationId: string;
+}
+
+export const useConfigurationDelete = ({ configurationId }: UseConfigurationDeleteParams): void => {
+    const [deleteConfiguration] = useMutation(requester.deleteConfiguration, { throwOnError: true });
 
     useEffect(() => {
-        if (state.configurationId) {
+        if (configurationId) {
             microsoftTeams.settings.registerOnRemoveHandler(async removeEvent => {
                 try {
-                    await deleteConfiguration(state.configurationId);
+                    await deleteConfiguration(configurationId);
                     removeEvent.notifySuccess();
                 } catch (error) {
                     removeEvent.notifyFailure(error?.message ?? error);

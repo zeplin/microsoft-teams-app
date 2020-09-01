@@ -5,15 +5,15 @@ import { Loader } from "@fluentui/react-northstar";
 
 import { Providers } from "../Providers";
 
-const Home = dynamic(
-    async () => (await import("../containers")).HomeContainer,
+const ConfigurationContainer = dynamic(
+    async () => (await import("../containers")).ConfigurationContainer,
     {
         ssr: false,
         loading: () => <Loader styles={{ height: "100vh" }} />
     }
 );
 
-const HomePage: FunctionComponent = () => {
+const ConfigurationPage: FunctionComponent = () => {
     const {
         query: {
             theme
@@ -22,9 +22,9 @@ const HomePage: FunctionComponent = () => {
 
     return (
         <Providers theme={String(theme)}>
-            <Home />
+            <ConfigurationContainer />
         </Providers>
     );
 };
 
-export default HomePage;
+export default ConfigurationPage;
