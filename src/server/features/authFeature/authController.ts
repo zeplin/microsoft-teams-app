@@ -11,7 +11,7 @@ export const handleAuthorize: RequestHandler = (req, res, next) => {
 
 export const handleTokenCreate: RequestHandler = async (req, res, next) => {
     try {
-        const result = await authFacade.createToken(req.body.code);
+        const result = await authFacade.createToken(req.body);
         res.json(result);
     } catch (error) {
         next(error);

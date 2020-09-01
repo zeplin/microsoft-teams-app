@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 
-import { fetchProjects, fetchStyleguides, Project, Styleguide } from "../../../requester";
-import { State } from "./useHomeReducer";
+import { fetchProjects, fetchStyleguides, Project, Styleguide } from "../../../lib/requester";
+import { State, Status } from "./useHomeReducer";
 
 interface UseResourcesResult {
     areResourcesLoading: boolean;
@@ -10,28 +10,18 @@ interface UseResourcesResult {
 }
 
 export const useResources = (state: State): UseResourcesResult => {
+    const enabled = !state.configurationId && state.selectedWorkspace && state.status === Status.CONFIGURATION;
+
     const { isLoading: areProjectsLoading, data: projects } = useQuery(
-        [
-            "projects",
-            state.selectedWorkspace,
-            state.accessToken
-        ],
-        (key, workspace, accessToken) => fetchProjects(workspace, accessToken),
-        {
-            enabled: !state.configurationId && state.selectedWorkspace && state.accessToken
-        }
+        ["projects", state.selectedWorkspace],
+        (key, workspace) => fetchProjects(workspace),
+        { enabled }
     );
 
     const { isLoading: areStyleguidesLoading, data: styleguides } = useQuery(
-        [
-            "styleguides",
-            state.selectedWorkspace,
-            state.accessToken
-        ],
-        (key, workspace, accessToken) => fetchStyleguides(workspace, accessToken),
-        {
-            enabled: !state.configurationId && state.selectedWorkspace && state.accessToken
-        }
+        ["styleguides", state.selectedWorkspace],
+        (key, workspace) => fetchStyleguides(workspace),
+        { enabled }
     );
 
     return {

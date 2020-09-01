@@ -1,4 +1,4 @@
-import Axios from "axios";
+import { httpClient } from "./httpClient";
 
 export enum ResourceType {
     PROJECT = "Project",
@@ -45,7 +45,6 @@ export const resourceBasedEvents = {
 };
 
 export interface ConfigurationCreateParameters {
-    accessToken: string;
     zeplin: {
         resource: {
             id: string;
@@ -65,7 +64,6 @@ export interface ConfigurationCreateParameters {
 
 export const fetchConfigurationCreate = async (
     {
-        accessToken,
         zeplin: {
             resource,
             events
@@ -73,7 +71,7 @@ export const fetchConfigurationCreate = async (
         ...configuration
     }: ConfigurationCreateParameters
 ): Promise<string> => {
-    const { data: { id } } = await Axios.post(
+    const { data: { id } } = await httpClient.post(
         "/api/configurations",
         {
             ...configuration,
@@ -83,18 +81,12 @@ export const fetchConfigurationCreate = async (
                     .filter(webhookEventType => resourceBasedEvents[resource.type].includes(webhookEventType))
                     .map(webhookEventType => `${resource.type.toLowerCase()}.${webhookEventType}`)
             }
-        },
-        {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
         }
     );
     return id;
 };
 
 export interface ConfigurationUpdateParameters {
-    accessToken: string;
     configurationId: string;
     zeplin: {
         resource: {
@@ -107,7 +99,6 @@ export interface ConfigurationUpdateParameters {
 
 export const fetchConfigurationUpdate = async (
     {
-        accessToken,
         configurationId,
         zeplin: {
             resource,
@@ -115,7 +106,7 @@ export const fetchConfigurationUpdate = async (
         }
     }: ConfigurationUpdateParameters
 ): Promise<string> => {
-    const { data: { id } } = await Axios.put(
+    const { data: { id } } = await httpClient.put(
         `/api/configurations/${configurationId}`,
         {
             zeplin: {
@@ -124,41 +115,14 @@ export const fetchConfigurationUpdate = async (
                     .filter(webhookEventType => resourceBasedEvents[resource.type].includes(webhookEventType))
                     .map(webhookEventType => `${resource.type.toLowerCase()}.${webhookEventType}`)
             }
-        },
-        {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
         }
     );
     return id;
 };
 
-export interface ConfigurationDeleteParameters {
-    accessToken: string;
-    configurationId: string;
-}
-
-export const fetchConfigurationDelete = async (
-    {
-        accessToken,
-        configurationId
-    }: ConfigurationDeleteParameters
-): Promise<void> => {
-    await Axios.delete(
-        `/api/configurations/${configurationId}`,
-        {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        }
-    );
+export const fetchConfigurationDelete = async (configurationId: string): Promise<void> => {
+    await httpClient.delete(`/api/configurations/${configurationId}`);
 };
-
-export interface ConfigurationParameters {
-    accessToken: string;
-    configurationId: string;
-}
 
 export interface Configuration {
     resource: Resource;
@@ -167,12 +131,7 @@ export interface Configuration {
     };
 }
 
-export const fetchConfiguration = async (
-    {
-        accessToken,
-        configurationId
-    }: ConfigurationParameters
-): Promise<Configuration> => {
+export const fetchConfiguration = async (configurationId: string): Promise<Configuration> => {
     const {
         data: {
             zeplin: {
@@ -186,14 +145,7 @@ export const fetchConfiguration = async (
                 }
             }
         }
-    } = await Axios.get(
-        `/api/configurations/${configurationId}`,
-        {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        }
-    );
+    } = await httpClient.get(`/api/configurations/${configurationId}`);
 
     return {
         resource: {

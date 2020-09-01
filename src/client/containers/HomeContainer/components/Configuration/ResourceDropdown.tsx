@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactElement } from "react";
 import { Divider, Dropdown } from "@fluentui/react-northstar";
-import { Project, Resource, ResourceType, Styleguide } from "../../../../requester";
+import { Project, Resource, ResourceType, Styleguide } from "../../../../lib/requester";
 
 interface ResourceDropdownProps {
     disabled: boolean;

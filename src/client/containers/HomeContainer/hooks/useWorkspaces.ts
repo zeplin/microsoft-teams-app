@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { fetchWorkspaces, Workspace } from "../../../requester";
+import { fetchWorkspaces, Workspace } from "../../../lib/requester";
 import { State, Status } from "./useHomeReducer";
 
 interface UseWorkspacesResult {
@@ -9,8 +9,8 @@ interface UseWorkspacesResult {
 
 export const useWorkspaces = (state: State): UseWorkspacesResult => {
     const { isLoading: areWorkspacesLoading, data: workspaces } = useQuery(
-        ["workspaces", state.status === Status.CONFIGURATION && state.accessToken],
-        (key, accessToken) => fetchWorkspaces(accessToken),
+        "workspaces",
+        fetchWorkspaces,
         {
             enabled: !state.configurationId && state.status === Status.CONFIGURATION
         }
