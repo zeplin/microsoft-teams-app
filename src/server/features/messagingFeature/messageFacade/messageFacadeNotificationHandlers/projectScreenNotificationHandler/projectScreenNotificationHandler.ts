@@ -9,6 +9,7 @@ import {
 import { MEDIUM_DELAY } from "../constants";
 import { ScreenResource } from "../resources/screenResource";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
+import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
 const IMAGE_LIMIT = 5;
 
@@ -83,9 +84,10 @@ class ProjectScreenNotificationHandler extends NotificationHandler {
             }
         }] = events;
         if (events.length === 1) {
-            return `${ZEPLIN_MAC_APP_URL_SCHEME}screen?pid=${projectId}&sid=${events[0].payload.resource.id}`;
+            return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://screen?pid=${projectId}&sid=${events[0].payload.resource.id}`);
         }
-        return `${ZEPLIN_MAC_APP_URL_SCHEME}project?pid=${projectId}&sids=${events.map(event => event.payload.resource.id).join(",")}`;
+
+        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://project?pid=${projectId}&sids=${events.map(event => event.payload.resource.id).join(",")}`);
     }
 
     getTeamsMessage(events: WebhookEvent<ProjectScreenEventPayload>[]): MessageCard {

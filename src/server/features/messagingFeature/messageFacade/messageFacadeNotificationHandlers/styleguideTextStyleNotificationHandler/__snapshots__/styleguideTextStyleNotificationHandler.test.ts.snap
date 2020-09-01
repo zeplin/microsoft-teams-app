@@ -18,7 +18,7 @@ exports[`styleguideTextStyleNotificationHandler getTeamsMessage method for creat
       "targets": [
         {
           "os": "default",
-          "uri": "zpl://textStyles?stid=styleguideId&tsids=textStyleId,anotherTextStyleId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2FtextStyles%3Fstid%3DstyleguideId%26tsids%3DtextStyleId%2CanotherTextStyleId"
         }
       ]
     },
@@ -54,7 +54,7 @@ exports[`styleguideTextStyleNotificationHandler getTeamsMessage method for creat
       "targets": [
         {
           "os": "default",
-          "uri": "zpl://textStyles?stid=styleguideId&tsids=textStyleId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2FtextStyles%3Fstid%3DstyleguideId%26tsids%3DtextStyleId"
         }
       ]
     },
@@ -90,7 +90,7 @@ exports[`styleguideTextStyleNotificationHandler getTeamsMessage method for updat
       "targets": [
         {
           "os": "default",
-          "uri": "zpl://textStyles?stid=styleguideId&tsids=textStyleId,anotherTextStyleId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2FtextStyles%3Fstid%3DstyleguideId%26tsids%3DtextStyleId%2CanotherTextStyleId"
         }
       ]
     },
@@ -126,7 +126,7 @@ exports[`styleguideTextStyleNotificationHandler getTeamsMessage method for updat
       "targets": [
         {
           "os": "default",
-          "uri": "zpl://textStyles?stid=styleguideId&tsids=textStyleId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2FtextStyles%3Fstid%3DstyleguideId%26tsids%3DtextStyleId"
         }
       ]
     },

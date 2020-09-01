@@ -18,7 +18,7 @@ exports[`projectColorNotificationHandler getTeamsMessage method for created noti
       "targets": [
         {
           "os": "default",
-          "uri": "zpl://colors?pid=projectId&cids=colorId,anotherColorId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId%2CanotherColorId"
         }
       ]
     },
@@ -54,7 +54,7 @@ exports[`projectColorNotificationHandler getTeamsMessage method for created noti
       "targets": [
         {
           "os": "default",
-          "uri": "zpl://colors?pid=projectId&cids=colorId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId"
         }
       ]
     },
@@ -90,7 +90,7 @@ exports[`projectColorNotificationHandler getTeamsMessage method for updated noti
       "targets": [
         {
           "os": "default",
-          "uri": "zpl://colors?pid=projectId&cids=colorId,anotherColorId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId%2CanotherColorId"
         }
       ]
     },
@@ -126,7 +126,7 @@ exports[`projectColorNotificationHandler getTeamsMessage method for updated noti
       "targets": [
         {
           "os": "default",
-          "uri": "zpl://colors?pid=projectId&cids=colorId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId"
         }
       ]
     },

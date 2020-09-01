@@ -10,6 +10,7 @@ import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
 import { TextStyleResource } from "../resources";
+import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
 type ProjectTextStyleEventDescriptor = {
     type: EventType.PROJECT_TEXT_STYLE;
@@ -70,7 +71,7 @@ class ProjectTextStyleNotificationHandler extends NotificationHandler {
                 }
             }
         }] = events;
-        return `${ZEPLIN_MAC_APP_URL_SCHEME}textStyles?pid=${projectId}&tsids=${events.map(event => event.payload.resource.id).join(",")}`;
+        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://textStyles?pid=${projectId}&tsids=${events.map(event => event.payload.resource.id).join(",")}`);
     }
 
     shouldHandleEvent(event: WebhookEvent): boolean {

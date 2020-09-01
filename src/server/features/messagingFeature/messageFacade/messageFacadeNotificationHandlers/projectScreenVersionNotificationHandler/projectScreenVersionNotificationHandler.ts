@@ -10,6 +10,7 @@ import {
 import { MEDIUM_DELAY } from "../constants";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { ScreenVersionSummaryResource } from "../resources/screenVersionSummaryResource";
+import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
 const IMAGE_LIMIT = 5;
 
@@ -86,9 +87,10 @@ class ProjectScreenVersionNotificationHandler extends NotificationHandler {
         }] = events;
 
         if (events.length === 1) {
-            return `${ZEPLIN_MAC_APP_URL_SCHEME}screen?pid=${projectId}&sid=${screenId}`;
+            return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://screen?pid=${projectId}&sid=${screenId}`);
         }
-        return `${ZEPLIN_MAC_APP_URL_SCHEME}project?pid=${projectId}&sids=${events.map(event => event.payload.context.screen.id).join(",")}`;
+
+        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://project?pid=${projectId}&sids=${events.map(event => event.payload.context.screen.id).join(",")}`);
     }
 
     getGroupingKey(event: WebhookEvent<ProjectScreenVersionEventPayload>): string {

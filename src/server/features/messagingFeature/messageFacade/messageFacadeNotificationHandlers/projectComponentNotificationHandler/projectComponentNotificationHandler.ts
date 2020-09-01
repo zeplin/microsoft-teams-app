@@ -10,6 +10,7 @@ import {
 import { MEDIUM_DELAY } from "../constants";
 import { ComponentResource } from "../resources/componentResource";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
+import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
 const IMAGE_LIMIT = 5;
 
@@ -78,7 +79,7 @@ class ProjectComponentNotificationHandler extends NotificationHandler {
                 }
             }
         }] = events;
-        return `${ZEPLIN_MAC_APP_URL_SCHEME}components?pid=${projectId}&coids=${events.map(event => event.payload.resource.id).join(",")}`;
+        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://components?pid=${projectId}&coids=${events.map(event => event.payload.resource.id).join(",")}`);
     }
 
     getTeamsMessage(events: WebhookEvent<ProjectComponentEventPayload>[]): MessageCard {
