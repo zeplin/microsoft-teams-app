@@ -4,5 +4,6 @@ module.exports = {
         "<rootDir>/**/*.ts",
         "!<rootDir>/test/**/*.ts"
     ],
-    snapshotSerializers: ["<rootDir>/test/helpers/messageCardSerializer.ts"]
+    snapshotSerializers: ["<rootDir>/test/helpers/messageCardSerializer.ts"],
+    setupFiles: ["./test/helpers/setupMocks.ts"]
 };

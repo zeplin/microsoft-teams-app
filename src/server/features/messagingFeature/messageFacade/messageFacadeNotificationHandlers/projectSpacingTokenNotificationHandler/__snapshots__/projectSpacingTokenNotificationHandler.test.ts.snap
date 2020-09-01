@@ -18,7 +18,7 @@ exports[`projectSpacingTokenNotificationHandler getTeamsMessage method for creat
       "targets": [
         {
           "os": "default",
-          "uri": "zpl://spacing?pid=projectId&sptids=spacingTokenId,anotherSpacingTokenId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%2CanotherSpacingTokenId"
         }
       ]
     },
@@ -54,7 +54,7 @@ exports[`projectSpacingTokenNotificationHandler getTeamsMessage method for creat
       "targets": [
         {
           "os": "default",
-          "uri": "zpl://spacing?pid=projectId&sptids=spacingTokenId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId"
         }
       ]
     },
@@ -90,7 +90,7 @@ exports[`projectSpacingTokenNotificationHandler getTeamsMessage method for updat
       "targets": [
         {
           "os": "default",
-          "uri": "zpl://spacing?pid=projectId&sptids=spacingTokenId,anotherSpacingTokenId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%2CanotherSpacingTokenId"
         }
       ]
     },
@@ -126,7 +126,7 @@ exports[`projectSpacingTokenNotificationHandler getTeamsMessage method for updat
       "targets": [
         {
           "os": "default",
-          "uri": "zpl://spacing?pid=projectId&sptids=spacingTokenId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId"
         }
       ]
     },
