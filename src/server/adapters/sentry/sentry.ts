@@ -34,7 +34,7 @@ class Sentry {
     }
 
     get errorHandler(): ErrorRequestHandler {
-        return SentryClient.Handlers.errorHandler({
+        const sentryErrorHandler = SentryClient.Handlers.errorHandler({
             shouldHandleError: (error: Error) => {
                 if (error instanceof ServiceError) {
                     return error.shouldCapture;
@@ -43,6 +43,16 @@ class Sentry {
                 return true;
             }
         });
+
+        return (error, req, res, next): void => {
+            if (error instanceof ServiceError && error.extra) {
+                SentryClient.configureScope(scope => {
+                    scope.setExtra("extra", error.extra);
+                });
+            }
+
+            return sentryErrorHandler(error, req, res, next);
+        };
     }
 }
 
