@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ServiceError } from "server/errors";
 
 class Requester {
     async post(url: string, payload: object): Promise<void> {
@@ -6,17 +7,20 @@ class Requester {
             await axios.post(url, payload);
         } catch (err) {
             if (err.response) {
-                // TODO: Better error?
-                throw new Error(`Request did not succeed ${err.response}`);
+                throw new ServiceError("Request did not succeed", {
+                    extra: { response: err.response }
+                });
             }
 
             if (err.request) {
-                // TODO: Better error?
-                throw new Error(`Request was made but no response is received ${err.request}`);
+                throw new ServiceError("Request was made but no response is received", {
+                    extra: { request: err.request }
+                });
             }
 
-            // TODO: Better error?
-            throw new Error(`Unexpected error ${err.message}`);
+            throw new ServiceError("Unexpected error", {
+                extra: { message: err.message }
+            });
         }
     }
 }

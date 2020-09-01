@@ -1,4 +1,5 @@
 import { NotificationHandler } from "../NotificationHandler";
+import { ServiceError } from "server/errors";
 
 class PingNotificationHandler extends NotificationHandler {
     delay = 0;
@@ -8,7 +9,7 @@ class PingNotificationHandler extends NotificationHandler {
     }
 
     getTeamsMessage(): never {
-        throw new Error("Unreachable code");
+        throw new ServiceError("Unreachable code");
     }
 }
 

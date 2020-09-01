@@ -6,6 +6,7 @@ import { initAdapters } from "./adapters";
 import { initFeatures } from "./features";
 import path from "path";
 import { handleError } from "./middlewares";
+import { ServiceError } from "./errors";
 
 class App {
     private expressApp?: Express;
@@ -42,7 +43,7 @@ class App {
 
     listen(port: number): Promise<void> {
         if (!this.expressApp) {
-            throw new Error("App is not initialized");
+            throw new ServiceError("App is tried to be listened before initialized");
         }
 
         return new Promise((resolve, reject) => {
