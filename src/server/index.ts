@@ -1,6 +1,6 @@
 import { app } from "./app";
 import * as config from "./config";
-import { sentry } from "./adapters";
+import { sentry, closeAdapters } from "./adapters";
 
 async function drive(): Promise<void> {
     // Initialize NextJS and routes
@@ -14,6 +14,15 @@ async function drive(): Promise<void> {
 }
 
 drive().catch(async error => {
+    try {
+        await closeAdapters();
+    } catch (closeAdaptersError) {
+        sentry.captureException(closeAdaptersError);
+    }
+
     sentry.captureException(error);
     await sentry.flush();
+
+    // eslint-disable-next-line no-process-exit
+    process.exit(1);
 });
