@@ -11,6 +11,7 @@ type SentryInitParams = {
 class Sentry {
     init({ sentryDsn, version, environment }: SentryInitParams): void {
         SentryClient.init({
+            enabled: environment === "production",
             dsn: sentryDsn,
             release: version,
             environment,
