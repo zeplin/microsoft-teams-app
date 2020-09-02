@@ -17,6 +17,8 @@ class App {
     }
 
     async init(config: Config): Promise<void> {
+        await initAdapters(config);
+
         this.expressApp = express();
 
         const nextApp = next({
@@ -26,8 +28,6 @@ class App {
         await nextApp.prepare();
 
         const apiRouter = createRouter({ mergeParams: true });
-
-        await initAdapters(config);
 
         initFeatures(apiRouter, config);
 
