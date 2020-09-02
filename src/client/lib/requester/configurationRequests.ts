@@ -1,5 +1,5 @@
 import { httpClient } from "./httpClient";
-import { ConfigurationConstants, resourceBasedEvents, ResourceType, WebhookEventType } from "../../constants";
+import { Configuration, resourceBasedEvents, ResourceType, WebhookEventType } from "../../constants";
 
 interface ConfigurationCreateParameters {
     zeplin: {
@@ -81,7 +81,7 @@ export const deleteConfiguration = async (configurationId: string): Promise<void
     await httpClient.delete(`/api/configurations/${configurationId}`);
 };
 
-export const getConfiguration = async (configurationId: string): Promise<ConfigurationConstants> => {
+export const getConfiguration = async (configurationId: string): Promise<Configuration> => {
     const {
         data: {
             zeplin: {

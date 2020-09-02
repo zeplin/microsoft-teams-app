@@ -1,12 +1,12 @@
 import { useQuery } from "react-query";
 
 import { requester } from "../../../lib";
-import { ConfigurationConstants } from "../../../constants";
+import { Configuration } from "../../../constants";
 
 interface UseConfigurationParams {
     enabled: boolean;
     configurationId: string;
-    onSuccess: (configuration: ConfigurationConstants) => void;
+    onSuccess: (configuration: Configuration) => void;
 }
 
 export const useConfiguration = ({
@@ -16,7 +16,7 @@ export const useConfiguration = ({
 }: UseConfigurationParams): void => {
     useQuery(
         ["configuration", configurationId],
-        (): Promise<ConfigurationConstants> => requester.getConfiguration(configurationId),
+        (): Promise<Configuration> => requester.getConfiguration(configurationId),
         {
             enabled,
             cacheTime: Infinity,

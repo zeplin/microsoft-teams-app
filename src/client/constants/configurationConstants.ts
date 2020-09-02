@@ -42,7 +42,7 @@ export const resourceBasedEvents = {
     ]
 };
 
-export interface ConfigurationConstants {
+export interface Configuration {
     resource: Resource;
     webhook: {
         events: WebhookEventType[];
