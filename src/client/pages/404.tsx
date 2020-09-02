@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
-import Error, { ErrorProps } from "next/error";
+import Error from "next/error";
 
-export default function NotFoundPage({ statusCode }: ErrorProps): ReactElement {
-    return <Error statusCode={statusCode}/>;
+export default function NotFoundPage(): ReactElement {
+    return <Error statusCode={404}/>;
 }
