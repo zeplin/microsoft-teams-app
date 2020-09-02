@@ -41,6 +41,10 @@ class Sentry {
         SentryClient.captureException(error);
     }
 
+    flush(): Promise<boolean> {
+        return SentryClient.flush();
+    }
+
     get requestHandler(): RequestHandler {
         return SentryClient.Handlers.requestHandler();
     }
