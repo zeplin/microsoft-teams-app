@@ -7,7 +7,7 @@ import {
     ResourceType,
     Styleguide,
     WebhookEventType,
-    WorkspaceConstants
+    Workspace
 } from "../../../../constants";
 import { WorkspaceDropdown } from "./WorkspaceDropdown";
 import { ResourceDropdown } from "./ResourceDropdown";
@@ -16,7 +16,7 @@ import { WebhookEvents } from "./WebhookEvents";
 interface ConfigurationCreateProps {
     channelName: string;
     areWorkspacesLoading: boolean;
-    workspaces: WorkspaceConstants[];
+    workspaces: Workspace[];
     isWorkspaceSelected: boolean;
     resourceType: ResourceType;
     areResourcesLoading: boolean;

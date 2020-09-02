@@ -1,7 +1,7 @@
 import { httpClient } from "./httpClient";
-import { Project, Styleguide, WorkspaceConstants } from "../../constants";
+import { Project, Styleguide, Workspace } from "../../constants";
 
-export const getWorkspaces = async (): Promise<WorkspaceConstants[]> => {
+export const getWorkspaces = async (): Promise<Workspace[]> => {
     const { data: result } = await httpClient.get("/api/workspaces");
     return result;
 };

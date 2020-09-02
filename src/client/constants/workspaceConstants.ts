@@ -1,4 +1,4 @@
-export interface WorkspaceConstants {
+export interface Workspace {
     id: string;
     name: string;
 }

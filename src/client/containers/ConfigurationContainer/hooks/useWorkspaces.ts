@@ -1,11 +1,11 @@
 import { useQuery } from "react-query";
 
 import { requester } from "../../../lib";
-import { WorkspaceConstants } from "../../../constants";
+import { Workspace } from "../../../constants";
 
 interface UseWorkspacesResult {
     areWorkspacesLoading: boolean;
-    workspaces: WorkspaceConstants[];
+    workspaces: Workspace[];
 }
 
 interface UseWorkspacesResultParams {
