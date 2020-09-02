@@ -11,7 +11,6 @@ class MessageWebhookEventRepo {
     }
 
     async getAndRemoveGroupEvents(groupingKey: string): Promise<WebhookEvent[]> {
-        // TODO: Handle error?
         const rawEvents = await redis.getAllAndDel(getRedisKey(groupingKey));
         return rawEvents.map(rawEvent => JSON.parse(rawEvent));
     }

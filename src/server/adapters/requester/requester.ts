@@ -1,22 +1,42 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { ServerError } from "../../errors";
 
 class Requester {
     async post(url: string, payload: object): Promise<void> {
         try {
             await axios.post(url, payload);
         } catch (err) {
-            if (err.response) {
-                // TODO: Better error?
-                throw new Error(`Request did not succeed ${err.response}`);
+            const error = err as AxiosError;
+            const configExtra = {
+                url: error.config.url,
+                headers: error.config.headers,
+                data: error.config.data,
+                responseType: error.config.responseType
+            };
+
+            if (error.response) {
+                throw new ServerError("Request did not succeed", {
+                    extra: {
+                        message: error.message,
+                        response: {
+                            body: error.response.data,
+                            headers: error.response.headers,
+                            status: error.response.status
+                        },
+                        config: configExtra
+                    }
+                });
             }
 
-            if (err.request) {
-                // TODO: Better error?
-                throw new Error(`Request was made but no response is received ${err.request}`);
+            if (error.request) {
+                throw new ServerError("Request was made but no response is received", {
+                    extra: { config: configExtra }
+                });
             }
 
-            // TODO: Better error?
-            throw new Error(`Unexpected error ${err.message}`);
+            throw new ServerError("Unexpected error", {
+                extra: { message: error.message }
+            });
         }
     }
 }

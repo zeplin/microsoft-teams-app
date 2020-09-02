@@ -6,6 +6,7 @@ import { NotificationHandler } from "./messageFacadeNotificationHandlers/Notific
 import { configurationRepo } from "../../../repos";
 import { requester } from "../../../adapters/requester";
 import { dummyConfiguration } from "../../../test/helpers";
+import { ServerError } from "../../../errors";
 
 jest.mock("../messageQueue", () => ({
     messageQueue: {
@@ -65,10 +66,9 @@ describe("messageFacade", () => {
     });
 
     describe("`handleEventArrived` function", () => {
-        // TODO: Check error itself too
         it("should throw error when there isn't any configuration for the webhook event", async () => {
             jest.spyOn(configurationRepo, "getByWebhookId").mockResolvedValueOnce(null);
-            await expect(() => messageFacade.handleEventArrived(exampleEvent)).rejects.toThrow();
+            await expect(() => messageFacade.handleEventArrived(exampleEvent)).rejects.toThrow(new ServerError("Event doesn't have configuration"));
         });
 
         it("should update active job id for group", async () => {
@@ -102,18 +102,17 @@ describe("messageFacade", () => {
     });
 
     describe("`processJob` function", () => {
-        // TODO: Check error itself too
         it("should throw error when there isn't any event for the group", async () => {
             jest.spyOn(messageWebhookEventRepo, "getAndRemoveGroupEvents").mockResolvedValueOnce([]);
             jest.spyOn(messageJobRepo, "getGroupActiveJobId").mockResolvedValueOnce(exampleJobData.id);
-            await expect(() => messageFacade.processJob(exampleJobData)).rejects.toThrow();
+            await expect(() => messageFacade.processJob(exampleJobData)).rejects.toThrow(new ServerError("There isn't any event found for the grouping key"));
         });
 
         it("should throw error when there isn't any incoming webhook URL for webhook", async () => {
             jest.spyOn(configurationRepo, "getByWebhookId").mockResolvedValueOnce(null);
             jest.spyOn(messageJobRepo, "getGroupActiveJobId").mockResolvedValueOnce(exampleJobData.id);
             jest.spyOn(messageWebhookEventRepo, "getAndRemoveGroupEvents").mockResolvedValueOnce([exampleEvent, exampleEvent]);
-            await expect(() => messageFacade.processJob(exampleJobData)).rejects.toThrow();
+            await expect(() => messageFacade.processJob(exampleJobData)).rejects.toThrow(new ServerError("There isn't any incoming webhook URL found for webhook"));
         });
 
         it("should not get and remove events when there isn't job id for the group", async () => {

@@ -10,7 +10,7 @@ import {
     Styleguide
 } from "../../adapters";
 import { BASE_URL, WEBHOOK_SECRET } from "../../config";
-import { ServiceError } from "../../errors";
+import { ServerError } from "../../errors";
 import { NOT_FOUND } from "http-status-codes";
 
 interface ConfigurationResponse {
@@ -252,7 +252,7 @@ class ConfigurationFacade {
         const configuration = await configurationRepo.get(configurationId);
 
         if (!configuration) {
-            throw new ServiceError(
+            throw new ServerError(
                 "Configuration not found",
                 {
                     statusCode: NOT_FOUND,
@@ -290,7 +290,7 @@ class ConfigurationFacade {
             parameters.zeplin.resource.type !== configuration.zeplin.resource.type
         ) {
             // TODO: log the case and create alert when resource mismatch
-            throw new ServiceError(
+            throw new ServerError(
                 "Configuration not found",
                 {
                     statusCode: NOT_FOUND,
