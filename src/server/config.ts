@@ -25,6 +25,7 @@ export const PORT = getNumberVariable("NEXT_PUBLIC_PORT", DEFAULT_PORT);
 export const {
     NODE_ENV: ENVIRONMENT,
     NEXT_PUBLIC_VERSION: VERSION = "1.0.0-local",
+    NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
     NEXT_PRIVATE_REDIS_URL: REDIS_URL = "redis://localhost:6379",
     NEXT_PRIVATE_WEBHOOK_SECRET: WEBHOOK_SECRET = "dummy-secret",
     NEXT_PRIVATE_ZEPLIN_URL: ZEPLIN_URL = "https://api.zeplin.dev",
@@ -33,8 +34,7 @@ export const {
     NEXT_PRIVATE_MONGO_URL: MONGO_URL = "mongodb://localhost:27017/zeplin-microsoft-teams-app",
     NEXT_PUBLIC_BASE_URL: BASE_URL,
     NEXT_PRIVATE_ZEPLIN_WEB_APP_BASE_URL: ZEPLIN_WEB_APP_BASE_URL = "https://app.zeplin.io",
-    NEXT_PRIVATE_ZEPLIN_MAC_APP_URL_SCHEME: ZEPLIN_MAC_APP_URL_SCHEME = "zpl",
-    NEXT_PRIVATE_SENTRY_DSN: SENTRY_DSN
+    NEXT_PRIVATE_ZEPLIN_MAC_APP_URL_SCHEME: ZEPLIN_MAC_APP_URL_SCHEME = "zpl"
 } = process.env;
 
 export const IS_DEV = ENVIRONMENT !== "production";

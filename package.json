@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon",
     "dev:prod-build": "nodemon --config nodemon.prod.json",
+    "prebuild": "touch .env && cp .env src/client/.env",
     "build": "next build src/client && tsc --project src/server/tsconfig.json",
     "test": "ENV_FILE=.env.test NODE_ENV=test jest",
     "tunnel": "ngrok http 3000 --host-header=localhost:3000",
@@ -27,7 +28,9 @@
     "@fluentui/react-northstar": "^0.50.0",
     "@hapi/joi": "^17.1.1",
     "@microsoft/teams-js": "^1.6.0",
+    "@sentry/browser": "^5.22.3",
     "@sentry/node": "^5.22.3",
+    "@zeit/next-source-maps": "0.0.4-canary.1",
     "axios": "^0.19.2",
     "bull": "^3.16.0",
     "dotenv": "^8.2.0",
