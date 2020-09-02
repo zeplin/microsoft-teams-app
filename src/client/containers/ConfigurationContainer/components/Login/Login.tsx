@@ -1,11 +1,12 @@
 import React, { FunctionComponent } from "react";
-import { Button, Flex, Text } from "@fluentui/react-northstar";
+import { Button, Flex, Text, ErrorIcon } from "@fluentui/react-northstar";
 
 interface LoginProps {
+    error?: string;
     onButtonClick: () => void;
 }
 
-export const Login: FunctionComponent<LoginProps> = ({ onButtonClick }) => (
+export const Login: FunctionComponent<LoginProps> = ({ error, onButtonClick }) => (
     <Flex fill column gap="gap.large">
         <div />
         <Flex fill column gap="gap.medium">
@@ -16,6 +17,14 @@ export const Login: FunctionComponent<LoginProps> = ({ onButtonClick }) => (
                 Once proceeding, we will ask you to authorize Microsoft Teams access through a separate window. Once
                 it’s authorized, you can do more advanced settings on the Teams channel linked with Zeplin.
             </Text>
+            {error && (
+                <Flex fill gap="gap.smaller">
+                    <ErrorIcon size="large" />
+                    <Text error>
+                        {error}
+                    </Text>
+                </Flex>
+            )}
         </Flex>
         <div>
             <Button

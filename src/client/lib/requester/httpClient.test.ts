@@ -45,56 +45,90 @@ describe("httpClient", () => {
         spyGetAccessToken.mockRestore();
     });
 
-    it("should refresh token and retry the request when token is expired", async () => {
+    describe("UNAUTHORIZED errors", () => {
+        let spyGetAccessToken;
+        let spyGetRefreshToken;
+        let spyRemoveAccessToken;
+        let spyRemoveRefreshToken;
+        let spySetAccessToken;
+        let spySetRefreshToken;
         const newAccessToken = "newAccessToken";
         const newRefreshToken = "newRefreshToken";
 
-        const spyGetAccessToken = jest.spyOn(storage, "getAccessToken")
-            .mockReturnValueOnce(defaultAccessToken)
-            .mockReturnValueOnce(newAccessToken);
-        const spyGetRefreshToken = jest.spyOn(storage, "getRefreshToken")
-            .mockReturnValue(refreshToken);
+        beforeEach(() => {
+            spyGetAccessToken = jest.spyOn(storage, "getAccessToken")
+                .mockReturnValueOnce(defaultAccessToken)
+                .mockReturnValueOnce(newAccessToken);
+            spyGetRefreshToken = jest.spyOn(storage, "getRefreshToken")
+                .mockReturnValue(refreshToken);
 
-        const spySetAccessToken = jest.spyOn(storage, "setAccessToken").mockImplementation();
-        const spySetRefreshToken = jest.spyOn(storage, "setRefreshToken").mockImplementation();
+            spyRemoveAccessToken = jest.spyOn(storage, "removeAccessToken").mockImplementation();
+            spyRemoveRefreshToken = jest.spyOn(storage, "removeRefreshToken").mockImplementation();
 
-        createMockInterceptor().reply(UNAUTHORIZED, { detail: "token_expired" });
-        createMockInterceptor(newAccessToken).reply(OK, result);
+            spySetAccessToken = jest.spyOn(storage, "setAccessToken").mockImplementation();
+            spySetRefreshToken = jest.spyOn(storage, "setRefreshToken").mockImplementation();
+        });
 
-        nock("http://localhost")
-            .post("/api/auth/token", { refreshToken })
-            .reply(OK, { accessToken: newAccessToken, refreshToken: newRefreshToken });
+        afterEach(() => {
+            spyGetAccessToken.mockRestore();
+            spyGetRefreshToken.mockRestore();
+            spySetAccessToken.mockRestore();
+            spySetRefreshToken.mockRestore();
+            spyRemoveAccessToken.mockRestore();
+            spyRemoveRefreshToken.mockRestore();
+        });
 
-        const { data } = await httpClient.get("/");
+        it("should remove token when it gets a generic UNAUTHORIZED error", async () => {
+            createMockInterceptor().reply(UNAUTHORIZED, { detail: "some error" });
 
-        expect(data).toBe(result);
-        expect(spySetAccessToken).toBeCalledWith(newAccessToken);
-        expect(spySetRefreshToken).toBeCalledWith(newRefreshToken);
+            await expect(() => httpClient.get("/")).rejects.toThrow();
+            expect(spyRemoveAccessToken).toBeCalledWith();
+            expect(spyRemoveRefreshToken).toBeCalledWith();
+        });
 
-        spyGetAccessToken.mockRestore();
-        spyGetRefreshToken.mockRestore();
-        spySetAccessToken.mockRestore();
-        spySetRefreshToken.mockRestore();
-    });
+        it("should refresh token and retry the request when token is expired", async () => {
+            createMockInterceptor().reply(UNAUTHORIZED, { detail: "token_expired" });
+            createMockInterceptor(newAccessToken).reply(OK, result);
 
-    it("should throw error when refresh token fails", async () => {
-        const newAccessToken = "newAccessToken";
-        const spyGetAccessToken = jest.spyOn(storage, "getAccessToken")
-            .mockReturnValueOnce(defaultAccessToken)
-            .mockReturnValueOnce(newAccessToken);
-        const spyGetRefreshToken = jest.spyOn(storage, "getRefreshToken")
-            .mockReturnValue(refreshToken);
+            nock("http://localhost")
+                .post("/api/auth/token", { refreshToken })
+                .reply(OK, { accessToken: newAccessToken, refreshToken: newRefreshToken });
 
-        createMockInterceptor().reply(UNAUTHORIZED, { detail: "token_expired" });
-        createMockInterceptor(newAccessToken).reply(OK, result);
+            const { data } = await httpClient.get("/");
 
-        nock("http://localhost")
-            .post("/api/auth/token", { refreshToken })
-            .reply(BAD_REQUEST, result);
+            expect(data).toBe(result);
+            expect(spySetAccessToken).toBeCalledWith(newAccessToken);
+            expect(spySetRefreshToken).toBeCalledWith(newRefreshToken);
+        });
 
-        await expect(() => httpClient.get("/")).rejects.toThrow();
+        it("should refresh token and retry the request when token is expired and get AUTHORIZATION error second time", async () => {
+            createMockInterceptor().reply(UNAUTHORIZED, { detail: "token_expired" });
+            createMockInterceptor(newAccessToken).reply(UNAUTHORIZED, { detail: "some error" });
 
-        spyGetAccessToken.mockRestore();
-        spyGetRefreshToken.mockRestore();
+            nock("http://localhost")
+                .post("/api/auth/token", { refreshToken })
+                .reply(OK, { accessToken: newAccessToken, refreshToken: newRefreshToken });
+
+            await expect(() => httpClient.get("/")).rejects.toThrow();
+            expect(spySetAccessToken).toBeCalledWith(newAccessToken);
+            expect(spySetRefreshToken).toBeCalledWith(newRefreshToken);
+
+            expect(spyRemoveAccessToken).toBeCalledWith();
+            expect(spyRemoveRefreshToken).toBeCalledWith();
+        });
+
+        it("should throw error when refresh token fails", async () => {
+            createMockInterceptor().reply(UNAUTHORIZED, { detail: "token_expired" });
+            createMockInterceptor(newAccessToken).reply(OK, result);
+
+            nock("http://localhost")
+                .post("/api/auth/token", { refreshToken })
+                .reply(BAD_REQUEST, result);
+
+            await expect(() => httpClient.get("/")).rejects.toThrow();
+
+            expect(spyRemoveAccessToken).toBeCalledWith();
+            expect(spyRemoveRefreshToken).toBeCalledWith();
+        });
     });
 });

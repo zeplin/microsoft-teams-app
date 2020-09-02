@@ -21,8 +21,19 @@ const getItem = (key: string): string|undefined => {
     }
 };
 
+const removeItem = (key: string): void => {
+    try {
+        delete memoryStorage[key];
+        localStorage.removeItem(key);
+    } catch (error) {
+        // Do nothing
+    }
+};
+
 export const getAccessToken = (): string|undefined => getItem(accessTokenKey);
 export const setAccessToken = (value: string): void => setItem(accessTokenKey, value);
+export const removeAccessToken = (): void => removeItem(accessTokenKey);
 
 export const getRefreshToken = (): string|undefined => getItem(refreshTokenKey);
 export const setRefreshToken = (value: string): void => setItem(refreshTokenKey, value);
+export const removeRefreshToken = (): void => removeItem(refreshTokenKey);

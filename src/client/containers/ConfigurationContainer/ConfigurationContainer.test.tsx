@@ -1,8 +1,8 @@
 import React from "react";
 import { ConfigurationContainer } from "./ConfigurationContainer";
 import * as microsoftTeams from "@microsoft/teams-js";
-import { fireEvent, render, RenderResult } from "@testing-library/react";
-import { Providers } from "../../Providers";
+import { act, fireEvent, render, RenderResult } from "@testing-library/react";
+import { TestProviders } from "../../test/TestProviders";
 
 jest.mock("@microsoft/teams-js", () => ({
     initialize: jest.fn(callback => callback()),
@@ -30,19 +30,19 @@ jest.mock("next/router", () => ({
     })
 }));
 
-function renderHome(): RenderResult {
+function renderConfigurationContainer(): RenderResult {
     return render(
-        <Providers>
+        <TestProviders>
             <ConfigurationContainer />
-        </Providers>
+        </TestProviders>
     );
 }
 
-describe("HomeContainer", () => {
+describe("ConfigurationContainer", () => {
     it("should initialize Microsoft Teams", () => {
         const spy = jest.spyOn(microsoftTeams.appInitialization, "notifySuccess");
 
-        renderHome();
+        renderConfigurationContainer();
 
         expect(spy).toBeCalledWith();
     });
@@ -50,11 +50,13 @@ describe("HomeContainer", () => {
     it("should change ui when login flow completed", () => {
         const spy = jest.spyOn(microsoftTeams.authentication, "authenticate");
 
-        const { getByText } = renderHome();
+        const { getByText } = renderConfigurationContainer();
 
         expect(spy).not.toBeCalled();
 
-        fireEvent.click(getByText("Log in Zeplin"));
+        act(() => {
+            fireEvent.click(getByText("Log in Zeplin"));
+        });
 
         expect(spy).toBeCalled();
     });

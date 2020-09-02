@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import { Resource, resourceBasedEvents, ResourceType, WebhookEventType } from "../../constants";
 import {
-    useAuthenticate,
+    useLogin,
     useConfigurationSave,
     useInitialize,
     useResources,
@@ -43,13 +43,40 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
 
     const [state, setState] = useState<State>({ status: Status.LOADING });
 
-    const { areWorkspacesLoading, workspaces } = useWorkspaces({ enabled: state.status === Status.CONFIGURATION });
-    const { areResourcesLoading, projects, styleguides } = useResources({
-        enabled: state.status === Status.CONFIGURATION && Boolean(state.workspace),
-        workspace: state.status === Status.CONFIGURATION ? state.workspace : undefined
+    const {
+        areWorkspacesLoading,
+        workspacesError,
+        workspaces,
+        refetchWorkspaces
+    } = useWorkspaces({
+        enabled: state.status === Status.CONFIGURATION,
+        onError: isAuthorizationError => {
+            if (isAuthorizationError) {
+                setState({ status: Status.LOGIN });
+            }
+        }
     });
 
-    const authenticate = useAuthenticate({
+    const {
+        areResourcesLoading,
+        projectsError,
+        styleguidesError,
+        projects,
+        styleguides,
+        refetchProjects,
+        refetchStyleguides
+    } = useResources({
+        enabled: state.status === Status.CONFIGURATION && Boolean(state.workspace),
+        workspace: state.status === Status.CONFIGURATION ? state.workspace : undefined,
+        onError: isAuthorizationError => {
+            if (isAuthorizationError) {
+                setState({ status: Status.LOGIN });
+            }
+        }
+
+    });
+
+    const [login, { loginError }] = useLogin({
         onSuccess: () => setState({
             status: Status.CONFIGURATION,
             events: Object.values(WebhookEventType)
@@ -79,7 +106,7 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
         case Status.LOADING:
             return <Loader styles={{ height: "100vh" }} />;
         case Status.LOGIN:
-            return <Login onButtonClick={authenticate} />;
+            return <Login onButtonClick={login} error={loginError} />;
         case Status.CONFIGURATION:
             return (
                 <ConfigurationCreate
@@ -92,6 +119,18 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
                     projects={projects || []}
                     styleguides={styleguides || []}
                     selectedWebhookEvents={state.events}
+                    isError={styleguidesError || projectsError || workspacesError}
+                    onRetryClick={(): void => {
+                        if (workspacesError) {
+                            refetchWorkspaces();
+                        }
+                        if (projectsError) {
+                            refetchProjects();
+                        }
+                        if (styleguidesError) {
+                            refetchStyleguides();
+                        }
+                    }}
                     onWorkspaceChange={(workspace): void => setState(prevState => ({
                         ...prevState,
                         workspace,

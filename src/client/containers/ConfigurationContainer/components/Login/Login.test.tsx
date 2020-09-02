@@ -1,14 +1,14 @@
 import React from "react";
 import { fireEvent, render } from "@testing-library/react";
-import { Providers } from "../../../../Providers";
+import { TestProviders } from "../../../../test/TestProviders";
 import { Login } from "./Login";
 
 describe("Login", () => {
     it("should render correctly", () => {
         const { container: { firstChild: component } } = render(
-            <Providers>
+            <TestProviders>
                 <Login onButtonClick={(): void => undefined}/>
-            </Providers>
+            </TestProviders>
         );
 
         expect(component).toMatchSnapshot();
@@ -18,13 +18,25 @@ describe("Login", () => {
         const handler = jest.fn();
 
         const { getByText } = render(
-            <Providers>
+            <TestProviders>
                 <Login onButtonClick={handler}/>
-            </Providers>
+            </TestProviders>
         );
 
         fireEvent.click(getByText("Log in Zeplin"));
 
         expect(handler).toBeCalledWith();
+    });
+
+    it("should render error row when an error is specified", () => {
+        const handler = jest.fn();
+
+        const { container: { firstChild: component } } = render(
+            <TestProviders>
+                <Login onButtonClick={handler} error="Some error" />
+            </TestProviders>
+        );
+
+        expect(component).toMatchSnapshot();
     });
 });
