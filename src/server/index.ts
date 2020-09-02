@@ -1,5 +1,6 @@
 import { app } from "./app";
 import * as config from "./config";
+import { sentry } from "./adapters";
 
 async function drive(): Promise<void> {
     // Initialize NextJS and routes
@@ -12,4 +13,7 @@ async function drive(): Promise<void> {
     console.log(`> Server listening at http://localhost:${config.PORT} as ${config.ENVIRONMENT}`);
 }
 
-drive();
+drive().catch(async error => {
+    sentry.captureException(error);
+    await sentry.flush();
+});
