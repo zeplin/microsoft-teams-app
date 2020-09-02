@@ -1,7 +1,8 @@
 import Axios from "axios";
 import { UNAUTHORIZED } from "http-status-codes";
-import { AuthToken, refreshAuthToken } from "./auth";
+import { refreshAuthToken } from "./authRequests";
 import { storage } from "../storage";
+import { AuthToken } from "../../constants";
 
 const httpClient = Axios.create();
 

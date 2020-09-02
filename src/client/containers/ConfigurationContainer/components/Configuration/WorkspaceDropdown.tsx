@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Dropdown } from "@fluentui/react-northstar";
-import { Workspace } from "../../../../lib/requester";
+import { Workspace } from "../../../../constants";
 
 interface WorkspaceDropdownProps {
     loading: boolean;

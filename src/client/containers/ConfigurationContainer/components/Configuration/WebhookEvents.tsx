@@ -1,7 +1,18 @@
 import React, { FunctionComponent, ReactElement } from "react";
 import { Flex } from "@fluentui/react-northstar";
 import { ConfigurationCheckbox } from "./ConfigurationCheckbox";
-import { resourceBasedEvents, ResourceType, WebhookEventType } from "../../../../lib/requester";
+import { resourceBasedEvents, ResourceType, WebhookEventType } from "../../../../constants";
+
+const toggleWebhookEvent = (
+    webhookEvents: WebhookEventType[],
+    webhookEvent: WebhookEventType
+): WebhookEventType[] => {
+    const index = webhookEvents.indexOf(webhookEvent);
+    if (index === -1) {
+        return [...webhookEvents, webhookEvent];
+    }
+    return [...webhookEvents.slice(0, index), ...webhookEvents.slice(index + 1)];
+};
 
 const HALF_DIVIDER = 2;
 
@@ -62,13 +73,13 @@ const webhookEvents: WebhookEvent[] = [
 interface WebhookEventsProps {
     resourceType: ResourceType;
     selectedWebhookEvents: WebhookEventType[];
-    onWebhookEventChange: (value: WebhookEventType) => void;
+    onWebhookEventsChange: (value: WebhookEventType[]) => void;
 }
 
 export const WebhookEvents: FunctionComponent<WebhookEventsProps> = ({
     resourceType,
     selectedWebhookEvents,
-    onWebhookEventChange
+    onWebhookEventsChange
 }) => {
     const availableEvents = webhookEvents.filter(({ id }) => resourceBasedEvents[resourceType].includes(id));
     const middleIndex = Math.ceil(availableEvents.length / HALF_DIVIDER);
@@ -79,7 +90,7 @@ export const WebhookEvents: FunctionComponent<WebhookEventsProps> = ({
             key={id}
             title={title}
             description={description}
-            onChange={(): void => onWebhookEventChange(id)} />
+            onChange={(): void => onWebhookEventsChange(toggleWebhookEvent(selectedWebhookEvents, id))} />
     );
 
     return (

@@ -4,7 +4,7 @@ import {
     Resource,
     ResourceType,
     WebhookEventType
-} from "../../../../lib/requester";
+} from "../../../../constants";
 import { WebhookEvents } from "./WebhookEvents";
 
 const resourceTypeTextMap: Record<ResourceType, string> = {
@@ -18,14 +18,14 @@ interface ConfigurationUpdateProps {
     channelName: string;
     resource: Resource;
     selectedWebhookEvents: WebhookEventType[];
-    onWebhookEventChange: (value: WebhookEventType) => void;
+    onWebhookEventsChange: (value: WebhookEventType[]) => void;
 }
 
 export const ConfigurationUpdate: FunctionComponent<ConfigurationUpdateProps> = ({
     channelName,
     resource,
     selectedWebhookEvents,
-    onWebhookEventChange
+    onWebhookEventsChange
 }) => (
     <Flex fill column gap="gap.large">
         <div />
@@ -45,7 +45,7 @@ export const ConfigurationUpdate: FunctionComponent<ConfigurationUpdateProps> = 
                 <WebhookEvents
                     resourceType={resource.type}
                     selectedWebhookEvents={selectedWebhookEvents}
-                    onWebhookEventChange={onWebhookEventChange} />
+                    onWebhookEventsChange={onWebhookEventsChange} />
             </div>
         </Flex>
     </Flex>

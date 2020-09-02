@@ -1,5 +1,5 @@
 import React from "react";
-import { HomeContainer } from "./HomeContainer";
+import { ConfigurationContainer } from "./ConfigurationContainer";
 import * as microsoftTeams from "@microsoft/teams-js";
 import { fireEvent, render, RenderResult } from "@testing-library/react";
 import { Providers } from "../../Providers";
@@ -33,7 +33,7 @@ jest.mock("next/router", () => ({
 function renderHome(): RenderResult {
     return render(
         <Providers>
-            <HomeContainer />
+            <ConfigurationContainer />
         </Providers>
     );
 }

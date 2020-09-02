@@ -8,7 +8,7 @@ import {
     Styleguide,
     WebhookEventType,
     Workspace
-} from "../../../../lib/requester";
+} from "../../../../constants";
 import { WorkspaceDropdown } from "./WorkspaceDropdown";
 import { ResourceDropdown } from "./ResourceDropdown";
 import { WebhookEvents } from "./WebhookEvents";
@@ -25,7 +25,7 @@ interface ConfigurationCreateProps {
     selectedWebhookEvents: WebhookEventType[];
     onWorkspaceChange: (value: string) => void;
     onResourceChange: (value: Resource | undefined) => void;
-    onWebhookEventChange: (value: WebhookEventType) => void;
+    onWebhookEventsChange: (value: WebhookEventType[]) => void;
 }
 
 export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = ({
@@ -40,7 +40,7 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
     selectedWebhookEvents,
     onWorkspaceChange,
     onResourceChange,
-    onWebhookEventChange
+    onWebhookEventsChange
 }) => (
     <Flex fill column gap="gap.large">
         <div />
@@ -94,7 +94,7 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
                 <WebhookEvents
                     resourceType={resourceType}
                     selectedWebhookEvents={selectedWebhookEvents}
-                    onWebhookEventChange={onWebhookEventChange} />
+                    onWebhookEventsChange={onWebhookEventsChange} />
             </div>
         </Flex>
     </Flex>
