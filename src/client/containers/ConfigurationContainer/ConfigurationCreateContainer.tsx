@@ -19,6 +19,7 @@ type State = {
 } | {
     status: Status.CONFIGURATION;
     workspace?: string;
+    resourceSearch: string;
     resource?: Resource;
     events: WebhookEventType[];
 };
@@ -79,14 +80,19 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
     const [login, { loginError }] = useLogin({
         onSuccess: () => setState({
             status: Status.CONFIGURATION,
-            events: Object.values(WebhookEventType)
+            events: Object.values(WebhookEventType),
+            resourceSearch: ""
         })
     });
 
     useInitialize({
         onSuccess: () => setState(
             storage.getAccessToken()
-                ? { status: Status.CONFIGURATION, events: Object.values(WebhookEventType) }
+                ? {
+                    status: Status.CONFIGURATION,
+                    events: Object.values(WebhookEventType),
+                    resourceSearch: ""
+                }
                 : { status: Status.LOGIN }
         )
     });
@@ -120,6 +126,13 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
                     styleguides={styleguides || []}
                     selectedWebhookEvents={state.events}
                     isError={styleguidesError || projectsError || workspacesError}
+                    resourceSearch={state.resourceSearch}
+                    onResourceSearch={(resourceSearch): void => {
+                        setState(prevState => ({
+                            ...prevState,
+                            resourceSearch
+                        }));
+                    }}
                     onRetryClick={(): void => {
                         if (workspacesError) {
                             refetchWorkspaces();
@@ -131,14 +144,23 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
                             refetchStyleguides();
                         }
                     }}
+                    onResourceDropdownBlur={(): void => setState(prevState => ({
+                        ...prevState,
+                        resourceSearch:
+                            prevState.status === Status.CONFIGURATION
+                                ? prevState.resource?.name ?? ""
+                                : undefined
+                    }))}
                     onWorkspaceChange={(workspace): void => setState(prevState => ({
                         ...prevState,
                         workspace,
+                        resourceSearch: "",
                         resource: undefined
                     }))}
                     onResourceChange={(resource): void => setState(prevState => ({
                         ...prevState,
-                        resource
+                        resource,
+                        resourceSearch: resource.name
                     }))}
                     onWebhookEventsChange={(events): void => setState(prevState => ({
                         ...prevState,
