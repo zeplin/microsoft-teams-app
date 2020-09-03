@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 import { requester } from "../../../lib";
 import { Workspace } from "../../../constants";
 
-const retryCount = 3;
+const RETRY_COUNT = 3;
 
 interface UseWorkspacesResult {
     areWorkspacesLoading: boolean;
@@ -34,7 +34,7 @@ export const useWorkspaces = ({
         {
             retry: (failureCount, error: AxiosError) => (
                 error.response?.status >= INTERNAL_SERVER_ERROR &&
-                failureCount <= retryCount
+                failureCount <= RETRY_COUNT
             ),
             onError: error => onError(error.response?.status === UNAUTHORIZED),
             enabled

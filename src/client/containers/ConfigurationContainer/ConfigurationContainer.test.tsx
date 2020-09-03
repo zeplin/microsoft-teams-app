@@ -1,7 +1,7 @@
 import React from "react";
 import { ConfigurationContainer } from "./ConfigurationContainer";
 import * as microsoftTeams from "@microsoft/teams-js";
-import { act, fireEvent, render, RenderResult } from "@testing-library/react";
+import { fireEvent, render, RenderResult } from "@testing-library/react";
 import { TestProviders } from "../../test/TestProviders";
 
 jest.mock("@microsoft/teams-js", () => ({
@@ -54,9 +54,7 @@ describe("ConfigurationContainer", () => {
 
         expect(spy).not.toBeCalled();
 
-        act(() => {
-            fireEvent.click(getByText("Log in Zeplin"));
-        });
+        fireEvent.click(getByText("Log in Zeplin"));
 
         expect(spy).toBeCalled();
     });

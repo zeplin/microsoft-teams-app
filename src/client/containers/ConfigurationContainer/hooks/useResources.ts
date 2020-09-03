@@ -5,7 +5,7 @@ import { INTERNAL_SERVER_ERROR, UNAUTHORIZED } from "http-status-codes";
 import { requester } from "../../../lib";
 import { Project, Styleguide } from "../../../constants";
 
-const retryCount = 3;
+const RETRY_COUNT = 3;
 
 interface UseResourcesResult {
     areResourcesLoading: boolean;
@@ -35,8 +35,8 @@ export const useResources = ({ enabled, workspace, onError }: UseWorkspacesResul
         {
             enabled,
             retry: (failureCount, error: AxiosError) => (
-                error.response?.status !== UNAUTHORIZED &&
-                failureCount <= retryCount
+                error.response?.status >= INTERNAL_SERVER_ERROR &&
+                failureCount <= RETRY_COUNT
             ),
             onError: error => onError(error.response?.status === UNAUTHORIZED)
         }
@@ -54,7 +54,7 @@ export const useResources = ({ enabled, workspace, onError }: UseWorkspacesResul
             enabled,
             retry: (failureCount, error: AxiosError) => (
                 error.response?.status >= INTERNAL_SERVER_ERROR &&
-                failureCount <= retryCount
+                failureCount <= RETRY_COUNT
             ),
             onError: error => onError(error.response?.status === UNAUTHORIZED)
         }
