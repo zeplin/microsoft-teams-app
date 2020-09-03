@@ -3,7 +3,7 @@ import { RequestHandler, ErrorRequestHandler } from "express";
 import { ServerError } from "../../errors";
 
 type SentryInitParams = {
-    sentryDsn: string;
+    dsn: string;
     enabled: boolean;
     version: string;
     environment: string;
@@ -11,14 +11,14 @@ type SentryInitParams = {
 
 class Sentry {
     init({
-        sentryDsn,
+        dsn,
         version,
         environment,
         enabled
     }: SentryInitParams): void {
         SentryClient.init({
             enabled,
-            dsn: sentryDsn,
+            dsn,
             release: version,
             environment,
             beforeSend(event) {

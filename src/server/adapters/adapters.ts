@@ -9,7 +9,7 @@ export function initAdapters(config: Config): void {
     zeplin.init({ url: config.ZEPLIN_URL });
     mongo.init(config.MONGO_URL, { isDebug: config.IS_MONGO_DEBUG });
     sentry.init({
-        sentryDsn: config.SENTRY_DSN,
+        dsn: config.SENTRY_DSN,
         environment: config.ENVIRONMENT,
         enabled: config.IS_SENTRY_ENABLED,
         version: config.VERSION
