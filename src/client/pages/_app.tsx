@@ -1,11 +1,11 @@
 import * as Sentry from "@sentry/node";
 import React, { ReactElement } from "react";
-import { SENTRY_DSN, ENVIRONMENT, VERSION } from "../lib/config";
+import { SENTRY_DSN, ENVIRONMENT, VERSION, IS_SENTRY_ENABLED } from "../lib/config";
 import { AppProps } from "next/app";
 
 if (SENTRY_DSN) {
     Sentry.init({
-        enabled: ENVIRONMENT === "production",
+        enabled: IS_SENTRY_ENABLED,
         dsn: SENTRY_DSN,
         release: VERSION,
         environment: ENVIRONMENT

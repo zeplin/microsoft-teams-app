@@ -39,6 +39,7 @@ export const {
 
 export const IS_DEV = ENVIRONMENT !== "production";
 export const IS_MONGO_DEBUG = getBooleanVariable("NEXT_PRIVATE_IS_MONGO_DEBUG", IS_DEV);
+export const IS_SENTRY_ENABLED = getBooleanVariable("NEXT_PUBLIC_IS_SENTRY_ENABLED", !IS_DEV);
 
 export interface Config {
     IS_MONGO_DEBUG: boolean;
@@ -51,5 +52,6 @@ export interface Config {
     WEBHOOK_SECRET: string;
     ZEPLIN_URL: string;
     SENTRY_DSN: string;
+    IS_SENTRY_ENABLED: boolean;
     VERSION: string;
 }

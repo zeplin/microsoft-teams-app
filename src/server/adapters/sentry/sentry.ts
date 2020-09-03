@@ -4,14 +4,20 @@ import { ServerError } from "../../errors";
 
 type SentryInitParams = {
     sentryDsn: string;
+    isEnabled: boolean;
     version: string;
     environment: string;
 }
 
 class Sentry {
-    init({ sentryDsn, version, environment }: SentryInitParams): void {
+    init({
+        sentryDsn,
+        version,
+        environment,
+        isEnabled
+    }: SentryInitParams): void {
         SentryClient.init({
-            enabled: environment === "production",
+            enabled: isEnabled,
             dsn: sentryDsn,
             release: version,
             environment,
@@ -19,7 +25,10 @@ class Sentry {
                 if (event.request) {
                     delete event.request.headers?.["authorization"];
 
-                    if (event.request.data && typeof event.request.data === "object") {
+                    if (
+                        event.request.data &&
+                        typeof event.request.data === "object"
+                    ) {
                         delete event.request.data.accessToken;
                         delete event.request.data.refreshToken;
                     }
