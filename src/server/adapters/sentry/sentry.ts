@@ -3,25 +3,29 @@ import { RequestHandler, ErrorRequestHandler } from "express";
 import { ServerError } from "../../errors";
 
 type SentryInitParams = {
-    sentryDsn: string;
+    dsn: string;
+    enabled: boolean;
     version: string;
     environment: string;
 }
 
 class Sentry {
-    init({ sentryDsn, version, environment }: SentryInitParams): void {
+    init({
+        dsn,
+        version,
+        environment,
+        enabled
+    }: SentryInitParams): void {
         SentryClient.init({
-            dsn: sentryDsn,
+            enabled,
+            dsn,
             release: version,
             environment,
             beforeSend(event) {
                 if (event.request) {
-                    delete event.request.headers?.["authorization"];
-
-                    if (event.request.data && typeof event.request.data === "object") {
-                        delete event.request.data.accessToken;
-                        delete event.request.data.refreshToken;
-                    }
+                    delete event.request.headers?.authorization;
+                    delete event.request.data?.accessToken;
+                    delete event.request.data?.refreshToken;
                 }
 
                 return event;
