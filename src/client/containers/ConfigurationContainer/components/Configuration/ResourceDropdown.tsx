@@ -42,47 +42,51 @@ export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
             loadingMessage="Loading..."
             fluid
             checkable
-            items={ [
-                filteredProjects.length > 0 && {
-                    key: "Project Header",
-                    header: "Projects",
-                    disabled: true,
-                    styles: {
-                        "font-weight": "bolder"
-                    }
-                },
-                ...filteredProjects.map(({ id, name }) => ({
-                    key: id,
-                    header: name,
-                    resource: {
-                        id,
-                        name,
-                        type: ResourceType.PROJECT
-                    }
-                })),
-                filteredProjects.length > 0 && filteredStyleguides.length > 0 && {
-                    key: "Seperator",
-                    as: (): ReactElement => <Divider />,
-                    disabled: true
-                },
-                filteredStyleguides.length > 0 && {
-                    key: "Styleguide Header",
-                    header: "Styleguides",
-                    disabled: true,
-                    styles: {
-                        "font-weight": "bolder"
-                    }
-                },
-                ...filteredStyleguides.map(({ id, name }) => ({
-                    key: id,
-                    header: name,
-                    resource: {
-                        id,
-                        name,
-                        type: ResourceType.STYLEGUIDE
-                    }
-                }))
-            ]}
+            items={
+                loading
+                    ? []
+                    : [
+                        filteredProjects.length > 0 && {
+                            key: "Project Header",
+                            header: "Projects",
+                            disabled: true,
+                            styles: {
+                                "font-weight": "bolder"
+                            }
+                        },
+                        ...filteredProjects.map(({ id, name }) => ({
+                            key: id,
+                            header: name,
+                            resource: {
+                                id,
+                                name,
+                                type: ResourceType.PROJECT
+                            }
+                        })),
+                        filteredProjects.length > 0 && filteredStyleguides.length > 0 && {
+                            key: "Seperator",
+                            as: (): ReactElement => <Divider />,
+                            disabled: true
+                        },
+                        filteredStyleguides.length > 0 && {
+                            key: "Styleguide Header",
+                            header: "Styleguides",
+                            disabled: true,
+                            styles: {
+                                "font-weight": "bolder"
+                            }
+                        },
+                        ...filteredStyleguides.map(({ id, name }) => ({
+                            key: id,
+                            header: name,
+                            resource: {
+                                id,
+                                name,
+                                type: ResourceType.STYLEGUIDE
+                            }
+                        }))
+                    ]
+            }
             placeholder="Select Project/Styleguide"
             onBlur={(): void => {
                 setOpen(false);
@@ -91,12 +95,13 @@ export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
             onFocus={(): void => {
                 setOpen(true);
             }}
-            onChange={(_, { value: { resource } }: { value: { resource: Resource } }): void => {
-                onChange(resource);
-                setOpen(false);
+            onChange={(_, { value }: { value?: { resource: Resource } }): void => {
+                if (value) {
+                    onChange(value.resource);
+                    setOpen(false);
+                }
             }}
-            onSearchQueryChange={(event, { searchQuery }): void => {
-                event?.preventDefault();
+            onSearchQueryChange={(_, { searchQuery }): void => {
                 onSearchChange(searchQuery);
             }}
         />
