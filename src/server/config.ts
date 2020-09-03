@@ -23,7 +23,8 @@ const DEFAULT_PORT = 3000;
 
 export const PORT = getNumberVariable("NEXT_PUBLIC_PORT", DEFAULT_PORT);
 export const {
-    NODE_ENV: ENVIRONMENT,
+    NODE_ENV,
+    NEXT_PUBLIC_ENVIRONMENT: ENVIRONMENT = "local",
     NEXT_PUBLIC_VERSION: VERSION = "1.0.0-local",
     NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
     NEXT_PRIVATE_REDIS_URL: REDIS_URL = "redis://localhost:6379",
@@ -37,13 +38,14 @@ export const {
     NEXT_PRIVATE_ZEPLIN_MAC_APP_URL_SCHEME: ZEPLIN_MAC_APP_URL_SCHEME = "zpl"
 } = process.env;
 
-export const IS_DEV = ENVIRONMENT !== "production";
+export const IS_DEV = NODE_ENV !== "production";
 export const IS_MONGO_DEBUG = getBooleanVariable("NEXT_PRIVATE_IS_MONGO_DEBUG", IS_DEV);
 export const IS_SENTRY_ENABLED = getBooleanVariable("NEXT_PUBLIC_IS_SENTRY_ENABLED", !IS_DEV);
 
 export interface Config {
     IS_MONGO_DEBUG: boolean;
     MONGO_URL: string;
+    NODE_ENV: string;
     ENVIRONMENT: string;
     REDIS_URL: string;
     BASE_URL: string;

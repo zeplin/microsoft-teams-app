@@ -9,7 +9,7 @@ async function drive(): Promise<void> {
     await app.listen(config.PORT);
 
     // eslint-disable-next-line no-console
-    console.log(`> Server listening at http://localhost:${config.PORT} as ${config.ENVIRONMENT}`);
+    console.log(`> Server listening at http://localhost:${config.PORT} as ${config.NODE_ENV}`);
 }
 
 drive();

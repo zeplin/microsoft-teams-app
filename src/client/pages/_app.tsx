@@ -1,6 +1,11 @@
 import * as Sentry from "@sentry/node";
 import React, { ReactElement } from "react";
-import { SENTRY_DSN, ENVIRONMENT, VERSION, IS_SENTRY_ENABLED } from "../lib/config";
+import {
+    SENTRY_DSN,
+    VERSION,
+    IS_SENTRY_ENABLED,
+    ENVIRONMENT
+} from "../lib/config";
 import { AppProps } from "next/app";
 
 if (SENTRY_DSN) {
