@@ -30,7 +30,7 @@ jest.mock("next/router", () => ({
     })
 }));
 
-function renderHome(): RenderResult {
+function renderConfigurationContainer(): RenderResult {
     return render(
         <Providers>
             <ConfigurationContainer />
@@ -38,11 +38,11 @@ function renderHome(): RenderResult {
     );
 }
 
-describe("HomeContainer", () => {
+describe("ConfigurationContainer", () => {
     it("should initialize Microsoft Teams", () => {
         const spy = jest.spyOn(microsoftTeams.appInitialization, "notifySuccess");
 
-        renderHome();
+        renderConfigurationContainer();
 
         expect(spy).toBeCalledWith();
     });
@@ -50,7 +50,7 @@ describe("HomeContainer", () => {
     it("should change ui when login flow completed", () => {
         const spy = jest.spyOn(microsoftTeams.authentication, "authenticate");
 
-        const { getByText } = renderHome();
+        const { getByText } = renderConfigurationContainer();
 
         expect(spy).not.toBeCalled();
 
