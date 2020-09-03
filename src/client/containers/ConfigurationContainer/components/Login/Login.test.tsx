@@ -1,16 +1,16 @@
 import React from "react";
 import { fireEvent, render } from "@testing-library/react";
-import { TestProviders } from "../../../../test/TestProviders";
 import { Login } from "./Login";
+import { Providers } from "../../../../Providers";
 
 describe("Login", () => {
     it("should trigger onClick when button is clicked", () => {
         const handler = jest.fn();
 
         const { getByText } = render(
-            <TestProviders>
+            <Providers>
                 <Login onButtonClick={handler}/>
-            </TestProviders>
+            </Providers>
         );
 
         fireEvent.click(getByText("Log in Zeplin"));

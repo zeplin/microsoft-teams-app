@@ -2,7 +2,7 @@ import React from "react";
 import { ConfigurationContainer } from "./ConfigurationContainer";
 import * as microsoftTeams from "@microsoft/teams-js";
 import { fireEvent, render, RenderResult } from "@testing-library/react";
-import { TestProviders } from "../../test/TestProviders";
+import { Providers } from "../../Providers";
 
 jest.mock("@microsoft/teams-js", () => ({
     initialize: jest.fn(callback => callback()),
@@ -32,9 +32,9 @@ jest.mock("next/router", () => ({
 
 function renderConfigurationContainer(): RenderResult {
     return render(
-        <TestProviders>
+        <Providers>
             <ConfigurationContainer />
-        </TestProviders>
+        </Providers>
     );
 }
 
