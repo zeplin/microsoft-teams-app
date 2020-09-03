@@ -11,7 +11,7 @@ export function initAdapters(config: Config): void {
     sentry.init({
         sentryDsn: config.SENTRY_DSN,
         environment: config.ENVIRONMENT,
-        isEnabled: config.IS_SENTRY_ENABLED,
+        enabled: config.IS_SENTRY_ENABLED,
         version: config.VERSION
     });
 }

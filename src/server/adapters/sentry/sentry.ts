@@ -4,7 +4,7 @@ import { ServerError } from "../../errors";
 
 type SentryInitParams = {
     sentryDsn: string;
-    isEnabled: boolean;
+    enabled: boolean;
     version: string;
     environment: string;
 }
@@ -14,10 +14,10 @@ class Sentry {
         sentryDsn,
         version,
         environment,
-        isEnabled
+        enabled
     }: SentryInitParams): void {
         SentryClient.init({
-            enabled: isEnabled,
+            enabled,
             dsn: sentryDsn,
             release: version,
             environment,
