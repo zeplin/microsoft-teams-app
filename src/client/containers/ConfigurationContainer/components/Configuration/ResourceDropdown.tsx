@@ -1,5 +1,6 @@
-import React, { FunctionComponent, ReactElement } from "react";
-import { Divider, Dropdown } from "@fluentui/react-northstar";
+import React, { FunctionComponent, ReactElement, useState } from "react";
+import { Divider, Dropdown, DropdownItemProps, ShorthandCollection } from "@fluentui/react-northstar";
+
 import { Project, Resource, ResourceType, Styleguide } from "../../../../constants";
 
 interface ResourceDropdownProps {
@@ -7,6 +8,9 @@ interface ResourceDropdownProps {
     loading: boolean;
     projects: Project[];
     styleguides: Styleguide[];
+    search: string;
+    onBlur: () => void;
+    onSearchChange: (value: string) => void;
     onChange: (value: Resource | undefined) => void;
 }
 
@@ -15,51 +19,91 @@ export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
     loading,
     projects,
     styleguides,
+    search,
+    onBlur,
+    onSearchChange,
     onChange
-}) => (
-    <Dropdown
-        disabled={disabled}
-        loading={loading}
-        loadingMessage="Loading..."
-        fluid
-        checkable
-        items={ [
-            projects.length > 0 && {
-                key: "Project Header",
-                header: "Projects",
-                disabled: true,
-                styles: {
-                    "font-weight": "bolder"
+}) => {
+    const doesNameIncludesSearch = (
+        { name }: { name: string }
+    ): boolean => name.toLowerCase().includes(search.toLowerCase());
+
+    const [open, setOpen] = useState(false);
+
+    const filteredProjects = projects.filter(doesNameIncludesSearch);
+    const filteredStyleguides = styleguides.filter(doesNameIncludesSearch);
+    return (
+        <Dropdown
+            search={(items): ShorthandCollection<DropdownItemProps> => items}
+            open={open}
+            searchQuery={search}
+            disabled={disabled}
+            loading={loading}
+            loadingMessage="Loading..."
+            fluid
+            checkable
+            items={
+                loading
+                    ? []
+                    : [
+                        filteredProjects.length > 0 && {
+                            key: "Project Header",
+                            header: "Projects",
+                            disabled: true,
+                            styles: {
+                                "font-weight": "bolder"
+                            }
+                        },
+                        ...filteredProjects.map(({ id, name }) => ({
+                            key: id,
+                            header: name,
+                            resource: {
+                                id,
+                                name,
+                                type: ResourceType.PROJECT
+                            }
+                        })),
+                        filteredProjects.length > 0 && filteredStyleguides.length > 0 && {
+                            key: "Seperator",
+                            as: (): ReactElement => <Divider />,
+                            disabled: true
+                        },
+                        filteredStyleguides.length > 0 && {
+                            key: "Styleguide Header",
+                            header: "Styleguides",
+                            disabled: true,
+                            styles: {
+                                "font-weight": "bolder"
+                            }
+                        },
+                        ...filteredStyleguides.map(({ id, name }) => ({
+                            key: id,
+                            header: name,
+                            resource: {
+                                id,
+                                name,
+                                type: ResourceType.STYLEGUIDE
+                            }
+                        }))
+                    ]
+            }
+            placeholder="Select Project/Styleguide"
+            onBlur={(): void => {
+                setOpen(false);
+                onBlur();
+            }}
+            onFocus={(): void => {
+                setOpen(true);
+            }}
+            onChange={(_, { value }: { value?: { resource: Resource } }): void => {
+                if (value) {
+                    onChange(value.resource);
+                    setOpen(false);
                 }
-            },
-            ...projects.map(({ id, name }) => ({
-                key: id,
-                header: name,
-                onClick: (): void => {
-                    onChange({ type: ResourceType.PROJECT, id, name });
-                }
-            })),
-            projects.length > 0 && styleguides.length > 0 && {
-                key: "Seperator",
-                as: (): ReactElement => <Divider />,
-                disabled: true
-            },
-            styleguides.length > 0 && {
-                key: "Styleguide Header",
-                header: "Styleguides",
-                disabled: true,
-                styles: {
-                    "font-weight": "bolder"
-                }
-            },
-            ...styleguides.map(({ id, name }) => ({
-                key: id,
-                header: name,
-                onClick: (): void => {
-                    onChange({ type: ResourceType.STYLEGUIDE, id, name });
-                }
-            }))
-        ]}
-        placeholder="Select Project/Styleguide"
-    />
-);
+            }}
+            onSearchQueryChange={(_, { searchQuery }): void => {
+                onSearchChange(searchQuery);
+            }}
+        />
+    );
+};

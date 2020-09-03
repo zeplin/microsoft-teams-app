@@ -24,6 +24,9 @@ interface ConfigurationCreateProps {
     styleguides: Styleguide[];
     selectedWebhookEvents: WebhookEventType[];
     isError: boolean;
+    resourceSearch: string;
+    onResourceSearch: (value: string) => void;
+    onResourceDropdownBlur: () => void;
     onRetryClick: () => void;
     onWorkspaceChange: (value: string) => void;
     onResourceChange: (value: Resource | undefined) => void;
@@ -41,6 +44,9 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
     styleguides,
     selectedWebhookEvents,
     isError,
+    resourceSearch,
+    onResourceSearch,
+    onResourceDropdownBlur,
     onRetryClick,
     onWorkspaceChange,
     onResourceChange,
@@ -85,6 +91,9 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
                             projects={projects}
                             styleguides={styleguides}
                             disabled={!isWorkspaceSelected}
+                            search={resourceSearch}
+                            onBlur={onResourceDropdownBlur}
+                            onSearchChange={onResourceSearch}
                             onChange={onResourceChange} />
                     </div>
                 </Flex.Item>
