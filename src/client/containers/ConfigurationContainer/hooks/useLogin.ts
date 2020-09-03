@@ -1,11 +1,11 @@
 import * as microsoftTeams from "@microsoft/teams-js";
 import { useCallback, useState } from "react";
 
-interface UseAuthenticateParams {
+interface UseLoginParams {
     onSuccess: () => void;
 }
 
-type UseAuthenticateResult = [
+type UseLoginResult = [
     () => void,
     {
         loginError?: string;
@@ -22,7 +22,7 @@ const errorToText = (error: string): string => {
     }
 };
 
-export const useLogin = ({ onSuccess }: UseAuthenticateParams): UseAuthenticateResult => {
+export const useLogin = ({ onSuccess }: UseLoginParams): UseLoginResult => {
     const [loginError, setError] = useState<string|undefined>();
 
     const login = useCallback(
