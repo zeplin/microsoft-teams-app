@@ -35,21 +35,41 @@ function throttledRefreshToken(refreshToken: string): Promise<AuthToken> {
 httpClient.interceptors.response.use(
     value => value,
     async error => {
-        if (error.response.status !== UNAUTHORIZED || error.response.data.detail !== "token_expired") {
+        if (error.response?.status !== UNAUTHORIZED) {
             throw error;
         }
 
-        const { accessToken, refreshToken } = await throttledRefreshToken(storage.getRefreshToken());
-        storage.setAccessToken(accessToken);
-        storage.setRefreshToken(refreshToken);
+        if (error.response?.data?.detail !== "token_expired") {
+            storage.removeAccessToken();
+            storage.removeRefreshToken();
+            throw error;
+        }
 
-        return Axios.request({
-            ...error.config,
-            headers: {
-                ...error.config.headers,
-                Authorization: `Bearer ${storage.getAccessToken()}`
+        try {
+            const { accessToken, refreshToken } = await throttledRefreshToken(storage.getRefreshToken());
+            storage.setAccessToken(accessToken);
+            storage.setRefreshToken(refreshToken);
+        } catch (e) {
+            storage.removeAccessToken();
+            storage.removeRefreshToken();
+            throw error;
+        }
+
+        try {
+            return await Axios.request({
+                ...error.config,
+                headers: {
+                    ...error.config.headers,
+                    Authorization: `Bearer ${storage.getAccessToken()}`
+                }
+            });
+        } catch (secondError) {
+            if (error.response?.status === UNAUTHORIZED) {
+                storage.removeAccessToken();
+                storage.removeRefreshToken();
             }
-        });
+            throw secondError;
+        }
     }
 );
 

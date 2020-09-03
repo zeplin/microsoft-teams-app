@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { Flex, Text } from "@fluentui/react-northstar";
+import { ErrorIcon, Flex, Text } from "@fluentui/react-northstar";
 
 import {
     Project,
@@ -23,6 +23,8 @@ interface ConfigurationCreateProps {
     projects: Project[];
     styleguides: Styleguide[];
     selectedWebhookEvents: WebhookEventType[];
+    isError: boolean;
+    onRetryClick: () => void;
     onWorkspaceChange: (value: string) => void;
     onResourceChange: (value: Resource | undefined) => void;
     onWebhookEventsChange: (value: WebhookEventType[]) => void;
@@ -38,6 +40,8 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
     projects,
     styleguides,
     selectedWebhookEvents,
+    isError,
+    onRetryClick,
     onWorkspaceChange,
     onResourceChange,
     onWebhookEventsChange
@@ -86,6 +90,24 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
                 </Flex.Item>
             </Flex>
         </Flex>
+        {isError && (
+            <Flex fill gap="gap.smaller">
+                <ErrorIcon size="large" />
+                <Text error>
+                    {"We cannot proceed the process due to API related connectivity issue. "}
+                    <Text
+                        color="brand"
+                        styles={{
+                            ":hover": {
+                                cursor: "pointer"
+                            }
+                        }}
+                        onClick={onRetryClick}>
+                        Retry
+                    </Text>
+                </Text>
+            </Flex>
+        )}
         <Flex fill column gap="gap.medium">
             <Text weight="semibold">
                 Select the events you want to get a message for:

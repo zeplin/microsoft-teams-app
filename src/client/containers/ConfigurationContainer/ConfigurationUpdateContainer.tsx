@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import { Resource, resourceBasedEvents, WebhookEventType } from "../../constants";
 import {
-    useAuthenticate,
+    useLogin,
     useConfiguration,
     useConfigurationDelete,
     useConfigurationSave,
@@ -63,7 +63,7 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
         })
     });
 
-    const authenticate = useAuthenticate({
+    const [login, { loginError }] = useLogin({
         onSuccess: () => setState({ status: Status.LOADING_CONFIGURATION })
     });
 
@@ -92,7 +92,7 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
         case Status.LOADING_CONFIGURATION:
             return <Loader styles={{ height: "100vh" }} />;
         case Status.LOGIN:
-            return <Login onButtonClick={authenticate} />;
+            return <Login onButtonClick={login} error={loginError} />;
         case Status.CONFIGURATION:
             return (
                 <ConfigurationUpdate
