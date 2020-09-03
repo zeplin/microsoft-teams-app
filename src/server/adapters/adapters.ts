@@ -6,8 +6,9 @@ import { sentry } from "./sentry";
 
 export async function initAdapters(config: Config): Promise<void> {
     sentry.init({
-        sentryDsn: config.SENTRY_DSN,
+        dsn: config.SENTRY_DSN,
         environment: config.ENVIRONMENT,
+        enabled: config.IS_SENTRY_ENABLED,
         version: config.VERSION
     });
     redis.init(config.REDIS_URL);
