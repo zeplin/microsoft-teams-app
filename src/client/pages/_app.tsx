@@ -7,7 +7,8 @@ if (SENTRY_DSN) {
     Sentry.init({
         enabled: ENVIRONMENT === "production",
         dsn: SENTRY_DSN,
-        release: VERSION
+        release: VERSION,
+        environment: ENVIRONMENT
     });
 }
 
