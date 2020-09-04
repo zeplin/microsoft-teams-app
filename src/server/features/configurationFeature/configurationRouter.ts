@@ -2,7 +2,7 @@ import { Router as createRouter } from "express";
 import Joi from "@hapi/joi";
 
 import { validateRequest, JSONBodyParser } from "../../middlewares";
-import { ProjectWebhookEvent, StyleguideWebhookEvent, WebhookResourceType } from "../../adapters";
+import { ProjectWebhookEventType, StyleguideWebhookEventType, WebhookResourceType } from "../../adapters/zeplin/types";
 import {
     handleConfigurationCreate,
     handleConfigurationDelete,
@@ -19,8 +19,8 @@ const zeplinSchema = Joi.object({
     }),
     events: Joi.when("resource.type", {
         is: WebhookResourceType.PROJECT,
-        then: Joi.array().items(Joi.string().valid(...Object.values(ProjectWebhookEvent))).unique().min(1),
-        otherwise: Joi.array().items(Joi.valid(...Object.values(StyleguideWebhookEvent))).unique().min(1)
+        then: Joi.array().items(Joi.string().valid(...Object.values(ProjectWebhookEventType))).unique().min(1),
+        otherwise: Joi.array().items(Joi.valid(...Object.values(StyleguideWebhookEventType))).unique().min(1)
     })
 });
 

@@ -1,25 +1,14 @@
-import {
-    WebhookEvent,
-    EventPayload,
-    StyleguideContext,
-    EventType
-} from "../../../messagingTypes";
+import { StyleguideSpacingTokenEvent, WebhookEvent } from "../../../../../adapters/zeplin/types";
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
-import { SpacingTokenResource } from "../resources";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
-
-type StyleguideSpacingTokenEventDescriptor = {
-    type: EventType.STYLEGUIDE_SPACING_TOKEN;
-    action: "created" | "updated";
-};
 
 class StyleguideSpacingTokenNotificationHandler extends NotificationHandler {
     delay = SHORT_DELAY;
-    private getText(events: WebhookEvent<StyleguideSpacingTokenEventPayload>[]): string {
+    private getText(events: StyleguideSpacingTokenEvent[]): string {
         const [{
             payload: {
                 action,
@@ -42,7 +31,7 @@ class StyleguideSpacingTokenNotificationHandler extends NotificationHandler {
     }
 
     private getWebappURL(
-        events: WebhookEvent<StyleguideSpacingTokenEventPayload>[]
+        events: StyleguideSpacingTokenEvent[]
     ): string {
         const [{
             payload: {
@@ -60,7 +49,7 @@ class StyleguideSpacingTokenNotificationHandler extends NotificationHandler {
     }
 
     private getMacAppURL(
-        events: WebhookEvent<StyleguideSpacingTokenEventPayload>[]
+        events: StyleguideSpacingTokenEvent[]
     ): string {
         const [{
             payload: {
@@ -79,7 +68,7 @@ class StyleguideSpacingTokenNotificationHandler extends NotificationHandler {
     }
 
     getTeamsMessage(
-        events: WebhookEvent<StyleguideSpacingTokenEventPayload>[]
+        events: StyleguideSpacingTokenEvent[]
     ): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
@@ -97,9 +86,4 @@ class StyleguideSpacingTokenNotificationHandler extends NotificationHandler {
     }
 }
 
-export type StyleguideSpacingTokenEventPayload = EventPayload<
-    StyleguideSpacingTokenEventDescriptor,
-    StyleguideContext,
-    SpacingTokenResource
->;
 export const styleguideSpacingTokenNotificationHandler = new StyleguideSpacingTokenNotificationHandler();

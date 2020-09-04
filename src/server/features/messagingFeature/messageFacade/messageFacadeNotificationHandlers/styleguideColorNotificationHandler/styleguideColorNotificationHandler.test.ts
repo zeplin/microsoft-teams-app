@@ -1,8 +1,5 @@
-import { WebhookEvent } from "../../../messagingTypes";
-import {
-    styleguideColorNotificationHandler,
-    StyleguideColorEventPayload
-} from "./styleguideColorNotificationHandler";
+import { styleguideColorNotificationHandler } from "./styleguideColorNotificationHandler";
+import { StyleguideColorEvent } from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     action?: string;
@@ -14,7 +11,7 @@ function getDummyEvent({
     action = "created",
     colorId = "colorId",
     colorName = "colorName"
-}: GetDummyEventParams = {}): WebhookEvent<StyleguideColorEventPayload> {
+}: GetDummyEventParams = {}): StyleguideColorEvent {
     return {
         payload: {
             action,
@@ -32,7 +29,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as WebhookEvent<StyleguideColorEventPayload>;
+    } as StyleguideColorEvent;
 }
 
 describe("styleguideColorNotificationHandler", () => {

@@ -1,4 +1,4 @@
-import { MessageJobData, WebhookEvent } from "../messagingTypes";
+import { WebhookEvent } from "../../../adapters/zeplin/types";
 import { messageQueue } from "../messageQueue";
 import { messageJobRepo, messageWebhookEventRepo } from "../messagingRepos";
 import { getNotificationHandler } from "./messageFacadeNotificationHandlers";
@@ -6,8 +6,13 @@ import { configurationRepo } from "../../../repos";
 import { requester } from "../../../adapters/requester";
 import { ServerError } from "../../../errors";
 
+interface JobData {
+    groupingKey: string;
+    id: string;
+}
+
 class MessageFacade {
-    async processJob(data: MessageJobData): Promise<void> {
+    async processJob(data: JobData): Promise<void> {
         const activeJobId = await messageJobRepo.getGroupActiveJobId(data.groupingKey);
         if (!activeJobId || data.id !== activeJobId) {
             return;

@@ -1,25 +1,14 @@
-import {
-    WebhookEvent,
-    EventPayload,
-    StyleguideContext,
-    EventType
-} from "../../../messagingTypes";
+import { WebhookEvent, StyleguideColorEvent } from "../../../../../adapters/zeplin/types";
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
-import { ColorResource } from "../resources";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
-
-type StyleguideColorEventDescriptor = {
-    type: EventType.STYLEGUIDE_COLOR;
-    action: "created" | "updated";
-};
 
 class StyleguideColorNotificationHandler extends NotificationHandler {
     delay = SHORT_DELAY;
-    private getText(events: WebhookEvent<StyleguideColorEventPayload>[]): string {
+    private getText(events: StyleguideColorEvent[]): string {
         const [{
             payload: {
                 action,
@@ -42,7 +31,7 @@ class StyleguideColorNotificationHandler extends NotificationHandler {
     }
 
     private getWebappURL(
-        events: WebhookEvent<StyleguideColorEventPayload>[]
+        events: StyleguideColorEvent[]
     ): string {
         const [{
             payload: {
@@ -60,7 +49,7 @@ class StyleguideColorNotificationHandler extends NotificationHandler {
     }
 
     private getMacAppURL(
-        events: WebhookEvent<StyleguideColorEventPayload>[]
+        events: StyleguideColorEvent[]
     ): string {
         const [{
             payload: {
@@ -79,7 +68,7 @@ class StyleguideColorNotificationHandler extends NotificationHandler {
     }
 
     getTeamsMessage(
-        events: WebhookEvent<StyleguideColorEventPayload>[]
+        events: StyleguideColorEvent[]
     ): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
@@ -97,9 +86,4 @@ class StyleguideColorNotificationHandler extends NotificationHandler {
     }
 }
 
-export type StyleguideColorEventPayload = EventPayload<
-    StyleguideColorEventDescriptor,
-    StyleguideContext,
-    ColorResource
->;
 export const styleguideColorNotificationHandler = new StyleguideColorNotificationHandler();

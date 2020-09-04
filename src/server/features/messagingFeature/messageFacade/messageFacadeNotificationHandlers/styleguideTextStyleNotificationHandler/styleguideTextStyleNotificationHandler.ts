@@ -1,26 +1,15 @@
-import {
-    WebhookEvent,
-    EventPayload,
-    StyleguideContext,
-    EventType
-} from "../../../messagingTypes";
+import { StyleguideTextStyleEvent, WebhookEvent } from "../../../../../adapters/zeplin/types";
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
-import { commonTeamsCard } from "../teamsCardTemplates";
+import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
-import { TextStyleResource } from "../resources";
-import { MessageCard } from "../teamsCardTemplates/messageCardTypes";
-import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
-type StyleguideTextStyleEventDescriptor = {
-    type: EventType.STYLEGUIDE_TEXT_STYLE;
-    action: "created" | "updated";
-};
+import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
 class StyleguideTextStyleNotificationHandler extends NotificationHandler {
     delay = SHORT_DELAY;
-    private getText(events: WebhookEvent<StyleguideTextStyleEventPayload>[]): string {
+    private getText(events: StyleguideTextStyleEvent[]): string {
         const [{
             payload: {
                 action,
@@ -43,7 +32,7 @@ class StyleguideTextStyleNotificationHandler extends NotificationHandler {
     }
 
     private getWebappURL(
-        events: WebhookEvent<StyleguideTextStyleEventPayload>[]
+        events: StyleguideTextStyleEvent[]
     ): string {
         const [{
             payload: {
@@ -61,7 +50,7 @@ class StyleguideTextStyleNotificationHandler extends NotificationHandler {
     }
 
     private getMacAppURL(
-        events: WebhookEvent<StyleguideTextStyleEventPayload>[]
+        events: StyleguideTextStyleEvent[]
     ): string {
         const [{
             payload: {
@@ -80,7 +69,7 @@ class StyleguideTextStyleNotificationHandler extends NotificationHandler {
     }
 
     getTeamsMessage(
-        events: WebhookEvent<StyleguideTextStyleEventPayload>[]
+        events: StyleguideTextStyleEvent[]
     ): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
@@ -98,9 +87,4 @@ class StyleguideTextStyleNotificationHandler extends NotificationHandler {
     }
 }
 
-export type StyleguideTextStyleEventPayload = EventPayload<
-    StyleguideTextStyleEventDescriptor,
-    StyleguideContext,
-    TextStyleResource
->;
 export const styleguideTextStyleNotificationHandler = new StyleguideTextStyleNotificationHandler();

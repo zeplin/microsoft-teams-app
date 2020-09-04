@@ -1,25 +1,14 @@
-import {
-    WebhookEvent,
-    EventPayload,
-    ProjectContext,
-    EventType
-} from "../../../messagingTypes";
+import { ProjectSpacingTokenEvent, WebhookEvent } from "../../../../../adapters/zeplin/types";
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
-import { SpacingTokenResource } from "../resources";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
-
-type ProjectSpacingTokenEventDescriptor = {
-    type: EventType.PROJECT_SPACING_TOKEN;
-    action: "created" | "updated";
-};
 
 class ProjectSpacingTokenNotificationHandler extends NotificationHandler {
     delay = SHORT_DELAY;
-    private getText(events: WebhookEvent<ProjectSpacingTokenEventPayload>[]): string {
+    private getText(events: ProjectSpacingTokenEvent[]): string {
         const [{
             payload: {
                 action,
@@ -42,7 +31,7 @@ class ProjectSpacingTokenNotificationHandler extends NotificationHandler {
     }
 
     private getWebappURL(
-        events: WebhookEvent<ProjectSpacingTokenEventPayload>[]
+        events: ProjectSpacingTokenEvent[]
     ): string {
         const [{
             payload: {
@@ -60,7 +49,7 @@ class ProjectSpacingTokenNotificationHandler extends NotificationHandler {
     }
 
     private getMacAppURL(
-        events: WebhookEvent<ProjectSpacingTokenEventPayload>[]
+        events: ProjectSpacingTokenEvent[]
     ): string {
         const [{
             payload: {
@@ -79,7 +68,7 @@ class ProjectSpacingTokenNotificationHandler extends NotificationHandler {
     }
 
     getTeamsMessage(
-        events: WebhookEvent<ProjectSpacingTokenEventPayload>[]
+        events: ProjectSpacingTokenEvent[]
     ): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
@@ -97,9 +86,4 @@ class ProjectSpacingTokenNotificationHandler extends NotificationHandler {
     }
 }
 
-export type ProjectSpacingTokenEventPayload = EventPayload<
-    ProjectSpacingTokenEventDescriptor,
-    ProjectContext,
-    SpacingTokenResource
->;
 export const projectSpacingTokenNotificationHandler = new ProjectSpacingTokenNotificationHandler();

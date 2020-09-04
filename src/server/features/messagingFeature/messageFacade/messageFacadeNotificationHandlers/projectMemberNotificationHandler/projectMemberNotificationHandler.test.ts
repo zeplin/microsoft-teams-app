@@ -1,5 +1,5 @@
-import { WebhookEvent } from "server/features/messagingFeature/messagingTypes";
-import { ProjectMemberEventPayload, projectMemberNotificationHandler } from "./projectMemberNotificationHandler";
+import { projectMemberNotificationHandler } from "./projectMemberNotificationHandler";
+import { ProjectMemberEvent } from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     projectName?: string;
@@ -11,7 +11,7 @@ function getDummyEvent({
     projectName = "Project MS Teams Integration",
     userId = "userId",
     userName = "dirtybit"
-}: GetDummyEventParams = {}): WebhookEvent<ProjectMemberEventPayload> {
+}: GetDummyEventParams = {}): ProjectMemberEvent {
     return {
         payload: {
             action: "invited",
@@ -30,7 +30,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as WebhookEvent<ProjectMemberEventPayload>;
+    } as ProjectMemberEvent;
 }
 
 describe("projectMemberNotificationHandler", () => {

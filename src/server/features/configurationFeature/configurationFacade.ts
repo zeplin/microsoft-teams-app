@@ -1,14 +1,14 @@
 import { Configuration, configurationRepo } from "../../repos";
 import {
-    ProjectWebhookEvent,
-    StyleguideWebhookEvent,
+    ProjectWebhookEventType,
+    StyleguideWebhookEventType,
     WebhookResourceType,
     ProjectWebhook,
     StyleguideWebhook,
-    zeplin,
     Project,
     Styleguide
-} from "../../adapters";
+} from "../../adapters/zeplin/types";
+import { zeplin } from "../../adapters";
 import { BASE_URL, WEBHOOK_SECRET } from "../../config";
 import { ServerError } from "../../errors";
 import { NOT_FOUND } from "http-status-codes";
@@ -36,7 +36,7 @@ interface ProjectParameters {
         id: string;
         type: WebhookResourceType.PROJECT;
     };
-    events: ProjectWebhookEvent[];
+    events: ProjectWebhookEventType[];
 }
 
 interface StyleguideParameters {
@@ -44,7 +44,7 @@ interface StyleguideParameters {
         id: string;
         type: WebhookResourceType.STYLEGUIDE;
     };
-    events: StyleguideWebhookEvent[];
+    events: StyleguideWebhookEventType[];
 }
 
 interface ConfigurationCreateParameters {

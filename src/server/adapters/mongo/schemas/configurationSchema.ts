@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { WebhookResourceType } from "../../zeplin";
+import { WebhookResourceType } from "../../zeplin/types";
 
 export const configurationSchema = new Schema({
     zeplin: {

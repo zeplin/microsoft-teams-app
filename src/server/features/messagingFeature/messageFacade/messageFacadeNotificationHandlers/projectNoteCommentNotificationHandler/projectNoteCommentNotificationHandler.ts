@@ -1,25 +1,12 @@
 import { NotificationHandler } from "../NotificationHandler";
 import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
-import {
-    WebhookEvent,
-    EventType,
-    EventPayload,
-    ProjectContext,
-    ScreenContext,
-    NoteContext
-} from "../../../messagingTypes";
-import { ScreenNoteCommentResource } from "../resources/screenNoteCommentResource";
+import { ProjectNoteCommentEvent, WebhookEvent } from "../../../../../adapters/zeplin/types";
 import { ZEPLIN_MAC_APP_URL_SCHEME, ZEPLIN_WEB_APP_BASE_URL } from "../../../../../config";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
-type ProjectNoteCommentEventDescriptor = {
-    type: EventType.PROJECT_NOTE_COMMENT;
-    action: "created";
-}
-
 class ProjectNoteCommentNotificationHandler extends NotificationHandler {
     delay: 0;
-    private getText(event: WebhookEvent<ProjectNoteCommentEventPayload>): string {
+    private getText(event: ProjectNoteCommentEvent): string {
         const {
             payload: {
                 context: {
@@ -43,7 +30,7 @@ class ProjectNoteCommentNotificationHandler extends NotificationHandler {
         return `**${username}** replied to note _#${order}_ on _${screenName}_ screen in _${projectName}_. 🏃‍♂`;
     }
 
-    private getSectionText(event: WebhookEvent<ProjectNoteCommentEventPayload>): string {
+    private getSectionText(event: ProjectNoteCommentEvent): string {
         const {
             payload: {
                 resource: {
@@ -56,7 +43,7 @@ class ProjectNoteCommentNotificationHandler extends NotificationHandler {
         return commentContent;
     }
 
-    private getWebappURL(event: WebhookEvent<ProjectNoteCommentEventPayload>): string {
+    private getWebappURL(event: ProjectNoteCommentEvent): string {
         const {
             payload: {
                 context: {
@@ -82,7 +69,7 @@ class ProjectNoteCommentNotificationHandler extends NotificationHandler {
         return webappURL.toString();
     }
 
-    private getMacAppURL(event: WebhookEvent<ProjectNoteCommentEventPayload>): string {
+    private getMacAppURL(event: ProjectNoteCommentEvent): string {
         const {
             payload: {
                 context: {
@@ -112,7 +99,7 @@ class ProjectNoteCommentNotificationHandler extends NotificationHandler {
         return event.deliveryId;
     }
 
-    getTeamsMessage(events: WebhookEvent<ProjectNoteCommentEventPayload>[]): MessageCard {
+    getTeamsMessage(events: ProjectNoteCommentEvent[]): MessageCard {
         const [event] = events;
         return commonTeamsCard({
             text: this.getText(event),
@@ -130,9 +117,4 @@ class ProjectNoteCommentNotificationHandler extends NotificationHandler {
     }
 }
 
-export type ProjectNoteCommentEventPayload = EventPayload<
-    ProjectNoteCommentEventDescriptor,
-    ProjectContext & ScreenContext & NoteContext,
-    ScreenNoteCommentResource
->;
 export const projectNoteCommentNotificationHandler = new ProjectNoteCommentNotificationHandler();

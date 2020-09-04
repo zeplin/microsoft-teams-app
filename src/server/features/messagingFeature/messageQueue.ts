@@ -1,11 +1,15 @@
 import Bull from "bull";
-import { MessageJobData } from "./messagingTypes";
 import { Config } from "../../config";
 
 const QUEUE_NAME = "process-events";
 
 type AddOptions = {
     delay: number;
+}
+
+interface MessageJobData {
+    id: string;
+    groupingKey: string;
 }
 
 class MessageQueue {

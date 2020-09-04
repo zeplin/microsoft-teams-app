@@ -1,9 +1,9 @@
-import { ProjectWebhookEvent, ProjectWebhook } from "../types";
+import { ProjectWebhookEventType, ProjectWebhook } from "../types";
 import { Requester } from "../requester";
 
 interface ProjectWebhookCreateBody {
     url: string;
-    events: ProjectWebhookEvent[];
+    events: ProjectWebhookEventType[];
     secret: string;
 }
 

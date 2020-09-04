@@ -1,4 +1,4 @@
-import { WebhookEvent } from "../../messagingTypes";
+import { WebhookEvent } from "../../../../adapters/zeplin/types";
 import { MessageCard } from "./teamsCardTemplates";
 
 export abstract class NotificationHandler {

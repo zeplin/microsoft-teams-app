@@ -1,8 +1,5 @@
-import { WebhookEvent } from "../../../messagingTypes";
-import {
-    projectColorNotificationHandler,
-    ProjectColorEventPayload
-} from "./projectColorNotificationHandler";
+import { projectColorNotificationHandler } from "./projectColorNotificationHandler";
+import { ProjectColorEvent } from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     action?: string;
@@ -14,7 +11,7 @@ function getDummyEvent({
     action = "created",
     colorId = "colorId",
     colorName = "colorName"
-}: GetDummyEventParams = {}): WebhookEvent<ProjectColorEventPayload> {
+}: GetDummyEventParams = {}): ProjectColorEvent {
     return {
         payload: {
             action,
@@ -32,7 +29,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as WebhookEvent<ProjectColorEventPayload>;
+    } as ProjectColorEvent;
 }
 
 describe("projectColorNotificationHandler", () => {

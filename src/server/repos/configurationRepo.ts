@@ -1,4 +1,5 @@
-import { ConfigurationDocument, mongo, WebhookResourceType } from "../adapters";
+import { ConfigurationDocument, mongo } from "../adapters";
+import { WebhookResourceType } from "../adapters/zeplin/types";
 
 interface ConfigurationCreateParameters {
     zeplin: {

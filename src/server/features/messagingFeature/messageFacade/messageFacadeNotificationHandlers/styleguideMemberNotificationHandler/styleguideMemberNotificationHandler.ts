@@ -1,18 +1,12 @@
 import { NotificationHandler } from "../NotificationHandler";
 import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
-import { WebhookEvent, EventType, EventPayload, StyleguideContext } from "../../../messagingTypes";
+import { StyleguideMemberEvent, WebhookEvent } from "../../../../../adapters/zeplin/types";
 import { LONG_DELAY } from "../constants";
-import { StyleguideMemberResource } from "../resources/styleguideMemberResource";
-
-type StyleguideMemberEventDescriptor = {
-    type: EventType.STYLEGUIDE_MEMBER;
-    action: "invited";
-};
 
 class StyleguideMemberNotificationHandler extends NotificationHandler {
     delay = LONG_DELAY;
 
-    private getText(events: WebhookEvent<StyleguideMemberEventPayload>[]): string {
+    private getText(events: StyleguideMemberEvent[]): string {
         const [{
             payload: {
                 context: {
@@ -34,7 +28,7 @@ class StyleguideMemberNotificationHandler extends NotificationHandler {
             : `**${events.length} new users** just joined _${styleguideName}_`;
     }
 
-    getTeamsMessage(events: WebhookEvent<StyleguideMemberEventPayload>[]): MessageCard {
+    getTeamsMessage(events: StyleguideMemberEvent[]): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
             section: {
@@ -48,9 +42,4 @@ class StyleguideMemberNotificationHandler extends NotificationHandler {
     }
 }
 
-export type StyleguideMemberEventPayload = EventPayload<
-    StyleguideMemberEventDescriptor,
-    StyleguideContext,
-    StyleguideMemberResource
->;
 export const styleguideMemberNotificationHandler = new StyleguideMemberNotificationHandler();

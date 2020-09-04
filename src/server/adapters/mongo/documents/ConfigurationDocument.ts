@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
 import { ObjectId } from "mongodb";
-import { WebhookResourceType } from "../../zeplin";
+import { WebhookResourceType } from "../../zeplin/types";
 
 export interface ConfigurationDocument extends Document {
     _id: ObjectId;

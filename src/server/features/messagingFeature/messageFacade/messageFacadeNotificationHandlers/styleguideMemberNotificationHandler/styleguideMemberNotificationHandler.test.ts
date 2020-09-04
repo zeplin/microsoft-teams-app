@@ -1,5 +1,5 @@
-import { WebhookEvent } from "server/features/messagingFeature/messagingTypes";
-import { StyleguideMemberEventPayload, styleguideMemberNotificationHandler } from "./styleguideMemberNotificationHandler";
+import { styleguideMemberNotificationHandler } from "./styleguideMemberNotificationHandler";
+import { StyleguideMemberEvent } from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     styleguideName?: string;
@@ -11,7 +11,7 @@ function getDummyEvent({
     styleguideName = "Styleguide MS Teams Integration",
     userId = "userId",
     userName = "dirtybit"
-}: GetDummyEventParams = {}): WebhookEvent<StyleguideMemberEventPayload> {
+}: GetDummyEventParams = {}): StyleguideMemberEvent {
     return {
         payload: {
             action: "invited",
@@ -30,7 +30,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as WebhookEvent<StyleguideMemberEventPayload>;
+    } as StyleguideMemberEvent;
 }
 
 describe("styleguideMemberNotificationHandler", () => {

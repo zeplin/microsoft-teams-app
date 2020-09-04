@@ -1,4 +1,4 @@
-import { StyleguideWebhookEvent } from "./WebhookEvents";
+import { StyleguideWebhookEventType } from "./WebhookEventTypes";
 import { WebhookStatus } from "./WebhookStatus";
 import { WebhookUrlHealth } from "./WebhookUrlHealth";
 import { User } from "./User";
@@ -15,5 +15,5 @@ export interface StyleguideWebhook {
     created_by: User;
     updated_by: User;
     zeplin_app?: ZeplinApplication;
-    events: StyleguideWebhookEvent[];
+    events: StyleguideWebhookEventType[];
 }

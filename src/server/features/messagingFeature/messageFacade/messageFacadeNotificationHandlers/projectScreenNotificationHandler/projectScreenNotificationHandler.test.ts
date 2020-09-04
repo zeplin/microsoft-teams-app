@@ -1,5 +1,5 @@
-import { WebhookEvent } from "server/features/messagingFeature/messagingTypes";
-import { ProjectScreenEventPayload, projectScreenNotificationHandler } from "./projectScreenNotificationHandler";
+import { projectScreenNotificationHandler } from "./projectScreenNotificationHandler";
+import { ProjectScreenEvent } from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     screenId?: string;
@@ -13,7 +13,7 @@ function getDummyEvent({
     screenName = "screenName",
     imageUrl = "http://placehold.it/200",
     timestamp = 1
-}: GetDummyEventParams = {}): WebhookEvent<ProjectScreenEventPayload> {
+}: GetDummyEventParams = {}): ProjectScreenEvent {
     return {
         payload: {
             action: "created",
@@ -35,7 +35,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as WebhookEvent<ProjectScreenEventPayload>;
+    } as ProjectScreenEvent;
 }
 
 describe("projectScreenNotificationHandler", () => {

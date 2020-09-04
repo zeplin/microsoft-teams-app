@@ -1,25 +1,14 @@
-import {
-    WebhookEvent,
-    EventPayload,
-    ProjectContext,
-    EventType
-} from "../../../messagingTypes";
+import { WebhookEvent, ProjectColorEvent } from "../../../../../adapters/zeplin/types";
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
-import { ColorResource } from "../resources";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
-
-type ProjectColorEventDescriptor = {
-    type: EventType.PROJECT_COLOR;
-    action: "created" | "updated";
-};
 
 class ProjectColorNotificationHandler extends NotificationHandler {
     delay = SHORT_DELAY;
-    private getText(events: WebhookEvent<ProjectColorEventPayload>[]): string {
+    private getText(events: ProjectColorEvent[]): string {
         const [{
             payload: {
                 action,
@@ -42,7 +31,7 @@ class ProjectColorNotificationHandler extends NotificationHandler {
     }
 
     private getWebappURL(
-        events: WebhookEvent<ProjectColorEventPayload>[]
+        events: ProjectColorEvent[]
     ): string {
         const [{
             payload: {
@@ -60,7 +49,7 @@ class ProjectColorNotificationHandler extends NotificationHandler {
     }
 
     private getMacAppURL(
-        events: WebhookEvent<ProjectColorEventPayload>[]
+        events: ProjectColorEvent[]
     ): string {
         const [{
             payload: {
@@ -79,7 +68,7 @@ class ProjectColorNotificationHandler extends NotificationHandler {
     }
 
     getTeamsMessage(
-        events: WebhookEvent<ProjectColorEventPayload>[]
+        events: ProjectColorEvent[]
     ): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
@@ -97,9 +86,4 @@ class ProjectColorNotificationHandler extends NotificationHandler {
     }
 }
 
-export type ProjectColorEventPayload = EventPayload<
-    ProjectColorEventDescriptor,
-    ProjectContext,
-    ColorResource
->;
 export const projectColorNotificationHandler = new ProjectColorNotificationHandler();

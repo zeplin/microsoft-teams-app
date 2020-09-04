@@ -1,28 +1,16 @@
 import { NotificationHandler } from "../NotificationHandler";
 import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
-import {
-    WebhookEvent,
-    CommonEventPayload,
-    EventType,
-    EventPayload,
-    StyleguideContext
-} from "../../../messagingTypes";
+import { StyleguideComponentEvent, WebhookEvent } from "../../../../../adapters/zeplin/types";
 import { MEDIUM_DELAY } from "../constants";
-import { ComponentResource } from "../resources/componentResource";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
 const IMAGE_LIMIT = 5;
 
-type StyleguideComponentEventDescriptor = {
-    type: EventType.STYLEGUIDE_COMPONENT;
-    action: "created" | "version_created";
-};
-
 class StyleguideComponentNotificationHandler extends NotificationHandler {
     delay = MEDIUM_DELAY;
 
-    private getText(events: WebhookEvent<StyleguideComponentEventPayload>[]): string {
+    private getText(events: StyleguideComponentEvent[]): string {
         const [{
             payload: {
                 action,
@@ -44,7 +32,7 @@ class StyleguideComponentNotificationHandler extends NotificationHandler {
             : `**${events.length}${action === "created" ? " new" : ""} components** are ${actionText} in _${styleguideName}_! 🏃‍♂️`;
     }
 
-    private getImages(events: WebhookEvent<StyleguideComponentEventPayload>[]): string[] {
+    private getImages(events: StyleguideComponentEvent[]): string[] {
         // Take last 5 screen images
         return events
             .sort((e1, e2) => e2.payload.timestamp - e1.payload.timestamp)
@@ -53,7 +41,7 @@ class StyleguideComponentNotificationHandler extends NotificationHandler {
             .slice(0, IMAGE_LIMIT);
     }
 
-    private getWebappURL(events: WebhookEvent<StyleguideComponentEventPayload>[]): string {
+    private getWebappURL(events: StyleguideComponentEvent[]): string {
         const [{
             payload: {
                 context: {
@@ -69,7 +57,7 @@ class StyleguideComponentNotificationHandler extends NotificationHandler {
         return webappURL.toString();
     }
 
-    private getMacAppURL(events: WebhookEvent<StyleguideComponentEventPayload>[]): string {
+    private getMacAppURL(events: StyleguideComponentEvent[]): string {
         const [{
             payload: {
                 context: {
@@ -82,7 +70,7 @@ class StyleguideComponentNotificationHandler extends NotificationHandler {
         return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://components?stid=${styleguideId}&coids=${events.map(event => event.payload.resource.id).join(",")}`);
     }
 
-    getTeamsMessage(events: WebhookEvent<StyleguideComponentEventPayload>[]): MessageCard {
+    getTeamsMessage(events: StyleguideComponentEvent[]): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
             images: this.getImages(events),
@@ -96,14 +84,9 @@ class StyleguideComponentNotificationHandler extends NotificationHandler {
         });
     }
 
-    shouldHandleEvent(event: WebhookEvent<CommonEventPayload>): boolean {
+    shouldHandleEvent(event: WebhookEvent): boolean {
         return event.payload.action === "created" || event.payload.action === "version_created";
     }
 }
 
-export type StyleguideComponentEventPayload = EventPayload<
-    StyleguideComponentEventDescriptor,
-    StyleguideContext,
-    ComponentResource
->;
 export const styleguideComponentNotificationHandler = new StyleguideComponentNotificationHandler();
