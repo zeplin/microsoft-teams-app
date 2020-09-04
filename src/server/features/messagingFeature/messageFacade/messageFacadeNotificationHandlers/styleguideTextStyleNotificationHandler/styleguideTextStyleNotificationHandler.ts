@@ -1,4 +1,8 @@
-import { StyleguideTextStyleEvent, WebhookEvent } from "../../../../../adapters/zeplin/types";
+import {
+    StyleguideTextStyleCreateEvent,
+    StyleguideTextStyleUpdateEvent,
+    WebhookEvent
+} from "../../../../../adapters/zeplin/types";
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
@@ -7,9 +11,11 @@ import { URL } from "url";
 
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
-class StyleguideTextStyleNotificationHandler extends NotificationHandler {
+type Event = StyleguideTextStyleCreateEvent | StyleguideTextStyleUpdateEvent;
+
+class StyleguideTextStyleNotificationHandler extends NotificationHandler<Event> {
     delay = SHORT_DELAY;
-    private getText(events: StyleguideTextStyleEvent[]): string {
+    private getText(events: Event[]): string {
         const [{
             payload: {
                 action,
@@ -32,7 +38,7 @@ class StyleguideTextStyleNotificationHandler extends NotificationHandler {
     }
 
     private getWebappURL(
-        events: StyleguideTextStyleEvent[]
+        events: Event[]
     ): string {
         const [{
             payload: {
@@ -50,7 +56,7 @@ class StyleguideTextStyleNotificationHandler extends NotificationHandler {
     }
 
     private getMacAppURL(
-        events: StyleguideTextStyleEvent[]
+        events: Event[]
     ): string {
         const [{
             payload: {
@@ -64,12 +70,12 @@ class StyleguideTextStyleNotificationHandler extends NotificationHandler {
         return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://textStyles?stid=${styleguideId}&tsids=${events.map(event => event.payload.resource.id).join(",")}`);
     }
 
-    shouldHandleEvent(event: WebhookEvent): boolean {
+    shouldHandleEvent(event: WebhookEvent): event is Event {
         return event.payload.action !== "deleted";
     }
 
     getTeamsMessage(
-        events: StyleguideTextStyleEvent[]
+        events: Event[]
     ): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),

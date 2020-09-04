@@ -1,16 +1,16 @@
 import { NotificationHandler } from "../NotificationHandler";
 import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
-import { ProjectScreenVersionEvent, WebhookEvent } from "../../../../../adapters/zeplin/types";
+import { ScreenVersionCreateEvent, WebhookEvent } from "../../../../../adapters/zeplin/types";
 import { MEDIUM_DELAY } from "../constants";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
 const IMAGE_LIMIT = 5;
 
-class ProjectScreenVersionNotificationHandler extends NotificationHandler {
+class ProjectScreenVersionNotificationHandler extends NotificationHandler<ScreenVersionCreateEvent> {
     delay = MEDIUM_DELAY;
 
-    private getText(events: ProjectScreenVersionEvent[]): string {
+    private getText(events: ScreenVersionCreateEvent[]): string {
         const [{
             payload: {
                 context: {
@@ -28,7 +28,7 @@ class ProjectScreenVersionNotificationHandler extends NotificationHandler {
             : `**${events.length} screens** are updated in _${projectName}_! 🏃‍♂`;
     }
 
-    private getImages(events: ProjectScreenVersionEvent[]): string[] {
+    private getImages(events: ScreenVersionCreateEvent[]): string[] {
         // Take last 5 screen images
         return events
             .sort((e1, e2) => e2.payload.timestamp - e1.payload.timestamp)
@@ -37,7 +37,7 @@ class ProjectScreenVersionNotificationHandler extends NotificationHandler {
             .slice(0, IMAGE_LIMIT);
     }
 
-    private getWebappURL(events: ProjectScreenVersionEvent[]): string {
+    private getWebappURL(events: ScreenVersionCreateEvent[]): string {
         const [{
             payload: {
                 context: {
@@ -60,7 +60,7 @@ class ProjectScreenVersionNotificationHandler extends NotificationHandler {
         return webappURL.toString();
     }
 
-    private getMacAppURL(events: ProjectScreenVersionEvent[]): string {
+    private getMacAppURL(events: ScreenVersionCreateEvent[]): string {
         const [{
             payload: {
                 context: {
@@ -81,7 +81,7 @@ class ProjectScreenVersionNotificationHandler extends NotificationHandler {
         return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://project?pid=${projectId}&sids=${events.map(event => event.payload.context.screen.id).join(",")}`);
     }
 
-    getGroupingKey(event: ProjectScreenVersionEvent): string {
+    getGroupingKey(event: ScreenVersionCreateEvent): string {
         const {
             webhookId,
             payload: {
@@ -97,7 +97,7 @@ class ProjectScreenVersionNotificationHandler extends NotificationHandler {
         return `${webhookId}:${commit?.message}:${eventType}:${action}`;
     }
 
-    getTeamsMessage(events: ProjectScreenVersionEvent[]): MessageCard {
+    getTeamsMessage(events: ScreenVersionCreateEvent[]): MessageCard {
         const [{
             payload: {
                 resource: {
@@ -124,7 +124,7 @@ class ProjectScreenVersionNotificationHandler extends NotificationHandler {
         });
     }
 
-    shouldHandleEvent(event: WebhookEvent): boolean {
+    shouldHandleEvent(event: WebhookEvent): event is ScreenVersionCreateEvent {
         return event.payload.action === "created";
     }
 }

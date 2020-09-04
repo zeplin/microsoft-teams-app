@@ -1,5 +1,8 @@
 import { projectTextStyleNotificationHandler } from "./projectTextStyleNotificationHandler";
-import { ProjectTextStyleEvent } from "../../../../../adapters/zeplin/types";
+import {
+    ProjectTextStyleCreateEvent,
+    ProjectTextStyleUpdateEvent
+} from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     action?: string;
@@ -11,7 +14,7 @@ function getDummyEvent({
     action = "created",
     textStyleId = "textStyleId",
     textStyleName = "textStyleName"
-}: GetDummyEventParams = {}): ProjectTextStyleEvent {
+}: GetDummyEventParams = {}): ProjectTextStyleCreateEvent | ProjectTextStyleUpdateEvent {
     return {
         payload: {
             action,
@@ -29,7 +32,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as ProjectTextStyleEvent;
+    } as ProjectTextStyleCreateEvent | ProjectTextStyleUpdateEvent;
 }
 
 describe("projectTextStyleNotificationHandler", () => {

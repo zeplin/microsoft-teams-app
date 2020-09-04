@@ -1,12 +1,12 @@
 import { NotificationHandler } from "../NotificationHandler";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
-import { ProjectMemberEvent, WebhookEvent } from "../../../../../adapters/zeplin/types";
+import { ProjectMemberInviteEvent, WebhookEvent } from "../../../../../adapters/zeplin/types";
 import { LONG_DELAY } from "../constants";
 
-class ProjectMemberNotificationHandler extends NotificationHandler {
+class ProjectMemberNotificationHandler extends NotificationHandler<ProjectMemberInviteEvent> {
     delay = LONG_DELAY;
 
-    private getText(events: ProjectMemberEvent[]): string {
+    private getText(events: ProjectMemberInviteEvent[]): string {
         const [{
             payload: {
                 context: {
@@ -28,7 +28,7 @@ class ProjectMemberNotificationHandler extends NotificationHandler {
             : `**${events.length} new users** just joined _${projectName}_`;
     }
 
-    getTeamsMessage(events: ProjectMemberEvent[]): MessageCard {
+    getTeamsMessage(events: ProjectMemberInviteEvent[]): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
             section: {
@@ -37,7 +37,7 @@ class ProjectMemberNotificationHandler extends NotificationHandler {
         });
     }
 
-    shouldHandleEvent(event: WebhookEvent): boolean {
+    shouldHandleEvent(event: WebhookEvent): event is ProjectMemberInviteEvent {
         return event.payload.action === "invited";
     }
 }

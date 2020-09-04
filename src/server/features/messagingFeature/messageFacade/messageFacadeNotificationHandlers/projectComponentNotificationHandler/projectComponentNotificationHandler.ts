@@ -1,16 +1,21 @@
 import { NotificationHandler } from "../NotificationHandler";
 import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
-import { ProjectComponentEvent } from "../../../../../adapters/zeplin/types";
+import {
+    ProjectComponentCreateEvent,
+    ProjectComponentVersionCreateEvent
+} from "../../../../../adapters/zeplin/types";
 import { MEDIUM_DELAY } from "../constants";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
 const IMAGE_LIMIT = 5;
 
-class ProjectComponentNotificationHandler extends NotificationHandler {
+type Event = ProjectComponentCreateEvent | ProjectComponentVersionCreateEvent;
+
+class ProjectComponentNotificationHandler extends NotificationHandler<Event> {
     delay = MEDIUM_DELAY;
 
-    private getText(events: ProjectComponentEvent[]): string {
+    private getText(events: Event[]): string {
         const [{
             payload: {
                 action,
@@ -32,7 +37,7 @@ class ProjectComponentNotificationHandler extends NotificationHandler {
             : `**${events.length}${action === "created" ? " new" : ""} components** are ${actionText} in _${projectName}_! 🏃‍♂️`;
     }
 
-    private getImages(events: ProjectComponentEvent[]): string[] {
+    private getImages(events: Event[]): string[] {
         // Take last 5 screen images
         return events
             .sort((e1, e2) => e2.payload.timestamp - e1.payload.timestamp)
@@ -41,7 +46,7 @@ class ProjectComponentNotificationHandler extends NotificationHandler {
             .slice(0, IMAGE_LIMIT);
     }
 
-    private getWebappURL(events: ProjectComponentEvent[]): string {
+    private getWebappURL(events: Event[]): string {
         const [{
             payload: {
                 context: {
@@ -57,7 +62,7 @@ class ProjectComponentNotificationHandler extends NotificationHandler {
         return webappURL.toString();
     }
 
-    private getMacAppURL(events: ProjectComponentEvent[]): string {
+    private getMacAppURL(events: Event[]): string {
         const [{
             payload: {
                 context: {
@@ -70,7 +75,7 @@ class ProjectComponentNotificationHandler extends NotificationHandler {
         return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://components?pid=${projectId}&coids=${events.map(event => event.payload.resource.id).join(",")}`);
     }
 
-    getTeamsMessage(events: ProjectComponentEvent[]): MessageCard {
+    getTeamsMessage(events: Event[]): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
             images: this.getImages(events),
@@ -84,7 +89,7 @@ class ProjectComponentNotificationHandler extends NotificationHandler {
         });
     }
 
-    shouldHandleEvent(event: ProjectComponentEvent): boolean {
+    shouldHandleEvent(event: Event): event is Event {
         return event.payload.action === "created" || event.payload.action === "version_created";
     }
 }

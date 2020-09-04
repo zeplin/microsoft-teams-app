@@ -1,5 +1,8 @@
 import { projectComponentNotificationHandler } from "./projectComponentNotificationHandler";
-import { ProjectComponentEvent } from "../../../../../adapters/zeplin/types";
+import {
+    ProjectComponentCreateEvent,
+    ProjectComponentVersionCreateEvent
+} from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     action?: string;
@@ -15,7 +18,7 @@ function getDummyEvent({
     componentName = "componentName",
     imageUrl = "http://placehold.it/200",
     timestamp = 1
-}: GetDummyEventParams = {}): ProjectComponentEvent {
+}: GetDummyEventParams = {}): ProjectComponentCreateEvent | ProjectComponentVersionCreateEvent {
     return {
         payload: {
             timestamp,
@@ -37,7 +40,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as ProjectComponentEvent;
+    } as ProjectComponentCreateEvent | ProjectComponentVersionCreateEvent;
 }
 
 describe("projectComponentNotificationHandler", () => {

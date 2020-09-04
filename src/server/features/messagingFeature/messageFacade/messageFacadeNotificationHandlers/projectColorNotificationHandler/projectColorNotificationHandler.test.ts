@@ -1,5 +1,8 @@
 import { projectColorNotificationHandler } from "./projectColorNotificationHandler";
-import { ProjectColorEvent } from "../../../../../adapters/zeplin/types";
+import {
+    ProjectColorCreateEvent,
+    ProjectColorUpdateEvent
+} from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     action?: string;
@@ -11,7 +14,7 @@ function getDummyEvent({
     action = "created",
     colorId = "colorId",
     colorName = "colorName"
-}: GetDummyEventParams = {}): ProjectColorEvent {
+}: GetDummyEventParams = {}): ProjectColorCreateEvent | ProjectColorUpdateEvent {
     return {
         payload: {
             action,
@@ -29,7 +32,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as ProjectColorEvent;
+    } as ProjectColorCreateEvent | ProjectColorUpdateEvent;
 }
 
 describe("projectColorNotificationHandler", () => {

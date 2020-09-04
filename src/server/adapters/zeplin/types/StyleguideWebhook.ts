@@ -1,4 +1,4 @@
-import { StyleguideWebhookEventType } from "./WebhookEventTypes";
+import { StyleguideWebhookEventType } from "./WebhookEvents";
 import { WebhookStatus } from "./WebhookStatus";
 import { WebhookUrlHealth } from "./WebhookUrlHealth";
 import { User } from "./User";

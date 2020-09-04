@@ -1,14 +1,14 @@
 import { NotificationHandler } from "../NotificationHandler";
 import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
-import { ProjectNoteEvent, WebhookEvent } from "../../../../../adapters/zeplin/types";
+import { NoteCreateEvent, WebhookEvent } from "../../../../../adapters/zeplin/types";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
-class ProjectNoteNotificationHandler extends NotificationHandler {
+class ProjectNoteNotificationHandler extends NotificationHandler<NoteCreateEvent> {
     // We want to send project note events immediately
     delay = 0;
 
-    private getText(event: ProjectNoteEvent): string {
+    private getText(event: NoteCreateEvent): string {
         const {
             payload: {
                 context: {
@@ -29,7 +29,7 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
         return `**${username}** added a note on _${screenName}_ screen in _${projectName}_. 🏃‍♂`;
     }
 
-    private getSectionText(event: ProjectNoteEvent): string {
+    private getSectionText(event: NoteCreateEvent): string {
         const {
             payload: {
                 resource: {
@@ -42,7 +42,7 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
         return commentContent;
     }
 
-    private getWebappURL(event: ProjectNoteEvent): string {
+    private getWebappURL(event: NoteCreateEvent): string {
         const {
             payload: {
                 context: {
@@ -64,7 +64,7 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
         return webappURL.toString();
     }
 
-    private getMacAppURL(event: ProjectNoteEvent): string {
+    private getMacAppURL(event: NoteCreateEvent): string {
         const {
             payload: {
                 context: {
@@ -83,7 +83,7 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
         return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://dot?pid=${projectId}&sid=${screenId}&did=${noteId}`);
     }
 
-    shouldHandleEvent(event: WebhookEvent): boolean {
+    shouldHandleEvent(event: WebhookEvent): event is NoteCreateEvent {
         return event.payload.action === "created";
     }
 
@@ -92,7 +92,7 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
         return event.deliveryId;
     }
 
-    getTeamsMessage(events: ProjectNoteEvent[]): MessageCard {
+    getTeamsMessage(events: NoteCreateEvent[]): MessageCard {
         const [event] = events;
         return commonTeamsCard({
             text: this.getText(event),

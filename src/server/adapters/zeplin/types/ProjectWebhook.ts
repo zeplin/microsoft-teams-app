@@ -1,4 +1,4 @@
-import { ProjectWebhookEventType } from "./WebhookEventTypes";
+import { ProjectWebhookEventType } from "./WebhookEvents";
 import { WebhookStatus } from "./WebhookStatus";
 import { WebhookUrlHealth } from "./WebhookUrlHealth";
 import { User } from "./User";

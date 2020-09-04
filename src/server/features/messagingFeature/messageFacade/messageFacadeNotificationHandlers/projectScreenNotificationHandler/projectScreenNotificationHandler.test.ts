@@ -1,5 +1,5 @@
 import { projectScreenNotificationHandler } from "./projectScreenNotificationHandler";
-import { ProjectScreenEvent } from "../../../../../adapters/zeplin/types";
+import { ScreenCreateEvent } from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     screenId?: string;
@@ -13,7 +13,7 @@ function getDummyEvent({
     screenName = "screenName",
     imageUrl = "http://placehold.it/200",
     timestamp = 1
-}: GetDummyEventParams = {}): ProjectScreenEvent {
+}: GetDummyEventParams = {}): ScreenCreateEvent {
     return {
         payload: {
             action: "created",
@@ -35,7 +35,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as ProjectScreenEvent;
+    } as ScreenCreateEvent;
 }
 
 describe("projectScreenNotificationHandler", () => {

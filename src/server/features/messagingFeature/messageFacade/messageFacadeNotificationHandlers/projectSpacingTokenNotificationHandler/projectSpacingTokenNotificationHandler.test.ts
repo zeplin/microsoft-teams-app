@@ -1,5 +1,8 @@
 import { projectSpacingTokenNotificationHandler } from "./projectSpacingTokenNotificationHandler";
-import { ProjectSpacingTokenEvent } from "../../../../../adapters/zeplin/types";
+import {
+    ProjectSpacingTokenCreateEvent,
+    ProjectSpacingTokenUpdateEvent
+} from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     action?: string;
@@ -11,7 +14,7 @@ function getDummyEvent({
     action = "created",
     spacingTokenId = "spacingTokenId",
     spacingTokenName = "spacingTokenName"
-}: GetDummyEventParams = {}): ProjectSpacingTokenEvent {
+}: GetDummyEventParams = {}): ProjectSpacingTokenCreateEvent | ProjectSpacingTokenUpdateEvent {
     return {
         payload: {
             action,
@@ -29,7 +32,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as ProjectSpacingTokenEvent;
+    } as ProjectSpacingTokenCreateEvent | ProjectSpacingTokenUpdateEvent;
 }
 
 describe("projectSpacingTokenNotificationHandler", () => {

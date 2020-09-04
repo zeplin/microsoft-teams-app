@@ -1,5 +1,8 @@
 import { styleguideTextStyleNotificationHandler } from "./styleguideTextStyleNotificationHandler";
-import { StyleguideTextStyleEvent } from "../../../../../adapters/zeplin/types";
+import {
+    StyleguideTextStyleCreateEvent,
+    StyleguideTextStyleUpdateEvent
+} from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     action?: string;
@@ -11,7 +14,7 @@ function getDummyEvent({
     action = "created",
     textStyleId = "textStyleId",
     textStyleName = "textStyleName"
-}: GetDummyEventParams = {}): StyleguideTextStyleEvent {
+}: GetDummyEventParams = {}): StyleguideTextStyleCreateEvent | StyleguideTextStyleUpdateEvent {
     return {
         payload: {
             action,
@@ -29,7 +32,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as StyleguideTextStyleEvent;
+    } as StyleguideTextStyleCreateEvent | StyleguideTextStyleUpdateEvent;
 }
 
 describe("styleguideTextStyleNotificationHandler", () => {

@@ -14,9 +14,9 @@ import { styleguideComponentNotificationHandler } from "./styleguideComponentNot
 import { projectScreenNotificationHandler } from "./projectScreenNotificationHandler";
 import { projectScreenVersionNotificationHandler } from "./projectScreenVersionNotificationHandler";
 import { pingNotificationHandler } from "./pingNotificationHandler";
-import { WebhookEventType } from "../../../../adapters/zeplin/types";
+import { WebhookEvent, WebhookEventType } from "../../../../adapters/zeplin/types";
 
-const notificationMap: Record<WebhookEventType, NotificationHandler> = {
+const notificationMap: Record<WebhookEventType, NotificationHandler<WebhookEvent>> = {
     [WebhookEventType.PING]: pingNotificationHandler,
     [WebhookEventType.PROJECT_COLOR]: projectColorNotificationHandler,
     [WebhookEventType.STYLEGUIDE_COLOR]: styleguideColorNotificationHandler,
@@ -34,6 +34,6 @@ const notificationMap: Record<WebhookEventType, NotificationHandler> = {
     [WebhookEventType.PROJECT_SCREEN_VERSION]: projectScreenVersionNotificationHandler
 } as const;
 
-export function getNotificationHandler(eventType: WebhookEventType): NotificationHandler {
+export function getNotificationHandler(eventType: WebhookEventType): NotificationHandler<WebhookEvent> {
     return notificationMap[eventType];
 }

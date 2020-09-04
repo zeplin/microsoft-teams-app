@@ -57,7 +57,7 @@ const mockNotificationHandler = {
 };
 
 jest.mock("./messageFacadeNotificationHandlers", () => ({
-    getNotificationHandler: (): NotificationHandler => mockNotificationHandler
+    getNotificationHandler: (): NotificationHandler<WebhookEvent> => mockNotificationHandler
 }));
 
 describe("messageFacade", () => {

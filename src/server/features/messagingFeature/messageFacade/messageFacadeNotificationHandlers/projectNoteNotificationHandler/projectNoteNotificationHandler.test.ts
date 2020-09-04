@@ -1,5 +1,5 @@
 import { projectNoteNotificationHandler } from "./projectNoteNotificationHandler";
-import { ProjectNoteEvent } from "../../../../../adapters/zeplin/types";
+import { NoteCreateEvent } from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     projectId?: string;
@@ -19,7 +19,7 @@ function getDummyEvent({
     username = "sertac",
     noteId = "noteId",
     commentContent = "Naptin nettin nettin naptin?"
-}: GetDummyEventParams = {}): ProjectNoteEvent {
+}: GetDummyEventParams = {}): NoteCreateEvent {
     return {
         payload: {
             action: "created",
@@ -48,7 +48,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as ProjectNoteEvent;
+    } as NoteCreateEvent;
 }
 
 describe("projectNoteNotificationHandler", () => {

@@ -1,5 +1,5 @@
 import { projectNoteCommentNotificationHandler } from "./projectNoteCommentNotificationHandler";
-import { ProjectNoteCommentEvent } from "../../../../../adapters/zeplin/types";
+import { NoteCommentCreateEvent } from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     projectId?: string;
@@ -23,7 +23,7 @@ function getDummyEvent({
     noteOrder = "1",
     commentId = "commentId",
     commentContent = "cok guzel keyfimiz var"
-}: GetDummyEventParams = {}): ProjectNoteCommentEvent {
+}: GetDummyEventParams = {}): NoteCommentCreateEvent {
     return {
         payload: {
             action: "created",
@@ -54,7 +54,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as ProjectNoteCommentEvent;
+    } as NoteCommentCreateEvent;
 }
 
 describe("projectNoteNotificationHandler", () => {

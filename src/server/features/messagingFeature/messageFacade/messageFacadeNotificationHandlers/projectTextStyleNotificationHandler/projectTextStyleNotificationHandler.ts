@@ -1,4 +1,9 @@
-import { ProjectTextStyleEvent, WebhookEvent } from "../../../../../adapters/zeplin/types";
+import {
+    ProjectTextStyleCreateEvent,
+    ProjectTextStyleEvent,
+    ProjectTextStyleUpdateEvent,
+    WebhookEvent
+} from "../../../../../adapters/zeplin/types";
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
@@ -6,7 +11,9 @@ import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../
 import { URL } from "url";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
-class ProjectTextStyleNotificationHandler extends NotificationHandler {
+type Event = ProjectTextStyleCreateEvent | ProjectTextStyleUpdateEvent;
+
+class ProjectTextStyleNotificationHandler extends NotificationHandler<Event> {
     delay = SHORT_DELAY;
     private getText(events: ProjectTextStyleEvent[]): string {
         const [{
@@ -63,7 +70,7 @@ class ProjectTextStyleNotificationHandler extends NotificationHandler {
         return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://textStyles?pid=${projectId}&tsids=${events.map(event => event.payload.resource.id).join(",")}`);
     }
 
-    shouldHandleEvent(event: WebhookEvent): boolean {
+    shouldHandleEvent(event: WebhookEvent): event is Event {
         return event.payload.action !== "deleted";
     }
 

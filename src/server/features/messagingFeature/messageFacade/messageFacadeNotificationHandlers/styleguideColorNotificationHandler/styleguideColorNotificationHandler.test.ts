@@ -1,5 +1,8 @@
 import { styleguideColorNotificationHandler } from "./styleguideColorNotificationHandler";
-import { StyleguideColorEvent } from "../../../../../adapters/zeplin/types";
+import {
+    StyleguideColorCreateEvent,
+    StyleguideColorUpdateEvent
+} from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     action?: string;
@@ -11,7 +14,7 @@ function getDummyEvent({
     action = "created",
     colorId = "colorId",
     colorName = "colorName"
-}: GetDummyEventParams = {}): StyleguideColorEvent {
+}: GetDummyEventParams = {}): StyleguideColorCreateEvent | StyleguideColorUpdateEvent {
     return {
         payload: {
             action,
@@ -29,7 +32,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as StyleguideColorEvent;
+    } as StyleguideColorCreateEvent | StyleguideColorUpdateEvent;
 }
 
 describe("styleguideColorNotificationHandler", () => {

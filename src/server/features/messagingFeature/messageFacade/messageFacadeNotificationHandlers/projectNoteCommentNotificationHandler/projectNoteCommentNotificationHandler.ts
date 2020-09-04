@@ -1,12 +1,15 @@
 import { NotificationHandler } from "../NotificationHandler";
 import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
-import { ProjectNoteCommentEvent, WebhookEvent } from "../../../../../adapters/zeplin/types";
+import {
+    NoteCommentCreateEvent,
+    WebhookEvent
+} from "../../../../../adapters/zeplin/types";
 import { ZEPLIN_MAC_APP_URL_SCHEME, ZEPLIN_WEB_APP_BASE_URL } from "../../../../../config";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
-class ProjectNoteCommentNotificationHandler extends NotificationHandler {
+class ProjectNoteCommentNotificationHandler extends NotificationHandler<NoteCommentCreateEvent> {
     delay: 0;
-    private getText(event: ProjectNoteCommentEvent): string {
+    private getText(event: NoteCommentCreateEvent): string {
         const {
             payload: {
                 context: {
@@ -30,7 +33,7 @@ class ProjectNoteCommentNotificationHandler extends NotificationHandler {
         return `**${username}** replied to note _#${order}_ on _${screenName}_ screen in _${projectName}_. 🏃‍♂`;
     }
 
-    private getSectionText(event: ProjectNoteCommentEvent): string {
+    private getSectionText(event: NoteCommentCreateEvent): string {
         const {
             payload: {
                 resource: {
@@ -43,7 +46,7 @@ class ProjectNoteCommentNotificationHandler extends NotificationHandler {
         return commentContent;
     }
 
-    private getWebappURL(event: ProjectNoteCommentEvent): string {
+    private getWebappURL(event: NoteCommentCreateEvent): string {
         const {
             payload: {
                 context: {
@@ -69,7 +72,7 @@ class ProjectNoteCommentNotificationHandler extends NotificationHandler {
         return webappURL.toString();
     }
 
-    private getMacAppURL(event: ProjectNoteCommentEvent): string {
+    private getMacAppURL(event: NoteCommentCreateEvent): string {
         const {
             payload: {
                 context: {
@@ -91,7 +94,7 @@ class ProjectNoteCommentNotificationHandler extends NotificationHandler {
         return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://dot?pid=${projectId}&sid=${screenId}&did=${noteId}&cmids=${commentId}`);
     }
 
-    shouldHandleEvent(event: WebhookEvent): boolean {
+    shouldHandleEvent(event: WebhookEvent): event is NoteCommentCreateEvent {
         return event.payload.action === "created";
     }
 
@@ -99,7 +102,7 @@ class ProjectNoteCommentNotificationHandler extends NotificationHandler {
         return event.deliveryId;
     }
 
-    getTeamsMessage(events: ProjectNoteCommentEvent[]): MessageCard {
+    getTeamsMessage(events: NoteCommentCreateEvent[]): MessageCard {
         const [event] = events;
         return commonTeamsCard({
             text: this.getText(event),
