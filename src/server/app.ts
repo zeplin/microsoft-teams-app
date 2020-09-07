@@ -19,7 +19,7 @@ class App {
     async init(config: Config): Promise<void> {
         await initAdapters(config);
 
-        await initializeQueueListener();
+        initializeQueueListener();
 
         this.expressApp = express();
 
