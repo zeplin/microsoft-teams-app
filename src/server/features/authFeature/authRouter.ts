@@ -1,12 +1,20 @@
 import { Router as createRouter } from "express";
 import Joi from "@hapi/joi";
 
-import { handleAuthorize, handleTokenCreate } from "./authController";
 import { JSONBodyParser, validateRequest } from "../../middlewares";
+import { authFacade } from "./authFacade";
 
 const authRouter = createRouter({ mergeParams: true });
 
-authRouter.get("/authorize", handleAuthorize);
+authRouter.get(
+    "/authorize",
+    (req, res, next) => {
+        try {
+            res.redirect(authFacade.getAuthorizationUrl());
+        } catch (error) {
+            next(error);
+        }
+    });
 
 authRouter.post(
     "/token",
@@ -17,7 +25,14 @@ authRouter.post(
             refreshToken: Joi.string().optional()
         }).xor("code", "refreshToken")
     }),
-    handleTokenCreate
+    async (req, res, next) => {
+        try {
+            const result = await authFacade.createToken(req.body);
+            res.json(result);
+        } catch (error) {
+            next(error);
+        }
+    }
 );
 
 export {

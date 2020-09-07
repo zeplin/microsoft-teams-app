@@ -3,12 +3,7 @@ import Joi from "@hapi/joi";
 
 import { validateRequest, JSONBodyParser } from "../../middlewares";
 import { ProjectWebhookEventType, StyleguideWebhookEventType, WebhookResourceType } from "../../adapters/zeplin/types";
-import {
-    handleConfigurationCreate,
-    handleConfigurationDelete,
-    handleConfigurationGet,
-    handleConfigurationUpdate
-} from "./configurationController";
+import { configurationFacade } from "./configurationFacade";
 
 const configurationRouter = createRouter({ mergeParams: true });
 
@@ -40,7 +35,19 @@ configurationRouter.post(
             })
         })
     }),
-    handleConfigurationCreate
+    async (req, res, next) => {
+        try {
+            const result = await configurationFacade.create(
+                req.body,
+                {
+                    authToken: String(req.headers.authorization)
+                }
+            );
+            res.json(result);
+        } catch (error) {
+            next(error);
+        }
+    }
 );
 
 configurationRouter.put(
@@ -54,7 +61,22 @@ configurationRouter.put(
             zeplin: zeplinSchema
         })
     }),
-    handleConfigurationUpdate
+    async (req, res, next) => {
+        try {
+            const result = await configurationFacade.update(
+                {
+                    configurationId: req.params.configurationId,
+                    zeplin: req.body.zeplin
+                },
+                {
+                    authToken: String(req.headers.authorization)
+                }
+            );
+            res.json(result);
+        } catch (error) {
+            next(error);
+        }
+    }
 );
 
 configurationRouter.delete(
@@ -64,7 +86,19 @@ configurationRouter.delete(
             configurationId: Joi.string().regex(/^[0-9a-f]{24}$/i)
         })
     }),
-    handleConfigurationDelete
+    async (req, res, next) => {
+        try {
+            const result = await configurationFacade.delete(
+                req.params.configurationId,
+                {
+                    authToken: String(req.headers.authorization)
+                }
+            );
+            res.json(result);
+        } catch (error) {
+            next(error);
+        }
+    }
 );
 
 configurationRouter.get(
@@ -74,7 +108,19 @@ configurationRouter.get(
             configurationId: Joi.string().regex(/^[0-9a-f]{24}$/i)
         })
     }),
-    handleConfigurationGet
+    async (req, res, next) => {
+        try {
+            const result = await configurationFacade.get(
+                req.params.configurationId,
+                {
+                    authToken: String(req.headers.authorization)
+                }
+            );
+            res.json(result);
+        } catch (error) {
+            next(error);
+        }
+    }
 );
 
 export {

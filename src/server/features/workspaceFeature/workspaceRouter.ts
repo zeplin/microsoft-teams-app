@@ -2,12 +2,24 @@ import { Router as createRouter } from "express";
 import Joi from "@hapi/joi";
 
 import { validateRequest } from "../../middlewares";
-import { handleWorkspacesGet } from "./workspaceController";
 import { projectRouter } from "./project";
 import { styleguideRouter } from "./styleguide";
+import { workspaceFacade } from "./workspaceFacade";
 
 const workspaceRouter = createRouter({ mergeParams: true });
-workspaceRouter.get("/", handleWorkspacesGet);
+
+workspaceRouter.get(
+    "/",
+    async (req, res, next) => {
+        try {
+            const result = await workspaceFacade.list(String(req.headers.authorization));
+            res.json(result);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
 workspaceRouter.use(
     "/:workspace/projects",
     validateRequest({
@@ -17,6 +29,7 @@ workspaceRouter.use(
     }),
     projectRouter
 );
+
 workspaceRouter.use(
     "/:workspace/styleguides",
     validateRequest({
