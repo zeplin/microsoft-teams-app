@@ -2,10 +2,8 @@ import { messageQueue, sentry } from "../../adapters";
 import { webhookEventService } from "../../services";
 import { Router } from "express";
 import { webhookEventRouter } from "./webhookEventRouter";
-import { Config } from "../../config";
 
-export function initMessagingFeature(router: Router, config: Config): void {
-    messageQueue.init(config);
+export function initMessagingFeature(router: Router): void {
     messageQueue.process(async job => {
         try {
             await webhookEventService.processJob(job.data);

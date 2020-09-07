@@ -1,5 +1,4 @@
 import Bull from "bull";
-import { Config } from "../../config";
 
 const QUEUE_NAME = "process-events";
 
@@ -14,8 +13,8 @@ interface MessageJobData {
 
 class MessageQueue {
     private bullQueue: Bull.Queue<MessageJobData> | undefined;
-    init(config: Config): void {
-        this.bullQueue = new Bull<MessageJobData>(QUEUE_NAME, config.REDIS_URL);
+    init(url: string): void {
+        this.bullQueue = new Bull<MessageJobData>(QUEUE_NAME, url);
     }
 
     process(handler: Bull.ProcessCallbackFunction<MessageJobData>): Promise<void> {
