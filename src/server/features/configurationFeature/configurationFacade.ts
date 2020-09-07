@@ -1,4 +1,4 @@
-import { Configuration, configurationRepo } from "../../repos";
+import { configurationRepo } from "../../repos";
 import {
     ProjectWebhookEventType,
     StyleguideWebhookEventType,
@@ -66,6 +66,11 @@ interface ConfigurationUpdateParameters {
 
 interface ConfigurationCommonOptions {
     authToken: string;
+}
+
+interface ResourceParams {
+    id: string;
+    type: WebhookResourceType;
 }
 
 class ConfigurationFacade {
@@ -142,7 +147,8 @@ class ConfigurationFacade {
     }
 
     private deleteWebhook(
-        { zeplin: { resource, webhookId } }: Configuration,
+        webhookId: string,
+        resource: ResourceParams,
         { authToken }: ConfigurationCommonOptions
     ): Promise<void> {
         if (resource.type === WebhookResourceType.PROJECT) {
@@ -168,7 +174,8 @@ class ConfigurationFacade {
     }
 
     private getWebhook(
-        { zeplin: { resource, webhookId } }: Configuration,
+        webhookId: string,
+        resource: ResourceParams,
         { authToken }: ConfigurationCommonOptions
     ): Promise<ProjectWebhook | StyleguideWebhook> {
         if (resource.type === WebhookResourceType.PROJECT) {
@@ -194,7 +201,7 @@ class ConfigurationFacade {
     }
 
     private getResource(
-        { zeplin: { resource } }: Configuration,
+        resource: ResourceParams,
         { authToken }: ConfigurationCommonOptions
     ): Promise<Project | Styleguide> {
         if (resource.type === WebhookResourceType.PROJECT) {
@@ -240,7 +247,7 @@ class ConfigurationFacade {
     ): Promise<void> {
         const configuration = await configurationRepo.get(configurationId);
         if (configuration) {
-            await this.deleteWebhook(configuration, options);
+            await this.deleteWebhook(configuration.zeplin.webhookId, configuration.zeplin.resource, options);
             await configurationRepo.delete(configurationId);
         }
     }
@@ -261,8 +268,8 @@ class ConfigurationFacade {
         }
 
         const [webhook, resource] = await Promise.all([
-            this.getWebhook(configuration, options),
-            this.getResource(configuration, options)
+            this.getWebhook(configuration.zeplin.webhookId, configuration.zeplin.resource, options),
+            this.getResource(configuration.zeplin.resource, options)
         ]);
 
         return {

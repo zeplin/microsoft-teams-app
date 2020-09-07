@@ -1,9 +1,8 @@
 import { messageFacade } from "./messageFacade";
-import { messageJobRepo, messageWebhookEventRepo } from "../messagingRepos";
 import { messageQueue } from "../messageQueue";
 import { WebhookEvent } from "../../../adapters/zeplin/types";
 import { NotificationHandler } from "./messageFacadeNotificationHandlers/NotificationHandler";
-import { configurationRepo } from "../../../repos";
+import { configurationRepo, messageJobRepo, messageWebhookEventRepo } from "../../../repos";
 import { requester } from "../../../adapters/requester";
 import { dummyConfiguration } from "../../../test/helpers";
 import { ServerError } from "../../../errors";
@@ -20,7 +19,7 @@ jest.mock("../messageQueue", () => ({
 
 jest.mock("../../../adapters/requester");
 
-jest.mock("../messagingRepos", () => ({
+jest.mock("../../../repos", () => ({
     messageJobRepo: {
         setGroupActiveJobId: jest.fn(),
         getGroupActiveJobId: jest.fn()
@@ -28,6 +27,9 @@ jest.mock("../messagingRepos", () => ({
     messageWebhookEventRepo: {
         addEventToGroup: jest.fn(),
         getAndRemoveGroupEvents: jest.fn()
+    },
+    configurationRepo: {
+        getByWebhookId: jest.fn()
     }
 }));
 

@@ -1,4 +1,4 @@
-import { redis } from "../../../../adapters";
+import { redis } from "../../adapters";
 
 const ACTIVE_JOB_TTL = 3600; // 1 hour in seconds
 

@@ -1,6 +1,6 @@
 import { messageWebhookEventRepo } from "./messageWebhookEventRepo";
-import { redis } from "../../../../adapters";
-import { WebhookEvent } from "../../../../adapters/zeplin/types";
+import { redis } from "../../adapters";
+import { WebhookEvent } from "../../adapters/zeplin/types";
 
 const exampleGroupingKey = "example-grouping-key";
 const exampleEvent = {

@@ -1,5 +1,5 @@
-import { WebhookEvent } from "../../../../adapters/zeplin/types";
-import { redis } from "../../../../adapters";
+import { WebhookEvent } from "../../adapters/zeplin/types";
+import { redis } from "../../adapters";
 
 function getRedisKey(groupingKey: string): string {
     return `webhook_events:${groupingKey}`;

@@ -1,5 +1,5 @@
 import { messageJobRepo } from "./messageJobRepo";
-import { redis } from "../../../../adapters";
+import { redis } from "../../adapters";
 
 const EXPECTED_TTL = 3600;
 
