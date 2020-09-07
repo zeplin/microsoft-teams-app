@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { Config } from "../config";
-import { initMessagingFeature } from "./messagingFeature";
+import { initMessagingFeature } from "./webhookEventFeature";
 import { initAuthFeature } from "./authFeature";
 import { initWorkspaceFeature } from "./workspaceFeature";
 import { initConfigurationFeature } from "./configurationFeature";

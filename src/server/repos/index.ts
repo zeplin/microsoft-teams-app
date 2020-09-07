@@ -1,3 +1,3 @@
 export * from "./configurationRepo";
-export * from "./messageWebhookEventRepo";
+export * from "./webhookEventRepo";
 export * from "./messageJobRepo";

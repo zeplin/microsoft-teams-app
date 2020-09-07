@@ -1,6 +1,6 @@
 import { WebhookEvent } from "../../adapters/zeplin/types";
 import { messageQueue, requester } from "../../adapters";
-import { messageJobRepo, messageWebhookEventRepo, configurationRepo } from "../../repos";
+import { messageJobRepo, webhookEventRepo, configurationRepo } from "../../repos";
 import { getNotificationHandler } from "./notificationHandlers";
 import { ServerError } from "../../errors";
 
@@ -16,7 +16,7 @@ class WebhookEventService {
             return;
         }
 
-        const events = await messageWebhookEventRepo.getAndRemoveGroupEvents(data.groupingKey);
+        const events = await webhookEventRepo.getAndRemoveGroupEvents(data.groupingKey);
         const [pivotEvent] = events;
         if (!pivotEvent) {
             throw new ServerError("There isn't any event found for the grouping key", {
@@ -57,7 +57,7 @@ class WebhookEventService {
         }
 
         await messageJobRepo.setGroupActiveJobId(groupingKey, jobId);
-        await messageWebhookEventRepo.addEventToGroup(groupingKey, event);
+        await webhookEventRepo.addEventToGroup(groupingKey, event);
 
         await messageQueue.add(
             { id: jobId, groupingKey },

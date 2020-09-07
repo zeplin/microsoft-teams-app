@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`projectComponentHandler getTeamsMessage method for created event should match snapshot when there are more than one events 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**2 new components** are added in _projectName_! 🏃‍♂️",
+  "sections": [
+    {
+      "images": [
+        {
+          "image": "http://placehold.it/200",
+          "title": "Section Image"
+        },
+        {
+          "image": "http://placehold.it/200",
+          "title": "Section Image"
+        }
+      ]
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fpid%3DprojectId%26coids%3DcomponentId%2CcomponentId2"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/components?coid=componentId&coid=componentId2"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`projectComponentHandler getTeamsMessage method for created event should match snapshot when there is only one event 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**componentName** is added in _projectName_! 🏃‍♂️",
+  "sections": [
+    {
+      "images": [
+        {
+          "image": "http://placehold.it/200",
+          "title": "Section Image"
+        }
+      ]
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fpid%3DprojectId%26coids%3DcomponentId"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/components?coid=componentId"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`projectComponentHandler getTeamsMessage method for version_created event should match snapshot when there are more than one events 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**2 components** are updated in _projectName_! 🏃‍♂️",
+  "sections": [
+    {
+      "images": [
+        {
+          "image": "http://placehold.it/200",
+          "title": "Section Image"
+        },
+        {
+          "image": "http://placehold.it/200",
+          "title": "Section Image"
+        }
+      ]
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fpid%3DprojectId%26coids%3DcomponentId%2CcomponentId2"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/components?coid=componentId&coid=componentId2"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`projectComponentHandler getTeamsMessage method for version_created event should match snapshot when there is only one event 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**componentName** is updated in _projectName_! 🏃‍♂️",
+  "sections": [
+    {
+      "images": [
+        {
+          "image": "http://placehold.it/200",
+          "title": "Section Image"
+        }
+      ]
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fpid%3DprojectId%26coids%3DcomponentId"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/components?coid=componentId"
+        }
+      ]
+    }
+  ]
+}
+`;
