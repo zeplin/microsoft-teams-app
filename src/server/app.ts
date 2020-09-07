@@ -2,12 +2,11 @@ import express, { Express, RequestHandler } from "express";
 import next from "next";
 import { parse } from "url";
 import { Config } from "./config";
-import { initAdapters } from "./adapters";
+import { initAdapters, sentry } from "./adapters";
 import { router } from "./router";
 import path from "path";
 import { handleError } from "./middlewares";
 import { ServerError } from "./errors";
-import { sentry } from "./adapters/sentry";
 import { initializeQueueListener } from "./queueListener";
 
 class App {

@@ -1,12 +1,16 @@
-import { zeplin } from "../../adapters/zeplin";
+import { zeplin } from "../../adapters";
 import { ZEPLIN_CLIENT_ID, ZEPLIN_CLIENT_SECRET, BASE_URL } from "../../config";
-import { AuthToken } from "../../adapters/zeplin/Auth";
 
 const REDIRECT_URI = `${BASE_URL}/zeplin/auth/end`;
 
 type TokenCreateParams = {
     code: string;
 } | {
+    refreshToken: string;
+}
+
+interface AuthToken {
+    accessToken: string;
     refreshToken: string;
 }
 
