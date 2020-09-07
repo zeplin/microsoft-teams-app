@@ -1,13 +1,12 @@
 import { webhookEventService } from "./webhookEventService";
-import { messageQueue } from "../../features/messagingFeature/messageQueue";
+import { messageQueue, requester } from "../../adapters";
 import { WebhookEvent } from "../../adapters/zeplin/types";
 import { configurationRepo, messageJobRepo, messageWebhookEventRepo } from "../../repos";
-import { requester } from "../../adapters/requester";
 import { dummyConfiguration } from "../../test/helpers";
 import { ServerError } from "../../errors";
 import { NotificationHandler } from "./notificationHandlers/NotificationHandler";
 
-jest.mock("../../features/messagingFeature/messageQueue", () => ({
+jest.mock("../../adapters/messageQueue", () => ({
     messageQueue: {
         process: jest.fn((handler: Function): Promise<void> => {
             handler();

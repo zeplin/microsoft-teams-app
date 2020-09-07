@@ -1,8 +1,7 @@
 import { WebhookEvent } from "../../adapters/zeplin/types";
-import { messageQueue } from "../../features/messagingFeature/messageQueue";
+import { messageQueue, requester } from "../../adapters";
 import { messageJobRepo, messageWebhookEventRepo, configurationRepo } from "../../repos";
 import { getNotificationHandler } from "./notificationHandlers";
-import { requester } from "../../adapters/requester";
 import { ServerError } from "../../errors";
 
 interface JobData {

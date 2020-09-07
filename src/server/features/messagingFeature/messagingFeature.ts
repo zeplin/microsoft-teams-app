@@ -1,9 +1,8 @@
-import { messageQueue } from "./messageQueue";
+import { messageQueue, sentry } from "../../adapters";
 import { webhookEventService } from "../../services";
 import { Router } from "express";
 import { messageRouter } from "./messageRouter";
 import { Config } from "../../config";
-import { sentry } from "../../adapters";
 
 export function initMessagingFeature(router: Router, config: Config): void {
     messageQueue.init(config);
