@@ -21,7 +21,7 @@ const options: ConnectionOptions = {
 };
 
 class Mongo {
-    private mongoose: Mongoose;
+    private mongoose!: Mongoose;
 
     async init(uri: string, { isDebug = false }: MongoOptions): Promise<void> {
         mongoose.set("debug", isDebug);

@@ -1,8 +1,13 @@
 import { app } from "./app";
 import * as config from "./config";
 import { sentry, closeAdapters } from "./adapters";
+import { ServerError } from "./errors";
 
 async function drive(): Promise<void> {
+    if (!config.validateConfig(config)) {
+        throw new ServerError("Config is not initialized");
+    }
+
     // Initialize NextJS and routes
     await app.init(config);
 

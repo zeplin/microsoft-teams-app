@@ -11,8 +11,8 @@ interface UseResourcesResult {
     areResourcesLoading: boolean;
     projectsError: boolean;
     styleguidesError: boolean;
-    projects: Project[];
-    styleguides: Styleguide[];
+    projects?: Project[];
+    styleguides?: Styleguide[];
     refetchProjects: () => void;
     refetchStyleguides: () => void;
 }
@@ -31,11 +31,11 @@ export const useResources = ({ enabled, workspace, onError }: UseWorkspacesResul
         refetch: refetchProjects
     } = useQuery(
         ["projects", workspace],
-        () => requester.getProjects(workspace),
+        () => requester.getProjects(workspace ?? ""),
         {
             enabled,
             retry: (failureCount, error: AxiosError) => (
-                error.response?.status >= INTERNAL_SERVER_ERROR &&
+                (error.response?.status === undefined || error.response?.status >= INTERNAL_SERVER_ERROR) &&
                 failureCount <= RETRY_COUNT
             ),
             onError: error => onError(error.response?.status === UNAUTHORIZED)
@@ -49,11 +49,11 @@ export const useResources = ({ enabled, workspace, onError }: UseWorkspacesResul
         refetch: refetchStyleguides
     } = useQuery(
         ["styleguides", workspace],
-        () => requester.getStyleguides(workspace),
+        () => requester.getStyleguides(workspace ?? ""),
         {
             enabled,
             retry: (failureCount, error: AxiosError) => (
-                error.response?.status >= INTERNAL_SERVER_ERROR &&
+                (error.response?.status === undefined || error.response?.status >= INTERNAL_SERVER_ERROR) &&
                 failureCount <= RETRY_COUNT
             ),
             onError: error => onError(error.response?.status === UNAUTHORIZED)

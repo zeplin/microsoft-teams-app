@@ -6,7 +6,7 @@ import { Projects } from "./Projects";
 import { ProjectStatus } from "../types";
 
 const authToken = "authToken";
-const expectedResult = [];
+const expectedResult: string[] = [];
 
 describe("Zeplin > projects", () => {
     let projects: Projects;

@@ -12,7 +12,7 @@ interface MessageJobData {
 }
 
 class MessageQueue {
-    private bullQueue: Bull.Queue<MessageJobData> | undefined;
+    private bullQueue!: Bull.Queue<MessageJobData>;
     init(url: string): void {
         this.bullQueue = new Bull<MessageJobData>(QUEUE_NAME, url);
     }

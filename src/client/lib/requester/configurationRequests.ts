@@ -104,7 +104,7 @@ export const getConfiguration = async (configurationId: string): Promise<Configu
             type
         },
         webhook: {
-            events: events.map(event => event.slice(event.indexOf(".") + 1))
+            events: events.map((event: string) => event.slice(event.indexOf(".") + 1))
         }
     };
 };

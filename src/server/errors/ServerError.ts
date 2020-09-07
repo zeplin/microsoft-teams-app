@@ -11,7 +11,7 @@ export class ServerError extends Error {
     statusCode: number;
     title?: string;
     extra?: object;
-    shouldCapture?: boolean;
+    shouldCapture: boolean;
 
     constructor(
         message: string,

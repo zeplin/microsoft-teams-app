@@ -10,7 +10,7 @@ const RETRY_COUNT = 3;
 interface UseWorkspacesResult {
     areWorkspacesLoading: boolean;
     workspacesError: boolean;
-    workspaces: Workspace[];
+    workspaces?: Workspace[];
     refetchWorkspaces: () => void;
 }
 
@@ -33,7 +33,7 @@ export const useWorkspaces = ({
         requester.getWorkspaces,
         {
             retry: (failureCount, error: AxiosError) => (
-                error.response?.status >= INTERNAL_SERVER_ERROR &&
+                (error.response?.status === undefined || error.response?.status >= INTERNAL_SERVER_ERROR) &&
                 failureCount <= RETRY_COUNT
             ),
             onError: error => onError(error.response?.status === UNAUTHORIZED),

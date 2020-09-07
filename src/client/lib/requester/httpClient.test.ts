@@ -46,12 +46,12 @@ describe("httpClient", () => {
     });
 
     describe("UNAUTHORIZED errors", () => {
-        let spyGetAccessToken;
-        let spyGetRefreshToken;
-        let spyRemoveAccessToken;
-        let spyRemoveRefreshToken;
-        let spySetAccessToken;
-        let spySetRefreshToken;
+        let spyGetAccessToken: jest.SpyInstance;
+        let spyGetRefreshToken: jest.SpyInstance;
+        let spyRemoveAccessToken: jest.SpyInstance;
+        let spyRemoveRefreshToken: jest.SpyInstance;
+        let spySetAccessToken: jest.SpyInstance;
+        let spySetRefreshToken: jest.SpyInstance;
         const newAccessToken = "newAccessToken";
         const newRefreshToken = "newRefreshToken";
 

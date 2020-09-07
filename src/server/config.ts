@@ -1,5 +1,6 @@
 /* eslint-disable no-process-env */
 import { config } from "dotenv";
+import { ServerError } from "./errors";
 
 config({ path: process.env.ENV_FILE });
 
@@ -54,4 +55,20 @@ export interface Config {
     SENTRY_DSN: string;
     IS_SENTRY_ENABLED: boolean;
     VERSION: string;
+    ZEPLIN_CLIENT_ID: string;
+    ZEPLIN_CLIENT_SECRET: string;
+}
+
+export function validateConfig(value: Partial<Config>): value is Config {
+    if (value.BASE_URL === undefined) {
+        throw new ServerError("`BASE_URL` is missing");
+    }
+    if (value.ZEPLIN_CLIENT_ID === undefined) {
+        throw new ServerError("`ZEPLIN_CLIENT_ID` is missing");
+    }
+    if (value.ZEPLIN_CLIENT_SECRET === undefined) {
+        throw new ServerError("`ZEPLIN_CLIENT_SECRET` is missing");
+    }
+
+    return true;
 }

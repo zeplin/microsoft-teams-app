@@ -12,7 +12,7 @@ type UseLoginResult = [
     }
 ]
 
-const errorToText = (error: string): string => {
+const errorToText = (error?: string): string => {
     switch (error) {
         case "CancelledByUser":
         case "access_denied":
