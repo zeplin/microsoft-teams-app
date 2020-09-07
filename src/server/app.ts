@@ -1,9 +1,9 @@
-import express, { Express, RequestHandler, Router as createRouter } from "express";
+import express, { Express, RequestHandler } from "express";
 import next from "next";
 import { parse } from "url";
 import { Config } from "./config";
 import { initAdapters } from "./adapters";
-import { initFeatures } from "./features";
+import { router } from "./router";
 import path from "path";
 import { handleError } from "./middlewares";
 import { ServerError } from "./errors";
@@ -30,16 +30,12 @@ class App {
         });
         await nextApp.prepare();
 
-        const apiRouter = createRouter({ mergeParams: true });
-
-        initFeatures(apiRouter);
-
         this.expressApp.get("/health", this.handleHealthCheck);
 
         this.expressApp.use(
             "/api",
             sentry.requestHandler,
-            apiRouter,
+            router,
             sentry.errorHandler,
             handleError
         );
