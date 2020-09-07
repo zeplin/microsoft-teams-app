@@ -8,6 +8,7 @@ import path from "path";
 import { handleError } from "./middlewares";
 import { ServerError } from "./errors";
 import { sentry } from "./adapters/sentry";
+import { initializeQueueListener } from "./queueListener";
 
 class App {
     private expressApp?: Express;
@@ -19,6 +20,8 @@ class App {
     async init(config: Config): Promise<void> {
         await initAdapters(config);
 
+        await initializeQueueListener();
+
         this.expressApp = express();
 
         const nextApp = next({
@@ -29,7 +32,7 @@ class App {
 
         const apiRouter = createRouter({ mergeParams: true });
 
-        initFeatures(apiRouter, config);
+        initFeatures(apiRouter);
 
         this.expressApp.get("/health", this.handleHealthCheck);
 
