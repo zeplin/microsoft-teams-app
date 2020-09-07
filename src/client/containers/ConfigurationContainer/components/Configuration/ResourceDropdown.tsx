@@ -11,7 +11,7 @@ interface ResourceDropdownProps {
     search: string;
     onBlur: () => void;
     onSearchChange: (value: string) => void;
-    onChange: (value: Resource | undefined) => void;
+    onChange: (value: Resource) => void;
 }
 
 export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({

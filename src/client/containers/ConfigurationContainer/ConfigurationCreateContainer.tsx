@@ -160,7 +160,7 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
                     onResourceChange={(resource): void => setState(prevState => ({
                         ...prevState,
                         resource,
-                        resourceSearch: resource?.name ?? ""
+                        resourceSearch: resource.name
                     }))}
                     onWebhookEventsChange={(events): void => setState(prevState => ({
                         ...prevState,
