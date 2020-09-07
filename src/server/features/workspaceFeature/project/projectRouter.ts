@@ -1,6 +1,6 @@
 import { Router as createRouter } from "express";
 
-import { projectFacade } from "./projectFacade";
+import { projectService } from "../../../services";
 
 const projectRouter = createRouter({ mergeParams: true });
 
@@ -8,7 +8,7 @@ projectRouter.get(
     "/",
     async (req, res, next) => {
         try {
-            const result = await projectFacade.list({
+            const result = await projectService.list({
                 workspace: req.params.workspace,
                 authToken: String(req.headers.authorization)
             });

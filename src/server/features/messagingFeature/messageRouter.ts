@@ -1,6 +1,6 @@
 import { Router as createRouter } from "express";
 import { JSONBodyParser } from "../../middlewares";
-import { messageFacade } from "./messageFacade";
+import { webhookEventService } from "../../services";
 
 const messageRouter = createRouter({ mergeParams: true });
 messageRouter.post("/",
@@ -9,7 +9,7 @@ messageRouter.post("/",
         try {
             const webhookId = req.headers["zeplin-webhook-id"] as string;
             const deliveryId = req.headers["zeplin-delivery-id"] as string;
-            await messageFacade.handleEventArrived({
+            await webhookEventService.handleEventArrived({
                 webhookId,
                 deliveryId,
                 payload: req.body

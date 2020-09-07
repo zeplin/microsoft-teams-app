@@ -1,6 +1,6 @@
 import { Router as createRouter } from "express";
 
-import { styleguideFacade } from "./styleguideFacade";
+import { styleguideService } from "../../../services";
 
 const styleguideRouter = createRouter({ mergeParams: true });
 
@@ -8,7 +8,7 @@ styleguideRouter.get(
     "/",
     async (req, res, next) => {
         try {
-            const result = await styleguideFacade.list({
+            const result = await styleguideService.list({
                 workspace: req.params.workspace,
                 authToken: String(req.headers.authorization)
             });

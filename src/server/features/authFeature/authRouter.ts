@@ -2,7 +2,7 @@ import { Router as createRouter } from "express";
 import Joi from "@hapi/joi";
 
 import { JSONBodyParser, validateRequest } from "../../middlewares";
-import { authFacade } from "./authFacade";
+import { authService } from "../../services";
 
 const authRouter = createRouter({ mergeParams: true });
 
@@ -10,7 +10,7 @@ authRouter.get(
     "/authorize",
     (req, res, next) => {
         try {
-            res.redirect(authFacade.getAuthorizationUrl());
+            res.redirect(authService.getAuthorizationUrl());
         } catch (error) {
             next(error);
         }
@@ -27,7 +27,7 @@ authRouter.post(
     }),
     async (req, res, next) => {
         try {
-            const result = await authFacade.createToken(req.body);
+            const result = await authService.createToken(req.body);
             res.json(result);
         } catch (error) {
             next(error);

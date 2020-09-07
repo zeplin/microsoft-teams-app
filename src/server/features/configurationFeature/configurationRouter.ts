@@ -3,7 +3,7 @@ import Joi from "@hapi/joi";
 
 import { validateRequest, JSONBodyParser } from "../../middlewares";
 import { ProjectWebhookEventType, StyleguideWebhookEventType, WebhookResourceType } from "../../adapters/zeplin/types";
-import { configurationFacade } from "./configurationFacade";
+import { configurationService } from "../../services";
 
 const configurationRouter = createRouter({ mergeParams: true });
 
@@ -37,7 +37,7 @@ configurationRouter.post(
     }),
     async (req, res, next) => {
         try {
-            const result = await configurationFacade.create(
+            const result = await configurationService.create(
                 req.body,
                 {
                     authToken: String(req.headers.authorization)
@@ -63,7 +63,7 @@ configurationRouter.put(
     }),
     async (req, res, next) => {
         try {
-            const result = await configurationFacade.update(
+            const result = await configurationService.update(
                 {
                     configurationId: req.params.configurationId,
                     zeplin: req.body.zeplin
@@ -88,7 +88,7 @@ configurationRouter.delete(
     }),
     async (req, res, next) => {
         try {
-            const result = await configurationFacade.delete(
+            const result = await configurationService.delete(
                 req.params.configurationId,
                 {
                     authToken: String(req.headers.authorization)
@@ -110,7 +110,7 @@ configurationRouter.get(
     }),
     async (req, res, next) => {
         try {
-            const result = await configurationFacade.get(
+            const result = await configurationService.get(
                 req.params.configurationId,
                 {
                     authToken: String(req.headers.authorization)
