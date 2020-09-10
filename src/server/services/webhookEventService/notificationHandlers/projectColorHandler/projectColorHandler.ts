@@ -9,6 +9,7 @@ import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../config";
 import { URL } from "url";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
+import { md } from "../md";
 
 type Event = ProjectColorCreateEvent | ProjectColorUpdateEvent;
 
@@ -32,8 +33,8 @@ class ProjectColorHandler extends NotificationHandler<Event> {
         }] = events;
         const actionText = action === "created" ? "added" : "updated";
         return events.length === 1
-            ? `**${pivotColorName}** is ${actionText} in _${projectName}_! 🏃‍♂`
-            : `**${events.length} new colors** are ${actionText} in _${projectName}_! 🏃‍♂`;
+            ? md`**${pivotColorName}** is ${actionText} in _${projectName}_! 🏃‍♂`
+            : md`**${events.length} new colors** are ${actionText} in _${projectName}_! 🏃‍♂`;
     }
 
     private getWebappURL(

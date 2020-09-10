@@ -9,6 +9,7 @@ import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../config";
 import { URL } from "url";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
+import { md } from "../md";
 
 type Event = StyleguideSpacingTokenCreateEvent | StyleguideSpacingTokenUpdateEvent;
 
@@ -32,8 +33,8 @@ class StyleguideSpacingTokenHandler extends NotificationHandler<Event> {
         }] = events;
         const actionText = action === "created" ? "added" : "updated";
         return events.length === 1
-            ? `**${pivotSpacingTokenName}** is ${actionText} in _${styleguideName}_! 🏃‍♂`
-            : `**${events.length} spacing tokens** are ${actionText} in _${styleguideName}_! 🏃‍♂`;
+            ? md`**${pivotSpacingTokenName}** is ${actionText} in _${styleguideName}_! 🏃‍♂`
+            : md`**${events.length} spacing tokens** are ${actionText} in _${styleguideName}_! 🏃‍♂`;
     }
 
     private getWebappURL(

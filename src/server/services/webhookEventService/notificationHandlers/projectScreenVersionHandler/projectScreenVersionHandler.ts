@@ -4,6 +4,7 @@ import { ScreenVersionCreateEvent, WebhookEvent } from "../../../../adapters/zep
 import { MEDIUM_DELAY } from "../constants";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../config";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
+import { md } from "../md";
 
 const IMAGE_LIMIT = 5;
 
@@ -24,8 +25,8 @@ class ProjectScreenVersionHandler extends NotificationHandler<ScreenVersionCreat
             }
         }] = events;
         return events.length === 1
-            ? `**${screenName}** is updated in _${projectName}_! 🏃‍♂️`
-            : `**${events.length} screens** are updated in _${projectName}_! 🏃‍♂`;
+            ? md`**${screenName}** is updated in _${projectName}_! 🏃‍♂️`
+            : md`**${events.length} screens** are updated in _${projectName}_! 🏃‍♂`;
     }
 
     private getImages(events: ScreenVersionCreateEvent[]): string[] {
