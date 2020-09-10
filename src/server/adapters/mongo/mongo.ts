@@ -1,11 +1,11 @@
 import mongoose, {
     ConnectionOptions,
     Mongoose,
-    Model
+    Model,
+    Schema,
+    Document
 } from "mongoose";
 import { ReadPreference } from "mongodb";
-import { configurationSchema } from "./schemas";
-import { ConfigurationDocument } from "./documents";
 
 interface MongoOptions {
     isDebug?: boolean;
@@ -22,13 +22,15 @@ const options: ConnectionOptions = {
 
 class Mongo {
     private mongoose: Mongoose;
-    configuration: Model<ConfigurationDocument>;
 
     async init(uri: string, { isDebug = false }: MongoOptions): Promise<void> {
         mongoose.set("debug", isDebug);
 
         this.mongoose = await mongoose.connect(uri, options);
-        this.configuration = this.mongoose.model("configuration", configurationSchema);
+    }
+
+    createModel<D extends Document>(modelName: string, schema: Schema): Model<D> {
+        return this.mongoose.model<D>(modelName, schema);
     }
 
     close(): Promise<void> {

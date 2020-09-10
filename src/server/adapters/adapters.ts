@@ -3,6 +3,7 @@ import { Config } from "../config";
 import { zeplin } from "./zeplin";
 import { mongo } from "./mongo";
 import { sentry } from "./sentry";
+import { messageQueue } from "./messageQueue";
 
 export async function initAdapters(config: Config): Promise<void> {
     sentry.init({
@@ -13,6 +14,7 @@ export async function initAdapters(config: Config): Promise<void> {
     });
     redis.init(config.REDIS_URL);
     zeplin.init({ url: config.ZEPLIN_URL });
+    messageQueue.init(config.REDIS_URL);
     await mongo.init(config.MONGO_URL, { isDebug: config.IS_MONGO_DEBUG });
 }
 

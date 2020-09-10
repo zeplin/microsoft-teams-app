@@ -1,0 +1,145 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`styleguideColorHandler getTeamsMessage method for created notification should match snapshot when there are more than 1 events 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**2 new colors** are added in _styleguideName_! 🏃‍♂",
+  "sections": [
+    {
+      "text": "Make sure your stylesheets are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fstid%3DstyleguideId%26cids%3DcolorId%2CanotherColorId"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/styleguide/colors?cid=colorId&cid=anotherColorId"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideColorHandler getTeamsMessage method for created notification should match snapshot when there is only 1 event 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is added in _styleguideName_! 🏃‍♂",
+  "sections": [
+    {
+      "text": "Make sure your stylesheets are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fstid%3DstyleguideId%26cids%3DcolorId"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/styleguide/colors?cid=colorId"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideColorHandler getTeamsMessage method for updated notification should match snapshot when there are more than 1 events 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**2 new colors** are updated in _styleguideName_! 🏃‍♂",
+  "sections": [
+    {
+      "text": "Make sure your stylesheets are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fstid%3DstyleguideId%26cids%3DcolorId%2CanotherColorId"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/styleguide/colors?cid=colorId&cid=anotherColorId"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideColorHandler getTeamsMessage method for updated notification should match snapshot when there is only 1 event 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is updated in _styleguideName_! 🏃‍♂",
+  "sections": [
+    {
+      "text": "Make sure your stylesheets are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fstid%3DstyleguideId%26cids%3DcolorId"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/styleguide/colors?cid=colorId"
+        }
+      ]
+    }
+  ]
+}
+`;

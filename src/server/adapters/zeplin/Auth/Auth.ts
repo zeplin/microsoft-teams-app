@@ -24,7 +24,7 @@ interface AuthTokenRefreshParameter {
     };
 }
 
-export interface AuthToken {
+interface AuthToken {
     accessToken: string;
     refreshToken: string;
 }

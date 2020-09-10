@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`projectMemberHandler getTeamsMessage should match snapshot when there are more than one events 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**2 new users** just joined _Project MS Teams Integration_",
+  "sections": [
+    {
+      "text": "Say hi 👋",
+      "images": []
+    }
+  ]
+}
+`;
+
+exports[`projectMemberHandler getTeamsMessage should match snapshot when there is only one event 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**dirtybit** just joined _Project MS Teams Integration_.",
+  "sections": [
+    {
+      "text": "Say hi 👋",
+      "images": []
+    }
+  ]
+}
+`;

@@ -1,0 +1,145 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`styleguideTextStyleHandler getTeamsMessage method for created notification should match snapshot when there are more than 1 events 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**2 text styles** are added in _styleguideName_! 🏃‍♂",
+  "sections": [
+    {
+      "text": "Make sure your stylesheets are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2FtextStyles%3Fstid%3DstyleguideId%26tsids%3DtextStyleId%2CanotherTextStyleId"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/styleguide/textstyles?tsid=textStyleId&tsid=anotherTextStyleId"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideTextStyleHandler getTeamsMessage method for created notification should match snapshot when there is only 1 event 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**textStyleName** is added in _styleguideName_! 🏃‍♂",
+  "sections": [
+    {
+      "text": "Make sure your stylesheets are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2FtextStyles%3Fstid%3DstyleguideId%26tsids%3DtextStyleId"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/styleguide/textstyles?tsid=textStyleId"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideTextStyleHandler getTeamsMessage method for updated notification should match snapshot when there are more than 1 events 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**2 text styles** are updated in _styleguideName_! 🏃‍♂",
+  "sections": [
+    {
+      "text": "Make sure your stylesheets are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2FtextStyles%3Fstid%3DstyleguideId%26tsids%3DtextStyleId%2CanotherTextStyleId"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/styleguide/textstyles?tsid=textStyleId&tsid=anotherTextStyleId"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideTextStyleHandler getTeamsMessage method for updated notification should match snapshot when there is only 1 event 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**textStyleName** is updated in _styleguideName_! 🏃‍♂",
+  "sections": [
+    {
+      "text": "Make sure your stylesheets are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2FtextStyles%3Fstid%3DstyleguideId%26tsids%3DtextStyleId"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/styleguide/textstyles?tsid=textStyleId"
+        }
+      ]
+    }
+  ]
+}
+`;

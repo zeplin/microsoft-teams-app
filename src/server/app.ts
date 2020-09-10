@@ -1,13 +1,13 @@
-import express, { Express, RequestHandler, Router as createRouter } from "express";
+import express, { Express, RequestHandler } from "express";
 import next from "next";
 import { parse } from "url";
 import { Config } from "./config";
-import { initAdapters } from "./adapters";
-import { initFeatures } from "./features";
+import { initAdapters, sentry } from "./adapters";
+import { router } from "./router";
 import path from "path";
 import { handleError } from "./middlewares";
 import { ServerError } from "./errors";
-import { sentry } from "./adapters/sentry";
+import { initializeQueueListener } from "./queueListener";
 
 class App {
     private expressApp?: Express;
@@ -19,6 +19,8 @@ class App {
     async init(config: Config): Promise<void> {
         await initAdapters(config);
 
+        initializeQueueListener();
+
         this.expressApp = express();
 
         const nextApp = next({
@@ -27,16 +29,12 @@ class App {
         });
         await nextApp.prepare();
 
-        const apiRouter = createRouter({ mergeParams: true });
-
-        initFeatures(apiRouter, config);
-
         this.expressApp.get("/health", this.handleHealthCheck);
 
         this.expressApp.use(
             "/api",
             sentry.requestHandler,
-            apiRouter,
+            router,
             sentry.errorHandler,
             handleError
         );
