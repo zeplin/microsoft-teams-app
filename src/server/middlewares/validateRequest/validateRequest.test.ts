@@ -19,7 +19,12 @@ const handleError: ErrorRequestHandler = (err, req, res, next) => {
     }
 };
 
-function createServer({ url = "/", validationSchema }): request.SuperTest<request.Test> {
+interface ServerCreateParams {
+    url?: string;
+    validationSchema: Parameters<typeof validateRequest>[0];
+}
+
+function createServer({ url = "/", validationSchema }: ServerCreateParams): request.SuperTest<request.Test> {
     const app = express();
 
     app.post(

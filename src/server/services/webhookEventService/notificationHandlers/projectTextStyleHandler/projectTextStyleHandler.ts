@@ -1,6 +1,5 @@
 import {
     ProjectTextStyleCreateEvent,
-    ProjectTextStyleEvent,
     ProjectTextStyleUpdateEvent,
     WebhookEvent
 } from "../../../../adapters/zeplin/types";
@@ -15,7 +14,7 @@ type Event = ProjectTextStyleCreateEvent | ProjectTextStyleUpdateEvent;
 
 class ProjectTextStyleHandler extends NotificationHandler<Event> {
     delay = SHORT_DELAY;
-    private getText(events: ProjectTextStyleEvent[]): string {
+    private getText(events: Event[]): string {
         const [{
             payload: {
                 action,
@@ -38,7 +37,7 @@ class ProjectTextStyleHandler extends NotificationHandler<Event> {
     }
 
     private getWebappURL(
-        events: ProjectTextStyleEvent[]
+        events: Event[]
     ): string {
         const [{
             payload: {
@@ -56,7 +55,7 @@ class ProjectTextStyleHandler extends NotificationHandler<Event> {
     }
 
     private getMacAppURL(
-        events: ProjectTextStyleEvent[]
+        events: Event[]
     ): string {
         const [{
             payload: {
@@ -75,7 +74,7 @@ class ProjectTextStyleHandler extends NotificationHandler<Event> {
     }
 
     getTeamsMessage(
-        events: ProjectTextStyleEvent[]
+        events: Event[]
     ): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),

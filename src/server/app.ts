@@ -47,19 +47,19 @@ class App {
     }
 
     listen(port: number): Promise<void> {
-        if (!this.expressApp) {
-            throw new ServerError("App is tried to be listened before initialized");
-        }
-
         return new Promise((resolve, reject) => {
-            this.expressApp.listen(port, err => {
-                if (err) {
-                    reject(err);
-                    return;
-                }
+            if (this.expressApp) {
+                this.expressApp.listen(port, err => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
 
-                resolve();
-            });
+                    resolve();
+                });
+            } else {
+                reject(new ServerError("App is tried to be listened before initialized"));
+            }
         });
     }
 }

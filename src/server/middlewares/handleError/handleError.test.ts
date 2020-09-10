@@ -1,4 +1,4 @@
-import express from "express";
+import express, { RequestHandler } from "express";
 import request from "supertest";
 import { handleError } from "./handleError";
 import { INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from "http-status-codes";
@@ -8,14 +8,12 @@ describe("handleError", () => {
     it("should do nothing if response is sent", async () => {
         const app = express();
 
-        app.get(
-            "/",
-            (req, res, next) => {
-                res.json({});
-                next(new Error("hello"));
-            },
-            handleError
-        );
+        const handler: RequestHandler = (req, res, next) => {
+            res.json({});
+            next(new Error("hello"));
+        };
+
+        app.get("/", handler, handleError);
 
         const requester = request(app);
 
@@ -26,13 +24,11 @@ describe("handleError", () => {
     it("should send error to client when there is an error", async () => {
         const app = express();
 
-        app.get(
-            "/",
-            (req, res, next) => {
-                next(new ServerError("Case specific message", { statusCode: UNAUTHORIZED, title: "Title" }));
-            },
-            handleError
-        );
+        const handler: RequestHandler = (req, res, next) => {
+            next(new ServerError("Case specific message", { statusCode: UNAUTHORIZED, title: "Title" }));
+        };
+
+        app.get("/", handler, handleError);
 
         const requester = request(app);
 
@@ -47,13 +43,11 @@ describe("handleError", () => {
     it("should send internal server error when the status code is not specified", async () => {
         const app = express();
 
-        app.get(
-            "/",
-            (req, res, next) => {
-                next(new ServerError("Case specific message", { title: "Title" }));
-            },
-            handleError
-        );
+        const handler: RequestHandler = (req, res, next) => {
+            next(new ServerError("Case specific message", { title: "Title" }));
+        };
+
+        app.get("/", handler, handleError);
 
         const requester = request(app);
 
@@ -68,13 +62,11 @@ describe("handleError", () => {
     it('should send error with "Unexpected Error" title when the title is not specified', async () => {
         const app = express();
 
-        app.get(
-            "/",
-            (req, res, next) => {
-                next(new ServerError("Case specific message", { statusCode: UNAUTHORIZED }));
-            },
-            handleError
-        );
+        const handler: RequestHandler = (req, res, next) => {
+            next(new ServerError("Case specific message", { statusCode: UNAUTHORIZED }));
+        };
+
+        app.get("/", handler, handleError);
 
         const requester = request(app);
 

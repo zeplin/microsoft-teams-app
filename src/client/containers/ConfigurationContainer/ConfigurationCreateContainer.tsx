@@ -32,10 +32,10 @@ enum Status {
 
 function isValid(state: State): boolean {
     return state.status === Status.CONFIGURATION &&
-        Boolean(state.workspace) &&
-        Boolean(state.resource) &&
+        state.workspace !== undefined &&
+        state.resource !== undefined &&
         state.events.filter(
-            event => resourceBasedEvents[state.resource.type].includes(event)
+            event => resourceBasedEvents[(state.resource as Resource).type].includes(event)
         ).length > 0;
 }
 
@@ -149,7 +149,7 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
                         resourceSearch:
                             prevState.status === Status.CONFIGURATION
                                 ? prevState.resource?.name ?? ""
-                                : undefined
+                                : ""
                     }))}
                     onWorkspaceChange={(workspace): void => setState(prevState => ({
                         ...prevState,

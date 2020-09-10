@@ -8,7 +8,8 @@ import { ZEPLIN_MAC_APP_URL_SCHEME, ZEPLIN_WEB_APP_BASE_URL } from "../../../../
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
 class ProjectNoteCommentHandler extends NotificationHandler<NoteCommentCreateEvent> {
-    delay: 0;
+    delay = 0;
+
     private getText(event: NoteCommentCreateEvent): string {
         const {
             payload: {

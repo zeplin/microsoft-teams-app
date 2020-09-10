@@ -47,6 +47,14 @@ export const useConfigurationSave = ({
             }) => {
                 microsoftTeams.settings.getSettings(settings => {
                     microsoftTeams.settings.registerOnSaveHandler(async saveEvent => {
+                        if (tenantId === undefined ||
+                            channelId === undefined ||
+                            channelName === undefined ||
+                            resource === undefined ||
+                            events === undefined) {
+                            saveEvent.notifyFailure("params are not defined");
+                            return;
+                        }
                         const { webhookUrl } = settings as unknown as WebhookSettings;
                         try {
                             if (configurationId) {

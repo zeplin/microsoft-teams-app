@@ -11,7 +11,7 @@ interface ResourceDropdownProps {
     search: string;
     onBlur: () => void;
     onSearchChange: (value: string) => void;
-    onChange: (value: Resource | undefined) => void;
+    onChange: (value: Resource) => void;
 }
 
 export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
@@ -95,14 +95,15 @@ export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
             onFocus={(): void => {
                 setOpen(true);
             }}
-            onChange={(_, { value }: { value?: { resource: Resource } }): void => {
+            onChange={(_, { value }): void => {
                 if (value) {
-                    onChange(value.resource);
+                    const { resource } = value as { resource: Resource };
+                    onChange(resource);
                     setOpen(false);
                 }
             }}
             onSearchQueryChange={(_, { searchQuery }): void => {
-                onSearchChange(searchQuery);
+                onSearchChange(searchQuery ?? "");
             }}
         />
     );

@@ -52,7 +52,7 @@ describe("projectScreenHandler", () => {
             ]);
             const expectedImages = ["url6", "url5", "url4", "url3", "url2"];
             const { sections: [{ images }] } = result;
-            expect(images.map(image => image.image)).toEqual(expectedImages);
+            expect(images?.map(image => image.image)).toEqual(expectedImages);
         });
 
         it("should match snapshot when there is only one event", () => {

@@ -38,15 +38,16 @@ httpClient.interceptors.response.use(
         if (error.response?.status !== UNAUTHORIZED) {
             throw error;
         }
+        const currentRefreshToken = storage.getRefreshToken();
 
-        if (error.response?.data?.detail !== "token_expired") {
+        if (error.response?.data?.detail !== "token_expired" || !currentRefreshToken) {
             storage.removeAccessToken();
             storage.removeRefreshToken();
             throw error;
         }
 
         try {
-            const { accessToken, refreshToken } = await throttledRefreshToken(storage.getRefreshToken());
+            const { accessToken, refreshToken } = await throttledRefreshToken(currentRefreshToken);
             storage.setAccessToken(accessToken);
             storage.setRefreshToken(refreshToken);
         } catch (e) {

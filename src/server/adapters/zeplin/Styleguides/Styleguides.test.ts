@@ -6,7 +6,7 @@ import { Styleguides } from "./Styleguides";
 import { StyleguideStatus } from "../types";
 
 const authToken = "authToken";
-const expectedResult = [];
+const expectedResult: string[] = [];
 
 describe("Zeplin > styleguides", () => {
     let styleguides: Styleguides;

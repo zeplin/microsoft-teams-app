@@ -19,7 +19,7 @@ class AuthService {
         return zeplin.auth.getAuthorizationUrl({
             query: {
                 redirectUri: REDIRECT_URI,
-                clientId: ZEPLIN_CLIENT_ID
+                clientId: ZEPLIN_CLIENT_ID as string
             }
         });
     }
@@ -29,8 +29,8 @@ class AuthService {
             return zeplin.auth.createToken({
                 body: {
                     code: params.code,
-                    clientId: ZEPLIN_CLIENT_ID,
-                    clientSecret: ZEPLIN_CLIENT_SECRET,
+                    clientId: ZEPLIN_CLIENT_ID as string,
+                    clientSecret: ZEPLIN_CLIENT_SECRET as string,
                     redirectUri: REDIRECT_URI
                 }
             });
@@ -38,8 +38,8 @@ class AuthService {
         return zeplin.auth.refreshToken({
             body: {
                 refreshToken: params.refreshToken,
-                clientId: ZEPLIN_CLIENT_ID,
-                clientSecret: ZEPLIN_CLIENT_SECRET
+                clientId: ZEPLIN_CLIENT_ID as string,
+                clientSecret: ZEPLIN_CLIENT_SECRET as string
             }
         });
     }

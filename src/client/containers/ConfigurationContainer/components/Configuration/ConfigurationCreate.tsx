@@ -29,7 +29,7 @@ interface ConfigurationCreateProps {
     onResourceDropdownBlur: () => void;
     onRetryClick: () => void;
     onWorkspaceChange: (value: string) => void;
-    onResourceChange: (value: Resource | undefined) => void;
+    onResourceChange: (value: Resource) => void;
     onWebhookEventsChange: (value: WebhookEventType[]) => void;
 }
 

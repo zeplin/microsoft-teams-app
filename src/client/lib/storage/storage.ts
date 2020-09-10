@@ -2,7 +2,7 @@
 const accessTokenKey = "@zeplin/microsoft-teams-app:accessToken";
 const refreshTokenKey = "@zeplin/microsoft-teams-app:refreshToken";
 
-const memoryStorage = {};
+const memoryStorage: Record<string, string> = {};
 
 const setItem = (key: string, value: string): void => {
     try {
@@ -13,9 +13,9 @@ const setItem = (key: string, value: string): void => {
     }
 };
 
-const getItem = (key: string): string|undefined => {
+const getItem = (key: string): string | undefined => {
     try {
-        return memoryStorage[key] || localStorage.getItem(key);
+        return memoryStorage[key] ?? localStorage.getItem(key) ?? undefined;
     } catch (e) {
         return memoryStorage[key];
     }
