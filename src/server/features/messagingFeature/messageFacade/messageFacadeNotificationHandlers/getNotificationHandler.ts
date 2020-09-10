@@ -1,6 +1,5 @@
 import { projectColorNotificationHandler } from "./projectColorNotificationHandler";
 import { NotificationHandler } from "./NotificationHandler";
-import { EventType } from "../../messagingTypes";
 import { styleguideColorNotificationHandler } from "./styleguideColorNotificationHandler";
 import { projectNoteNotificationHandler } from "./projectNoteNotificationHandler";
 import { projectNoteCommentNotificationHandler } from "./projectNoteCommentNotificationHandler";
@@ -15,25 +14,26 @@ import { styleguideComponentNotificationHandler } from "./styleguideComponentNot
 import { projectScreenNotificationHandler } from "./projectScreenNotificationHandler";
 import { projectScreenVersionNotificationHandler } from "./projectScreenVersionNotificationHandler";
 import { pingNotificationHandler } from "./pingNotificationHandler";
+import { WebhookEvent, WebhookEventType } from "../../../../adapters/zeplin/types";
 
-const notificationMap: Record<EventType, NotificationHandler> = {
-    [EventType.PING]: pingNotificationHandler,
-    [EventType.PROJECT_COLOR]: projectColorNotificationHandler,
-    [EventType.STYLEGUIDE_COLOR]: styleguideColorNotificationHandler,
-    [EventType.PROJECT_NOTE]: projectNoteNotificationHandler,
-    [EventType.PROJECT_NOTE_COMMENT]: projectNoteCommentNotificationHandler,
-    [EventType.PROJECT_TEXT_STYLE]: projectTextStyleNotificationHandler,
-    [EventType.STYLEGUIDE_TEXT_STYLE]: styleguideTextStyleNotificationHandler,
-    [EventType.PROJECT_SPACING_TOKEN]: projectSpacingTokenNotificationHandler,
-    [EventType.STYLEGUIDE_SPACING_TOKEN]: styleguideSpacingTokenNotificationHandler,
-    [EventType.PROJECT_MEMBER]: projectMemberNotificationHandler,
-    [EventType.STYLEGUIDE_MEMBER]: styleguideMemberNotificationHandler,
-    [EventType.PROJECT_COMPONENT]: projectComponentNotificationHandler,
-    [EventType.STYLEGUIDE_COMPONENT]: styleguideComponentNotificationHandler,
-    [EventType.PROJECT_SCREEN]: projectScreenNotificationHandler,
-    [EventType.PROJECT_SCREEN_VERSION]: projectScreenVersionNotificationHandler
+const notificationMap: Record<WebhookEventType, NotificationHandler<WebhookEvent>> = {
+    [WebhookEventType.PING]: pingNotificationHandler,
+    [WebhookEventType.PROJECT_COLOR]: projectColorNotificationHandler,
+    [WebhookEventType.STYLEGUIDE_COLOR]: styleguideColorNotificationHandler,
+    [WebhookEventType.PROJECT_NOTE]: projectNoteNotificationHandler,
+    [WebhookEventType.PROJECT_NOTE_COMMENT]: projectNoteCommentNotificationHandler,
+    [WebhookEventType.PROJECT_TEXT_STYLE]: projectTextStyleNotificationHandler,
+    [WebhookEventType.STYLEGUIDE_TEXT_STYLE]: styleguideTextStyleNotificationHandler,
+    [WebhookEventType.PROJECT_SPACING_TOKEN]: projectSpacingTokenNotificationHandler,
+    [WebhookEventType.STYLEGUIDE_SPACING_TOKEN]: styleguideSpacingTokenNotificationHandler,
+    [WebhookEventType.PROJECT_MEMBER]: projectMemberNotificationHandler,
+    [WebhookEventType.STYLEGUIDE_MEMBER]: styleguideMemberNotificationHandler,
+    [WebhookEventType.PROJECT_COMPONENT]: projectComponentNotificationHandler,
+    [WebhookEventType.STYLEGUIDE_COMPONENT]: styleguideComponentNotificationHandler,
+    [WebhookEventType.PROJECT_SCREEN]: projectScreenNotificationHandler,
+    [WebhookEventType.PROJECT_SCREEN_VERSION]: projectScreenVersionNotificationHandler
 } as const;
 
-export function getNotificationHandler(eventType: EventType): NotificationHandler {
+export function getNotificationHandler(eventType: WebhookEventType): NotificationHandler<WebhookEvent> {
     return notificationMap[eventType];
 }

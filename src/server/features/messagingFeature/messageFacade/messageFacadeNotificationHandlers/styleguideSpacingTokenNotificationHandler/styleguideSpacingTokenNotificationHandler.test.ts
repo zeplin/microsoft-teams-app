@@ -1,8 +1,8 @@
-import { WebhookEvent } from "../../../messagingTypes";
+import { styleguideSpacingTokenNotificationHandler } from "./styleguideSpacingTokenNotificationHandler";
 import {
-    styleguideSpacingTokenNotificationHandler,
-    StyleguideSpacingTokenEventPayload
-} from "./styleguideSpacingTokenNotificationHandler";
+    StyleguideSpacingTokenCreateEvent,
+    StyleguideSpacingTokenUpdateEvent
+} from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     action?: string;
@@ -14,7 +14,7 @@ function getDummyEvent({
     action = "created",
     spacingTokenId = "spacingTokenId",
     spacingTokenName = "spacingTokenName"
-}: GetDummyEventParams = {}): WebhookEvent<StyleguideSpacingTokenEventPayload> {
+}: GetDummyEventParams = {}): StyleguideSpacingTokenCreateEvent | StyleguideSpacingTokenUpdateEvent {
     return {
         payload: {
             action,
@@ -32,7 +32,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as WebhookEvent<StyleguideSpacingTokenEventPayload>;
+    } as StyleguideSpacingTokenCreateEvent | StyleguideSpacingTokenUpdateEvent;
 }
 
 describe("styleguideSpacingTokenNotificationHandler", () => {

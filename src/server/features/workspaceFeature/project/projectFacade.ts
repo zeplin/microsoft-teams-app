@@ -1,4 +1,5 @@
-import { ProjectStatus, zeplin } from "../../../adapters";
+import { zeplin } from "../../../adapters";
+import { ProjectStatus } from "../../../adapters/zeplin/types";
 
 interface Project {
     id: string;

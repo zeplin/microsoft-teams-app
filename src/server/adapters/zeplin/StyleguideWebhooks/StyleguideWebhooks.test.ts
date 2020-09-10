@@ -1,5 +1,5 @@
 import { StyleguideWebhooks } from "./StyleguideWebhooks";
-import { StyleguideWebhookEvent } from "../types";
+import { StyleguideWebhookEventType } from "../types";
 import { BAD_REQUEST, OK } from "http-status-codes";
 import nock, { Interceptor } from "nock";
 import { ZeplinError } from "../ZeplinError";
@@ -9,7 +9,7 @@ const authToken = "authToken";
 const styleguideId = "styleguideId";
 const webhookUrl = "https://webhook.url.com";
 const webhookSecret = "secret";
-const webhookEvents = [StyleguideWebhookEvent.ALL];
+const webhookEvents = [StyleguideWebhookEventType.ALL];
 
 const createMockInterceptor = (): Interceptor => nock(
     "http://localhost",

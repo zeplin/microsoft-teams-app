@@ -1,27 +1,16 @@
 import { NotificationHandler } from "../NotificationHandler";
 import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
-import {
-    WebhookEvent,
-    EventType,
-    EventPayload,
-    ProjectContext
-} from "../../../messagingTypes";
+import { ScreenCreateEvent, WebhookEvent } from "../../../../../adapters/zeplin/types";
 import { MEDIUM_DELAY } from "../constants";
-import { ScreenResource } from "../resources/screenResource";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
 const IMAGE_LIMIT = 5;
 
-type ProjectScreenEventDescriptor = {
-    type: EventType.PROJECT_SCREEN;
-    action: "created";
-};
-
-class ProjectScreenNotificationHandler extends NotificationHandler {
+class ProjectScreenNotificationHandler extends NotificationHandler<ScreenCreateEvent> {
     delay = MEDIUM_DELAY;
 
-    private getText(events: WebhookEvent<ProjectScreenEventPayload>[]): string {
+    private getText(events: ScreenCreateEvent[]): string {
         const [{
             payload: {
                 context: {
@@ -41,7 +30,7 @@ class ProjectScreenNotificationHandler extends NotificationHandler {
             : `**${events.length} new screens** are added in _${projectName}_! 🏃‍♂`;
     }
 
-    private getImages(events: WebhookEvent<ProjectScreenEventPayload>[]): string[] {
+    private getImages(events: ScreenCreateEvent[]): string[] {
         // Take last 5 screen images
         return events
             .sort((e1, e2) => e2.payload.timestamp - e1.payload.timestamp)
@@ -50,7 +39,7 @@ class ProjectScreenNotificationHandler extends NotificationHandler {
             .slice(0, IMAGE_LIMIT);
     }
 
-    private getWebappURL(events: WebhookEvent<ProjectScreenEventPayload>[]): string {
+    private getWebappURL(events: ScreenCreateEvent[]): string {
         const [{
             payload: {
                 context: {
@@ -73,7 +62,7 @@ class ProjectScreenNotificationHandler extends NotificationHandler {
         return webappURL.toString();
     }
 
-    private getMacAppURL(events: WebhookEvent<ProjectScreenEventPayload>[]): string {
+    private getMacAppURL(events: ScreenCreateEvent[]): string {
         const [{
             payload: {
                 context: {
@@ -90,7 +79,7 @@ class ProjectScreenNotificationHandler extends NotificationHandler {
         return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://project?pid=${projectId}&sids=${events.map(event => event.payload.resource.id).join(",")}`);
     }
 
-    getTeamsMessage(events: WebhookEvent<ProjectScreenEventPayload>[]): MessageCard {
+    getTeamsMessage(events: ScreenCreateEvent[]): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
             images: this.getImages(events),
@@ -104,14 +93,9 @@ class ProjectScreenNotificationHandler extends NotificationHandler {
         });
     }
 
-    shouldHandleEvent(event: WebhookEvent): boolean {
+    shouldHandleEvent(event: WebhookEvent): event is ScreenCreateEvent {
         return event.payload.action === "created";
     }
 }
 
-export type ProjectScreenEventPayload = EventPayload<
-    ProjectScreenEventDescriptor,
-    ProjectContext,
-    ScreenResource
->
 export const projectScreenNotificationHandler = new ProjectScreenNotificationHandler();

@@ -1,5 +1,5 @@
-import { WebhookEvent } from "../../../messagingTypes";
-import { ProjectNoteCommentEventPayload, projectNoteCommentNotificationHandler } from "./projectNoteCommentNotificationHandler";
+import { projectNoteCommentNotificationHandler } from "./projectNoteCommentNotificationHandler";
+import { NoteCommentCreateEvent } from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     projectId?: string;
@@ -23,7 +23,7 @@ function getDummyEvent({
     noteOrder = "1",
     commentId = "commentId",
     commentContent = "cok guzel keyfimiz var"
-}: GetDummyEventParams = {}): WebhookEvent<ProjectNoteCommentEventPayload> {
+}: GetDummyEventParams = {}): NoteCommentCreateEvent {
     return {
         payload: {
             action: "created",
@@ -54,7 +54,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as WebhookEvent<ProjectNoteCommentEventPayload>;
+    } as NoteCommentCreateEvent;
 }
 
 describe("projectNoteNotificationHandler", () => {

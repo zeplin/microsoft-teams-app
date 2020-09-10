@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 
 import { Configuration } from "../../repos";
-import { WebhookResourceType } from "../../adapters";
+import { WebhookResourceType } from "../../adapters/zeplin/types";
 
 export const dummyConfiguration: Configuration = {
     _id: new ObjectId("5f439cec8096ff7a262cbf47"),

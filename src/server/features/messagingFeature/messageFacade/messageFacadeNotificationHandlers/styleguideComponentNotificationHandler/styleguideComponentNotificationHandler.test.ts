@@ -1,8 +1,8 @@
-import { WebhookEvent } from "../../../messagingTypes";
+import { styleguideComponentNotificationHandler } from "./styleguideComponentNotificationHandler";
 import {
-    styleguideComponentNotificationHandler,
-    StyleguideComponentEventPayload
-} from "./styleguideComponentNotificationHandler";
+    StyleguideComponentCreateEvent,
+    StyleguideComponentVersionCreateEvent
+} from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     action?: string;
@@ -18,7 +18,7 @@ function getDummyEvent({
     componentName = "componentName",
     imageUrl = "http://placehold.it/200",
     timestamp = 1
-}: GetDummyEventParams = {}): WebhookEvent<StyleguideComponentEventPayload> {
+}: GetDummyEventParams = {}): StyleguideComponentCreateEvent | StyleguideComponentVersionCreateEvent {
     return {
         payload: {
             timestamp,
@@ -40,7 +40,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as WebhookEvent<StyleguideComponentEventPayload>;
+    } as StyleguideComponentCreateEvent | StyleguideComponentVersionCreateEvent;
 }
 
 describe("styleguideComponentNotificationHandler", () => {

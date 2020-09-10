@@ -1,25 +1,20 @@
 import {
     WebhookEvent,
-    EventPayload,
-    ProjectContext,
-    EventType
-} from "../../../messagingTypes";
+    ProjectSpacingTokenCreateEvent,
+    ProjectSpacingTokenUpdateEvent
+} from "../../../../../adapters/zeplin/types";
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
-import { SpacingTokenResource } from "../resources";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
-type ProjectSpacingTokenEventDescriptor = {
-    type: EventType.PROJECT_SPACING_TOKEN;
-    action: "created" | "updated";
-};
+type Event = ProjectSpacingTokenCreateEvent | ProjectSpacingTokenUpdateEvent;
 
-class ProjectSpacingTokenNotificationHandler extends NotificationHandler {
+class ProjectSpacingTokenNotificationHandler extends NotificationHandler<Event> {
     delay = SHORT_DELAY;
-    private getText(events: WebhookEvent<ProjectSpacingTokenEventPayload>[]): string {
+    private getText(events: Event[]): string {
         const [{
             payload: {
                 action,
@@ -42,7 +37,7 @@ class ProjectSpacingTokenNotificationHandler extends NotificationHandler {
     }
 
     private getWebappURL(
-        events: WebhookEvent<ProjectSpacingTokenEventPayload>[]
+        events: Event[]
     ): string {
         const [{
             payload: {
@@ -60,7 +55,7 @@ class ProjectSpacingTokenNotificationHandler extends NotificationHandler {
     }
 
     private getMacAppURL(
-        events: WebhookEvent<ProjectSpacingTokenEventPayload>[]
+        events: Event[]
     ): string {
         const [{
             payload: {
@@ -74,12 +69,12 @@ class ProjectSpacingTokenNotificationHandler extends NotificationHandler {
         return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://spacing?pid=${projectId}&sptids=${events.map(event => event.payload.resource.id).join(",")}`);
     }
 
-    shouldHandleEvent(event: WebhookEvent): boolean {
+    shouldHandleEvent(event: WebhookEvent): event is Event {
         return event.payload.action !== "deleted";
     }
 
     getTeamsMessage(
-        events: WebhookEvent<ProjectSpacingTokenEventPayload>[]
+        events: Event[]
     ): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
@@ -97,9 +92,4 @@ class ProjectSpacingTokenNotificationHandler extends NotificationHandler {
     }
 }
 
-export type ProjectSpacingTokenEventPayload = EventPayload<
-    ProjectSpacingTokenEventDescriptor,
-    ProjectContext,
-    SpacingTokenResource
->;
 export const projectSpacingTokenNotificationHandler = new ProjectSpacingTokenNotificationHandler();

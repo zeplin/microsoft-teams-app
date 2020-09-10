@@ -1,26 +1,14 @@
 import { NotificationHandler } from "../NotificationHandler";
 import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
-import {
-    EventPayload,
-    EventType,
-    ProjectContext,
-    ScreenContext,
-    WebhookEvent
-} from "../../../messagingTypes";
-import { ScreenNoteResource } from "../resources";
+import { NoteCreateEvent, WebhookEvent } from "../../../../../adapters/zeplin/types";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
-type ProjectNoteEventDescriptor = {
-    type: EventType.PROJECT_NOTE;
-    action: "created";
-}
-
-class ProjectNoteNotificationHandler extends NotificationHandler {
+class ProjectNoteNotificationHandler extends NotificationHandler<NoteCreateEvent> {
     // We want to send project note events immediately
     delay = 0;
 
-    private getText(event: WebhookEvent<ProjectNoteEventPayload>): string {
+    private getText(event: NoteCreateEvent): string {
         const {
             payload: {
                 context: {
@@ -41,7 +29,7 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
         return `**${username}** added a note on _${screenName}_ screen in _${projectName}_. 🏃‍♂`;
     }
 
-    private getSectionText(event: WebhookEvent<ProjectNoteEventPayload>): string {
+    private getSectionText(event: NoteCreateEvent): string {
         const {
             payload: {
                 resource: {
@@ -54,7 +42,7 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
         return commentContent;
     }
 
-    private getWebappURL(event: WebhookEvent<ProjectNoteEventPayload>): string {
+    private getWebappURL(event: NoteCreateEvent): string {
         const {
             payload: {
                 context: {
@@ -76,7 +64,7 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
         return webappURL.toString();
     }
 
-    private getMacAppURL(event: WebhookEvent<ProjectNoteEventPayload>): string {
+    private getMacAppURL(event: NoteCreateEvent): string {
         const {
             payload: {
                 context: {
@@ -95,7 +83,7 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
         return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://dot?pid=${projectId}&sid=${screenId}&did=${noteId}`);
     }
 
-    shouldHandleEvent(event: WebhookEvent): boolean {
+    shouldHandleEvent(event: WebhookEvent): event is NoteCreateEvent {
         return event.payload.action === "created";
     }
 
@@ -104,7 +92,7 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
         return event.deliveryId;
     }
 
-    getTeamsMessage(events: WebhookEvent<ProjectNoteEventPayload>[]): MessageCard {
+    getTeamsMessage(events: NoteCreateEvent[]): MessageCard {
         const [event] = events;
         return commonTeamsCard({
             text: this.getText(event),
@@ -122,9 +110,4 @@ class ProjectNoteNotificationHandler extends NotificationHandler {
     }
 }
 
-export type ProjectNoteEventPayload = EventPayload<
-    ProjectNoteEventDescriptor,
-    ProjectContext & ScreenContext,
-    ScreenNoteResource
->;
 export const projectNoteNotificationHandler = new ProjectNoteNotificationHandler();

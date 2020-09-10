@@ -1,8 +1,8 @@
-import { WebhookEvent } from "../../../messagingTypes";
+import { projectTextStyleNotificationHandler } from "./projectTextStyleNotificationHandler";
 import {
-    projectTextStyleNotificationHandler,
-    ProjectTextStyleEventPayload
-} from "./projectTextStyleNotificationHandler";
+    ProjectTextStyleCreateEvent,
+    ProjectTextStyleUpdateEvent
+} from "../../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     action?: string;
@@ -14,7 +14,7 @@ function getDummyEvent({
     action = "created",
     textStyleId = "textStyleId",
     textStyleName = "textStyleName"
-}: GetDummyEventParams = {}): WebhookEvent<ProjectTextStyleEventPayload> {
+}: GetDummyEventParams = {}): ProjectTextStyleCreateEvent | ProjectTextStyleUpdateEvent {
     return {
         payload: {
             action,
@@ -32,7 +32,7 @@ function getDummyEvent({
                 }
             }
         }
-    } as WebhookEvent<ProjectTextStyleEventPayload>;
+    } as ProjectTextStyleCreateEvent | ProjectTextStyleUpdateEvent;
 }
 
 describe("projectTextStyleNotificationHandler", () => {

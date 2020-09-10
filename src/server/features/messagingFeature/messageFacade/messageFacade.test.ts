@@ -1,7 +1,7 @@
 import { messageFacade } from "./messageFacade";
 import { messageJobRepo, messageWebhookEventRepo } from "../messagingRepos";
 import { messageQueue } from "../messageQueue";
-import { WebhookEvent } from "../messagingTypes";
+import { WebhookEvent } from "../../../adapters/zeplin/types";
 import { NotificationHandler } from "./messageFacadeNotificationHandlers/NotificationHandler";
 import { configurationRepo } from "../../../repos";
 import { requester } from "../../../adapters/requester";
@@ -57,7 +57,7 @@ const mockNotificationHandler = {
 };
 
 jest.mock("./messageFacadeNotificationHandlers", () => ({
-    getNotificationHandler: (): NotificationHandler => mockNotificationHandler
+    getNotificationHandler: (): NotificationHandler<WebhookEvent> => mockNotificationHandler
 }));
 
 describe("messageFacade", () => {

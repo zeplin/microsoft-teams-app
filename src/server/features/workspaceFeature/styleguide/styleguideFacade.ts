@@ -1,4 +1,5 @@
-import { StyleguideStatus, zeplin } from "../../../adapters";
+import { zeplin } from "../../../adapters";
+import { StyleguideStatus } from "../../../adapters/zeplin/types";
 
 interface Styleguide {
     id: string;

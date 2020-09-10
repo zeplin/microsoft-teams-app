@@ -1,4 +1,4 @@
-import { ProjectWebhookEvent } from "./WebhookEvents";
+import { ProjectWebhookEventType } from "./WebhookEvents";
 import { WebhookStatus } from "./WebhookStatus";
 import { WebhookUrlHealth } from "./WebhookUrlHealth";
 import { User } from "./User";
@@ -15,5 +15,5 @@ export interface ProjectWebhook {
     created_by: User;
     updated_by: User;
     zeplin_app?: ZeplinApplication;
-    events: ProjectWebhookEvent[];
+    events: ProjectWebhookEventType[];
 }

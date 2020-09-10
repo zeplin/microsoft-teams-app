@@ -1,11 +1,11 @@
-import { WebhookEvent } from "../../messagingTypes";
+import { WebhookEvent } from "../../../../adapters/zeplin/types";
 import { MessageCard } from "./teamsCardTemplates";
 
-export abstract class NotificationHandler {
+export abstract class NotificationHandler<E extends WebhookEvent> {
     abstract get delay(): number;
-    abstract getTeamsMessage(events: WebhookEvent[]): MessageCard;
+    abstract getTeamsMessage(events: E[]): MessageCard;
     abstract shouldHandleEvent(event: WebhookEvent): boolean;
-    getGroupingKey(event: WebhookEvent): string {
+    getGroupingKey(event: E): string {
         const {
             event: eventType,
             action

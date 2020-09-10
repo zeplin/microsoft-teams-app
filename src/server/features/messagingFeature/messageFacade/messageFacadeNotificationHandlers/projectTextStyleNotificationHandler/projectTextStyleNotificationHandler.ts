@@ -1,25 +1,21 @@
 import {
-    WebhookEvent,
-    EventPayload,
-    ProjectContext,
-    EventType
-} from "../../../messagingTypes";
+    ProjectTextStyleCreateEvent,
+    ProjectTextStyleEvent,
+    ProjectTextStyleUpdateEvent,
+    WebhookEvent
+} from "../../../../../adapters/zeplin/types";
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../../config";
 import { URL } from "url";
-import { TextStyleResource } from "../resources";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 
-type ProjectTextStyleEventDescriptor = {
-    type: EventType.PROJECT_TEXT_STYLE;
-    action: "created" | "updated";
-};
+type Event = ProjectTextStyleCreateEvent | ProjectTextStyleUpdateEvent;
 
-class ProjectTextStyleNotificationHandler extends NotificationHandler {
+class ProjectTextStyleNotificationHandler extends NotificationHandler<Event> {
     delay = SHORT_DELAY;
-    private getText(events: WebhookEvent<ProjectTextStyleEventPayload>[]): string {
+    private getText(events: ProjectTextStyleEvent[]): string {
         const [{
             payload: {
                 action,
@@ -42,7 +38,7 @@ class ProjectTextStyleNotificationHandler extends NotificationHandler {
     }
 
     private getWebappURL(
-        events: WebhookEvent<ProjectTextStyleEventPayload>[]
+        events: ProjectTextStyleEvent[]
     ): string {
         const [{
             payload: {
@@ -60,7 +56,7 @@ class ProjectTextStyleNotificationHandler extends NotificationHandler {
     }
 
     private getMacAppURL(
-        events: WebhookEvent<ProjectTextStyleEventPayload>[]
+        events: ProjectTextStyleEvent[]
     ): string {
         const [{
             payload: {
@@ -74,12 +70,12 @@ class ProjectTextStyleNotificationHandler extends NotificationHandler {
         return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://textStyles?pid=${projectId}&tsids=${events.map(event => event.payload.resource.id).join(",")}`);
     }
 
-    shouldHandleEvent(event: WebhookEvent): boolean {
+    shouldHandleEvent(event: WebhookEvent): event is Event {
         return event.payload.action !== "deleted";
     }
 
     getTeamsMessage(
-        events: WebhookEvent<ProjectTextStyleEventPayload>[]
+        events: ProjectTextStyleEvent[]
     ): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
@@ -97,9 +93,4 @@ class ProjectTextStyleNotificationHandler extends NotificationHandler {
     }
 }
 
-export type ProjectTextStyleEventPayload = EventPayload<
-    ProjectTextStyleEventDescriptor,
-    ProjectContext,
-    TextStyleResource
->;
 export const projectTextStyleNotificationHandler = new ProjectTextStyleNotificationHandler();
