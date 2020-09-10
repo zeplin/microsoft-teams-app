@@ -9,7 +9,7 @@ export interface ProjectContext {
 }
 
 export interface ComponentVersionContext {
-    project: ComponentVersionSummary;
+    version: ComponentVersionSummary;
 }
 
 export interface ScreenContext {
