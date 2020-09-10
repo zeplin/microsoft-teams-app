@@ -17,7 +17,7 @@ rm -rf tmp
 mkdir tmp
 
 echo "Creating required files for manifest at tmp folder"
-cp -r package/* tmp
+cp -r src/package/* tmp
 perl -p -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' < tmp/manifest.template.json > tmp/manifest.json
 rm tmp/manifest.template.json
 
