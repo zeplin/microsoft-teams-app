@@ -4,9 +4,9 @@ import { ZEPLIN_MAC_APP_URL_SCHEME } from "../../config";
 import Joi from "@hapi/joi";
 import { PERMANENT_REDIRECT } from "http-status-codes";
 
-const macAppRedirectLinksRouter = createRouter({ mergeParams: true });
+const appRedirectLinksRouter = createRouter({ mergeParams: true });
 
-macAppRedirectLinksRouter.get(
+appRedirectLinksRouter.get(
     "/",
     validateRequest({
         query: Joi.object({
@@ -19,5 +19,5 @@ macAppRedirectLinksRouter.get(
 );
 
 export {
-    macAppRedirectLinksRouter
+    appRedirectLinksRouter
 };
