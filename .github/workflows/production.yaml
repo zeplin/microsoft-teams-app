@@ -81,6 +81,9 @@ jobs:
           aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Set `TARBALL` variable
+        run: echo ::set-env name=TARBALL::microsoft-teams-app-prod--${GITHUB_REF#refs/tags/v}.tar.gz
+
       - name: Change latest release
         run: aws s3 cp $S3_PATH/$TARBALL $S3_PATH/microsoft-teams-app-prod-latest.tar.gz
 
