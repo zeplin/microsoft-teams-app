@@ -82,8 +82,8 @@ jobs:
       - name: Change latest release
         run: aws s3 cp $S3_PATH/$TARBALL $S3_PATH/microsoft-teams-app-dev-latest.tar.gz
 
-      - name: Change the release version
-        run: aws opsworks --region $AWS_REGION update-app --app-id $AWS_APP_ID --environment Key=NEXT_PUBLIC_VERSION,Value=0.0.0-${GITHUB_SHA},Secure=false
+#      - name: Change the release version
+#        run: aws opsworks --region $AWS_REGION update-app --app-id $AWS_APP_ID --environment Key=NEXT_PUBLIC_VERSION,Value=0.0.0-${GITHUB_SHA},Secure=false
 
       - name: Deploy
         run: >
