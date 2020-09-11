@@ -6,6 +6,7 @@ import {
 } from "../../../../adapters/zeplin/types";
 import { ZEPLIN_MAC_APP_URL_SCHEME, ZEPLIN_WEB_APP_BASE_URL } from "../../../../config";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
+import { md } from "../md";
 
 class ProjectNoteCommentHandler extends NotificationHandler<NoteCommentCreateEvent> {
     delay = 0;
@@ -31,7 +32,7 @@ class ProjectNoteCommentHandler extends NotificationHandler<NoteCommentCreateEve
                 }
             }
         } = event;
-        return `**${username}** replied to note _#${order}_ on _${screenName}_ screen in _${projectName}_. 🏃‍♂`;
+        return md`**${username as string}** replied to note _#${order}_ on _${screenName}_ screen in _${projectName}_. 🏃‍♂`;
     }
 
     private getSectionText(event: NoteCommentCreateEvent): string {

@@ -10,6 +10,7 @@ import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../
 import { URL } from "url";
 
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
+import { md } from "../md";
 
 type Event = StyleguideTextStyleCreateEvent | StyleguideTextStyleUpdateEvent;
 
@@ -33,8 +34,8 @@ class StyleguideTextStyleHandler extends NotificationHandler<Event> {
         }] = events;
         const actionText = action === "created" ? "added" : "updated";
         return events.length === 1
-            ? `**${pivotTextStyleName}** is ${actionText} in _${styleguideName}_! 🏃‍♂`
-            : `**${events.length} text styles** are ${actionText} in _${styleguideName}_! 🏃‍♂`;
+            ? md`**${pivotTextStyleName}** is ${actionText} in _${styleguideName}_! 🏃‍♂`
+            : md`**${events.length} text styles** are ${actionText} in _${styleguideName}_! 🏃‍♂`;
     }
 
     private getWebappURL(

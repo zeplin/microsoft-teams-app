@@ -2,6 +2,7 @@ import { NotificationHandler } from "../NotificationHandler";
 import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import { StyleguideMemberInviteEvent, WebhookEvent } from "../../../../adapters/zeplin/types";
 import { LONG_DELAY } from "../constants";
+import { md } from "../md";
 
 class StyleguideMemberHandler extends NotificationHandler<StyleguideMemberInviteEvent> {
     delay = LONG_DELAY;
@@ -24,8 +25,8 @@ class StyleguideMemberHandler extends NotificationHandler<StyleguideMemberInvite
             }
         }] = events;
         return events.length === 1
-            ? `**${username}** just joined _${styleguideName}_.`
-            : `**${events.length} new users** just joined _${styleguideName}_`;
+            ? md`**${username || "A new member"}** just joined _${styleguideName}_.`
+            : md`**${events.length} new members** just joined _${styleguideName}_`;
     }
 
     getTeamsMessage(events: StyleguideMemberInviteEvent[]): MessageCard {
