@@ -4,6 +4,7 @@ import Joi from "@hapi/joi";
 import { validateRequest, JSONBodyParser } from "../../middlewares";
 import { ProjectWebhookEventType, StyleguideWebhookEventType, WebhookResourceType } from "../../adapters/zeplin/types";
 import { configurationService } from "../../services";
+import { BAD_REQUEST } from "http-status-codes";
 
 const configurationRouter = createRouter({ mergeParams: true });
 
@@ -116,7 +117,7 @@ configurationRouter.get(
                     authToken: String(req.headers.authorization)
                 }
             );
-            res.json(result);
+            res.status(BAD_REQUEST).json(result);
         } catch (error) {
             next(error);
         }

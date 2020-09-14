@@ -71,12 +71,14 @@ const webhookEvents: WebhookEvent[] = [
 ];
 
 interface WebhookEventsProps {
+    disabled: boolean;
     resourceType: ResourceType;
     selectedWebhookEvents: WebhookEventType[];
     onWebhookEventsChange: (value: WebhookEventType[]) => void;
 }
 
 export const WebhookEvents: FunctionComponent<WebhookEventsProps> = ({
+    disabled,
     resourceType,
     selectedWebhookEvents,
     onWebhookEventsChange
@@ -86,6 +88,7 @@ export const WebhookEvents: FunctionComponent<WebhookEventsProps> = ({
 
     const renderWebhookEvent = ({ id, title, description }: WebhookEvent): ReactElement => (
         <ConfigurationCheckbox
+            disabled={disabled}
             checked={selectedWebhookEvents.includes(id)}
             key={id}
             title={title}
