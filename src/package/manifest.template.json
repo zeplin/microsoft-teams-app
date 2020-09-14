@@ -29,7 +29,7 @@
     "connectors": [
         {
             "connectorId": "${NEXT_PRIVATE_CONNECTOR_ID}",
-            "configurationUrl": "${NEXT_PUBLIC_BASE_URL}/?theme={theme}&channel={channelName}",
+            "configurationUrl": "${NEXT_PRIVATE_BASE_URL}/?theme={theme}&channel={channelName}",
             "scopes": [
                 "team"
             ]
@@ -41,7 +41,7 @@
         "messageTeamMembers"
     ],
     "validDomains": [
-        "${NEXT_PUBLIC_DOMAIN}"
+        "${NEXT_PRIVATE_DOMAIN}"
     ],
     "showLoadingIndicator": true
 }
