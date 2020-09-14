@@ -26,12 +26,14 @@ interface ConfigurationCreateProps {
     selectedWebhookEvents: WebhookEventType[];
     isError: boolean;
     resourceSearch: string;
+    username: string;
     onResourceSearch: (value: string) => void;
     onResourceDropdownBlur: () => void;
     onRetryClick: () => void;
     onWorkspaceChange: (value: string) => void;
     onResourceChange: (value: Resource) => void;
     onWebhookEventsChange: (value: WebhookEventType[]) => void;
+    onLogoutClick: () => void;
 }
 
 export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = ({
@@ -46,21 +48,38 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
     selectedWebhookEvents,
     isError,
     resourceSearch,
+    username,
     onResourceSearch,
     onResourceDropdownBlur,
     onRetryClick,
     onWorkspaceChange,
     onResourceChange,
-    onWebhookEventsChange
+    onWebhookEventsChange,
+    onLogoutClick
 }) => (
     <Flex fill column gap="gap.large">
         <div />
         <Flex fill column gap="gap.small">
             <Text weight="semibold">
-                You are connecting <Text weight="bold">#{channelName}</Text> to Zeplin.
+                {"You are connecting "}
+                <Text weight="bold">#{channelName}</Text>
+                {" to Zeplin using your "}
+                <Text weight="bold">{username}</Text>
+                {" account."}
             </Text>
             <Text>
-                {"Can't find the project/styleguide to connect to? "}
+                {"If you prefer using another account, you can "}
+                <Text
+                    color="brand"
+                    styles={{
+                        ":hover": {
+                            cursor: "pointer"
+                        }
+                    }}
+                    onClick={onLogoutClick}>
+                    Log out
+                </Text>
+                {" first. Can't find the project/styleguide to connect to? "}
                 <Text
                     as="a"
                     color="brand"
