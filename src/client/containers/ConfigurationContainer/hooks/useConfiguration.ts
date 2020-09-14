@@ -10,6 +10,7 @@ const RETRY_COUNT = 3;
 interface UseConfigurationResult {
     isConfigurationError: boolean;
     refetchConfiguration: () => void;
+    configurationError?: string;
 }
 
 interface UseConfigurationParams {
@@ -19,6 +20,23 @@ interface UseConfigurationParams {
     onError: (isAuthorizationError: boolean) => void;
 }
 
+const errorToText = (error: AxiosError | null): string | undefined => {
+    if (!error || !error.response || error.response.status >= INTERNAL_SERVER_ERROR) {
+        return undefined;
+    }
+    const message = error.response.data?.detail ?? undefined;
+    switch (message) {
+        case "User is not a member of the project":
+            return "You are not member of the project";
+        case "User is not a member of the styleguide":
+            return "You are not member of the styleguide";
+        case "Webhook not found":
+            return "Configuration not found";
+        default:
+            return message;
+    }
+};
+
 export const useConfiguration = ({
     enabled,
     configurationId,
@@ -27,7 +45,8 @@ export const useConfiguration = ({
 }: UseConfigurationParams): UseConfigurationResult => {
     const {
         isError: isConfigurationError,
-        refetch: refetchConfiguration
+        refetch: refetchConfiguration,
+        error: configurationError
     } = useQuery(
         ["configuration", configurationId],
         (): Promise<Configuration> => requester.getConfiguration(configurationId),
@@ -46,6 +65,7 @@ export const useConfiguration = ({
 
     return {
         isConfigurationError,
-        refetchConfiguration
+        refetchConfiguration,
+        configurationError: errorToText(configurationError)
     };
 };

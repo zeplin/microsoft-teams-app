@@ -52,7 +52,11 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
 
     const [state, setState] = useState<State>({ status: Status.LOADING });
 
-    const { isConfigurationError, refetchConfiguration } = useConfiguration({
+    const {
+        isConfigurationError,
+        refetchConfiguration,
+        configurationError
+    } = useConfiguration({
         enabled: state.status === Status.LOADING_CONFIGURATION,
         configurationId: String(id),
         onError: isAuthorizationError => {
@@ -116,6 +120,7 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
                     resource={state.resource}
                     selectedWebhookEvents={state.events}
                     isError={isConfigurationError}
+                    errorMessage={configurationError}
                     onRetryClick={refetchConfiguration}
                     onWebhookEventsChange={(events): void => setState(prevState => ({
                         ...prevState,
