@@ -3,21 +3,23 @@ import { useMutation } from "react-query";
 import * as microsoftTeams from "@microsoft/teams-js";
 
 import { requester } from "../../../lib";
-import { Resource, WebhookEventType } from "../../../constants";
+import { Resource, ResourceType, WebhookEventType } from "../../../constants";
 
 interface WebhookSettings {
     webhookUrl: string;
 }
 
-function setSettings(configurationId: string, configurationName: string): void {
+function setSettings(configurationId: string, resourceName: string, resourceType: ResourceType): void {
     const contentURL = new URL(window.location.href);
     contentURL.searchParams.set("id", configurationId);
     contentURL.searchParams.set("theme", "{theme}");
     contentURL.searchParams.set("channel", "{channelName}");
+    contentURL.searchParams.set("resourceName", resourceName);
+    contentURL.searchParams.set("resourceType", resourceType);
 
     microsoftTeams.settings.setSettings({
         entityId: configurationId,
-        configName: configurationName,
+        configName: resourceName,
         contentUrl: decodeURI(contentURL.toString())
     } as unknown as microsoftTeams.settings.Settings);
 }
@@ -70,7 +72,7 @@ export const useConfigurationSave = ({
                                         }
                                     });
 
-                                setSettings(configurationId, resource.name);
+                                setSettings(configurationId, resource.name, resource.type);
                             } else {
                                 const newConfigurationId = await createConfiguration(
                                     {
@@ -91,7 +93,7 @@ export const useConfigurationSave = ({
                                         }
                                     });
 
-                                setSettings(newConfigurationId, resource.name);
+                                setSettings(newConfigurationId, resource.name, resource.type);
                             }
 
                             saveEvent.notifySuccess();

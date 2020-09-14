@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react";
 import { Checkbox, Flex, Text } from "@fluentui/react-northstar";
 
 interface ConfigurationCheckboxProps {
+    disabled: boolean;
     checked: boolean;
     title: string;
     description: string;
@@ -9,6 +10,7 @@ interface ConfigurationCheckboxProps {
 }
 
 export const ConfigurationCheckbox: FunctionComponent<ConfigurationCheckboxProps> = ({
+    disabled,
     checked,
     title,
     description,
@@ -16,6 +18,7 @@ export const ConfigurationCheckbox: FunctionComponent<ConfigurationCheckboxProps
 }) => (
     <div>
         <Checkbox
+            disabled={disabled}
             checked={checked}
             defaultChecked
             label={

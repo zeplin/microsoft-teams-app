@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from "react";
 import { Loader } from "@fluentui/react-northstar";
 import { useRouter } from "next/router";
 
-import { Resource, resourceBasedEvents, WebhookEventType } from "../../constants";
+import { Resource, resourceBasedEvents, ResourceType, WebhookEventType } from "../../constants";
 import {
     useLogin,
     useConfiguration,
@@ -48,13 +48,29 @@ function isValid(state: State): boolean {
 }
 
 export const ConfigurationUpdateContainer: FunctionComponent = () => {
-    const { query: { channel, id } } = useRouter();
+    const { query: { channel, id, resourceName, resourceType } } = useRouter();
 
     const [state, setState] = useState<State>({ status: Status.LOADING });
 
-    useConfiguration({
+    const { isConfigurationError, refetchConfiguration } = useConfiguration({
         enabled: state.status === Status.LOADING_CONFIGURATION,
         configurationId: String(id),
+        onError: isAuthorizationError => {
+            if (isAuthorizationError) {
+                setState({ status: Status.LOGIN });
+            } else {
+                setState({
+                    status: Status.CONFIGURATION,
+                    resource: {
+                        id: "dummyId",
+                        name: resourceName as string,
+                        type: resourceType as ResourceType
+                    },
+                    events: [],
+                    initialEvents: []
+                });
+            }
+        },
         onSuccess: ({ resource, webhook: { events } }) => setState({
             status: Status.CONFIGURATION,
             resource,
@@ -99,6 +115,8 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
                     channelName={String(channel)}
                     resource={state.resource}
                     selectedWebhookEvents={state.events}
+                    isError={isConfigurationError}
+                    onRetryClick={refetchConfiguration}
                     onWebhookEventsChange={(events): void => setState(prevState => ({
                         ...prevState,
                         events
