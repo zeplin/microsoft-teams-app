@@ -13,6 +13,7 @@ import {
 } from "./hooks";
 import { ConfigurationCreate, Login } from "./components";
 import { storage } from "../../lib";
+import { useMe } from "./hooks/useMe";
 
 type State = {
     status: Status.LOADING | Status.LOGIN;
@@ -50,6 +51,17 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
         workspaces,
         refetchWorkspaces
     } = useWorkspaces({
+        enabled: state.status === Status.CONFIGURATION,
+        onError: isAuthorizationError => {
+            if (isAuthorizationError) {
+                setState({ status: Status.LOGIN });
+            }
+        }
+    });
+
+    const {
+        me
+    } = useMe({
         enabled: state.status === Status.CONFIGURATION,
         onError: isAuthorizationError => {
             if (isAuthorizationError) {
@@ -127,6 +139,7 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
                     selectedWebhookEvents={state.events}
                     isError={styleguidesError || projectsError || workspacesError}
                     resourceSearch={state.resourceSearch}
+                    username={me?.username}
                     onResourceSearch={(resourceSearch): void => {
                         setState(prevState => ({
                             ...prevState,
@@ -166,6 +179,11 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
                         ...prevState,
                         events
                     }))}
+                    onLogoutClick={(): void => {
+                        storage.removeRefreshToken();
+                        storage.removeAccessToken();
+                        setState({ status: Status.LOGIN });
+                    }}
                 />
             );
         default:
