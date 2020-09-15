@@ -9,6 +9,17 @@ interface JobData {
     id: string;
 }
 
+const isOlderEventOfSameResource = (a: WebhookEvent, b: WebhookEvent): boolean => {
+    if ("id" in a.payload.resource && "id" in b.payload.resource) {
+        return a.payload.resource.id === b.payload.resource.id && a.payload.timestamp < b.payload.timestamp;
+    }
+    return false;
+};
+
+const getRecentEventsOfSameResources = (events: WebhookEvent[]): WebhookEvent[] => events.filter(
+    current => events.find(item => isOlderEventOfSameResource(current, item)) === undefined
+);
+
 class WebhookEventService {
     async processJob(data: JobData): Promise<void> {
         const activeJobId = await messageJobRepo.getGroupActiveJobId(data.groupingKey);
@@ -34,7 +45,8 @@ class WebhookEventService {
         }
 
         const notificationHandler = getNotificationHandler(pivotEvent.payload.event);
-        const message = notificationHandler.getTeamsMessage(events);
+        const distinctEvents = getRecentEventsOfSameResources(events);
+        const message = notificationHandler.getTeamsMessage(distinctEvents);
         await requester.post(configuration.microsoftTeams.incomingWebhookUrl, message);
     }
 
