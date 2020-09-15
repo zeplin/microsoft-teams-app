@@ -139,7 +139,7 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
                     selectedWebhookEvents={state.events}
                     isError={styleguidesError || projectsError || workspacesError}
                     resourceSearch={state.resourceSearch}
-                    username={me?.username ?? ""}
+                    username={me?.username}
                     onResourceSearch={(resourceSearch): void => {
                         setState(prevState => ({
                             ...prevState,

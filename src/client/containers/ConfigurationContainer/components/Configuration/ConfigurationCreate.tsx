@@ -26,7 +26,7 @@ interface ConfigurationCreateProps {
     selectedWebhookEvents: WebhookEventType[];
     isError: boolean;
     resourceSearch: string;
-    username: string;
+    username?: string;
     onResourceSearch: (value: string) => void;
     onResourceDropdownBlur: () => void;
     onRetryClick: () => void;
@@ -63,9 +63,16 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
             <Text weight="semibold">
                 {"You are connecting "}
                 <Text weight="bold">#{channelName}</Text>
-                {" to Zeplin using your "}
-                <Text weight="bold">{username}</Text>
-                {" account."}
+                {username
+                    ? (
+                        <>
+                            {" to Zeplin using your "}
+                            <Text weight="bold">{username}</Text>
+                            {" account."}
+                        </>
+                    )
+                    : " to Zeplin."
+                }
             </Text>
             <Text>
                 {"If you prefer using another account, you can "}
