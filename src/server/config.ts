@@ -22,7 +22,7 @@ function getBooleanVariable(name: string, defaultValue: boolean): boolean {
 
 const DEFAULT_PORT = 3000;
 
-export const PORT = getNumberVariable("NEXT_PUBLIC_PORT", DEFAULT_PORT);
+export const PORT = getNumberVariable("NEXT_PRIVATE_PORT", DEFAULT_PORT);
 export const {
     NEXT_PUBLIC_ENVIRONMENT: ENVIRONMENT = "local",
     NEXT_PUBLIC_VERSION: VERSION = "1.0.0-local",
