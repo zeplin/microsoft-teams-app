@@ -3,7 +3,7 @@
     "manifestVersion": "1.6",
     "id": "${NEXT_PRIVATE_APPLICATION_ID}",
     "version": "${NEXT_PUBLIC_VERSION}",
-    "packageName": "zeplin-for-teams",
+    "packageName": "zeplin",
     "developer": {
         "name": "Zeplin",
         "websiteUrl": "https://zeplin.io",
@@ -22,7 +22,7 @@
         "outline": "icon-outline.png",
         "color": "icon-color.png"
     },
-    "accentColor": "#D85028",
+    "accentColor": "#FFFFFF",
     "configurableTabs": [],
     "staticTabs": [],
     "bots": [],
