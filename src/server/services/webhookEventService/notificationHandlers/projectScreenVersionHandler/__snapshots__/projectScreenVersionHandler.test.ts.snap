@@ -48,7 +48,7 @@ exports[`projectScreenVersionHandler getTeamsMessage should match snapshot when 
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**screenName** is updated in _projectName_! 🗞️",
+  "text": "**screenName** is updated in _projectName_! 🗞",
   "sections": [
     {
       "title": "**Commit message**",
@@ -90,7 +90,7 @@ exports[`projectScreenVersionHandler getTeamsMessage should match snapshot when 
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**screenName** is updated in _projectName_! 🗞️",
+  "text": "**screenName** is updated in _projectName_! 🗞",
   "sections": [
     {
       "images": [

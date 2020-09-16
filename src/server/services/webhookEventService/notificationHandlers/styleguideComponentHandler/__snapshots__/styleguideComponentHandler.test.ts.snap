@@ -4,7 +4,7 @@ exports[`styleguideComponentHandler getTeamsMessage method for created event sho
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 new components** are added in _styleguideName_! 🗞️",
+  "text": "**2 new components** are added in _styleguideName_! 🗞",
   "sections": [
     {
       "images": [
@@ -48,7 +48,7 @@ exports[`styleguideComponentHandler getTeamsMessage method for created event sho
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**componentName** is added in _styleguideName_! 🗞️",
+  "text": "**componentName** is added in _styleguideName_! 🗞",
   "sections": [
     {
       "images": [
@@ -88,7 +88,7 @@ exports[`styleguideComponentHandler getTeamsMessage method for version_created e
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 components** are updated in _styleguideName_! 🗞️",
+  "text": "**2 components** are updated in _styleguideName_! 🗞",
   "sections": [
     {
       "images": [
@@ -132,7 +132,7 @@ exports[`styleguideComponentHandler getTeamsMessage method for version_created e
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**componentName** is updated in _styleguideName_! 🗞️",
+  "text": "**componentName** is updated in _styleguideName_! 🗞",
   "sections": [
     {
       "images": [

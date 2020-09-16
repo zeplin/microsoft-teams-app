@@ -26,7 +26,7 @@ class ProjectScreenVersionHandler extends NotificationHandler<ScreenVersionCreat
             }
         }] = events;
         return events.length === 1
-            ? md`**${screenName}** is updated in _${projectName}_! ${getRandomEmoji()}️`
+            ? md`**${screenName}** is updated in _${projectName}_! ${getRandomEmoji()}`
             : md`**${events.length} screens** are updated in _${projectName}_! ${getRandomEmoji()}`;
     }
 

@@ -35,8 +35,8 @@ class ProjectComponentHandler extends NotificationHandler<Event> {
         }] = events;
         const actionText = action === "created" ? "added" : "updated";
         return events.length === 1
-            ? md`**${componentName}** is ${actionText} in _${projectName}_! ${getRandomEmoji()}️`
-            : md`**${events.length}${action === "created" ? " new" : ""} components** are ${actionText} in _${projectName}_! ${getRandomEmoji()}️`;
+            ? md`**${componentName}** is ${actionText} in _${projectName}_! ${getRandomEmoji()}`
+            : md`**${events.length}${action === "created" ? " new" : ""} components** are ${actionText} in _${projectName}_! ${getRandomEmoji()}`;
     }
 
     private getImages(events: Event[]): string[] {

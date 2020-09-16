@@ -36,8 +36,8 @@ class StyleguideComponentHandler extends NotificationHandler<Event> {
         }] = events;
         const actionText = action === "created" ? "added" : "updated";
         return events.length === 1
-            ? md`**${componentName}** is ${actionText} in _${styleguideName}_! ${getRandomEmoji()}️`
-            : md`**${events.length}${action === "created" ? " new" : ""} components** are ${actionText} in _${styleguideName}_! ${getRandomEmoji()}️`;
+            ? md`**${componentName}** is ${actionText} in _${styleguideName}_! ${getRandomEmoji()}`
+            : md`**${events.length}${action === "created" ? " new" : ""} components** are ${actionText} in _${styleguideName}_! ${getRandomEmoji()}`;
     }
 
     private getImages(events: Event[]): string[] {
