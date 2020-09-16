@@ -11,6 +11,7 @@ import { URL } from "url";
 
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 import { md } from "../md";
+import { getRandomEmoji } from "../getRandomEmoji";
 
 type Event = StyleguideTextStyleCreateEvent | StyleguideTextStyleUpdateEvent;
 
@@ -34,8 +35,8 @@ class StyleguideTextStyleHandler extends NotificationHandler<Event> {
         }] = events;
         const actionText = action === "created" ? "added" : "updated";
         return events.length === 1
-            ? md`**${pivotTextStyleName}** is ${actionText} in _${styleguideName}_! 🏃‍♂`
-            : md`**${events.length} text styles** are ${actionText} in _${styleguideName}_! 🏃‍♂`;
+            ? md`**${pivotTextStyleName}** is ${actionText} in _${styleguideName}_! ${getRandomEmoji()}`
+            : md`**${events.length} text styles** are ${actionText} in _${styleguideName}_! ${getRandomEmoji()}`;
     }
 
     private getWebappURL(

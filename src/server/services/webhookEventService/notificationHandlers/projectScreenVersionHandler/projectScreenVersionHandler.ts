@@ -5,6 +5,7 @@ import { MEDIUM_DELAY } from "../constants";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../config";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 import { md } from "../md";
+import { getRandomEmoji } from "../getRandomEmoji";
 
 const IMAGE_LIMIT = 5;
 
@@ -25,8 +26,8 @@ class ProjectScreenVersionHandler extends NotificationHandler<ScreenVersionCreat
             }
         }] = events;
         return events.length === 1
-            ? md`**${screenName}** is updated in _${projectName}_! 🏃‍♂️`
-            : md`**${events.length} screens** are updated in _${projectName}_! 🏃‍♂`;
+            ? md`**${screenName}** is updated in _${projectName}_! ${getRandomEmoji()}️`
+            : md`**${events.length} screens** are updated in _${projectName}_! ${getRandomEmoji()}`;
     }
 
     private getImages(events: ScreenVersionCreateEvent[]): string[] {
