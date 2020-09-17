@@ -21,7 +21,7 @@ export const ZeplinAuthEndContainer: FunctionComponent = () => {
             }
 
             try {
-                const { accessToken, refreshToken } = await requester.getAuthToken(String(code));
+                const { accessToken, refreshToken } = await requester.createAuthToken(String(code));
                 storage.setAccessToken(accessToken);
                 storage.setRefreshToken(refreshToken);
                 microsoftTeams.authentication.notifySuccess();
