@@ -8,6 +8,7 @@ import { MEDIUM_DELAY } from "../constants";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../config";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 import { md } from "../md";
+import { getRandomEmoji } from "../getRandomEmoji";
 
 const IMAGE_LIMIT = 5;
 
@@ -34,8 +35,8 @@ class ProjectComponentHandler extends NotificationHandler<Event> {
         }] = events;
         const actionText = action === "created" ? "added" : "updated";
         return events.length === 1
-            ? md`**${componentName}** is ${actionText} in _${projectName}_! 🏃‍♂️`
-            : md`**${events.length}${action === "created" ? " new" : ""} components** are ${actionText} in _${projectName}_! 🏃‍♂️`;
+            ? md`**${componentName}** is ${actionText} in _${projectName}_! ${getRandomEmoji()}`
+            : md`**${events.length}${action === "created" ? " new" : ""} components** are ${actionText} in _${projectName}_! ${getRandomEmoji()}`;
     }
 
     private getImages(events: Event[]): string[] {

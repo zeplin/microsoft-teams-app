@@ -5,6 +5,7 @@ import { MEDIUM_DELAY } from "../constants";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../config";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 import { md } from "../md";
+import { getRandomEmoji } from "../getRandomEmoji";
 
 const IMAGE_LIMIT = 5;
 
@@ -27,8 +28,8 @@ class ProjectScreenHandler extends NotificationHandler<ScreenCreateEvent> {
             }
         }] = events;
         return events.length === 1
-            ? md`**${screenName}** is added in _${projectName}_! 🏃‍♂️`
-            : md`**${events.length} new screens** are added in _${projectName}_! 🏃‍♂`;
+            ? md`**${screenName}** is added in _${projectName}_! ${getRandomEmoji()}`
+            : md`**${events.length} new screens** are added in _${projectName}_! ${getRandomEmoji()}`;
     }
 
     private getImages(events: ScreenCreateEvent[]): string[] {
