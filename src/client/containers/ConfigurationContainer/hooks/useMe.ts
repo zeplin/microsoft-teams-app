@@ -1,9 +1,9 @@
 import { useQuery } from "react-query";
 import { INTERNAL_SERVER_ERROR, UNAUTHORIZED } from "http-status-codes";
-import { AxiosError } from "axios";
 
 import { requester } from "../../../lib";
 import { User } from "../../../constants";
+import { ClientError } from "../../../ClientError";
 
 const RETRY_COUNT = 3;
 
@@ -22,16 +22,16 @@ export const useMe = ({
 }: UseMeParams): UseMeResult => {
     const {
         data: me
-    } = useQuery<User, "me", AxiosError>(
+    } = useQuery(
         "me",
         requester.getMe,
         {
-            retry: (failureCount, error) => (
-                (error.response?.status === undefined || error.response?.status >= INTERNAL_SERVER_ERROR) &&
+            enabled,
+            retry: (failureCount, error: Error) => (
+                (!(error instanceof ClientError) || error.status >= INTERNAL_SERVER_ERROR) &&
                 failureCount <= RETRY_COUNT
             ),
-            onError: error => onError(error.response?.status === UNAUTHORIZED),
-            enabled
+            onError: error => onError(error instanceof ClientError && error.status === UNAUTHORIZED)
         }
     );
 

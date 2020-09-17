@@ -39,7 +39,7 @@ export const createConfiguration = async (
         ...configuration
     }: ConfigurationCreateParameters
 ): Promise<string> => {
-    const { data: { id } } = await httpClient.post(
+    const { id } = await httpClient.post(
         "/api/configurations",
         {
             ...configuration,
@@ -62,8 +62,8 @@ export const updateConfiguration = async (
             events
         }
     }: ConfigurationUpdateParameters
-): Promise<string> => {
-    const { data: { id } } = await httpClient.put(
+): Promise<void> => {
+    await httpClient.put(
         `/api/configurations/${configurationId}`,
         {
             zeplin: {
@@ -74,7 +74,6 @@ export const updateConfiguration = async (
             }
         }
     );
-    return id;
 };
 
 export const deleteConfiguration = async (configurationId: string): Promise<void> => {
@@ -83,16 +82,14 @@ export const deleteConfiguration = async (configurationId: string): Promise<void
 
 export const getConfiguration = async (configurationId: string): Promise<Configuration> => {
     const {
-        data: {
-            zeplin: {
-                resource: {
-                    id,
-                    name,
-                    type
-                },
-                webhook: {
-                    events
-                }
+        zeplin: {
+            resource: {
+                id,
+                name,
+                type
+            },
+            webhook: {
+                events
             }
         }
     } = await httpClient.get(`/api/configurations/${configurationId}`);

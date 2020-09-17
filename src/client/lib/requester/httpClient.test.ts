@@ -1,21 +1,11 @@
-import nock, { Interceptor } from "nock";
 import { BAD_REQUEST, NOT_FOUND, OK, UNAUTHORIZED } from "http-status-codes";
 import { httpClient } from "./httpClient";
 import { storage } from "../storage";
 
-const result = "result";
+const result = { result: "result" };
 
 const defaultAccessToken = "accessToken";
 const refreshToken = "refreshToken";
-
-const createMockInterceptor = (token = defaultAccessToken): Interceptor => nock(
-    "http://localhost",
-    {
-        reqheaders: {
-            Authorization: `Bearer ${token}`
-        }
-    }
-).get("/");
 
 describe("httpClient", () => {
     beforeAll(() => {
@@ -23,23 +13,34 @@ describe("httpClient", () => {
     });
 
     afterEach(() => {
-        nock.cleanAll();
         jest.runAllTimers();
+        if (global.fetch) {
+            (global.fetch as jest.Mock).mockRestore();
+            delete global.fetch;
+        }
     });
 
     it("should get the data from server with authentication header", async () => {
         const spyGetAccessToken = jest.spyOn(storage, "getAccessToken").mockReturnValue(defaultAccessToken);
-        createMockInterceptor().reply(OK, result);
 
-        const { data } = await httpClient.get("/");
+        global.fetch = jest.fn().mockResolvedValue({
+            status: OK,
+            json: () => Promise.resolve(result)
+        });
 
-        expect(data).toBe(result);
+        const data = await httpClient.get("/");
+
+        expect(data).toStrictEqual(result);
         spyGetAccessToken.mockRestore();
     });
 
     it("should get the error from server", async () => {
         const spyGetAccessToken = jest.spyOn(storage, "getAccessToken").mockReturnValue(defaultAccessToken);
-        createMockInterceptor().reply(NOT_FOUND, result);
+
+        global.fetch = jest.fn().mockResolvedValue({
+            status: NOT_FOUND,
+            json: () => Promise.resolve({ detail: "not found" })
+        });
 
         await expect(() => httpClient.get("/")).rejects.toThrow();
         spyGetAccessToken.mockRestore();
@@ -79,7 +80,10 @@ describe("httpClient", () => {
         });
 
         it("should remove token when it gets a generic UNAUTHORIZED error", async () => {
-            createMockInterceptor().reply(UNAUTHORIZED, { detail: "some error" });
+            global.fetch = jest.fn().mockResolvedValue({
+                status: UNAUTHORIZED,
+                json: () => Promise.resolve({ detail: "some error" })
+            });
 
             await expect(() => httpClient.get("/")).rejects.toThrow();
             expect(spyRemoveAccessToken).toBeCalledWith();
@@ -87,27 +91,57 @@ describe("httpClient", () => {
         });
 
         it("should refresh token and retry the request when token is expired", async () => {
-            createMockInterceptor().reply(UNAUTHORIZED, { detail: "token_expired" });
-            createMockInterceptor(newAccessToken).reply(OK, result);
+            global.fetch = jest.fn().mockImplementation((url, { headers: { Authorization }, body }) => {
+                if (url === "/" && Authorization === `Bearer ${newAccessToken}`) {
+                    return {
+                        status: OK,
+                        json: () => Promise.resolve(result)
+                    } as Response;
+                }
+                if (url === "/api/auth/token" && body === JSON.stringify({ refreshToken })) {
+                    return {
+                        status: OK,
+                        json: () => Promise.resolve({
+                            accessToken: newAccessToken,
+                            refreshToken: newRefreshToken
+                        })
+                    } as Response;
+                }
+                return {
+                    status: UNAUTHORIZED,
+                    json: () => Promise.resolve({ detail: "token_expired" })
+                } as Response;
+            });
 
-            nock("http://localhost")
-                .post("/api/auth/token", { refreshToken })
-                .reply(OK, { accessToken: newAccessToken, refreshToken: newRefreshToken });
+            const data = await httpClient.get("/");
 
-            const { data } = await httpClient.get("/");
-
-            expect(data).toBe(result);
+            expect(data).toStrictEqual(result);
             expect(spySetAccessToken).toBeCalledWith(newAccessToken);
             expect(spySetRefreshToken).toBeCalledWith(newRefreshToken);
         });
 
         it("should refresh token and retry the request when token is expired and get AUTHORIZATION error second time", async () => {
-            createMockInterceptor().reply(UNAUTHORIZED, { detail: "token_expired" });
-            createMockInterceptor(newAccessToken).reply(UNAUTHORIZED, { detail: "some error" });
-
-            nock("http://localhost")
-                .post("/api/auth/token", { refreshToken })
-                .reply(OK, { accessToken: newAccessToken, refreshToken: newRefreshToken });
+            global.fetch = jest.fn().mockImplementation((url, { headers: { Authorization }, body }) => {
+                if (url === "/" && Authorization === `Bearer ${newAccessToken}`) {
+                    return {
+                        status: UNAUTHORIZED,
+                        json: () => Promise.resolve({ detail: "some error" })
+                    } as Response;
+                }
+                if (url === "/api/auth/token" && body === JSON.stringify({ refreshToken })) {
+                    return {
+                        status: OK,
+                        json: () => Promise.resolve({
+                            accessToken: newAccessToken,
+                            refreshToken: newRefreshToken
+                        })
+                    } as Response;
+                }
+                return {
+                    status: UNAUTHORIZED,
+                    json: () => Promise.resolve({ detail: "token_expired" })
+                } as Response;
+            });
 
             await expect(() => httpClient.get("/")).rejects.toThrow();
             expect(spySetAccessToken).toBeCalledWith(newAccessToken);
@@ -118,12 +152,18 @@ describe("httpClient", () => {
         });
 
         it("should throw error when refresh token fails", async () => {
-            createMockInterceptor().reply(UNAUTHORIZED, { detail: "token_expired" });
-            createMockInterceptor(newAccessToken).reply(OK, result);
-
-            nock("http://localhost")
-                .post("/api/auth/token", { refreshToken })
-                .reply(BAD_REQUEST, result);
+            global.fetch = jest.fn().mockImplementation((url, { body }) => {
+                if (url === "/api/auth/token" && body === JSON.stringify({ refreshToken })) {
+                    return {
+                        status: BAD_REQUEST,
+                        json: () => Promise.resolve({ detail: "some error" })
+                    } as Response;
+                }
+                return {
+                    status: UNAUTHORIZED,
+                    json: () => Promise.resolve({ detail: "token_expired" })
+                } as Response;
+            });
 
             await expect(() => httpClient.get("/")).rejects.toThrow();
 
