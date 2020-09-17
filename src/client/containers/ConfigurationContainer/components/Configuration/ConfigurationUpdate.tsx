@@ -38,7 +38,7 @@ export const ConfigurationUpdate: FunctionComponent<ConfigurationUpdateProps> = 
             <Text weight="semibold">
                 <Text weight="bold">{resource.name}</Text>
                 {` ${resourceTypeToText(resource.type)} is connected to `}
-                <Text weight="bold">#{channelName}</Text>
+                <Text weight="bold">{channelName}</Text>
                 {" channel."}
             </Text>
         </Flex>
