@@ -7,7 +7,7 @@ interface ErrorRowParams {
 }
 
 export const ErrorRow: FunctionComponent<ErrorRowParams> = ({
-    message = "We cannot proceed the process due to API related connectivity issue",
+    message = "Could not proceed due to a connectivity issue, please try again or let us know: support@zeplin.io",
     onRetryClick
 }) => (
     <Flex fill gap="gap.smaller">

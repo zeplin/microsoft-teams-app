@@ -31,7 +31,7 @@ const errorToText = (error: AxiosError | null): string | undefined => {
         case "User is not a member of the styleguide":
             return "You are not member of the styleguide";
         case "Webhook not found":
-            return "Configuration not found";
+            return "This integration has been removed in Zeplin. You can remove this connector and create it again";
         default:
             return message;
     }
