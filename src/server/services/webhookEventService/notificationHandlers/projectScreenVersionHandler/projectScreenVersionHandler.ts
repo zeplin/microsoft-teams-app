@@ -34,7 +34,7 @@ class ProjectScreenVersionHandler extends NotificationHandler<ScreenVersionCreat
         // Take last 5 screen images
         return events
             .sort((e1, e2) => e2.payload.timestamp - e1.payload.timestamp)
-            .map(event => event.payload.context.screen.image.original_url)
+            .map(event => event.payload.context.screen.image.thumbnails?.small)
             .filter((val): val is string => Boolean(val))
             .slice(0, IMAGE_LIMIT);
     }

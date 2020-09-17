@@ -35,7 +35,9 @@ function getDummyEvent({
                     id: componentId,
                     name: componentName,
                     image: {
-                        original_url: imageUrl
+                        thumbnails: {
+                            small: imageUrl
+                        }
                     }
                 }
             }

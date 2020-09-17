@@ -30,7 +30,9 @@ function getDummyEvent({
                     id: screenId,
                     name: screenName,
                     image: {
-                        original_url: imageUrl
+                        thumbnails: {
+                            small: imageUrl
+                        }
                     }
                 }
             }
