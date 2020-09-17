@@ -37,6 +37,10 @@ function getDummyEvent({
 
 describe("styleguideColorHandler", () => {
     describe("getTeamsMessage method", () => {
+        beforeAll(() => {
+            jest.spyOn(Math, "random").mockReturnValue(0);
+        });
+
         describe("for created notification", () => {
             it("should match snapshot when there is only 1 event", () => {
                 expect(

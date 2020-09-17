@@ -1,9 +1,9 @@
 import { useQuery } from "react-query";
 import { INTERNAL_SERVER_ERROR, UNAUTHORIZED } from "http-status-codes";
-import { AxiosError } from "axios";
 
 import { requester } from "../../../lib";
 import { Configuration } from "../../../constants";
+import { ClientError } from "../../../ClientError";
 
 const RETRY_COUNT = 3;
 
@@ -54,12 +54,12 @@ export const useConfiguration = ({
             enabled,
             cacheTime: Infinity,
             refetchOnWindowFocus: false,
-            retry: (failureCount, error: AxiosError) => (
-                (error.response?.status === undefined || error.response?.status >= INTERNAL_SERVER_ERROR) &&
+            retry: (failureCount, error: Error) => (
+                (!(error instanceof ClientError) || error.status >= INTERNAL_SERVER_ERROR) &&
                 failureCount <= RETRY_COUNT
             ),
             onSuccess,
-            onError: error => onError(error.response?.status === UNAUTHORIZED)
+            onError: error => onError(error instanceof ClientError && error.status === UNAUTHORIZED)
         }
     );
 

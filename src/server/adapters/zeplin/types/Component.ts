@@ -1,3 +1,5 @@
+import { Thumbnails } from "./Thumbnails";
+
 export interface Component {
     id: string;
     name: string;
@@ -8,6 +10,7 @@ export interface Component {
         width: number;
         height: number;
         original_url?: string;
+        thumbnails?: Thumbnails;
     };
     section?: {
         id: string;

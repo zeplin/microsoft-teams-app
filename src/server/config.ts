@@ -22,7 +22,7 @@ function getBooleanVariable(name: string, defaultValue: boolean): boolean {
 
 const DEFAULT_PORT = 3000;
 
-export const PORT = getNumberVariable("NEXT_PUBLIC_PORT", DEFAULT_PORT);
+export const PORT = getNumberVariable("NEXT_PRIVATE_PORT", DEFAULT_PORT);
 export const {
     NEXT_PUBLIC_ENVIRONMENT: ENVIRONMENT = "local",
     NEXT_PUBLIC_VERSION: VERSION = "1.0.0-local",
@@ -33,7 +33,7 @@ export const {
     NEXT_PRIVATE_ZEPLIN_CLIENT_ID: ZEPLIN_CLIENT_ID,
     NEXT_PRIVATE_ZEPLIN_CLIENT_SECRET: ZEPLIN_CLIENT_SECRET,
     NEXT_PRIVATE_MONGO_URL: MONGO_URL = "mongodb://localhost:27017/zeplin-microsoft-teams-app",
-    NEXT_PUBLIC_BASE_URL: BASE_URL,
+    NEXT_PRIVATE_BASE_URL: BASE_URL,
     NEXT_PRIVATE_ZEPLIN_WEB_APP_BASE_URL: ZEPLIN_WEB_APP_BASE_URL = "https://app.zeplin.io",
     NEXT_PRIVATE_ZEPLIN_MAC_APP_URL_SCHEME: ZEPLIN_MAC_APP_URL_SCHEME = "zpl"
 } = process.env;

@@ -4,6 +4,7 @@ import { NoteCreateEvent, WebhookEvent } from "../../../../adapters/zeplin/types
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../config";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 import { md } from "../md";
+import { getRandomEmoji } from "../getRandomEmoji";
 
 class ProjectNoteHandler extends NotificationHandler<NoteCreateEvent> {
     // We want to send project note events immediately
@@ -27,7 +28,7 @@ class ProjectNoteHandler extends NotificationHandler<NoteCreateEvent> {
                 }
             }
         } = event;
-        return md`**${username as string}** added a note on _${screenName}_ screen in _${projectName}_. 🏃‍♂`;
+        return md`**${username as string}** added a note on _${screenName}_ screen in _${projectName}_. ${getRandomEmoji()}`;
     }
 
     private getSectionText(event: NoteCreateEvent): string {

@@ -4,7 +4,7 @@ exports[`styleguideTextStyleHandler getTeamsMessage method for created notificat
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 text styles** are added in _styleguideName_! 🏃‍♂",
+  "text": "**2 text styles** are added in _styleguideName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
@@ -40,7 +40,7 @@ exports[`styleguideTextStyleHandler getTeamsMessage method for created notificat
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**textStyleName** is added in _styleguideName_! 🏃‍♂",
+  "text": "**textStyleName** is added in _styleguideName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
@@ -76,7 +76,7 @@ exports[`styleguideTextStyleHandler getTeamsMessage method for updated notificat
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 text styles** are updated in _styleguideName_! 🏃‍♂",
+  "text": "**2 text styles** are updated in _styleguideName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
@@ -112,7 +112,7 @@ exports[`styleguideTextStyleHandler getTeamsMessage method for updated notificat
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**textStyleName** is updated in _styleguideName_! 🏃‍♂",
+  "text": "**textStyleName** is updated in _styleguideName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",

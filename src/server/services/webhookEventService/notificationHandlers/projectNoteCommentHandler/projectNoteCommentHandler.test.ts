@@ -59,6 +59,10 @@ function getDummyEvent({
 
 describe("projectNoteHandler", () => {
     describe("getTeamsMessage", () => {
+        beforeAll(() => {
+            jest.spyOn(Math, "random").mockReturnValue(0);
+        });
+
         it("should match snapshot", () => {
             expect(projectNoteCommentHandler.getTeamsMessage([getDummyEvent()])).toMatchSnapshot();
         });

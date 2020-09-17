@@ -4,7 +4,7 @@ exports[`projectTextStyleHandler getTeamsMessage method for created notification
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 text styles** are added in _projectName_! 🏃‍♂",
+  "text": "**2 text styles** are added in _projectName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
@@ -40,7 +40,7 @@ exports[`projectTextStyleHandler getTeamsMessage method for created notification
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**textStyleName** is added in _projectName_! 🏃‍♂",
+  "text": "**textStyleName** is added in _projectName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
@@ -76,7 +76,7 @@ exports[`projectTextStyleHandler getTeamsMessage method for updated notification
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 text styles** are updated in _projectName_! 🏃‍♂",
+  "text": "**2 text styles** are updated in _projectName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
@@ -112,7 +112,7 @@ exports[`projectTextStyleHandler getTeamsMessage method for updated notification
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**textStyleName** is updated in _projectName_! 🏃‍♂",
+  "text": "**textStyleName** is updated in _projectName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",

@@ -4,7 +4,7 @@ exports[`styleguideColorHandler getTeamsMessage method for created notification 
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 new colors** are added in _styleguideName_! 🏃‍♂",
+  "text": "**2 new colors** are added in _styleguideName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
@@ -40,7 +40,7 @@ exports[`styleguideColorHandler getTeamsMessage method for created notification 
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**colorName** is added in _styleguideName_! 🏃‍♂",
+  "text": "**colorName** is added in _styleguideName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
@@ -76,7 +76,7 @@ exports[`styleguideColorHandler getTeamsMessage method for updated notification 
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 new colors** are updated in _styleguideName_! 🏃‍♂",
+  "text": "**2 new colors** are updated in _styleguideName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
@@ -112,7 +112,7 @@ exports[`styleguideColorHandler getTeamsMessage method for updated notification 
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**colorName** is updated in _styleguideName_! 🏃‍♂",
+  "text": "**colorName** is updated in _styleguideName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",

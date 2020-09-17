@@ -4,7 +4,7 @@ exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notifi
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 spacing tokens** are added in _styleguideName_! 🏃‍♂",
+  "text": "**2 spacing tokens** are added in _styleguideName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
@@ -40,7 +40,7 @@ exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notifi
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**spacingTokenName** is added in _styleguideName_! 🏃‍♂",
+  "text": "**spacingTokenName** is added in _styleguideName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
@@ -76,7 +76,7 @@ exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notifi
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 spacing tokens** are updated in _styleguideName_! 🏃‍♂",
+  "text": "**2 spacing tokens** are updated in _styleguideName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
@@ -112,7 +112,7 @@ exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notifi
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**spacingTokenName** is updated in _styleguideName_! 🏃‍♂",
+  "text": "**spacingTokenName** is updated in _styleguideName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",

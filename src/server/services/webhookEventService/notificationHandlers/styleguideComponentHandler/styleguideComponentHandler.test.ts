@@ -45,6 +45,10 @@ function getDummyEvent({
 
 describe("styleguideComponentHandler", () => {
     describe("getTeamsMessage method", () => {
+        beforeAll(() => {
+            jest.spyOn(Math, "random").mockReturnValue(0);
+        });
+
         it("should images be sorted by timestamp and clamped to contain 5 non-empty urls", () => {
             const result = styleguideComponentHandler.getTeamsMessage([
                 getDummyEvent({ timestamp: 6, imageUrl: "url6" }),

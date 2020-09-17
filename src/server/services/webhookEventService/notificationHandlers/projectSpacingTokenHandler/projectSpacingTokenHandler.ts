@@ -10,6 +10,7 @@ import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../
 import { URL } from "url";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 import { md } from "../md";
+import { getRandomEmoji } from "../getRandomEmoji";
 
 type Event = ProjectSpacingTokenCreateEvent | ProjectSpacingTokenUpdateEvent;
 
@@ -33,8 +34,8 @@ class ProjectSpacingTokenHandler extends NotificationHandler<Event> {
         }] = events;
         const actionText = action === "created" ? "added" : "updated";
         return events.length === 1
-            ? md`**${pivotSpacingTokenName}** is ${actionText} in _${projectName}_! 🏃‍♂`
-            : md`**${events.length} spacing tokens** are ${actionText} in _${projectName}_! 🏃‍♂`;
+            ? md`**${pivotSpacingTokenName}** is ${actionText} in _${projectName}_! ${getRandomEmoji()}`
+            : md`**${events.length} spacing tokens** are ${actionText} in _${projectName}_! ${getRandomEmoji()}`;
     }
 
     private getWebappURL(

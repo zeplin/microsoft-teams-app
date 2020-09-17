@@ -3,9 +3,9 @@
     "manifestVersion": "1.6",
     "id": "${NEXT_PRIVATE_APPLICATION_ID}",
     "version": "${NEXT_PUBLIC_VERSION}",
-    "packageName": "myfirstteamsconnector",
+    "packageName": "zeplin",
     "developer": {
-        "name": "Zeplin Inc.",
+        "name": "Zeplin",
         "websiteUrl": "https://zeplin.io",
         "privacyUrl": "https://zeplin.io/privacy",
         "termsOfUseUrl": "https://zeplin.io/terms"
@@ -15,21 +15,21 @@
         "full": "Zeplin"
     },
     "description": {
-        "short": "TODO: add short description here",
-        "full": "TODO: add full description here"
+        "short": "Receive updates from your Zeplin workspace in real time",
+        "full": "Zeplin is a connected workspace for product teams where you can share, organize and collaborate on designs. It's a living source of truth where your projects and design system live hand in hand, integrated with the tools you use everyday."
     },
     "icons": {
         "outline": "icon-outline.png",
         "color": "icon-color.png"
     },
-    "accentColor": "#D85028",
+    "accentColor": "#FFFFFF",
     "configurableTabs": [],
     "staticTabs": [],
     "bots": [],
     "connectors": [
         {
             "connectorId": "${NEXT_PRIVATE_CONNECTOR_ID}",
-            "configurationUrl": "${NEXT_PUBLIC_BASE_URL}/?theme={theme}&channel={channelName}",
+            "configurationUrl": "${NEXT_PRIVATE_BASE_URL}/?theme={theme}&channel={channelName}",
             "scopes": [
                 "team"
             ]
@@ -41,7 +41,7 @@
         "messageTeamMembers"
     ],
     "validDomains": [
-        "${NEXT_PUBLIC_DOMAIN}"
+        "${NEXT_PRIVATE_DOMAIN}"
     ],
     "showLoadingIndicator": true
 }

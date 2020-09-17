@@ -30,7 +30,9 @@ function getDummyEvent({
                     id: screenId,
                     name: screenName,
                     image: {
-                        original_url: imageUrl
+                        thumbnails: {
+                            small: imageUrl
+                        }
                     }
                 }
             }
@@ -40,6 +42,10 @@ function getDummyEvent({
 
 describe("projectScreenHandler", () => {
     describe("getTeamsMessage", () => {
+        beforeAll(() => {
+            jest.spyOn(Math, "random").mockReturnValue(0);
+        });
+
         it("should images be sorted by timestamp and clamped to contain 5 non-empty urls", () => {
             const result = projectScreenHandler.getTeamsMessage([
                 getDummyEvent({ timestamp: 6, imageUrl: "url6" }),

@@ -1,4 +1,5 @@
 import { User } from "./User";
+import { Thumbnails } from "./Thumbnails";
 
 enum DestinationType {
     SCREEN = "screen",
@@ -10,6 +11,7 @@ export interface ComponentVersionSummary {
     created: number;
     creator?: User;
     image_url?: string;
+    thumbnails?: Thumbnails;
     background_color?: {
         r: number;
         g: number;

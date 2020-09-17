@@ -1,9 +1,9 @@
 import { useQuery } from "react-query";
-import { AxiosError } from "axios";
 import { INTERNAL_SERVER_ERROR, UNAUTHORIZED } from "http-status-codes";
 
 import { requester } from "../../../lib";
 import { Project, Styleguide } from "../../../constants";
+import { ClientError } from "../../../ClientError";
 
 const RETRY_COUNT = 3;
 
@@ -34,11 +34,11 @@ export const useResources = ({ enabled, workspace, onError }: UseWorkspacesResul
         () => requester.getProjects(workspace ?? ""),
         {
             enabled,
-            retry: (failureCount, error: AxiosError) => (
-                (error.response?.status === undefined || error.response?.status >= INTERNAL_SERVER_ERROR) &&
+            retry: (failureCount, error: Error) => (
+                (!(error instanceof ClientError) || error.status >= INTERNAL_SERVER_ERROR) &&
                 failureCount <= RETRY_COUNT
             ),
-            onError: error => onError(error.response?.status === UNAUTHORIZED)
+            onError: error => onError(error instanceof ClientError && error.status === UNAUTHORIZED)
         }
     );
 
@@ -52,11 +52,11 @@ export const useResources = ({ enabled, workspace, onError }: UseWorkspacesResul
         () => requester.getStyleguides(workspace ?? ""),
         {
             enabled,
-            retry: (failureCount, error: AxiosError) => (
-                (error.response?.status === undefined || error.response?.status >= INTERNAL_SERVER_ERROR) &&
+            retry: (failureCount, error: Error) => (
+                (!(error instanceof ClientError) || error.status >= INTERNAL_SERVER_ERROR) &&
                 failureCount <= RETRY_COUNT
             ),
-            onError: error => onError(error.response?.status === UNAUTHORIZED)
+            onError: error => onError(error instanceof ClientError && error.status === UNAUTHORIZED)
         }
     );
 

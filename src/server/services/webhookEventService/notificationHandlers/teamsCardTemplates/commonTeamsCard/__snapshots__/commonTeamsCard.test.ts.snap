@@ -5,7 +5,7 @@ exports[`commonTeamsCard should match snapshot when rendered with all elements 1
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
   "title": "Project name",
-  "text": "**sertac 🌮** added a new comment on _Manage Zeplin Connector_ screen. 🏃‍♂",
+  "text": "**sertac 🌮** added a new comment on _Manage Zeplin Connector_ screen. 🗞",
   "sections": [
     {
       "title": "Section title",

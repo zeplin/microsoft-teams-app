@@ -4,7 +4,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for created notificat
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 spacing tokens** are added in _projectName_! 🏃‍♂",
+  "text": "**2 spacing tokens** are added in _projectName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
@@ -40,7 +40,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for created notificat
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**spacingTokenName** is added in _projectName_! 🏃‍♂",
+  "text": "**spacingTokenName** is added in _projectName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
@@ -76,7 +76,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for updated notificat
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 spacing tokens** are updated in _projectName_! 🏃‍♂",
+  "text": "**2 spacing tokens** are updated in _projectName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
@@ -112,7 +112,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for updated notificat
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**spacingTokenName** is updated in _projectName_! 🏃‍♂",
+  "text": "**spacingTokenName** is updated in _projectName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",

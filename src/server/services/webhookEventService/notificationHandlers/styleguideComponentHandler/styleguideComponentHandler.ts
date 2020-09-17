@@ -9,6 +9,7 @@ import { MEDIUM_DELAY } from "../constants";
 import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../config";
 import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 import { md } from "../md";
+import { getRandomEmoji } from "../getRandomEmoji";
 
 const IMAGE_LIMIT = 5;
 
@@ -35,8 +36,8 @@ class StyleguideComponentHandler extends NotificationHandler<Event> {
         }] = events;
         const actionText = action === "created" ? "added" : "updated";
         return events.length === 1
-            ? md`**${componentName}** is ${actionText} in _${styleguideName}_! 🏃‍♂️`
-            : md`**${events.length}${action === "created" ? " new" : ""} components** are ${actionText} in _${styleguideName}_! 🏃‍♂️`;
+            ? md`**${componentName}** is ${actionText} in _${styleguideName}_! ${getRandomEmoji()}`
+            : md`**${events.length}${action === "created" ? " new" : ""} components** are ${actionText} in _${styleguideName}_! ${getRandomEmoji()}`;
     }
 
     private getImages(events: Event[]): string[] {

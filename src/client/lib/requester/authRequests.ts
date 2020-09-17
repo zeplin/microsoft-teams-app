@@ -1,13 +1,15 @@
-import Axios from "axios";
 import { AuthToken } from "../../constants";
+import { httpClient } from "./httpClient";
 
-export const getAuthToken = async (code: string): Promise<AuthToken> => {
-    const { data } = await Axios.post("/api/auth/token", { code });
-    return data;
-};
+export const createAuthToken = (code: string): Promise<AuthToken> => httpClient.post(
+    "/api/auth/token",
+    { code },
+    { useAuth: false }
+);
 
-export const refreshAuthToken = async (refreshToken: string): Promise<AuthToken> => {
-    const { data } = await Axios.post("/api/auth/token", { refreshToken });
-    return data;
-};
+export const refreshAuthToken = (refreshToken: string): Promise<AuthToken> => httpClient.post(
+    "/api/auth/token",
+    { refreshToken },
+    { useAuth: false }
+);
 
