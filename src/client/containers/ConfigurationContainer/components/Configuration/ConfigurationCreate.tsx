@@ -62,7 +62,7 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
         <Flex fill column gap="gap.small">
             <Text weight="semibold">
                 {"You are connecting "}
-                <Text weight="bold">#{channelName}</Text>
+                <Text weight="bold">{channelName}</Text>
                 {username
                     ? (
                         <>
