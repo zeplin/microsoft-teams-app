@@ -1,3 +1,5 @@
+import { Thumbnails } from "./Thumbnails";
+
 export interface Screen {
     id: string;
     created: number;
@@ -8,6 +10,7 @@ export interface Screen {
         width: number;
         height: number;
         original_url?: string;
+        thumbnails?: Thumbnails;
     };
     section?: {
         id: string;
