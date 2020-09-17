@@ -2,12 +2,12 @@ import React, { FunctionComponent } from "react";
 import { ErrorIcon, Flex, Text } from "@fluentui/react-northstar";
 
 interface ErrorRowParams {
-    message?: string;
+    message: string;
     onRetryClick: () => void;
 }
 
 export const ErrorRow: FunctionComponent<ErrorRowParams> = ({
-    message = "Could not proceed due to a connectivity issue, please try again or let us know: support@zeplin.io",
+    message,
     onRetryClick
 }) => (
     <Flex fill gap="gap.smaller">
