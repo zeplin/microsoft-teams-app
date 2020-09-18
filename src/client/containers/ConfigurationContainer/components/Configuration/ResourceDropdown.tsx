@@ -3,6 +3,67 @@ import { Divider, Dropdown, DropdownItemProps, ShorthandCollection } from "@flue
 
 import { Project, Resource, ResourceType, Styleguide } from "../../../../constants";
 
+interface ItemsGetParams {
+    projects: Project[];
+    styleguides: Styleguide[];
+    loading: boolean;
+}
+const getItems = ({ projects, styleguides, loading }: ItemsGetParams): ShorthandCollection<DropdownItemProps> => {
+    if (loading) {
+        return [];
+    }
+    if (projects.length === 0 && styleguides.length === 0) {
+        return [{
+            header: "There is no project/styleguide",
+            disabled: true,
+            styles: {
+                "font-weight": "bold"
+            }
+        }];
+    }
+    return [
+        projects.length > 0 && {
+            key: "Project Header",
+            header: "Projects",
+            disabled: true,
+            styles: {
+                "font-weight": "bolder"
+            }
+        },
+        ...projects.map(({ id, name }) => ({
+            key: id,
+            header: name,
+            resource: {
+                id,
+                name,
+                type: ResourceType.PROJECT
+            }
+        })),
+        projects.length > 0 && styleguides.length > 0 && {
+            key: "Seperator",
+            as: (): ReactElement => <Divider />,
+            disabled: true
+        },
+        styleguides.length > 0 && {
+            key: "Styleguide Header",
+            header: "Styleguides",
+            disabled: true,
+            styles: {
+                "font-weight": "bolder"
+            }
+        },
+        ...styleguides.map(({ id, name }) => ({
+            key: id,
+            header: name,
+            resource: {
+                id,
+                name,
+                type: ResourceType.STYLEGUIDE
+            }
+        }))
+    ];
+};
+
 interface ResourceDropdownProps {
     disabled: boolean;
     loading: boolean;
@@ -40,54 +101,9 @@ export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
             disabled={disabled}
             loading={loading}
             loadingMessage="Loading..."
-            noResultsMessage="There is no project/styleguide"
             fluid
             checkable
-            items={
-                loading
-                    ? []
-                    : [
-                        filteredProjects.length > 0 && {
-                            key: "Project Header",
-                            header: "Projects",
-                            disabled: true,
-                            styles: {
-                                "font-weight": "bolder"
-                            }
-                        },
-                        ...filteredProjects.map(({ id, name }) => ({
-                            key: id,
-                            header: name,
-                            resource: {
-                                id,
-                                name,
-                                type: ResourceType.PROJECT
-                            }
-                        })),
-                        filteredProjects.length > 0 && filteredStyleguides.length > 0 && {
-                            key: "Seperator",
-                            as: (): ReactElement => <Divider />,
-                            disabled: true
-                        },
-                        filteredStyleguides.length > 0 && {
-                            key: "Styleguide Header",
-                            header: "Styleguides",
-                            disabled: true,
-                            styles: {
-                                "font-weight": "bolder"
-                            }
-                        },
-                        ...filteredStyleguides.map(({ id, name }) => ({
-                            key: id,
-                            header: name,
-                            resource: {
-                                id,
-                                name,
-                                type: ResourceType.STYLEGUIDE
-                            }
-                        }))
-                    ]
-            }
+            items={getItems({ loading, projects: filteredProjects, styleguides: filteredStyleguides })}
             placeholder="Select Project/Styleguide"
             onBlur={(): void => {
                 setOpen(false);
