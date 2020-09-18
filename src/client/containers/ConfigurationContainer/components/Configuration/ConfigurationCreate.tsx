@@ -126,7 +126,11 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
                 </Flex.Item>
             </Flex>
         </Flex>
-        {isError && <ErrorRow onRetryClick={onRetryClick} />}
+        {isError && (
+            <ErrorRow
+                onRetryClick={onRetryClick}
+                message="Could not proceed due to a connectivity issue, please try again or let us know: support@zeplin.io" />
+        )}
         <Flex fill column gap="gap.medium">
             <Text weight="semibold">
                 Select the events you want to get a message for:
