@@ -44,7 +44,7 @@ export const ConfigurationUpdate: FunctionComponent<ConfigurationUpdateProps> = 
                 {" channel."}
             </Text>
         </Flex>
-        {isError && <ErrorRow onRetryClick={onRetryClick} message={errorMessage} />}
+        {errorMessage && <ErrorRow onRetryClick={onRetryClick} message={errorMessage} />}
         <Flex fill column gap="gap.medium">
             <Text weight="semibold">
                     Select the events you want to get a message for:

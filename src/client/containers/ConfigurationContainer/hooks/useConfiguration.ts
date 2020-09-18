@@ -20,20 +20,36 @@ interface UseConfigurationParams {
     onError: (isAuthorizationError: boolean) => void;
 }
 
-const errorToText = (error: AxiosError | null): string | undefined => {
-    if (!error || !error.response || error.response.status >= INTERNAL_SERVER_ERROR) {
-        return undefined;
+const errorToText = (error: Error): string | undefined => {
+    const defaultMessage = "We're experiencing an issue here. Please try it later or let us know: support@zeplin.io.";
+
+    if (!(error instanceof ClientError) || error.status >= INTERNAL_SERVER_ERROR) {
+        return defaultMessage;
     }
-    const message = error.response.data?.detail ?? undefined;
-    switch (message) {
+
+    switch (error.message) {
         case "User is not a member of the project":
-            return "You are not member of the project";
+            return "Only project members can update integrations settings";
         case "User is not a member of the styleguide":
-            return "You are not member of the styleguide";
-        case "Webhook not found":
+            return "Only styleguide members can update integrations settings";
+        case "Project webhook not found":
+        case "Styleguide webhook not found":
             return "This integration has been removed in Zeplin. You can remove this connector and create it again";
+        case "Project not found":
+        case "Project is archived":
+            return "Project is not available anymore. You can remove this integration";
+        case "Styleguide not found":
+        case "Styleguide is archived":
+            return "Styleguide is not available anymore. You can remove this integration";
+        case "Only organization editor (or higher) can access project webhooks":
+        case "Only organization editor (or higher) can access styleguide webhooks":
+            return "Only organization editor (or higher) can update integration settings";
+        case "Only owner of the project can access webhooks":
+            return "Only owner of the project update integration settings";
+        case "Only owner of the styleguide can access webhooks":
+            return "Only owner of the styleguide update integration settings";
         default:
-            return message;
+            return defaultMessage;
     }
 };
 
@@ -66,6 +82,6 @@ export const useConfiguration = ({
     return {
         isConfigurationError,
         refetchConfiguration,
-        configurationError: errorToText(configurationError)
+        configurationError: configurationError ? errorToText(configurationError) : undefined
     };
 };
