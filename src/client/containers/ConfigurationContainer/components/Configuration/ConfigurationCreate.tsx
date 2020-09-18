@@ -129,7 +129,7 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
         {isError && (
             <ErrorRow
                 onRetryClick={onRetryClick}
-                message="Could not proceed due to a connectivity issue, please try again or let us know: support@zeplin.io" />
+                message="Could not proceed due to a connectivity issue, please try again or let us know: support@zeplin.io." />
         )}
         <Flex fill column gap="gap.medium">
             <Text weight="semibold">
