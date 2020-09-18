@@ -16,6 +16,7 @@ export const WorkspaceDropdown: FunctionComponent<WorkspaceDropdownProps> = ({
     <Dropdown
         loading={loading}
         loadingMessage="Loading..."
+        noResultsMessage="There is no workspace"
         fluid
         checkable
         items={workspaces.map(({ name, id }) => ({

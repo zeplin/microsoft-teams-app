@@ -40,6 +40,7 @@ export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
             disabled={disabled}
             loading={loading}
             loadingMessage="Loading..."
+            noResultsMessage="There is no project/styleguide"
             fluid
             checkable
             items={
