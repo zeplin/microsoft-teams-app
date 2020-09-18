@@ -40,7 +40,6 @@ export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
             disabled={disabled}
             loading={loading}
             loadingMessage="Loading..."
-            fluid
             checkable
             items={
                 loading
