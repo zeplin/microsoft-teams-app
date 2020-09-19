@@ -32,7 +32,7 @@ const errorToText = (error: Error): string => {
             return "Only project members can update integrations settings.";
         case "User is not a member of the styleguide":
             return "Only styleguide members can update integrations settings.";
-        case "webhook not found":
+        case "Webhook not found":
             return "This integration has been removed in Zeplin. You can remove this connector and create it again.";
         case "Project not found":
         case "Project is archived":
