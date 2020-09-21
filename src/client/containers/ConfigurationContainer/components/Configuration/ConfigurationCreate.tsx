@@ -28,6 +28,7 @@ interface ConfigurationCreateProps {
     resourceSearch: string;
     username?: string;
     onResourceSearch: (value: string) => void;
+    onResourceDropdownFocus: () => void;
     onResourceDropdownBlur: () => void;
     onRetryClick: () => void;
     onWorkspaceChange: (value: string) => void;
@@ -50,6 +51,7 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
     resourceSearch,
     username,
     onResourceSearch,
+    onResourceDropdownFocus,
     onResourceDropdownBlur,
     onRetryClick,
     onWorkspaceChange,
@@ -119,6 +121,7 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
                             styleguides={styleguides}
                             disabled={!isWorkspaceSelected}
                             search={resourceSearch}
+                            onFocus={onResourceDropdownFocus}
                             onBlur={onResourceDropdownBlur}
                             onSearchChange={onResourceSearch}
                             onChange={onResourceChange} />
@@ -129,7 +132,7 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
         {isError && (
             <ErrorRow
                 onRetryClick={onRetryClick}
-                message="Could not proceed due to a connectivity issue, please try again or let us know: support@zeplin.io" />
+                message="Could not proceed due to a connectivity issue, please try again or let us know: support@zeplin.io." />
         )}
         <Flex fill column gap="gap.medium">
             <Text weight="semibold">

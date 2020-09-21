@@ -10,6 +10,7 @@ interface ResourceDropdownProps {
     styleguides: Styleguide[];
     search: string;
     onBlur: () => void;
+    onFocus: () => void;
     onSearchChange: (value: string) => void;
     onChange: (value: Resource) => void;
 }
@@ -21,6 +22,7 @@ export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
     styleguides,
     search,
     onBlur,
+    onFocus,
     onSearchChange,
     onChange
 }) => {
@@ -93,6 +95,7 @@ export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
             }}
             onFocus={(): void => {
                 setOpen(true);
+                onFocus();
             }}
             onChange={(_, { value }): void => {
                 if (value) {
