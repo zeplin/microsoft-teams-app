@@ -13,7 +13,7 @@ export const ErrorRow: FunctionComponent<ErrorRowParams> = ({
     <Flex fill gap="gap.smaller">
         <ErrorIcon size="large" />
         <Text error>
-            {`${message}. `}
+            {`${message} `}
             <Text
                 color="brand"
                 styles={{
