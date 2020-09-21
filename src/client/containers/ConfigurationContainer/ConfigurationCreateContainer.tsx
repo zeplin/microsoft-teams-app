@@ -164,6 +164,10 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
                                 ? prevState.resource?.name ?? ""
                                 : ""
                     }))}
+                    onResourceDropdownFocus={(): void => setState(prevState => ({
+                        ...prevState,
+                        resourceSearch: ""
+                    }))}
                     onWorkspaceChange={(workspace): void => setState(prevState => ({
                         ...prevState,
                         workspace,
