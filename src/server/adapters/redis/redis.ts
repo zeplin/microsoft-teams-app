@@ -1,10 +1,15 @@
 import { createClient, RedisClient } from "redis";
+import Redlock from "redlock";
+
+const DEFAULT_LOCK_TTL = 5000;
 
 class Redis {
     private redis!: RedisClient;
+    private locker!: Redlock;
 
     init(url: string): void {
         this.redis = createClient(url);
+        this.locker = new Redlock([this.redis]);
     }
 
     close(): Promise<void> {
@@ -89,6 +94,11 @@ class Redis {
                     resolve(values);
                 });
         });
+    }
+
+    async lock(key: string, ttl = DEFAULT_LOCK_TTL): Promise<() => Promise<void>> {
+        const instance = await this.locker.lock(key, ttl);
+        return instance.unlock.bind(instance);
     }
 }
 

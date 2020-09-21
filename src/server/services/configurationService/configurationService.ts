@@ -8,10 +8,10 @@ import {
     Project,
     Styleguide
 } from "../../adapters/zeplin/types";
-import { zeplin } from "../../adapters";
+import { redis, zeplin } from "../../adapters";
 import { BASE_URL, WEBHOOK_SECRET } from "../../config";
 import { ServerError } from "../../errors";
-import { NOT_FOUND } from "http-status-codes";
+import { NOT_FOUND, UNPROCESSABLE_ENTITY } from "http-status-codes";
 
 interface ConfigurationResponse {
     id: string;
@@ -228,6 +228,24 @@ class ConfigurationService {
         params: ConfigurationCreateParameters,
         options: ConfigurationCommonOptions
     ): Promise<{ id: string }> {
+        const unlock = await redis.lock(`lock:configuration:${params.zeplin.resource.id}`);
+
+        const configuration = await configurationRepo.getByResourceAndChannel(
+            params.zeplin.resource.type,
+            params.zeplin.resource.id,
+            params.microsoftTeams.channel.id
+        );
+
+        if (configuration) {
+            await unlock();
+            throw new ServerError(
+                "Configuration is already created",
+                {
+                    statusCode: UNPROCESSABLE_ENTITY,
+                    title: "Configuration is already created"
+                });
+        }
+
         const webhookId = await this.createWebhook(params.zeplin, options);
         const { _id } = await configurationRepo.create({
             ...params,
@@ -236,6 +254,9 @@ class ConfigurationService {
                 resource: params.zeplin.resource
             }
         });
+
+        await unlock();
+
         return {
             id: _id.toHexString()
         };

@@ -1,5 +1,6 @@
 import { zeplin } from "../../adapters";
-import { ProjectStatus } from "../../adapters/zeplin/types";
+import { ProjectStatus, WebhookResourceType } from "../../adapters/zeplin/types";
+import { configurationRepo } from "../../repos";
 
 interface Project {
     id: string;
@@ -8,6 +9,7 @@ interface Project {
 
 interface ProjectServiceListParams {
     workspace: string;
+    channelId: string;
     authToken: string;
 }
 
@@ -52,9 +54,10 @@ class ProjectService {
 
     async list({
         workspace,
-        authToken
+        authToken,
+        channelId
     }: ProjectServiceListParams): Promise<Project[]> {
-        const result = new Map<string, Project>();
+        const projectsMap = new Map<string, Project>();
 
         const limit = 50;
         let offset = 0;
@@ -71,7 +74,7 @@ class ProjectService {
                     map.set(id, { id, name });
                     return map;
                 },
-                result
+                projectsMap
             );
 
             offset += limit;
@@ -85,7 +88,15 @@ class ProjectService {
             });
         }
 
-        return Array.from(result.values());
+        const result = Array.from(projectsMap.values());
+
+        const projectIds = result.map(({ id }) => id);
+
+        const configuredProjectIds = (
+            await configurationRepo.listByResourceAndChannel(WebhookResourceType.PROJECT, projectIds, channelId)
+        ).map(({ zeplin: { resource: { id } } }) => id);
+
+        return result.filter(({ id }) => !configuredProjectIds.includes(id));
     }
 }
 
