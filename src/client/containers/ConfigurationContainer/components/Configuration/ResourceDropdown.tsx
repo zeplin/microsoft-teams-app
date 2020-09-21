@@ -41,8 +41,7 @@ export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
             searchQuery={search}
             disabled={disabled}
             loading={loading}
-            loadingMessage="Loading..."
-            fluid
+            loadingMessage="Loading…"
             checkable
             items={
                 loading
