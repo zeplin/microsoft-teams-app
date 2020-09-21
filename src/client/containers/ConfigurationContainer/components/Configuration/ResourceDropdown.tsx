@@ -14,7 +14,7 @@ const getItems = ({ projects, styleguides, loading }: ItemsGetParams): Shorthand
     }
     if (projects.length === 0 && styleguides.length === 0) {
         return [{
-            header: "There is no project/styleguide",
+            header: "No project/styleguide to connect",
             disabled: true,
             styles: {
                 "font-weight": "bold"
