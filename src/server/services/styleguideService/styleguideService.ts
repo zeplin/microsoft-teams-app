@@ -1,5 +1,6 @@
 import { zeplin } from "../../adapters";
-import { StyleguideStatus } from "../../adapters/zeplin/types";
+import { StyleguideStatus, WebhookResourceType } from "../../adapters/zeplin/types";
+import { configurationRepo } from "../../repos/configurationRepo";
 
 interface Styleguide {
     id: string;
@@ -8,6 +9,7 @@ interface Styleguide {
 
 interface StyleguideServiceListParams {
     workspace: string;
+    channelId: string;
     authToken: string;
 }
 
@@ -52,9 +54,10 @@ class StyleguideService {
 
     async list({
         workspace,
-        authToken
+        authToken,
+        channelId
     }: StyleguideServiceListParams): Promise<Styleguide[]> {
-        const result = new Map<string, Styleguide>();
+        const styleguidesMap = new Map<string, Styleguide>();
 
         const limit = 50;
         let offset = 0;
@@ -71,7 +74,7 @@ class StyleguideService {
                     map.set(id, { id, name });
                     return map;
                 },
-                result
+                styleguidesMap
             );
             offset += limit;
 
@@ -83,8 +86,15 @@ class StyleguideService {
                 authToken
             });
         }
+        const result = Array.from(styleguidesMap.values());
 
-        return Array.from(result.values());
+        const styleguideIds = result.map(({ id }) => id);
+
+        const configuredStyleguideIds = (
+            await configurationRepo.listByResourceAndChannel(WebhookResourceType.STYLEGUIDE, styleguideIds, channelId)
+        ).map(({ zeplin: { resource: { id } } }) => id);
+
+        return result.filter(({ id }) => !configuredStyleguideIds.includes(id));
     }
 }
 
