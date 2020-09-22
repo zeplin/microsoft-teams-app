@@ -12,53 +12,57 @@ const getItems = ({ projects, styleguides, loading }: ItemsGetParams): Shorthand
     if (loading) {
         return [];
     }
-    return [
-        ...(projects.length > 0
-            ? [{
+    const result = [];
+    if (projects.length > 0) {
+        result.push(
+            {
                 key: "Project Header",
                 header: "Projects",
                 disabled: true,
                 styles: {
                     "font-weight": "bolder"
                 }
-            }]
-            : []),
-        ...projects.map(({ id, name }) => ({
-            key: id,
-            header: name,
-            resource: {
-                id,
-                name,
-                type: ResourceType.PROJECT
-            }
-        })),
-        ...(projects.length > 0 && styleguides.length > 0
-            ? [{
-                key: "Seperator",
-                as: (): ReactElement => <Divider />,
-                disabled: true
-            }]
-            : []),
-        ...(styleguides.length > 0
-            ? [{
+            },
+            ...projects.map(({ id, name }) => ({
+                key: id,
+                header: name,
+                resource: {
+                    id,
+                    name,
+                    type: ResourceType.PROJECT
+                }
+            }))
+        );
+    }
+    if (projects.length > 0 && styleguides.length > 0) {
+        result.push({
+            key: "Seperator",
+            as: (): ReactElement => <Divider />,
+            disabled: true
+        });
+    }
+    if (styleguides.length > 0) {
+        result.push(
+            {
                 key: "Styleguide Header",
                 header: "Styleguides",
                 disabled: true,
                 styles: {
                     "font-weight": "bolder"
                 }
-            }]
-            : []),
-        ...styleguides.map(({ id, name }) => ({
-            key: id,
-            header: name,
-            resource: {
-                id,
-                name,
-                type: ResourceType.STYLEGUIDE
-            }
-        }))
-    ];
+            },
+            ...styleguides.map(({ id, name }) => ({
+                key: id,
+                header: name,
+                resource: {
+                    id,
+                    name,
+                    type: ResourceType.STYLEGUIDE
+                }
+            }))
+        );
+    }
+    return result;
 };
 
 interface ResourceDropdownProps {
