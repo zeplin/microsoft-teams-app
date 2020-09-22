@@ -3,6 +3,68 @@ import { Divider, Dropdown, DropdownItemProps, ShorthandCollection } from "@flue
 
 import { Project, Resource, ResourceType, Styleguide } from "../../../../constants";
 
+interface ItemsGetParams {
+    projects: Project[];
+    styleguides: Styleguide[];
+    loading: boolean;
+}
+const getItems = ({ projects, styleguides, loading }: ItemsGetParams): ShorthandCollection<DropdownItemProps> => {
+    if (loading) {
+        return [];
+    }
+    const result = [];
+    if (projects.length > 0) {
+        result.push(
+            {
+                key: "Project Header",
+                header: "Projects",
+                disabled: true,
+                styles: {
+                    "font-weight": "bolder"
+                }
+            },
+            ...projects.map(({ id, name }) => ({
+                key: id,
+                header: name,
+                resource: {
+                    id,
+                    name,
+                    type: ResourceType.PROJECT
+                }
+            }))
+        );
+    }
+    if (projects.length > 0 && styleguides.length > 0) {
+        result.push({
+            key: "Seperator",
+            as: (): ReactElement => <Divider />,
+            disabled: true
+        });
+    }
+    if (styleguides.length > 0) {
+        result.push(
+            {
+                key: "Styleguide Header",
+                header: "Styleguides",
+                disabled: true,
+                styles: {
+                    "font-weight": "bolder"
+                }
+            },
+            ...styleguides.map(({ id, name }) => ({
+                key: id,
+                header: name,
+                resource: {
+                    id,
+                    name,
+                    type: ResourceType.STYLEGUIDE
+                }
+            }))
+        );
+    }
+    return result;
+};
+
 interface ResourceDropdownProps {
     disabled: boolean;
     loading: boolean;
@@ -42,52 +104,9 @@ export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
             disabled={disabled}
             loading={loading}
             loadingMessage="Loading…"
+            noResultsMessage="No project/styleguide to connect"
             checkable
-            items={
-                loading
-                    ? []
-                    : [
-                        filteredProjects.length > 0 && {
-                            key: "Project Header",
-                            header: "Projects",
-                            disabled: true,
-                            styles: {
-                                "font-weight": "bolder"
-                            }
-                        },
-                        ...filteredProjects.map(({ id, name }) => ({
-                            key: id,
-                            header: name,
-                            resource: {
-                                id,
-                                name,
-                                type: ResourceType.PROJECT
-                            }
-                        })),
-                        filteredProjects.length > 0 && filteredStyleguides.length > 0 && {
-                            key: "Seperator",
-                            as: (): ReactElement => <Divider />,
-                            disabled: true
-                        },
-                        filteredStyleguides.length > 0 && {
-                            key: "Styleguide Header",
-                            header: "Styleguides",
-                            disabled: true,
-                            styles: {
-                                "font-weight": "bolder"
-                            }
-                        },
-                        ...filteredStyleguides.map(({ id, name }) => ({
-                            key: id,
-                            header: name,
-                            resource: {
-                                id,
-                                name,
-                                type: ResourceType.STYLEGUIDE
-                            }
-                        }))
-                    ]
-            }
+            items={getItems({ loading, projects: filteredProjects, styleguides: filteredStyleguides })}
             placeholder="Select Project/Styleguide"
             onBlur={(): void => {
                 setOpen(false);
