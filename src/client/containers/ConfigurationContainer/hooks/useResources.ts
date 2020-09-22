@@ -1,5 +1,6 @@
 import { useQuery } from "react-query";
 import { INTERNAL_SERVER_ERROR, UNAUTHORIZED } from "http-status-codes";
+import * as microsoftTeams from "@microsoft/teams-js";
 
 import { requester } from "../../../lib";
 import { Project, Styleguide } from "../../../constants";
@@ -23,6 +24,10 @@ interface UseWorkspacesResultParams {
     onError: (isAuthorizationError: boolean) => void;
 }
 
+const getChannelId = (): Promise<string> => new Promise(resolve => {
+    microsoftTeams.getContext(({ channelId }) => resolve(channelId as string));
+});
+
 export const useResources = ({ enabled, workspace, onError }: UseWorkspacesResultParams): UseResourcesResult => {
     const {
         isLoading: areProjectsLoading,
@@ -31,7 +36,7 @@ export const useResources = ({ enabled, workspace, onError }: UseWorkspacesResul
         refetch: refetchProjects
     } = useQuery(
         ["projects", workspace],
-        () => requester.getProjects(workspace ?? ""),
+        async () => requester.getProjects(workspace ?? "", await getChannelId()),
         {
             enabled,
             retry: (failureCount, error: Error) => (
@@ -49,7 +54,7 @@ export const useResources = ({ enabled, workspace, onError }: UseWorkspacesResul
         refetch: refetchStyleguides
     } = useQuery(
         ["styleguides", workspace],
-        () => requester.getStyleguides(workspace ?? ""),
+        async () => requester.getStyleguides(workspace ?? "", await getChannelId()),
         {
             enabled,
             retry: (failureCount, error: Error) => (
