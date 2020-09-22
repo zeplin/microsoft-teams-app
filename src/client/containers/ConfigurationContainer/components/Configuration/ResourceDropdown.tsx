@@ -12,24 +12,17 @@ const getItems = ({ projects, styleguides, loading }: ItemsGetParams): Shorthand
     if (loading) {
         return [];
     }
-    if (projects.length === 0 && styleguides.length === 0) {
-        return [{
-            header: "No project/styleguide to connect",
-            disabled: true,
-            styles: {
-                "font-weight": "bold"
-            }
-        }];
-    }
     return [
-        projects.length > 0 && {
-            key: "Project Header",
-            header: "Projects",
-            disabled: true,
-            styles: {
-                "font-weight": "bolder"
-            }
-        },
+        ...(projects.length > 0
+            ? [{
+                key: "Project Header",
+                header: "Projects",
+                disabled: true,
+                styles: {
+                    "font-weight": "bolder"
+                }
+            }]
+            : []),
         ...projects.map(({ id, name }) => ({
             key: id,
             header: name,
@@ -39,19 +32,23 @@ const getItems = ({ projects, styleguides, loading }: ItemsGetParams): Shorthand
                 type: ResourceType.PROJECT
             }
         })),
-        projects.length > 0 && styleguides.length > 0 && {
-            key: "Seperator",
-            as: (): ReactElement => <Divider />,
-            disabled: true
-        },
-        styleguides.length > 0 && {
-            key: "Styleguide Header",
-            header: "Styleguides",
-            disabled: true,
-            styles: {
-                "font-weight": "bolder"
-            }
-        },
+        ...(projects.length > 0 && styleguides.length > 0
+            ? [{
+                key: "Seperator",
+                as: (): ReactElement => <Divider />,
+                disabled: true
+            }]
+            : []),
+        ...(styleguides.length > 0
+            ? [{
+                key: "Styleguide Header",
+                header: "Styleguides",
+                disabled: true,
+                styles: {
+                    "font-weight": "bolder"
+                }
+            }]
+            : []),
         ...styleguides.map(({ id, name }) => ({
             key: id,
             header: name,
@@ -103,6 +100,7 @@ export const ResourceDropdown: FunctionComponent<ResourceDropdownProps> = ({
             disabled={disabled}
             loading={loading}
             loadingMessage="Loading…"
+            noResultsMessage="No project/styleguide to connect"
             checkable
             items={getItems({ loading, projects: filteredProjects, styleguides: filteredStyleguides })}
             placeholder="Select Project/Styleguide"
