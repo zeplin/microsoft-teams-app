@@ -9,6 +9,7 @@ const RETRY_COUNT = 3;
 
 interface UseConfigurationResult {
     isConfigurationError: boolean;
+    isConfigurationErrorPermanent: boolean;
     refetchConfiguration: () => void;
     configurationError?: string;
 }
@@ -81,6 +82,10 @@ export const useConfiguration = ({
     return {
         isConfigurationError,
         refetchConfiguration,
-        configurationError: configurationError ? errorToText(configurationError) : undefined
+        configurationError: configurationError ? errorToText(configurationError) : undefined,
+        isConfigurationErrorPermanent: (
+            configurationError instanceof ClientError &&
+            configurationError.status < INTERNAL_SERVER_ERROR
+        )
     };
 };

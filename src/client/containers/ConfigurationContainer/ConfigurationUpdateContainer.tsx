@@ -54,6 +54,7 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
 
     const {
         isConfigurationError,
+        isConfigurationErrorPermanent,
         refetchConfiguration,
         configurationError
     } = useConfiguration({
@@ -121,6 +122,7 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
                     selectedWebhookEvents={state.events}
                     isError={isConfigurationError}
                     errorMessage={configurationError}
+                    hideRetry={isConfigurationErrorPermanent}
                     onRetryClick={refetchConfiguration}
                     onWebhookEventsChange={(events): void => setState(prevState => ({
                         ...prevState,
