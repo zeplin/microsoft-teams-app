@@ -92,7 +92,7 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
                 <Text
                     as="a"
                     color="brand"
-                    href="https://zpl.io/msteams-app-docs"
+                    href="https://zpl.io/msteams-integration-help"
                     target="_blank"
                     styles={{
                         "textDecoration": "none",
