@@ -21,6 +21,7 @@ type State = {
     resource: Resource;
     events: WebhookEventType[];
     initialEvents: WebhookEventType[];
+    configurationSaveError?: string;
 };
 
 enum Status {
@@ -101,7 +102,13 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
         enabled: state.status === Status.CONFIGURATION,
         configurationId: String(id),
         resource: state.status === Status.CONFIGURATION ? state.resource : undefined,
-        events: state.status === Status.CONFIGURATION ? state.events : undefined
+        events: state.status === Status.CONFIGURATION ? state.events : undefined,
+        onError: errorMessage => {
+            setState(prevState => ({
+                ...prevState,
+                configurationSaveError: errorMessage
+            }));
+        }
     });
 
     useConfigurationDelete({
@@ -120,12 +127,20 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
                     channelName={String(channel)}
                     resource={state.resource}
                     selectedWebhookEvents={state.events}
-                    isError={isConfigurationError}
-                    errorMessage={configurationError}
-                    hideRetry={isConfigurationErrorPermanent}
-                    onRetryClick={refetchConfiguration}
+                    disabled={isConfigurationError}
+                    errorMessage={configurationError || state.configurationSaveError}
+                    hideRetry={
+                        isConfigurationError
+                            ? isConfigurationErrorPermanent
+                            : state.configurationSaveError !== undefined
+                    }
+                    onRetryClick={(): void => {
+                        setState({ status: Status.LOADING_CONFIGURATION });
+                        refetchConfiguration();
+                    }}
                     onWebhookEventsChange={(events): void => setState(prevState => ({
                         ...prevState,
+                        configurationSaveError: undefined,
                         events
                     }))} />
             );

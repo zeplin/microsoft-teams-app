@@ -19,7 +19,7 @@ interface ConfigurationUpdateProps {
     channelName: string;
     resource: Resource;
     selectedWebhookEvents: WebhookEventType[];
-    isError: boolean;
+    disabled: boolean;
     errorMessage?: string;
     hideRetry: boolean;
     onRetryClick: () => void;
@@ -30,7 +30,7 @@ export const ConfigurationUpdate: FunctionComponent<ConfigurationUpdateProps> = 
     channelName,
     resource,
     selectedWebhookEvents,
-    isError,
+    disabled,
     errorMessage,
     hideRetry,
     onRetryClick,
@@ -53,7 +53,7 @@ export const ConfigurationUpdate: FunctionComponent<ConfigurationUpdateProps> = 
             </Text>
             <div>
                 <WebhookEvents
-                    disabled={isError}
+                    disabled={disabled}
                     resourceType={resource.type}
                     selectedWebhookEvents={selectedWebhookEvents}
                     onWebhookEventsChange={onWebhookEventsChange} />

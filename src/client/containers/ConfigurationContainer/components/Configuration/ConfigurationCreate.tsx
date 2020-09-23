@@ -24,7 +24,9 @@ interface ConfigurationCreateProps {
     projects: Project[];
     styleguides: Styleguide[];
     selectedWebhookEvents: WebhookEventType[];
-    isError: boolean;
+    disabled: boolean;
+    hideRetry: boolean;
+    errorMessage?: string;
     resourceSearch: string;
     username?: string;
     onResourceSearch: (value: string) => void;
@@ -47,7 +49,9 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
     projects,
     styleguides,
     selectedWebhookEvents,
-    isError,
+    disabled,
+    hideRetry,
+    errorMessage,
     resourceSearch,
     username,
     onResourceSearch,
@@ -129,18 +133,14 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
                 </Flex.Item>
             </Flex>
         </Flex>
-        {isError && (
-            <ErrorRow
-                onRetryClick={onRetryClick}
-                message="Could not proceed due to a connectivity issue, please try again or let us know: support@zeplin.io." />
-        )}
+        {errorMessage && (<ErrorRow onRetryClick={onRetryClick} hideRetry={hideRetry} message={errorMessage} />)}
         <Flex fill column gap="gap.medium">
             <Text weight="semibold">
                 Select the events you want to get a message for:
             </Text>
             <div>
                 <WebhookEvents
-                    disabled={isError}
+                    disabled={disabled}
                     resourceType={resourceType}
                     selectedWebhookEvents={selectedWebhookEvents}
                     onWebhookEventsChange={onWebhookEventsChange} />
