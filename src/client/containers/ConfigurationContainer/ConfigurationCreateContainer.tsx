@@ -4,7 +4,12 @@ import { useRouter } from "next/router";
 
 import { Resource, resourceBasedEvents, ResourceType, WebhookEventType } from "../../constants";
 import {
-    useConfigurationSave, useInitialize, useLogin, useResources, useValidate, useWorkspaces
+    useLogin,
+    useConfigurationSave,
+    useInitialize,
+    useResources,
+    useValidate,
+    useWorkspaces
 } from "./hooks";
 import { ConfigurationCreate, Login } from "./components";
 import { storage } from "../../lib";
