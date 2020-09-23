@@ -16,6 +16,7 @@ class Requester {
 
             if (error.response) {
                 throw new ServerError("Request did not succeed", {
+                    statusCode: error.response.status,
                     extra: {
                         message: error.message,
                         response: {

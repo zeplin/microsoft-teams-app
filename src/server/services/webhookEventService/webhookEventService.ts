@@ -3,6 +3,7 @@ import { messageQueue, requester } from "../../adapters";
 import { messageJobRepo, webhookEventRepo, configurationRepo } from "../../repos";
 import { getNotificationHandler } from "./notificationHandlers";
 import { ServerError } from "../../errors";
+import { GONE } from "http-status-codes";
 
 interface JobData {
     groupingKey: string;
@@ -47,7 +48,16 @@ class WebhookEventService {
         const notificationHandler = getNotificationHandler(pivotEvent.payload.event);
         const distinctEvents = getRecentEventsOfSameResources(events);
         const message = notificationHandler.getTeamsMessage(distinctEvents);
-        await requester.post(configuration.microsoftTeams.incomingWebhookUrl, message);
+
+        try {
+            await requester.post(configuration.microsoftTeams.incomingWebhookUrl, message);
+        } catch (error) {
+            if (error instanceof ServerError && error.statusCode === GONE) {
+                await configurationRepo.delete(configuration._id.toHexString());
+            } else {
+                throw error;
+            }
+        }
     }
 
     async handleEventArrived(event: WebhookEvent): Promise<void> {
@@ -61,11 +71,16 @@ class WebhookEventService {
 
         const configuration = await configurationRepo.getByWebhookId(event.webhookId);
         if (!configuration) {
-            throw new ServerError("Event doesn't have configuration", {
-                extra: {
-                    event: JSON.stringify(event)
+            throw new ServerError(
+                "Event doesn't have configuration",
+                {
+                    statusCode: GONE,
+                    shouldCapture: false,
+                    extra: {
+                        event: JSON.stringify(event)
+                    }
                 }
-            });
+            );
         }
 
         await messageJobRepo.setGroupActiveJobId(groupingKey, jobId);
