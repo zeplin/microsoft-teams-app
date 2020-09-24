@@ -16,7 +16,7 @@
     },
     "description": {
         "short": "Receive updates from your Zeplin workspace in real time",
-        "full": "Zeplin is a connected workspace for product teams where you can share, organize and collaborate on designs. It's a living source of truth where your projects and design system live hand in hand, integrated with the tools you use everyday."
+        "full": "Zeplin is a connected workspace for product teams where you can share, organize and collaborate on designs. It's a living source of truth where your projects and design system live hand in hand."
     },
     "icons": {
         "outline": "icon-outline.png",
