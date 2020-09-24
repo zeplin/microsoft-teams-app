@@ -6,3 +6,5 @@ export const IS_DEV = process.env.NODE_ENV !== "production";
 export const IS_SENTRY_ENABLED = process.env.NEXT_PUBLIC_IS_SENTRY_ENABLED
     ? process.env.NEXT_PUBLIC_IS_SENTRY_ENABLED.toLowerCase() === "true"
     : !IS_DEV;
+export const ZEPLIN_WEB_APP_BASE_URL = process.env.NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL ??
+    "https://app.zeplin.io";
