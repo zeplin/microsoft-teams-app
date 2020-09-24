@@ -32,10 +32,10 @@ class ProjectColorHandler extends NotificationHandler<Event> {
                 }
             }
         }] = events;
-        const actionText = action === "created" ? "added" : "updated";
+        const actionText = action === "created" ? "added to" : "updated in";
         return events.length === 1
-            ? md`**${pivotColorName}** is ${actionText} in _${projectName}_! ${getRandomEmoji()}`
-            : md`**${events.length} new colors** are ${actionText} in _${projectName}_! ${getRandomEmoji()}`;
+            ? md`**${pivotColorName}** is ${actionText} _${projectName}_! ${getRandomEmoji()}`
+            : md`**${events.length} colors** are ${actionText} _${projectName}_! ${getRandomEmoji()}`;
     }
 
     private getWebappURL(

@@ -25,8 +25,8 @@ class StyleguideMemberHandler extends NotificationHandler<StyleguideMemberInvite
             }
         }] = events;
         return events.length === 1
-            ? md`**${username || "A new member"}** just joined _${styleguideName}_.`
-            : md`**${events.length} new members** just joined _${styleguideName}_`;
+            ? md`**${username || "A new teammate"}** just joined _${styleguideName}_.`
+            : md`**${events.length} teammates** just joined _${styleguideName}_`;
     }
 
     getTeamsMessage(events: StyleguideMemberInviteEvent[]): MessageCard {
