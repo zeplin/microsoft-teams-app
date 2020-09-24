@@ -132,7 +132,7 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
                     hideRetry={
                         isConfigurationError
                             ? isConfigurationErrorPermanent
-                            : state.configurationSaveError !== undefined
+                            : true
                     }
                     onRetryClick={(): void => {
                         setState({ status: Status.LOADING_CONFIGURATION });
