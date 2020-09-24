@@ -15,7 +15,7 @@ export const Login: FunctionComponent<LoginProps> = ({ error, onButtonClick }) =
             </Text>
             <Text>
                 Once proceeding, we will ask you to authorize Microsoft Teams access through a separate window. Once
-                it’s authorized, you can do more advanced settings on the Teams channel linked with Zeplin.
+                it’s authorized, you can do more advanced settings on the Microsoft Teams channel linked with Zeplin.
             </Text>
             {error && (
                 <Flex fill gap="gap.smaller">

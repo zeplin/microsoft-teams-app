@@ -4,7 +4,7 @@ exports[`projectMemberHandler getTeamsMessage should match snapshot when there a
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 new members** just joined _Project MS Teams Integration_",
+  "text": "**2 new members** just joined _Project Microsoft Teams Integration_",
   "sections": [
     {
       "text": "Say hi 👋",
@@ -18,7 +18,7 @@ exports[`projectMemberHandler getTeamsMessage should match snapshot when there i
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**dirtybit** just joined _Project MS Teams Integration_.",
+  "text": "**dirtybit** just joined _Project Microsoft Teams Integration_.",
   "sections": [
     {
       "text": "Say hi 👋",
