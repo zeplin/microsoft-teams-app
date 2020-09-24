@@ -4,6 +4,7 @@ import { INTERNAL_SERVER_ERROR, UNAUTHORIZED } from "http-status-codes";
 import { requester } from "../../../lib";
 import { Configuration } from "../../../constants";
 import { ClientError } from "../../../ClientError";
+import { errorToText } from "./errorToText";
 
 const RETRY_COUNT = 3;
 
@@ -50,7 +51,7 @@ export const useConfiguration = ({
     return {
         isConfigurationError,
         refetchConfiguration,
-        configurationError: configurationError ? ClientError.toUserFriendlyText(configurationError) : undefined,
+        configurationError: configurationError ? errorToText(configurationError) : undefined,
         isConfigurationErrorPermanent: (
             configurationError instanceof ClientError &&
             configurationError.status < INTERNAL_SERVER_ERROR

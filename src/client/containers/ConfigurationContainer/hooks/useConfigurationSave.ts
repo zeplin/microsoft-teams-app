@@ -4,7 +4,7 @@ import * as microsoftTeams from "@microsoft/teams-js";
 
 import { requester } from "../../../lib";
 import { Resource, ResourceType, WebhookEventType } from "../../../constants";
-import { ClientError } from "../../../ClientError";
+import { errorToText } from "./errorToText";
 
 interface WebhookSettings {
     webhookUrl: string;
@@ -44,14 +44,14 @@ export const useConfigurationSave = ({
         requester.createConfiguration,
         {
             throwOnError: true,
-            onError: error => onError(ClientError.toUserFriendlyText(error))
+            onError: error => onError(errorToText(error))
         }
     );
     const [updateConfiguration] = useMutation(
         requester.updateConfiguration,
         {
             throwOnError: true,
-            onError: error => onError(ClientError.toUserFriendlyText(error))
+            onError: error => onError(errorToText(error))
         }
     );
 
