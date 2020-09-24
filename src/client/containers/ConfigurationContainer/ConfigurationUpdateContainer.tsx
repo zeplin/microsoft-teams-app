@@ -129,11 +129,7 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
                     selectedWebhookEvents={state.events}
                     disabled={isConfigurationError}
                     errorMessage={configurationError || state.configurationSaveError}
-                    hideRetry={
-                        isConfigurationError
-                            ? isConfigurationErrorPermanent
-                            : true
-                    }
+                    hideRetry={isConfigurationError && isConfigurationErrorPermanent}
                     onRetryClick={(): void => {
                         setState({ status: Status.LOADING_CONFIGURATION });
                         refetchConfiguration();
