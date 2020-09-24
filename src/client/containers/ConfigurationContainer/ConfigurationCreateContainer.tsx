@@ -15,6 +15,8 @@ import { ConfigurationCreate, Login } from "./components";
 import { storage } from "../../lib";
 import { useMe } from "./hooks/useMe";
 
+const DEFAULT_ERROR_MESSAGE = "Could not proceed due to a connectivity issue, please try again or let us know: support@zeplin.io.";
+
 type State = {
     status: Status.LOADING | Status.LOGIN;
 } | {
@@ -23,6 +25,7 @@ type State = {
     resourceSearch: string;
     resource?: Resource;
     events: WebhookEventType[];
+    error?: string;
 };
 
 enum Status {
@@ -145,7 +148,13 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
     useConfigurationSave({
         enabled: state.status === Status.CONFIGURATION,
         resource: state.status === Status.CONFIGURATION ? state.resource : undefined,
-        events: state.status === Status.CONFIGURATION ? state.events : undefined
+        events: state.status === Status.CONFIGURATION ? state.events : undefined,
+        onError: errorMessage => {
+            setState(prevState => ({
+                ...prevState,
+                error: errorMessage
+            }));
+        }
     });
 
     switch (state.status) {
@@ -165,13 +174,20 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
                     projects={projects || []}
                     styleguides={styleguides || []}
                     selectedWebhookEvents={state.events}
-                    isError={styleguidesError || projectsError || workspacesError}
+                    hideRetry={state.error !== undefined}
+                    disabled={styleguidesError || projectsError || workspacesError}
+                    errorMessage={
+                        styleguidesError || projectsError || workspacesError
+                            ? DEFAULT_ERROR_MESSAGE
+                            : state.error
+                    }
                     resourceSearch={state.resourceSearch}
                     username={me?.username}
                     onResourceSearch={(resourceSearch): void => {
                         setState(prevState => ({
                             ...prevState,
-                            resourceSearch
+                            resourceSearch,
+                            error: undefined
                         }));
                     }}
                     onRetryClick={(): void => {
@@ -187,6 +203,7 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
                     }}
                     onResourceDropdownBlur={(): void => setState(prevState => ({
                         ...prevState,
+                        error: undefined,
                         resourceSearch:
                             prevState.status === Status.CONFIGURATION
                                 ? prevState.resource?.name ?? ""
@@ -194,21 +211,25 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
                     }))}
                     onResourceDropdownFocus={(): void => setState(prevState => ({
                         ...prevState,
+                        error: undefined,
                         resourceSearch: ""
                     }))}
                     onWorkspaceChange={(workspace): void => setState(prevState => ({
                         ...prevState,
                         workspace,
+                        error: undefined,
                         resourceSearch: "",
                         resource: undefined
                     }))}
                     onResourceChange={(resource): void => setState(prevState => ({
                         ...prevState,
                         resource,
+                        error: undefined,
                         resourceSearch: resource.name
                     }))}
                     onWebhookEventsChange={(events): void => setState(prevState => ({
                         ...prevState,
+                        error: undefined,
                         events
                     }))}
                     onLogoutClick={(): void => {

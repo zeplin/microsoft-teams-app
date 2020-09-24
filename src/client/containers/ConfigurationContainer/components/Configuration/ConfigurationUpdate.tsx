@@ -19,8 +19,9 @@ interface ConfigurationUpdateProps {
     channelName: string;
     resource: Resource;
     selectedWebhookEvents: WebhookEventType[];
-    isError: boolean;
+    disabled: boolean;
     errorMessage?: string;
+    hideRetry: boolean;
     onRetryClick: () => void;
     onWebhookEventsChange: (value: WebhookEventType[]) => void;
 }
@@ -29,8 +30,9 @@ export const ConfigurationUpdate: FunctionComponent<ConfigurationUpdateProps> = 
     channelName,
     resource,
     selectedWebhookEvents,
-    isError,
+    disabled,
     errorMessage,
+    hideRetry,
     onRetryClick,
     onWebhookEventsChange
 }) => (
@@ -44,14 +46,14 @@ export const ConfigurationUpdate: FunctionComponent<ConfigurationUpdateProps> = 
                 {" channel."}
             </Text>
         </Flex>
-        {errorMessage && <ErrorRow onRetryClick={onRetryClick} message={errorMessage} />}
+        {errorMessage && <ErrorRow onRetryClick={onRetryClick} message={errorMessage} hideRetry={hideRetry} />}
         <Flex fill column gap="gap.medium">
             <Text weight="semibold">
                     Select the events you want to get a message for:
             </Text>
             <div>
                 <WebhookEvents
-                    disabled={isError}
+                    disabled={disabled}
                     resourceType={resource.type}
                     selectedWebhookEvents={selectedWebhookEvents}
                     onWebhookEventsChange={onWebhookEventsChange} />
