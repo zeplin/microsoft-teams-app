@@ -84,6 +84,34 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
     } = useResources({
         enabled: state.status === Status.CONFIGURATION && Boolean(state.workspace),
         workspace: state.status === Status.CONFIGURATION ? state.workspace : undefined,
+        onProjectsSuccess: newProjects => {
+            if (
+                state.status === Status.CONFIGURATION &&
+                state.resource &&
+                state.resource.type === ResourceType.PROJECT &&
+                newProjects.findIndex(({ id }) => id === state.resource?.id) === -1
+            ) {
+                setState(prevState => ({
+                    ...prevState,
+                    resourceSearch: "",
+                    resource: undefined
+                }));
+            }
+        },
+        onStyleguidesSuccess: newStyleguides => {
+            if (
+                state.status === Status.CONFIGURATION &&
+                state.resource &&
+                state.resource.type === ResourceType.STYLEGUIDE &&
+                newStyleguides.findIndex(({ id }) => id === state.resource?.id) === -1
+            ) {
+                setState(prevState => ({
+                    ...prevState,
+                    resourceSearch: "",
+                    resource: undefined
+                }));
+            }
+        },
         onError: isAuthorizationError => {
             if (isAuthorizationError) {
                 setState({ status: Status.LOGIN });

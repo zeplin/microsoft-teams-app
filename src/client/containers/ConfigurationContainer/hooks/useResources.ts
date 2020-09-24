@@ -22,13 +22,21 @@ interface UseWorkspacesResultParams {
     enabled: boolean;
     workspace?: string;
     onError: (isAuthorizationError: boolean) => void;
+    onProjectsSuccess: (projects: Project[]) => void;
+    onStyleguidesSuccess: (styleguides: Styleguide[]) => void;
 }
 
 const getChannelId = (): Promise<string> => new Promise(resolve => {
     microsoftTeams.getContext(({ channelId }) => resolve(channelId as string));
 });
 
-export const useResources = ({ enabled, workspace, onError }: UseWorkspacesResultParams): UseResourcesResult => {
+export const useResources = ({
+    enabled,
+    workspace,
+    onError,
+    onProjectsSuccess,
+    onStyleguidesSuccess
+}: UseWorkspacesResultParams): UseResourcesResult => {
     const {
         isLoading: areProjectsLoading,
         data: projects,
@@ -43,6 +51,7 @@ export const useResources = ({ enabled, workspace, onError }: UseWorkspacesResul
                 (!(error instanceof ClientError) || error.status >= INTERNAL_SERVER_ERROR) &&
                 failureCount <= RETRY_COUNT
             ),
+            onSuccess: onProjectsSuccess,
             onError: error => onError(error instanceof ClientError && error.status === UNAUTHORIZED)
         }
     );
@@ -61,6 +70,7 @@ export const useResources = ({ enabled, workspace, onError }: UseWorkspacesResul
                 (!(error instanceof ClientError) || error.status >= INTERNAL_SERVER_ERROR) &&
                 failureCount <= RETRY_COUNT
             ),
+            onSuccess: onStyleguidesSuccess,
             onError: error => onError(error instanceof ClientError && error.status === UNAUTHORIZED)
         }
     );
