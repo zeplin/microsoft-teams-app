@@ -1,5 +1,5 @@
-import { ProjectWebhookEventType, ProjectWebhook } from "../types";
-import { Requester } from "../requester";
+import { ProjectWebhookEventType, ProjectWebhook } from "../../types";
+import { Requester } from "../../requester";
 
 interface ProjectWebhookCreateBody {
     url: string;

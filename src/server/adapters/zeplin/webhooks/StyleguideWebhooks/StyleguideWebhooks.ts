@@ -1,5 +1,5 @@
-import { StyleguideWebhookEventType, StyleguideWebhook } from "../types";
-import { Requester } from "../requester";
+import { StyleguideWebhookEventType, StyleguideWebhook } from "../../types";
+import { Requester } from "../../requester";
 
 interface StyleguideWebhookCreateBody {
     url: string;

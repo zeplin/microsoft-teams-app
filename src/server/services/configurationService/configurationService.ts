@@ -83,7 +83,7 @@ class ConfigurationService {
         { authToken }: ConfigurationCommonOptions
     ): Promise<string> {
         if (this.isProjectParameters(params)) {
-            return zeplin.projectWebhooks.create({
+            return zeplin.webhooks.projectWebhooks.create({
                 params: {
                     projectId: params.resource.id
                 },
@@ -97,7 +97,7 @@ class ConfigurationService {
                 }
             });
         }
-        return zeplin.styleguideWebhooks.create({
+        return zeplin.webhooks.styleguideWebhooks.create({
             params: {
                 styleguideId: params.resource.id
             },
@@ -118,7 +118,7 @@ class ConfigurationService {
         { authToken }: ConfigurationCommonOptions
     ): Promise<void> {
         if (this.isProjectParameters(params)) {
-            await zeplin.projectWebhooks.update({
+            await zeplin.webhooks.projectWebhooks.update({
                 params: {
                     projectId: params.resource.id,
                     webhookId
@@ -131,7 +131,7 @@ class ConfigurationService {
                 }
             });
         } else {
-            await zeplin.styleguideWebhooks.update({
+            await zeplin.webhooks.styleguideWebhooks.update({
                 params: {
                     styleguideId: params.resource.id,
                     webhookId
@@ -152,7 +152,7 @@ class ConfigurationService {
         { authToken }: ConfigurationCommonOptions
     ): Promise<void> {
         if (resource.type === WebhookResourceType.PROJECT) {
-            return zeplin.projectWebhooks.delete({
+            return zeplin.webhooks.projectWebhooks.delete({
                 params: {
                     projectId: resource.id,
                     webhookId
@@ -162,7 +162,7 @@ class ConfigurationService {
                 }
             });
         }
-        return zeplin.styleguideWebhooks.delete({
+        return zeplin.webhooks.styleguideWebhooks.delete({
             params: {
                 styleguideId: resource.id,
                 webhookId
@@ -179,7 +179,7 @@ class ConfigurationService {
         { authToken }: ConfigurationCommonOptions
     ): Promise<ProjectWebhook | StyleguideWebhook> {
         if (resource.type === WebhookResourceType.PROJECT) {
-            return zeplin.projectWebhooks.get({
+            return zeplin.webhooks.projectWebhooks.get({
                 params: {
                     projectId: resource.id,
                     webhookId
@@ -189,7 +189,7 @@ class ConfigurationService {
                 }
             });
         }
-        return zeplin.styleguideWebhooks.get({
+        return zeplin.webhooks.styleguideWebhooks.get({
             params: {
                 styleguideId: resource.id,
                 webhookId
