@@ -16,14 +16,14 @@ export class ServerError extends Error {
     constructor(
         message: string,
         {
-            statusCode,
+            statusCode = INTERNAL_SERVER_ERROR,
             title,
             extra,
-            shouldCapture = true
+            shouldCapture = statusCode >= INTERNAL_SERVER_ERROR
         }: ServerErrorOptions = {}
     ) {
         super(message);
-        this.statusCode = statusCode || INTERNAL_SERVER_ERROR;
+        this.statusCode = statusCode;
         this.title = title;
         this.extra = extra;
         this.shouldCapture = shouldCapture;
