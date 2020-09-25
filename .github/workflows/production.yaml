@@ -13,6 +13,17 @@ env:
   AWS_STACK_ID: ${{ secrets.AWS_STACK_ID_PROD }}
   AWS_LAYER_ID: ${{ secrets.AWS_LAYER_ID_PROD }}
   AWS_APP_ID: ${{ secrets.AWS_APP_ID_PROD }}
+  NEXT_PRIVATE_BASE_URL: ${{ secrets.NEXT_PRIVATE_BASE_URL_PROD }}
+  NEXT_PRIVATE_DOMAIN: ${{ secrets.NEXT_PRIVATE_DOMAIN_PROD }}
+  NEXT_PRIVATE_PORT: ${{ secrets.NEXT_PRIVATE_PORT_PROD }}
+  NEXT_PRIVATE_ZEPLIN_MAC_APP_URL_SCHEME: ${{ secrets.NEXT_PRIVATE_ZEPLIN_MAC_APP_URL_SCHEME_PROD }}
+  NEXT_PRIVATE_REDIS_URL: ${{ secrets.NEXT_PRIVATE_REDIS_URL_PROD }}
+  NEXT_PRIVATE_MONGO_URL: ${{ secrets.NEXT_PRIVATE_MONGO_URL_PROD }}
+  NEXT_PRIVATE_IS_MONGO_DEBUG: ${{ secrets.NEXT_PRIVATE_IS_MONGO_DEBUG_PROD }}
+  NEXT_PRIVATE_ZEPLIN_URL: ${{ secrets.NEXT_PRIVATE_ZEPLIN_URL_PROD }}
+  NEXT_PRIVATE_ZEPLIN_CLIENT_ID: ${{ secrets.NEXT_PRIVATE_ZEPLIN_CLIENT_ID_PROD }}
+  NEXT_PRIVATE_ZEPLIN_CLIENT_SECRET: ${{ secrets.NEXT_PRIVATE_ZEPLIN_CLIENT_SECRET_PROD }}
+  NEXT_PRIVATE_WEBHOOK_SECRET: ${{ secrets.NEXT_PRIVATE_WEBHOOK_SECRET_PROD }}
   NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN_PROD }}
   NEXT_PUBLIC_IS_SENTRY_ENABLED: ${{ secrets.NEXT_PUBLIC_IS_SENTRY_ENABLED_PROD }}
   NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL: ${{ secrets.NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL_PROD }}
@@ -96,6 +107,9 @@ jobs:
 
       - name: Change latest release
         run: aws s3 cp $S3_PATH/$TARBALL $S3_PATH/microsoft-teams-app-prod-latest.tar.gz
+
+      - name: Set environments
+        run: aws opsworks --region $AWS_REGION update-app --app-id $AWS_APP_ID --environment  $(env | grep -E "NEXT_(PRIVATE|PUBLIC)_.*" | awk -F "=" '{printf "KEY=%s,Value=%s,Secure=true ", $1, $2}')
 
       - name: Deploy
         run: >
