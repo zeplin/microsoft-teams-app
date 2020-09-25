@@ -15,7 +15,7 @@ type GetDummyEventParams = {
 
 function getDummyEvent({
     projectId = "projectId",
-    projectName = "Project MS Teams Integration",
+    projectName = "Project Microsoft Teams Integration",
     screenId = "screenId",
     screenName = "Manage Zeplin Connector",
     username = "sertac",

@@ -8,7 +8,7 @@ type GetDummyEventParams = {
 }
 
 function getDummyEvent({
-    styleguideName = "Styleguide MS Teams Integration",
+    styleguideName = "Styleguide Microsoft Teams Integration",
     userId = "userId",
     userName = "dirtybit"
 }: GetDummyEventParams = {}): StyleguideMemberInviteEvent {

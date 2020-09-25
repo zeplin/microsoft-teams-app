@@ -4,7 +4,7 @@ exports[`projectNoteHandler getTeamsMessage should match snapshot 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**sertac** replied to note _#1_ on _Manage Zeplin Connector_ screen in _Project MS Teams Integration_. 🗞",
+  "text": "**sertac** replied to note _#1_ on _Manage Zeplin Connector_ screen in _Project Microsoft Teams Integration_. 🗞",
   "sections": [
     {
       "text": "cok guzel keyfimiz var",

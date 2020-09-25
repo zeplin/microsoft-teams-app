@@ -4,7 +4,7 @@ exports[`projectComponentHandler getTeamsMessage method for created event should
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 new components** are added in _projectName_! 🗞",
+  "text": "**2 components** are added to _projectName_! 🗞",
   "sections": [
     {
       "images": [
@@ -48,7 +48,7 @@ exports[`projectComponentHandler getTeamsMessage method for created event should
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**componentName** is added in _projectName_! 🗞",
+  "text": "**componentName** is added to _projectName_! 🗞",
   "sections": [
     {
       "images": [

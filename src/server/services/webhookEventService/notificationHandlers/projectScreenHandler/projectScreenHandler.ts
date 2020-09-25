@@ -28,8 +28,8 @@ class ProjectScreenHandler extends NotificationHandler<ScreenCreateEvent> {
             }
         }] = events;
         return events.length === 1
-            ? md`**${screenName}** is added in _${projectName}_! ${getRandomEmoji()}`
-            : md`**${events.length} new screens** are added in _${projectName}_! ${getRandomEmoji()}`;
+            ? md`**${screenName}** is added to _${projectName}_! ${getRandomEmoji()}`
+            : md`**${events.length} screens** are added to _${projectName}_! ${getRandomEmoji()}`;
     }
 
     private getImages(events: ScreenCreateEvent[]): string[] {

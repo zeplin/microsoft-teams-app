@@ -4,7 +4,7 @@ exports[`styleguideMemberHandler getTeamsMessage should match snapshot when ther
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 new members** just joined _Styleguide MS Teams Integration_",
+  "text": "**2 teammates** just joined _Styleguide Microsoft Teams Integration_",
   "sections": [
     {
       "text": "Say hi 👋",
@@ -18,7 +18,7 @@ exports[`styleguideMemberHandler getTeamsMessage should match snapshot when ther
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**dirtybit** just joined _Styleguide MS Teams Integration_.",
+  "text": "**dirtybit** just joined _Styleguide Microsoft Teams Integration_.",
   "sections": [
     {
       "text": "Say hi 👋",

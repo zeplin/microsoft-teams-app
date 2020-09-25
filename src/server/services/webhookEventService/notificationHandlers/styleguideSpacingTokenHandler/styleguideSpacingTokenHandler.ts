@@ -32,10 +32,10 @@ class StyleguideSpacingTokenHandler extends NotificationHandler<Event> {
                 }
             }
         }] = events;
-        const actionText = action === "created" ? "added" : "updated";
+        const actionText = action === "created" ? "added to" : "updated in";
         return events.length === 1
-            ? md`**${pivotSpacingTokenName}** is ${actionText} in _${styleguideName}_! ${getRandomEmoji()}`
-            : md`**${events.length} spacing tokens** are ${actionText} in _${styleguideName}_! ${getRandomEmoji()}`;
+            ? md`**${pivotSpacingTokenName}** is ${actionText} _${styleguideName}_! ${getRandomEmoji()}`
+            : md`**${events.length} spacing tokens** are ${actionText} _${styleguideName}_! ${getRandomEmoji()}`;
     }
 
     private getWebappURL(

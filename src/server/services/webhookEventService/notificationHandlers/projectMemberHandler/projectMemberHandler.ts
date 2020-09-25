@@ -25,8 +25,8 @@ class ProjectMemberHandler extends NotificationHandler<ProjectMemberInviteEvent>
             }
         }] = events;
         return events.length === 1
-            ? md`**${username || "A new member"}** just joined _${projectName}_.`
-            : md`**${events.length} new members** just joined _${projectName}_`;
+            ? md`**${username || "A new teammate"}** just joined _${projectName}_.`
+            : md`**${events.length} teammates** just joined _${projectName}_`;
     }
 
     getTeamsMessage(events: ProjectMemberInviteEvent[]): MessageCard {
