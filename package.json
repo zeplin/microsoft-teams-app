@@ -7,7 +7,7 @@
     "dev": "NODE_ENV=development nodemon",
     "dev:prod-build": "nodemon --config nodemon.prod.json",
     "prebuild": "touch .env && cp .env src/client/.env",
-    "build": "next build src/client && tsc --project src/server/tsconfig.json --sourceMap",
+    "build": "NODE_ENV=production next build src/client && tsc --project src/server/tsconfig.json --sourceMap",
     "test": "ENV_FILE=.env.test NODE_ENV=test jest",
     "tunnel": "ngrok http 3000 --host-header=localhost:3000",
     "build:package": "scripts/build_package.sh",
