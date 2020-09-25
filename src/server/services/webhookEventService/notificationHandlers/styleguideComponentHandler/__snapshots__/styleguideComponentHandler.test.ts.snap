@@ -36,7 +36,7 @@ exports[`styleguideComponentHandler getTeamsMessage method for created event sho
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/styleguide/styleguideId/styleguide/components?coid=componentId&coid=componentId2"
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/components?coid=componentId&coid=componentId2"
         }
       ]
     }
@@ -76,7 +76,7 @@ exports[`styleguideComponentHandler getTeamsMessage method for created event sho
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/styleguide/styleguideId/styleguide/components?coid=componentId"
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/components?coid=componentId"
         }
       ]
     }
@@ -120,7 +120,7 @@ exports[`styleguideComponentHandler getTeamsMessage method for version_created e
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/styleguide/styleguideId/styleguide/components?coid=componentId&coid=componentId2"
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/components?coid=componentId&coid=componentId2"
         }
       ]
     }
@@ -160,7 +160,7 @@ exports[`styleguideComponentHandler getTeamsMessage method for version_created e
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/styleguide/styleguideId/styleguide/components?coid=componentId"
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/components?coid=componentId"
         }
       ]
     }
