@@ -4,7 +4,7 @@ exports[`projectColorHandler getTeamsMessage method for created notification sho
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 new colors** are added in _projectName_! 🗞",
+  "text": "**2 colors** are added to _projectName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
@@ -40,7 +40,7 @@ exports[`projectColorHandler getTeamsMessage method for created notification sho
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**colorName** is added in _projectName_! 🗞",
+  "text": "**colorName** is added to _projectName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
@@ -76,7 +76,7 @@ exports[`projectColorHandler getTeamsMessage method for updated notification sho
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 new colors** are updated in _projectName_! 🗞",
+  "text": "**2 colors** are updated in _projectName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",

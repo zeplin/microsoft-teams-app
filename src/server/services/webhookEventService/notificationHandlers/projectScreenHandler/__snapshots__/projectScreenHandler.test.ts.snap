@@ -4,7 +4,7 @@ exports[`projectScreenHandler getTeamsMessage should match snapshot when there a
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**2 new screens** are added in _projectName_! 🗞",
+  "text": "**2 screens** are added to _projectName_! 🗞",
   "sections": [
     {
       "images": [
@@ -48,7 +48,7 @@ exports[`projectScreenHandler getTeamsMessage should match snapshot when there i
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
-  "text": "**screenName** is added in _projectName_! 🗞",
+  "text": "**screenName** is added to _projectName_! 🗞",
   "sections": [
     {
       "images": [

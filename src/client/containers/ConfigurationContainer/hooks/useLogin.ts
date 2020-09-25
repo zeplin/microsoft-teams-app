@@ -16,9 +16,9 @@ const errorToText = (error?: string): string => {
     switch (error) {
         case "CancelledByUser":
         case "access_denied":
-            return "You need to authorize Teams app to connect your Zeplin projects and styleguides.";
+            return "You need to authorize Microsoft Teams app to connect your Zeplin projects and styleguides.";
         default:
-            return "Authorization failed due to an API related connectivity issue. Retry log in.";
+            return "Authorization failed due to an API related connectivity issue. Please retry logging in.";
     }
 };
 

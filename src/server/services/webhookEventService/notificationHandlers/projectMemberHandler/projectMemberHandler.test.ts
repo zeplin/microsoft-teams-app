@@ -8,7 +8,7 @@ type GetDummyEventParams = {
 }
 
 function getDummyEvent({
-    projectName = "Project MS Teams Integration",
+    projectName = "Project Microsoft Teams Integration",
     userId = "userId",
     userName = "dirtybit"
 }: GetDummyEventParams = {}): ProjectMemberInviteEvent {

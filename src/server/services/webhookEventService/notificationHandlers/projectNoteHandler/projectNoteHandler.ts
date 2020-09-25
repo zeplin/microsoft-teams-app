@@ -91,7 +91,7 @@ class ProjectNoteHandler extends NotificationHandler<NoteCreateEvent> {
 
     // A unique grouping key so that it won't be grouped with any other events
     getGroupingKey(event: WebhookEvent): string {
-        return event.deliveryId;
+        return `${event.webhookId}:${event.deliveryId}`;
     }
 
     getTeamsMessage(events: NoteCreateEvent[]): MessageCard {

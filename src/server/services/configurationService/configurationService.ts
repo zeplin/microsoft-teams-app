@@ -268,8 +268,8 @@ class ConfigurationService {
     ): Promise<void> {
         const configuration = await configurationRepo.get(configurationId);
         if (configuration) {
-            await this.deleteWebhook(configuration.zeplin.webhookId, configuration.zeplin.resource, options);
             await configurationRepo.delete(configurationId);
+            await this.deleteWebhook(configuration.zeplin.webhookId, configuration.zeplin.resource, options);
         }
     }
 

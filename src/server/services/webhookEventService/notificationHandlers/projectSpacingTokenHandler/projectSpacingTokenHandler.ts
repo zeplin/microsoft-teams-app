@@ -32,10 +32,10 @@ class ProjectSpacingTokenHandler extends NotificationHandler<Event> {
                 }
             }
         }] = events;
-        const actionText = action === "created" ? "added" : "updated";
+        const actionText = action === "created" ? "added to" : "updated in";
         return events.length === 1
-            ? md`**${pivotSpacingTokenName}** is ${actionText} in _${projectName}_! ${getRandomEmoji()}`
-            : md`**${events.length} spacing tokens** are ${actionText} in _${projectName}_! ${getRandomEmoji()}`;
+            ? md`**${pivotSpacingTokenName}** is ${actionText} _${projectName}_! ${getRandomEmoji()}`
+            : md`**${events.length} spacing tokens** are ${actionText} _${projectName}_! ${getRandomEmoji()}`;
     }
 
     private getWebappURL(

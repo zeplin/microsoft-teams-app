@@ -33,10 +33,10 @@ class StyleguideTextStyleHandler extends NotificationHandler<Event> {
                 }
             }
         }] = events;
-        const actionText = action === "created" ? "added" : "updated";
+        const actionText = action === "created" ? "added to" : "updated in";
         return events.length === 1
-            ? md`**${pivotTextStyleName}** is ${actionText} in _${styleguideName}_! ${getRandomEmoji()}`
-            : md`**${events.length} text styles** are ${actionText} in _${styleguideName}_! ${getRandomEmoji()}`;
+            ? md`**${pivotTextStyleName}** is ${actionText} _${styleguideName}_! ${getRandomEmoji()}`
+            : md`**${events.length} text styles** are ${actionText} _${styleguideName}_! ${getRandomEmoji()}`;
     }
 
     private getWebappURL(

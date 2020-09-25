@@ -32,10 +32,10 @@ class ProjectTextStyleHandler extends NotificationHandler<Event> {
                 }
             }
         }] = events;
-        const actionText = action === "created" ? "added" : "updated";
+        const actionText = action === "created" ? "added to" : "updated in";
         return events.length === 1
-            ? md`**${pivotTextStyleName}** is ${actionText} in _${projectName}_! ${getRandomEmoji()}`
-            : md`**${events.length} text styles** are ${actionText} in _${projectName}_! ${getRandomEmoji()}`;
+            ? md`**${pivotTextStyleName}** is ${actionText} _${projectName}_! ${getRandomEmoji()}`
+            : md`**${events.length} text styles** are ${actionText} _${projectName}_! ${getRandomEmoji()}`;
     }
 
     private getWebappURL(

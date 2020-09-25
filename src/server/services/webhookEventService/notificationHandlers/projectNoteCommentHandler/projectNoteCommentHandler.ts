@@ -102,7 +102,7 @@ class ProjectNoteCommentHandler extends NotificationHandler<NoteCommentCreateEve
     }
 
     getGroupingKey(event: WebhookEvent): string {
-        return event.deliveryId;
+        return `${event.webhookId}:${event.deliveryId}`;
     }
 
     getTeamsMessage(events: NoteCommentCreateEvent[]): MessageCard {

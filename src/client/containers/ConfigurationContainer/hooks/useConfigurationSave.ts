@@ -4,6 +4,7 @@ import * as microsoftTeams from "@microsoft/teams-js";
 
 import { requester } from "../../../lib";
 import { Resource, ResourceType, WebhookEventType } from "../../../constants";
+import { errorToText } from "./errorToText";
 
 interface WebhookSettings {
     webhookUrl: string;
@@ -29,16 +30,30 @@ interface UseConfigurationSaveParams {
     configurationId?: string;
     resource?: Resource;
     events?: WebhookEventType[];
+    onError: (errorMessage: string) => void;
 }
 
 export const useConfigurationSave = ({
     enabled,
     configurationId,
     resource,
-    events
+    events,
+    onError
 }: UseConfigurationSaveParams): void => {
-    const [createConfiguration] = useMutation(requester.createConfiguration, { throwOnError: true });
-    const [updateConfiguration] = useMutation(requester.updateConfiguration, { throwOnError: true });
+    const [createConfiguration] = useMutation(
+        requester.createConfiguration,
+        {
+            throwOnError: true,
+            onError: error => onError(errorToText(error))
+        }
+    );
+    const [updateConfiguration] = useMutation(
+        requester.updateConfiguration,
+        {
+            throwOnError: true,
+            onError: error => onError(errorToText(error))
+        }
+    );
 
     useEffect(() => {
         if (enabled) {
