@@ -51,7 +51,7 @@ class StyleguideColorHandler extends NotificationHandler<Event> {
             }
         }] = events;
         const webappURL = new URL(ZEPLIN_WEB_APP_BASE_URL);
-        webappURL.pathname = `styleguide/${styleguideId}/styleguide/colors`;
+        webappURL.pathname = `styleguide/${styleguideId}/colors`;
         events.forEach(event => webappURL.searchParams.append("cid", event.payload.resource.id));
         return webappURL.toString();
     }

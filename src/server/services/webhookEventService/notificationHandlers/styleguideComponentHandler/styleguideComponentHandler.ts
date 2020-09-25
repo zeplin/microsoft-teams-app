@@ -60,7 +60,7 @@ class StyleguideComponentHandler extends NotificationHandler<Event> {
             }
         }] = events;
         const webappURL = new URL(ZEPLIN_WEB_APP_BASE_URL);
-        webappURL.pathname = `styleguide/${styleguideId}/styleguide/components`;
+        webappURL.pathname = `styleguide/${styleguideId}/components`;
         events.forEach(event => webappURL.searchParams.append("coid", event.payload.resource.id));
         return webappURL.toString();
     }
