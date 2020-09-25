@@ -1,9 +1,11 @@
-import { WebhookEvent } from "../../adapters/zeplin/types";
-import { messageQueue, requester } from "../../adapters";
-import { messageJobRepo, webhookEventRepo, configurationRepo } from "../../repos";
+import { GONE, UNAUTHORIZED } from "http-status-codes";
+
+import { PingEvent, WebhookEvent, WebhookEventType } from "../../adapters/zeplin/types";
+import { messageQueue, requester, zeplin } from "../../adapters";
+import { configurationRepo, messageJobRepo, webhookEventRepo } from "../../repos";
 import { getNotificationHandler } from "./notificationHandlers";
 import { ServerError } from "../../errors";
-import { GONE } from "http-status-codes";
+import { WEBHOOK_SECRET } from "../../config";
 
 interface JobData {
     groupingKey: string;
@@ -20,6 +22,8 @@ const isOlderEventOfSameResource = (a: WebhookEvent, b: WebhookEvent): boolean =
 const getRecentEventsOfSameResources = (events: WebhookEvent[]): WebhookEvent[] => events.filter(
     current => events.find(item => isOlderEventOfSameResource(current, item)) === undefined
 );
+
+const isPingEvent = (event: WebhookEvent): event is PingEvent => event.payload.event === WebhookEventType.PING;
 
 class WebhookEventService {
     async processJob(data: JobData): Promise<void> {
@@ -61,6 +65,28 @@ class WebhookEventService {
     }
 
     async handleEventArrived(event: WebhookEvent): Promise<void> {
+        // TODO: remove if check when ping event is sent
+        if (!isPingEvent(event)) {
+            const isVerifiedEvent = zeplin.webhooks.verifyWebhookEvent({
+                signature: event.signature,
+                deliveryTimestamp: event.deliveryTimestamp,
+                secret: WEBHOOK_SECRET,
+                payload: event.payload
+            });
+            if (!isVerifiedEvent) {
+                throw new ServerError(
+                    "Event is not verified",
+                    {
+                        statusCode: UNAUTHORIZED,
+                        shouldCapture: true,
+                        extra: {
+                            event: JSON.stringify(event)
+                        }
+                    }
+                );
+            }
+        }
+
         const notificationHandler = getNotificationHandler(event.payload.event);
         if (!notificationHandler.shouldHandleEvent(event)) {
             return;
