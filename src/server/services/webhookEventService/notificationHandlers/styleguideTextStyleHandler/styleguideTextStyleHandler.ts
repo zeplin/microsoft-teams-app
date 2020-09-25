@@ -52,7 +52,7 @@ class StyleguideTextStyleHandler extends NotificationHandler<Event> {
             }
         }] = events;
         const webappURL = new URL(ZEPLIN_WEB_APP_BASE_URL);
-        webappURL.pathname = `styleguide/${styleguideId}/styleguide/textstyles`;
+        webappURL.pathname = `styleguide/${styleguideId}/textstyles`;
         events.forEach(event => webappURL.searchParams.append("tsid", event.payload.resource.id));
         return webappURL.toString();
     }
