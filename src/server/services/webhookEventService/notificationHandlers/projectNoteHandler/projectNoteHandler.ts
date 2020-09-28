@@ -1,10 +1,9 @@
 import { NotificationHandler } from "../NotificationHandler";
 import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import { NoteCreateEvent, WebhookEvent } from "../../../../adapters/zeplin/types";
-import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../config";
-import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
+import { getRedirectURLForMacApp, getWebAppURL } from "../zeplinURL";
 
 class ProjectNoteHandler extends NotificationHandler<NoteCreateEvent> {
     // We want to send project note events immediately
@@ -60,10 +59,12 @@ class ProjectNoteHandler extends NotificationHandler<NoteCreateEvent> {
                 }
             }
         } = event;
-        const webappURL = new URL(ZEPLIN_WEB_APP_BASE_URL);
-        webappURL.pathname = `project/${projectId}/screen/${screenId}`;
-        webappURL.searchParams.set("did", noteId);
-        return webappURL.toString();
+        const pathname = `project/${projectId}/screen/${screenId}`;
+        const searchParams = {
+            did: noteId
+        };
+
+        return getWebAppURL(pathname, searchParams);
     }
 
     private getMacAppURL(event: NoteCreateEvent): string {
@@ -82,7 +83,13 @@ class ProjectNoteHandler extends NotificationHandler<NoteCreateEvent> {
                 }
             }
         } = event;
-        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://dot?pid=${projectId}&sid=${screenId}&did=${noteId}`);
+        const searchParams = {
+            pid: projectId,
+            sid: screenId,
+            did: noteId
+        };
+
+        return getRedirectURLForMacApp("dot", searchParams);
     }
 
     shouldHandleEvent(event: WebhookEvent): event is NoteCreateEvent {

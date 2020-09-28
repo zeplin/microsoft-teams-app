@@ -4,10 +4,9 @@ import { NotificationHandler } from "../NotificationHandler";
 import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import { ScreenVersionCreateEvent, WebhookEvent } from "../../../../adapters/zeplin/types";
 import { MEDIUM_DELAY } from "../constants";
-import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../config";
-import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
+import { getRedirectURLForMacApp, getWebAppURL } from "../zeplinURL";
 
 const IMAGE_LIMIT = 5;
 
@@ -54,14 +53,20 @@ class ProjectScreenVersionHandler extends NotificationHandler<ScreenVersionCreat
                 }
             }
         }] = events;
-        const webappURL = new URL(ZEPLIN_WEB_APP_BASE_URL);
+
+        let pathname;
+        let searchParams;
+
         if (events.length === 1) {
-            webappURL.pathname = `project/${projectId}/screen/${screenId}`;
+            pathname = `project/${projectId}/screen/${screenId}`;
         } else {
-            webappURL.pathname = `project/${projectId}`;
-            events.forEach(event => webappURL.searchParams.append("sid", event.payload.context.screen.id));
+            pathname = `project/${projectId}`;
+            searchParams = {
+                sid: events.map(event => event.payload.context.screen.id)
+            };
         }
-        return webappURL.toString();
+
+        return getWebAppURL(pathname, searchParams);
     }
 
     private getMacAppURL(events: ScreenVersionCreateEvent[]): string {
@@ -78,11 +83,24 @@ class ProjectScreenVersionHandler extends NotificationHandler<ScreenVersionCreat
             }
         }] = events;
 
+        let resource;
+        let searchParams;
+
         if (events.length === 1) {
-            return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://screen?pid=${projectId}&sid=${screenId}`);
+            resource = "screen";
+            searchParams = {
+                pid: projectId,
+                sid: screenId
+            };
+        } else {
+            resource = "project";
+            searchParams = {
+                pid: projectId,
+                sids: events.map(event => event.payload.context.screen.id)
+            };
         }
 
-        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://project?pid=${projectId}&sids=${events.map(event => event.payload.context.screen.id).join(",")}`);
+        return getRedirectURLForMacApp(resource, searchParams);
     }
 
     getGroupingKey(event: ScreenVersionCreateEvent): string {
