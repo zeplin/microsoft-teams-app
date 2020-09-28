@@ -1,5 +1,5 @@
 import { webhookEventService } from "./webhookEventService";
-import { messageQueue, requester } from "../../adapters";
+import { messageQueue, requester, zeplin } from "../../adapters";
 import { WebhookEvent } from "../../adapters/zeplin/types";
 import { configurationRepo, messageJobRepo, webhookEventRepo } from "../../repos";
 import { dummyConfiguration } from "../../test/helpers";
@@ -13,6 +13,14 @@ jest.mock("../../adapters/messageQueue", () => ({
             return Promise.resolve();
         }),
         add: jest.fn()
+    }
+}));
+
+jest.mock("../../adapters/zeplin/zeplin", () => ({
+    zeplin: {
+        webhooks: {
+            verifyWebhookEvent: jest.fn().mockReturnValue(true)
+        }
     }
 }));
 
@@ -72,6 +80,11 @@ describe("webhookEventService", () => {
     });
 
     describe("`handleEventArrived` function", () => {
+        it("should throw error when the event signature doesn't match", async () => {
+            jest.spyOn(zeplin.webhooks, "verifyWebhookEvent").mockReturnValueOnce(false);
+            await expect(() => webhookEventService.handleEventArrived(getExampleEvent())).rejects.toThrow();
+        });
+
         it("should throw error when there isn't any configuration for the webhook event", async () => {
             jest.spyOn(configurationRepo, "getByWebhookId").mockResolvedValueOnce(null);
             await expect(() => webhookEventService.handleEventArrived(getExampleEvent())).rejects.toThrow(new ServerError("Event doesn't have configuration"));

@@ -1,6 +1,5 @@
-import { ProjectWebhooks } from "./ProjectWebhooks";
 import { Requester } from "./requester";
-import { StyleguideWebhooks } from "./StyleguideWebhooks";
+import { Webhooks } from "./webhooks";
 import { Auth } from "./Auth";
 import { Organizations } from "./Organizations";
 import { Projects } from "./Projects";
@@ -13,8 +12,7 @@ interface ZeplinOptions {
 
 class Zeplin {
     public auth!: Auth;
-    public projectWebhooks!: ProjectWebhooks;
-    public styleguideWebhooks!: StyleguideWebhooks;
+    public webhooks!: Webhooks;
     public organizations!: Organizations;
     public projects!: Projects;
     public styleguides!: Styleguides;
@@ -24,8 +22,7 @@ class Zeplin {
         const requester = new Requester({ baseURL: `${url}/v1/` });
 
         this.auth = new Auth(requester);
-        this.projectWebhooks = new ProjectWebhooks(requester);
-        this.styleguideWebhooks = new StyleguideWebhooks(requester);
+        this.webhooks = new Webhooks(requester);
         this.organizations = new Organizations(requester);
         this.projects = new Projects(requester);
         this.styleguides = new Styleguides(requester);

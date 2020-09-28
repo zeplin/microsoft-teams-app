@@ -1,15 +1,15 @@
-import { ProjectWebhooks } from "./ProjectWebhooks";
-import { ProjectWebhookEventType } from "../types";
+import { StyleguideWebhooks } from "./StyleguideWebhooks";
+import { StyleguideWebhookEventType } from "../../types";
 import { BAD_REQUEST, OK } from "http-status-codes";
 import nock, { Interceptor } from "nock";
-import { ZeplinError } from "../ZeplinError";
-import { Requester } from "../requester";
+import { ZeplinError } from "../../ZeplinError";
+import { Requester } from "../../requester";
 
 const authToken = "authToken";
-const projectId = "projectId";
+const styleguideId = "styleguideId";
 const webhookUrl = "https://webhook.url.com";
 const webhookSecret = "secret";
-const webhookEvents = [ProjectWebhookEventType.ALL];
+const webhookEvents = [StyleguideWebhookEventType.ALL];
 
 const createMockInterceptor = (): Interceptor => nock(
     "http://localhost",
@@ -19,7 +19,7 @@ const createMockInterceptor = (): Interceptor => nock(
         }
     }
 ).post(
-    "/v1/projects/projectId/webhooks",
+    "/v1/styleguides/styleguideId/webhooks",
     {
         url: webhookUrl,
         events: webhookEvents,
@@ -27,10 +27,10 @@ const createMockInterceptor = (): Interceptor => nock(
     }
 );
 
-describe("Zeplin > projectWebhook", () => {
-    let projectWebhooks: ProjectWebhooks;
+describe("Zeplin > Webhooks > StyleguideWebhooks", () => {
+    let styleguideWebhooks: StyleguideWebhooks;
     beforeAll(() => {
-        projectWebhooks = new ProjectWebhooks(new Requester({ baseURL: "http://localhost/v1" }));
+        styleguideWebhooks = new StyleguideWebhooks(new Requester({ baseURL: "http://localhost/v1" }));
     });
 
     describe("create", () => {
@@ -40,8 +40,8 @@ describe("Zeplin > projectWebhook", () => {
                 { id: "webhookId" }
             );
 
-            const webhookId = await projectWebhooks.create({
-                params: { projectId },
+            const webhookId = await styleguideWebhooks.create({
+                params: { styleguideId },
                 body: {
                     url: webhookUrl,
                     events: webhookEvents,
@@ -59,8 +59,8 @@ describe("Zeplin > projectWebhook", () => {
                 { message: "Bad request" }
             );
             await expect(
-                projectWebhooks.create({
-                    params: { projectId },
+                styleguideWebhooks.create({
+                    params: { styleguideId },
                     body: {
                         url: webhookUrl,
                         events: webhookEvents,

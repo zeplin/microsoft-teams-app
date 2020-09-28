@@ -9,9 +9,13 @@ webhookEventRouter.post("/",
         try {
             const webhookId = req.headers["zeplin-webhook-id"] as string;
             const deliveryId = req.headers["zeplin-delivery-id"] as string;
+            const signature = req.headers["zeplin-signature"] as string;
+            const deliveryTimestamp = Number(req.headers["zeplin-delivery-timestamp"]);
             await webhookEventService.handleEventArrived({
                 webhookId,
                 deliveryId,
+                signature,
+                deliveryTimestamp,
                 payload: req.body
             });
             res.send();

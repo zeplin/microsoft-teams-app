@@ -12,6 +12,8 @@ export type BaseWebhookEvent<
 > = {
     webhookId: string;
     deliveryId: string;
+    signature: string;
+    deliveryTimestamp: number;
     payload: {
         event: E;
         action: A;
