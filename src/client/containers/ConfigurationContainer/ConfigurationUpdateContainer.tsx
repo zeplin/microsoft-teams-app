@@ -13,6 +13,7 @@ import {
 } from "./hooks";
 import { ConfigurationUpdate, Login } from "./components";
 import { storage } from "../../lib";
+import { useMe } from "./hooks/useMe";
 
 type State = {
     status: Status.LOADING | Status.LOGIN | Status.LOADING_CONFIGURATION;
@@ -52,6 +53,17 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
     const { query: { channel, id, resourceName, resourceType } } = useRouter();
 
     const [state, setState] = useState<State>({ status: Status.LOADING });
+
+    const {
+        me
+    } = useMe({
+        enabled: state.status === Status.CONFIGURATION,
+        onError: isAuthorizationError => {
+            if (isAuthorizationError) {
+                setState({ status: Status.LOGIN });
+            }
+        }
+    });
 
     const {
         isConfigurationError,
@@ -130,6 +142,7 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
                     disabled={isConfigurationError}
                     errorMessage={configurationError || state.configurationSaveError}
                     hideRetry={isConfigurationError && isConfigurationErrorPermanent}
+                    username={me?.username}
                     onRetryClick={(): void => {
                         setState({ status: Status.LOADING_CONFIGURATION });
                         refetchConfiguration();
@@ -138,7 +151,13 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
                         ...prevState,
                         configurationSaveError: undefined,
                         events
-                    }))} />
+                    }))}
+                    onLogoutClick={(): void => {
+                        storage.removeRefreshToken();
+                        storage.removeAccessToken();
+                        setState({ status: Status.LOGIN });
+                    }}
+                />
             );
         default:
             throw new Error();

@@ -22,8 +22,10 @@ interface ConfigurationUpdateProps {
     disabled: boolean;
     errorMessage?: string;
     hideRetry: boolean;
+    username?: string;
     onRetryClick: () => void;
     onWebhookEventsChange: (value: WebhookEventType[]) => void;
+    onLogoutClick: () => void;
 }
 
 export const ConfigurationUpdate: FunctionComponent<ConfigurationUpdateProps> = ({
@@ -33,8 +35,10 @@ export const ConfigurationUpdate: FunctionComponent<ConfigurationUpdateProps> = 
     disabled,
     errorMessage,
     hideRetry,
+    username,
     onRetryClick,
-    onWebhookEventsChange
+    onWebhookEventsChange,
+    onLogoutClick
 }) => (
     <Flex fill column gap="gap.large">
         <div />
@@ -45,6 +49,21 @@ export const ConfigurationUpdate: FunctionComponent<ConfigurationUpdateProps> = 
                 <Text weight="bold">{channelName}</Text>
                 {" channel."}
             </Text>
+            {username &&
+                <Text>
+                    You’re logged in to your Zelin account <Text weight="bold">{username}</Text>.
+                    If you prefer using another account, you can <Text
+                        color="brand"
+                        styles={{
+                            ":hover": {
+                                cursor: "pointer"
+                            }
+                        }}
+                        onClick={onLogoutClick}>
+                        Log out
+                    </Text> first.
+                </Text>
+            }
         </Flex>
         {errorMessage && <ErrorRow onRetryClick={onRetryClick} message={errorMessage} hideRetry={hideRetry} />}
         <Flex fill column gap="gap.medium">
