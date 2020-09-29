@@ -23,3 +23,4 @@ export * from "./SpacingToken";
 export * from "./StyleguideMember";
 export * from "./StyleguideMemberRole";
 export * from "./TextStyle";
+export * from "./WorkspaceType";
