@@ -9,6 +9,7 @@ import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { getRedirectURLForMacApp, getWebAppURL } from "../zeplinURL";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
+import { getColorUpdateMessage } from "../getStyleUpdateMessage";
 
 type Event = ProjectColorCreateEvent | ProjectColorUpdateEvent;
 
@@ -34,6 +35,20 @@ class ProjectColorHandler extends NotificationHandler<Event> {
         return events.length === 1
             ? md`**${pivotColorName}** is ${actionText} _${projectName}_! ${getRandomEmoji()}`
             : md`**${events.length} colors** are ${actionText} _${projectName}_! ${getRandomEmoji()}`;
+    }
+
+    private getSectionText(events: Event[]): string {
+        const [{
+            payload: {
+                context: {
+                    project: {
+                        platform: projectPlatform
+                    }
+                }
+            }
+        }] = events;
+
+        return getColorUpdateMessage(projectPlatform);
     }
 
     private getWebappURL(
@@ -86,7 +101,7 @@ class ProjectColorHandler extends NotificationHandler<Event> {
         return commonTeamsCard({
             text: this.getText(events),
             section: {
-                text: "Make sure your stylesheets are up to date!"
+                text: this.getSectionText(events)
             },
             links: [{
                 title: "Open in App",

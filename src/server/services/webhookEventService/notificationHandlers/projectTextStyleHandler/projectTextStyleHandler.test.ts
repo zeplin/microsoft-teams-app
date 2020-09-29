@@ -1,5 +1,6 @@
 import { projectTextStyleHandler } from "./projectTextStyleHandler";
 import {
+    ProjectPlatform,
     ProjectTextStyleCreateEvent,
     ProjectTextStyleUpdateEvent
 } from "../../../../adapters/zeplin/types";
@@ -8,12 +9,14 @@ type GetDummyEventParams = {
     action?: string;
     textStyleId?: string;
     textStyleName?: string;
+    projectPlatform?: ProjectPlatform;
 }
 
 function getDummyEvent({
     action = "created",
     textStyleId = "textStyleId",
-    textStyleName = "textStyleName"
+    textStyleName = "textStyleName",
+    projectPlatform = ProjectPlatform.WEB
 }: GetDummyEventParams = {}): ProjectTextStyleCreateEvent | ProjectTextStyleUpdateEvent {
     return {
         payload: {
@@ -21,7 +24,8 @@ function getDummyEvent({
             context: {
                 project: {
                     id: "projectId",
-                    name: "projectName"
+                    name: "projectName",
+                    platform: projectPlatform
                 }
             },
             resource: {
@@ -59,6 +63,19 @@ describe("projectTextStyleHandler", () => {
                     ])
                 ).toMatchSnapshot();
             });
+
+            it.each([
+                ProjectPlatform.ANDROID,
+                ProjectPlatform.IOS,
+                ProjectPlatform.MAC_OS,
+                ProjectPlatform.WEB
+            ])("should match snapshot for every possible project platform",
+                projectPlatform => {
+                    expect(
+                        projectTextStyleHandler.getTeamsMessage([getDummyEvent({ projectPlatform })])
+                    ).toMatchSnapshot();
+                }
+            );
         });
 
         describe("for updated notification", () => {
@@ -82,6 +99,24 @@ describe("projectTextStyleHandler", () => {
                     ])
                 ).toMatchSnapshot();
             });
+
+            it.each([
+                ProjectPlatform.ANDROID,
+                ProjectPlatform.IOS,
+                ProjectPlatform.MAC_OS,
+                ProjectPlatform.WEB
+            ])("should match snapshot for every possible project platform",
+                projectPlatform => {
+                    expect(
+                        projectTextStyleHandler.getTeamsMessage([
+                            getDummyEvent({
+                                action: "updated",
+                                projectPlatform
+                            })
+                        ])
+                    ).toMatchSnapshot();
+                }
+            );
         });
     });
 });

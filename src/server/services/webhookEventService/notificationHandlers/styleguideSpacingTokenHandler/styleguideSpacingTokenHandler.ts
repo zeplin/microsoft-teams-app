@@ -9,6 +9,7 @@ import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
 import { getRedirectURLForMacApp, getWebAppURL } from "../zeplinURL";
+import { getSpacingTokenUpdateMessage } from "../getStyleUpdateMessage";
 
 type Event = StyleguideSpacingTokenCreateEvent | StyleguideSpacingTokenUpdateEvent;
 
@@ -34,6 +35,20 @@ class StyleguideSpacingTokenHandler extends NotificationHandler<Event> {
         return events.length === 1
             ? md`**${pivotSpacingTokenName}** is ${actionText} _${styleguideName}_! ${getRandomEmoji()}`
             : md`**${events.length} spacing tokens** are ${actionText} _${styleguideName}_! ${getRandomEmoji()}`;
+    }
+
+    private getSectionText(events: Event[]): string {
+        const [{
+            payload: {
+                context: {
+                    styleguide: {
+                        platform: styleguidePlatform
+                    }
+                }
+            }
+        }] = events;
+
+        return getSpacingTokenUpdateMessage(styleguidePlatform);
     }
 
     private getWebappURL(
@@ -86,7 +101,7 @@ class StyleguideSpacingTokenHandler extends NotificationHandler<Event> {
         return commonTeamsCard({
             text: this.getText(events),
             section: {
-                text: "Make sure your stylesheets are up to date!"
+                text: this.getSectionText(events)
             },
             links: [{
                 title: "Open in App",

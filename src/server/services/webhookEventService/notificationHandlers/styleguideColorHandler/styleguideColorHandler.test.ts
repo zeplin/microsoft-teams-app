@@ -1,19 +1,22 @@
 import { styleguideColorHandler } from "./styleguideColorHandler";
 import {
     StyleguideColorCreateEvent,
-    StyleguideColorUpdateEvent
+    StyleguideColorUpdateEvent,
+    StyleguidePlatform
 } from "../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     action?: string;
     colorId?: string;
     colorName?: string;
+    styleguidePlatform?: string;
 }
 
 function getDummyEvent({
     action = "created",
     colorId = "colorId",
-    colorName = "colorName"
+    colorName = "colorName",
+    styleguidePlatform = StyleguidePlatform.WEB
 }: GetDummyEventParams = {}): StyleguideColorCreateEvent | StyleguideColorUpdateEvent {
     return {
         payload: {
@@ -21,7 +24,8 @@ function getDummyEvent({
             context: {
                 styleguide: {
                     id: "styleguideId",
-                    name: "styleguideName"
+                    name: "styleguideName",
+                    platform: styleguidePlatform
                 }
             },
             resource: {
@@ -59,6 +63,20 @@ describe("styleguideColorHandler", () => {
                     ])
                 ).toMatchSnapshot();
             });
+
+            it.each([
+                StyleguidePlatform.ANDROID,
+                StyleguidePlatform.IOS,
+                StyleguidePlatform.MAC_OS,
+                StyleguidePlatform.WEB,
+                StyleguidePlatform.BASE
+            ])("should match snapshot for every possible styleguide platform",
+                styleguidePlatform => {
+                    expect(
+                        styleguideColorHandler.getTeamsMessage([getDummyEvent({ styleguidePlatform })])
+                    ).toMatchSnapshot();
+                }
+            );
         });
 
         describe("for updated notification", () => {
@@ -82,6 +100,20 @@ describe("styleguideColorHandler", () => {
                     ])
                 ).toMatchSnapshot();
             });
+
+            it.each([
+                StyleguidePlatform.ANDROID,
+                StyleguidePlatform.IOS,
+                StyleguidePlatform.MAC_OS,
+                StyleguidePlatform.WEB,
+                StyleguidePlatform.BASE
+            ])("should match snapshot for every possible styleguide platform",
+                styleguidePlatform => {
+                    expect(
+                        styleguideColorHandler.getTeamsMessage([getDummyEvent({ styleguidePlatform })])
+                    ).toMatchSnapshot();
+                }
+            );
         });
     });
 });

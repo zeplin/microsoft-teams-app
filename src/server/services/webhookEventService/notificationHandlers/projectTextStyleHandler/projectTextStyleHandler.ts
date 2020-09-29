@@ -9,6 +9,7 @@ import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
 import { getRedirectURLForMacApp, getWebAppURL } from "../zeplinURL";
+import { getTextStyleUpdateMessage } from "../getStyleUpdateMessage";
 
 type Event = ProjectTextStyleCreateEvent | ProjectTextStyleUpdateEvent;
 
@@ -34,6 +35,20 @@ class ProjectTextStyleHandler extends NotificationHandler<Event> {
         return events.length === 1
             ? md`**${pivotTextStyleName}** is ${actionText} _${projectName}_! ${getRandomEmoji()}`
             : md`**${events.length} text styles** are ${actionText} _${projectName}_! ${getRandomEmoji()}`;
+    }
+
+    private getSectionText(events: Event[]): string {
+        const [{
+            payload: {
+                context: {
+                    project: {
+                        platform: projectPlatform
+                    }
+                }
+            }
+        }] = events;
+
+        return getTextStyleUpdateMessage(projectPlatform);
     }
 
     private getWebappURL(
@@ -86,7 +101,7 @@ class ProjectTextStyleHandler extends NotificationHandler<Event> {
         return commonTeamsCard({
             text: this.getText(events),
             section: {
-                text: "Make sure your stylesheets are up to date!"
+                text: this.getSectionText(events)
             },
             links: [{
                 title: "Open in App",

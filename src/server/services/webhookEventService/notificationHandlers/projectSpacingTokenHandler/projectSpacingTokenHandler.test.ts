@@ -1,5 +1,6 @@
 import { projectSpacingTokenHandler } from "./projectSpacingTokenHandler";
 import {
+    ProjectPlatform,
     ProjectSpacingTokenCreateEvent,
     ProjectSpacingTokenUpdateEvent
 } from "../../../../adapters/zeplin/types";
@@ -8,12 +9,14 @@ type GetDummyEventParams = {
     action?: string;
     spacingTokenId?: string;
     spacingTokenName?: string;
+    projectPlatform?: ProjectPlatform;
 }
 
 function getDummyEvent({
     action = "created",
     spacingTokenId = "spacingTokenId",
-    spacingTokenName = "spacingTokenName"
+    spacingTokenName = "spacingTokenName",
+    projectPlatform = ProjectPlatform.WEB
 }: GetDummyEventParams = {}): ProjectSpacingTokenCreateEvent | ProjectSpacingTokenUpdateEvent {
     return {
         payload: {
@@ -21,7 +24,8 @@ function getDummyEvent({
             context: {
                 project: {
                     id: "projectId",
-                    name: "projectName"
+                    name: "projectName",
+                    platform: projectPlatform
                 }
             },
             resource: {
@@ -59,6 +63,19 @@ describe("projectSpacingTokenHandler", () => {
                     ])
                 ).toMatchSnapshot();
             });
+
+            it.each([
+                ProjectPlatform.ANDROID,
+                ProjectPlatform.IOS,
+                ProjectPlatform.MAC_OS,
+                ProjectPlatform.WEB
+            ])("should match snapshot for every possible project platform",
+                projectPlatform => {
+                    expect(
+                        projectSpacingTokenHandler.getTeamsMessage([getDummyEvent({ projectPlatform })])
+                    ).toMatchSnapshot();
+                }
+            );
         });
 
         describe("for updated notification", () => {
@@ -82,6 +99,24 @@ describe("projectSpacingTokenHandler", () => {
                     ])
                 ).toMatchSnapshot();
             });
+
+            it.each([
+                ProjectPlatform.ANDROID,
+                ProjectPlatform.IOS,
+                ProjectPlatform.MAC_OS,
+                ProjectPlatform.WEB
+            ])("should match snapshot for every possible project platform",
+                projectPlatform => {
+                    expect(
+                        projectSpacingTokenHandler.getTeamsMessage([
+                            getDummyEvent({
+                                action: "updated",
+                                projectPlatform
+                            })
+                        ])
+                    ).toMatchSnapshot();
+                }
+            );
         });
     });
 });

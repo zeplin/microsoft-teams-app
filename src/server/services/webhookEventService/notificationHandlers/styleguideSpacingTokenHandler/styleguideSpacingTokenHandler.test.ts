@@ -1,5 +1,6 @@
 import { styleguideSpacingTokenHandler } from "./styleguideSpacingTokenHandler";
 import {
+    StyleguidePlatform,
     StyleguideSpacingTokenCreateEvent,
     StyleguideSpacingTokenUpdateEvent
 } from "../../../../adapters/zeplin/types";
@@ -8,12 +9,14 @@ type GetDummyEventParams = {
     action?: string;
     spacingTokenId?: string;
     spacingTokenName?: string;
+    styleguidePlatform?: string;
 }
 
 function getDummyEvent({
     action = "created",
     spacingTokenId = "spacingTokenId",
-    spacingTokenName = "spacingTokenName"
+    spacingTokenName = "spacingTokenName",
+    styleguidePlatform = StyleguidePlatform.WEB
 }: GetDummyEventParams = {}): StyleguideSpacingTokenCreateEvent | StyleguideSpacingTokenUpdateEvent {
     return {
         payload: {
@@ -21,7 +24,8 @@ function getDummyEvent({
             context: {
                 styleguide: {
                     id: "styleguideId",
-                    name: "styleguideName"
+                    name: "styleguideName",
+                    platform: styleguidePlatform
                 }
             },
             resource: {
@@ -59,6 +63,20 @@ describe("styleguideSpacingTokenHandler", () => {
                     ])
                 ).toMatchSnapshot();
             });
+
+            it.each([
+                StyleguidePlatform.ANDROID,
+                StyleguidePlatform.IOS,
+                StyleguidePlatform.MAC_OS,
+                StyleguidePlatform.WEB,
+                StyleguidePlatform.BASE
+            ])("should match snapshot for every possible styleguide platform",
+                styleguidePlatform => {
+                    expect(
+                        styleguideSpacingTokenHandler.getTeamsMessage([getDummyEvent({ styleguidePlatform })])
+                    ).toMatchSnapshot();
+                }
+            );
         });
 
         describe("for updated notification", () => {
@@ -82,6 +100,20 @@ describe("styleguideSpacingTokenHandler", () => {
                     ])
                 ).toMatchSnapshot();
             });
+
+            it.each([
+                StyleguidePlatform.ANDROID,
+                StyleguidePlatform.IOS,
+                StyleguidePlatform.MAC_OS,
+                StyleguidePlatform.WEB,
+                StyleguidePlatform.BASE
+            ])("should match snapshot for every possible styleguide platform",
+                styleguidePlatform => {
+                    expect(
+                        styleguideSpacingTokenHandler.getTeamsMessage([getDummyEvent({ styleguidePlatform })])
+                    ).toMatchSnapshot();
+                }
+            );
         });
     });
 });
