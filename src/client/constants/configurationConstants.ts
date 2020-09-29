@@ -44,6 +44,7 @@ export const resourceBasedEvents = {
 
 export interface Configuration {
     resource: Resource;
+    workspaceId: string;
     webhook: {
         events: WebhookEventType[];
     };

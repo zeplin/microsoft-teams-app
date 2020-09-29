@@ -27,6 +27,7 @@ export const {
     NEXT_PUBLIC_ENVIRONMENT: ENVIRONMENT = "local",
     NEXT_PUBLIC_VERSION: VERSION = "1.0.0-local",
     NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
+    NEXT_PRIVATE_MIXPANEL_TOKEN: MIXPANEL_TOKEN,
     NEXT_PRIVATE_REDIS_URL: REDIS_URL = "redis://localhost:6379",
     NEXT_PRIVATE_WEBHOOK_SECRET: WEBHOOK_SECRET = "dummy-secret",
     NEXT_PRIVATE_ZEPLIN_URL: ZEPLIN_URL = "https://api.zeplin.dev",
@@ -41,6 +42,7 @@ export const {
 export const IS_DEV = process.env.NODE_ENV !== "production";
 export const IS_MONGO_DEBUG = getBooleanVariable("NEXT_PRIVATE_IS_MONGO_DEBUG", IS_DEV);
 export const IS_SENTRY_ENABLED = getBooleanVariable("NEXT_PUBLIC_IS_SENTRY_ENABLED", !IS_DEV);
+export const IS_MIXPANEL_ENABLED = getBooleanVariable("NEXT_PRIVATE_IS_MIXPANEL_ENABLED", !IS_DEV);
 
 export interface Config {
     IS_MONGO_DEBUG: boolean;
@@ -54,6 +56,8 @@ export interface Config {
     ZEPLIN_URL: string;
     SENTRY_DSN: string;
     IS_SENTRY_ENABLED: boolean;
+    MIXPANEL_TOKEN: string;
+    IS_MIXPANEL_ENABLED: boolean;
     VERSION: string;
     ZEPLIN_CLIENT_ID: string;
     ZEPLIN_CLIENT_SECRET: string;

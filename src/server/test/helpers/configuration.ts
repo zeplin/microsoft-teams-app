@@ -9,7 +9,8 @@ export const dummyConfiguration = {
         resource: {
             id: "resourceId",
             type: WebhookResourceType.PROJECT
-        }
+        },
+        workspaceId: "workspaceId"
     },
     microsoftTeams: {
         incomingWebhookUrl: "https://webhook.example.com/",
