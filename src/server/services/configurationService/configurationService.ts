@@ -8,7 +8,7 @@ import {
     Project,
     Styleguide
 } from "../../adapters/zeplin/types";
-import { redis, zeplin } from "../../adapters";
+import { mixpanel, redis, zeplin } from "../../adapters";
 import { BASE_URL, WEBHOOK_SECRET } from "../../config";
 import { ServerError } from "../../errors";
 import { NOT_FOUND, UNPROCESSABLE_ENTITY } from "http-status-codes";
@@ -20,6 +20,7 @@ interface ConfigurationResponse {
         resource: (Project | Styleguide) & {
             type: WebhookResourceType;
         };
+        workspaceId: string;
     };
     microsoftTeams: {
         channel: {
@@ -47,8 +48,12 @@ interface StyleguideParameters {
     events: StyleguideWebhookEventType[];
 }
 
+type ZeplinParameters = (ProjectParameters | StyleguideParameters) & {
+    workspaceId: string;
+};
+
 interface ConfigurationCreateParameters {
-    zeplin: ProjectParameters | StyleguideParameters;
+    zeplin: ZeplinParameters;
     microsoftTeams: {
         channel: {
             name: string;
@@ -61,7 +66,7 @@ interface ConfigurationCreateParameters {
 
 interface ConfigurationUpdateParameters {
     configurationId: string;
-    zeplin: ProjectParameters | StyleguideParameters;
+    zeplin: ZeplinParameters;
 }
 
 interface ConfigurationCommonOptions {
@@ -71,6 +76,23 @@ interface ConfigurationCommonOptions {
 interface ResourceParams {
     id: string;
     type: WebhookResourceType;
+}
+
+enum ConfigurationWorkspaceType {
+    ORGANIZATION = "Organization",
+    PERSONAL = "Personal"
+}
+
+enum ConfigurationTrackingIntegrationType {
+    PROJECT = "Project",
+    STYLEGUIDE = "Styleguide"
+}
+
+interface ConfigurationTrackingParameters {
+    userId: string;
+    workspaceType: ConfigurationWorkspaceType;
+    resourceType: WebhookResourceType;
+    tenantId: string;
 }
 
 class ConfigurationService {
@@ -224,6 +246,52 @@ class ConfigurationService {
         });
     }
 
+    private async getUserId(options: ConfigurationCommonOptions): Promise<string> {
+        const user = await zeplin.me.get({ options });
+
+        return user.id;
+    }
+
+    private async trackConfigurationCreate(params: ConfigurationTrackingParameters): Promise<void> {
+        const {
+            userId,
+            workspaceType,
+            resourceType,
+            tenantId
+        } = params;
+
+        const integrationType = resourceType === WebhookResourceType.PROJECT
+            ? ConfigurationTrackingIntegrationType.PROJECT
+            : ConfigurationTrackingIntegrationType.STYLEGUIDE;
+
+        await mixpanel.trackEvent("Created Microsoft Teams integration", {
+            "distinct_id": userId,
+            "Workspace Type": workspaceType,
+            "Integration Type": integrationType,
+            "Tenant ID": tenantId
+        });
+    }
+
+    private async trackConfigurationDelete(params: ConfigurationTrackingParameters): Promise<void> {
+        const {
+            userId,
+            workspaceType,
+            resourceType,
+            tenantId
+        } = params;
+
+        const integrationType = resourceType === WebhookResourceType.PROJECT
+            ? ConfigurationTrackingIntegrationType.PROJECT
+            : ConfigurationTrackingIntegrationType.STYLEGUIDE;
+
+        await mixpanel.trackEvent("Removed Microsoft Teams integration", {
+            "distinct_id": userId,
+            "Workspace Type": workspaceType,
+            "Integration Type": integrationType,
+            "Tenant ID": tenantId
+        });
+    }
+
     async create(
         params: ConfigurationCreateParameters,
         options: ConfigurationCommonOptions
@@ -246,16 +314,30 @@ class ConfigurationService {
                 });
         }
 
-        const webhookId = await this.createWebhook(params.zeplin, options);
+        const [webhookId, userId] = await Promise.all([
+            this.createWebhook(params.zeplin, options),
+            this.getUserId(options)
+        ]);
         const { _id } = await configurationRepo.create({
             ...params,
             zeplin: {
                 webhookId,
+                workspaceId: params.zeplin.workspaceId,
                 resource: params.zeplin.resource
             }
         });
 
         await unlock();
+        await this.trackConfigurationCreate({
+            userId,
+            workspaceType: (
+                params.zeplin.workspaceId === "personal"
+                    ? ConfigurationWorkspaceType.PERSONAL
+                    : ConfigurationWorkspaceType.ORGANIZATION
+            ),
+            resourceType: params.zeplin.resource.type,
+            tenantId: params.microsoftTeams.tenantId
+        });
 
         return {
             id: _id.toHexString()
@@ -269,7 +351,20 @@ class ConfigurationService {
         const configuration = await configurationRepo.get(configurationId);
         if (configuration) {
             await configurationRepo.delete(configurationId);
-            await this.deleteWebhook(configuration.zeplin.webhookId, configuration.zeplin.resource, options);
+            const [userId] = await Promise.all([
+                this.getUserId(options),
+                this.deleteWebhook(configuration.zeplin.webhookId, configuration.zeplin.resource, options)
+            ]);
+            await this.trackConfigurationDelete({
+                userId,
+                workspaceType: (
+                    configuration.zeplin.workspaceId === "personal"
+                        ? ConfigurationWorkspaceType.PERSONAL
+                        : ConfigurationWorkspaceType.ORGANIZATION
+                ),
+                resourceType: configuration.zeplin.resource.type,
+                tenantId: configuration.microsoftTeams.tenantId
+            });
         }
     }
 
@@ -300,7 +395,8 @@ class ConfigurationService {
                 resource: {
                     ...resource,
                     type: configuration.zeplin.resource.type
-                }
+                },
+                workspaceId: configuration.zeplin.webhookId
             },
             microsoftTeams: configuration.microsoftTeams
         };

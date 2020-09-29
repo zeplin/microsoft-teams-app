@@ -17,6 +17,10 @@ export const configurationSchema = new Schema({
                 required: true,
                 enum: Object.values(WebhookResourceType)
             }
+        },
+        workspaceId: {
+            type: String,
+            required: true
         }
     },
     microsoftTeams: {

@@ -10,6 +10,7 @@ export interface ConfigurationDocument extends Document {
             id: string;
             type: WebhookResourceType;
         };
+        workspaceId: string;
     };
     microsoftTeams: {
         channel: {

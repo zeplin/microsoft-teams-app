@@ -11,6 +11,7 @@ interface ConfigurationCreateParameters {
             id: string;
             type: WebhookResourceType;
         };
+        workspaceId: string;
     };
     microsoftTeams: {
         channel: {
