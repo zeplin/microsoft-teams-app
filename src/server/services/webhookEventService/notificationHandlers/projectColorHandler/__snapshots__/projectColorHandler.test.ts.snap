@@ -18,7 +18,7 @@ exports[`projectColorHandler getTeamsMessage method for created notification sho
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId%2CanotherColorId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId%2CanotherColorId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -28,7 +28,7 @@ exports[`projectColorHandler getTeamsMessage method for created notification sho
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&cid=anotherColorId"
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&cid=anotherColorId&ref=microsoft-teams"
         }
       ]
     }
@@ -54,7 +54,7 @@ exports[`projectColorHandler getTeamsMessage method for created notification sho
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -64,7 +64,7 @@ exports[`projectColorHandler getTeamsMessage method for created notification sho
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId"
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&ref=microsoft-teams"
         }
       ]
     }
@@ -90,7 +90,7 @@ exports[`projectColorHandler getTeamsMessage method for updated notification sho
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId%2CanotherColorId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId%2CanotherColorId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -100,7 +100,7 @@ exports[`projectColorHandler getTeamsMessage method for updated notification sho
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&cid=anotherColorId"
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&cid=anotherColorId&ref=microsoft-teams"
         }
       ]
     }
@@ -126,7 +126,7 @@ exports[`projectColorHandler getTeamsMessage method for updated notification sho
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -136,7 +136,7 @@ exports[`projectColorHandler getTeamsMessage method for updated notification sho
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId"
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&ref=microsoft-teams"
         }
       ]
     }

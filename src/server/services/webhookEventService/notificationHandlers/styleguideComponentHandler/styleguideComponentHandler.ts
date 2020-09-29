@@ -6,10 +6,9 @@ import {
     WebhookEvent
 } from "../../../../adapters/zeplin/types";
 import { MEDIUM_DELAY } from "../constants";
-import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../config";
-import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
+import { getRedirectURLForMacApp, getWebAppURL } from "../zeplinURL";
 
 const IMAGE_LIMIT = 5;
 
@@ -59,10 +58,12 @@ class StyleguideComponentHandler extends NotificationHandler<Event> {
                 }
             }
         }] = events;
-        const webappURL = new URL(ZEPLIN_WEB_APP_BASE_URL);
-        webappURL.pathname = `styleguide/${styleguideId}/components`;
-        events.forEach(event => webappURL.searchParams.append("coid", event.payload.resource.id));
-        return webappURL.toString();
+        const pathname = `styleguide/${styleguideId}/components`;
+        const searchParams = {
+            coid: events.map(event => event.payload.resource.id)
+        };
+
+        return getWebAppURL(pathname, searchParams);
     }
 
     private getMacAppURL(events: Event[]): string {
@@ -75,7 +76,12 @@ class StyleguideComponentHandler extends NotificationHandler<Event> {
                 }
             }
         }] = events;
-        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://components?stid=${styleguideId}&coids=${events.map(event => event.payload.resource.id).join(",")}`);
+        const searchParams = {
+            stid: styleguideId,
+            coids: events.map(event => event.payload.resource.id)
+        };
+
+        return getRedirectURLForMacApp("components", searchParams);
     }
 
     getTeamsMessage(events: Event[]): MessageCard {
