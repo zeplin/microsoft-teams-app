@@ -15,8 +15,8 @@
         "full": "Zeplin"
     },
     "description": {
-        "short": "Receive updates from your Zeplin workspace in real time",
-        "full": "Zeplin is an organized workspace for published designs, where the entire team can collaborate to ship beautiful products."
+        "short": "Get updates from your Zeplin workspace",
+        "full": "Keep your team up-to-date with design changes and conversations happening in Zeplin."
     },
     "icons": {
         "outline": "icon-outline.png",
