@@ -6,9 +6,7 @@ import {
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
-import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../config";
-import { URL } from "url";
-import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
+import { getRedirectURLForMacApp, getWebAppURL } from "../zeplinURL";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
 
@@ -50,10 +48,12 @@ class ProjectColorHandler extends NotificationHandler<Event> {
                 }
             }
         }] = events;
-        const webappURL = new URL(ZEPLIN_WEB_APP_BASE_URL);
-        webappURL.pathname = `project/${projectId}/styleguide/colors`;
-        events.forEach(event => webappURL.searchParams.append("cid", event.payload.resource.id));
-        return webappURL.toString();
+        const pathname = `project/${projectId}/styleguide/colors`;
+        const searchParams = {
+            cid: events.map(event => event.payload.resource.id)
+        };
+
+        return getWebAppURL(pathname, searchParams);
     }
 
     private getMacAppURL(
@@ -68,7 +68,12 @@ class ProjectColorHandler extends NotificationHandler<Event> {
                 }
             }
         }] = events;
-        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://colors?pid=${projectId}&cids=${events.map(event => event.payload.resource.id).join(",")}`);
+        const searchParams = {
+            pid: projectId,
+            cids: events.map(event => event.payload.resource.id)
+        };
+
+        return getRedirectURLForMacApp("colors", searchParams);
     }
 
     shouldHandleEvent(event: WebhookEvent): event is Event {

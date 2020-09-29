@@ -18,7 +18,7 @@ exports[`projectTextStyleHandler getTeamsMessage method for created notification
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2FtextStyles%3Fpid%3DprojectId%26tsids%3DtextStyleId%2CanotherTextStyleId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2FtextStyles%3Fpid%3DprojectId%26tsids%3DtextStyleId%2CanotherTextStyleId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -28,7 +28,7 @@ exports[`projectTextStyleHandler getTeamsMessage method for created notification
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/project/projectId/styleguide/textstyles?tsid=textStyleId&tsid=anotherTextStyleId"
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/textstyles?tsid=textStyleId&tsid=anotherTextStyleId&ref=microsoft-teams"
         }
       ]
     }
@@ -54,7 +54,7 @@ exports[`projectTextStyleHandler getTeamsMessage method for created notification
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2FtextStyles%3Fpid%3DprojectId%26tsids%3DtextStyleId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2FtextStyles%3Fpid%3DprojectId%26tsids%3DtextStyleId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -64,7 +64,7 @@ exports[`projectTextStyleHandler getTeamsMessage method for created notification
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/project/projectId/styleguide/textstyles?tsid=textStyleId"
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/textstyles?tsid=textStyleId&ref=microsoft-teams"
         }
       ]
     }
@@ -90,7 +90,7 @@ exports[`projectTextStyleHandler getTeamsMessage method for updated notification
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2FtextStyles%3Fpid%3DprojectId%26tsids%3DtextStyleId%2CanotherTextStyleId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2FtextStyles%3Fpid%3DprojectId%26tsids%3DtextStyleId%2CanotherTextStyleId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -100,7 +100,7 @@ exports[`projectTextStyleHandler getTeamsMessage method for updated notification
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/project/projectId/styleguide/textstyles?tsid=textStyleId&tsid=anotherTextStyleId"
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/textstyles?tsid=textStyleId&tsid=anotherTextStyleId&ref=microsoft-teams"
         }
       ]
     }
@@ -126,7 +126,7 @@ exports[`projectTextStyleHandler getTeamsMessage method for updated notification
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2FtextStyles%3Fpid%3DprojectId%26tsids%3DtextStyleId"
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2FtextStyles%3Fpid%3DprojectId%26tsids%3DtextStyleId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -136,7 +136,7 @@ exports[`projectTextStyleHandler getTeamsMessage method for updated notification
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/project/projectId/styleguide/textstyles?tsid=textStyleId"
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/textstyles?tsid=textStyleId&ref=microsoft-teams"
         }
       ]
     }
