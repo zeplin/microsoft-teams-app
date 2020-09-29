@@ -7,6 +7,7 @@ interface ConfigurationCreateParameters {
             id: string;
             type: ResourceType;
         };
+        workspaceId: string;
         events: WebhookEventType[];
     };
     microsoftTeams: {
@@ -26,6 +27,7 @@ interface ConfigurationUpdateParameters {
             id: string;
             type: ResourceType;
         };
+        workspaceId: string;
         events: WebhookEventType[];
     };
 }
@@ -34,7 +36,8 @@ export const createConfiguration = async (
     {
         zeplin: {
             resource,
-            events
+            events,
+            workspaceId
         },
         ...configuration
     }: ConfigurationCreateParameters
@@ -45,6 +48,7 @@ export const createConfiguration = async (
             ...configuration,
             zeplin: {
                 resource,
+                workspaceId,
                 events: events
                     .filter(webhookEventType => resourceBasedEvents[resource.type].includes(webhookEventType))
                     .map(webhookEventType => `${resource.type.toLowerCase()}.${webhookEventType}`)
@@ -59,6 +63,7 @@ export const updateConfiguration = async (
         configurationId,
         zeplin: {
             resource,
+            workspaceId,
             events
         }
     }: ConfigurationUpdateParameters
@@ -68,6 +73,7 @@ export const updateConfiguration = async (
         {
             zeplin: {
                 resource,
+                workspaceId,
                 events: events
                     .filter(webhookEventType => resourceBasedEvents[resource.type].includes(webhookEventType))
                     .map(webhookEventType => `${resource.type.toLowerCase()}.${webhookEventType}`)
@@ -88,6 +94,7 @@ export const getConfiguration = async (configurationId: string): Promise<Configu
                 name,
                 type
             },
+            workspaceId,
             webhook: {
                 events
             }
@@ -100,6 +107,7 @@ export const getConfiguration = async (configurationId: string): Promise<Configu
             name,
             type
         },
+        workspaceId,
         webhook: {
             events: events.map((event: string) => event.slice(event.indexOf(".") + 1))
         }

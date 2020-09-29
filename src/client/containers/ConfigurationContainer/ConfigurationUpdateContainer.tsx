@@ -20,6 +20,7 @@ type State = {
 } | {
     status: Status.CONFIGURATION;
     resource: Resource;
+    workspaceId: string;
     events: WebhookEventType[];
     initialEvents: WebhookEventType[];
     configurationSaveError?: string;
@@ -84,14 +85,16 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
                         name: resourceName as string,
                         type: resourceType as ResourceType
                     },
+                    workspaceId: "dummyId",
                     events: [],
                     initialEvents: []
                 });
             }
         },
-        onSuccess: ({ resource, webhook: { events } }) => setState({
+        onSuccess: ({ resource, workspaceId, webhook: { events } }) => setState({
             status: Status.CONFIGURATION,
             resource,
+            workspaceId,
             events,
             initialEvents: events
         })
@@ -115,6 +118,7 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
         configurationId: String(id),
         resource: state.status === Status.CONFIGURATION ? state.resource : undefined,
         events: state.status === Status.CONFIGURATION ? state.events : undefined,
+        workspaceId: state.status === Status.CONFIGURATION ? state.workspaceId : undefined,
         onError: errorMessage => {
             setState(prevState => ({
                 ...prevState,

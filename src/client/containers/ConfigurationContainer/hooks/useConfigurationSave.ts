@@ -29,6 +29,7 @@ interface UseConfigurationSaveParams {
     enabled: boolean;
     configurationId?: string;
     resource?: Resource;
+    workspaceId?: string;
     events?: WebhookEventType[];
     onError: (errorMessage: string) => void;
 }
@@ -36,6 +37,7 @@ interface UseConfigurationSaveParams {
 export const useConfigurationSave = ({
     enabled,
     configurationId,
+    workspaceId,
     resource,
     events,
     onError
@@ -68,7 +70,8 @@ export const useConfigurationSave = ({
                             channelId === undefined ||
                             channelName === undefined ||
                             resource === undefined ||
-                            events === undefined) {
+                            events === undefined ||
+                            workspaceId === undefined) {
                             saveEvent.notifyFailure("params are not defined");
                             return;
                         }
@@ -83,6 +86,7 @@ export const useConfigurationSave = ({
                                                 id: resource.id,
                                                 type: resource.type
                                             },
+                                            workspaceId,
                                             events
                                         }
                                     });
@@ -96,6 +100,7 @@ export const useConfigurationSave = ({
                                                 id: resource.id,
                                                 type: resource.type
                                             },
+                                            workspaceId,
                                             events
                                         },
                                         microsoftTeams: {
