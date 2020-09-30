@@ -56,7 +56,7 @@ class StyleguideTextStyleHandler extends NotificationHandler<Event> {
         return getWebAppURL(pathname, searchParams);
     }
 
-    private getMacAppURL(
+    private getZeplinAppURI(
         events: Event[]
     ): string {
         const [{
@@ -90,7 +90,7 @@ class StyleguideTextStyleHandler extends NotificationHandler<Event> {
             },
             links: [{
                 title: "Open in App",
-                url: this.getMacAppURL(events)
+                url: this.getZeplinAppURI(events)
             }, {
                 title: "Open in Web",
                 url: this.getWebappURL(events)

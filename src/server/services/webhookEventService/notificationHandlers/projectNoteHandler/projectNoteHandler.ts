@@ -67,7 +67,7 @@ class ProjectNoteHandler extends NotificationHandler<NoteCreateEvent> {
         return getWebAppURL(pathname, searchParams);
     }
 
-    private getMacAppURL(event: NoteCreateEvent): string {
+    private getZeplinAppURI(event: NoteCreateEvent): string {
         const {
             payload: {
                 context: {
@@ -110,7 +110,7 @@ class ProjectNoteHandler extends NotificationHandler<NoteCreateEvent> {
             },
             links: [{
                 title: "Open in App",
-                url: this.getMacAppURL(event)
+                url: this.getZeplinAppURI(event)
             }, {
                 title: "Open in Web",
                 url: this.getWebappURL(event)

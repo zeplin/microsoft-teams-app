@@ -69,7 +69,7 @@ class ProjectScreenHandler extends NotificationHandler<ScreenCreateEvent> {
         return getWebAppURL(pathname, searchParams);
     }
 
-    private getMacAppURL(events: ScreenCreateEvent[]): string {
+    private getZeplinAppURIURI(events: ScreenCreateEvent[]): string {
         const [{
             payload: {
                 context: {
@@ -106,7 +106,7 @@ class ProjectScreenHandler extends NotificationHandler<ScreenCreateEvent> {
             images: this.getImages(events),
             links: [{
                 title: "Open in App",
-                url: this.getMacAppURL(events)
+                url: this.getZeplinAppURIURI(events)
             }, {
                 title: "Open in Web",
                 url: this.getWebappURL(events)

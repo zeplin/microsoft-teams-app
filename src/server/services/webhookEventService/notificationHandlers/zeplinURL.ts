@@ -42,7 +42,7 @@ export function getRedirectURLForZeplinApp(
     appURI += `&${REFERER_PARAM_NAME}=${REFERER_PARAM_VALUE}`;
 
     const redirectURL = new URL(BASE_URL);
-    redirectURL.pathname = "api/app-redirect";
+    redirectURL.pathname = "zeplin/app-redirect";
     redirectURL.searchParams.set("uri", appURI);
 
     return redirectURL.toString();

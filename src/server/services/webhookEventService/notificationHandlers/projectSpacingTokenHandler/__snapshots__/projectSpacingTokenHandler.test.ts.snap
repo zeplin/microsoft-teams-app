@@ -18,7 +18,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for created notificat
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -54,7 +54,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for created notificat
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -90,7 +90,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for created notificat
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -126,7 +126,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for created notificat
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -162,7 +162,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for created notificat
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%2CanotherSpacingTokenId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%2CanotherSpacingTokenId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -198,7 +198,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for created notificat
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -234,7 +234,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for updated notificat
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -270,7 +270,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for updated notificat
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -306,7 +306,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for updated notificat
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -342,7 +342,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for updated notificat
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -378,7 +378,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for updated notificat
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%2CanotherSpacingTokenId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%2CanotherSpacingTokenId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -414,7 +414,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for updated notificat
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fpid%3DprojectId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
         }
       ]
     },

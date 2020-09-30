@@ -69,7 +69,7 @@ class ProjectScreenVersionHandler extends NotificationHandler<ScreenVersionCreat
         return getWebAppURL(pathname, searchParams);
     }
 
-    private getMacAppURL(events: ScreenVersionCreateEvent[]): string {
+    private getZeplinAppURIURI(events: ScreenVersionCreateEvent[]): string {
         const [{
             payload: {
                 context: {
@@ -141,7 +141,7 @@ class ProjectScreenVersionHandler extends NotificationHandler<ScreenVersionCreat
             } : undefined,
             links: [{
                 title: "Open in App",
-                url: this.getMacAppURL(events)
+                url: this.getZeplinAppURIURI(events)
             }, {
                 title: "Open in Web",
                 url: this.getWebappURL(events)
