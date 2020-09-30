@@ -70,7 +70,7 @@ describe("styleguideColorHandler", () => {
                 StyleguidePlatform.MAC_OS,
                 StyleguidePlatform.WEB,
                 StyleguidePlatform.BASE
-            ])("should match snapshot for every possible styleguide platform",
+            ])("should match snapshot when styleguide platform is %s",
                 styleguidePlatform => {
                     expect(
                         styleguideColorHandler.getTeamsMessage([getDummyEvent({ styleguidePlatform })])
@@ -107,7 +107,7 @@ describe("styleguideColorHandler", () => {
                 StyleguidePlatform.MAC_OS,
                 StyleguidePlatform.WEB,
                 StyleguidePlatform.BASE
-            ])("should match snapshot for every possible styleguide platform",
+            ])("should match snapshot when styleguide platform is %s",
                 styleguidePlatform => {
                     expect(
                         styleguideColorHandler.getTeamsMessage([getDummyEvent({ styleguidePlatform })])

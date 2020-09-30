@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`projectSpacingTokenHandler getTeamsMessage method for created notification should match snapshot for every possible project platform 1`] = `
+exports[`projectSpacingTokenHandler getTeamsMessage method for created notification should match snapshot when project platform is android 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
@@ -36,7 +36,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for created notificat
 }
 `;
 
-exports[`projectSpacingTokenHandler getTeamsMessage method for created notification should match snapshot for every possible project platform 2`] = `
+exports[`projectSpacingTokenHandler getTeamsMessage method for created notification should match snapshot when project platform is ios 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
@@ -72,7 +72,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for created notificat
 }
 `;
 
-exports[`projectSpacingTokenHandler getTeamsMessage method for created notification should match snapshot for every possible project platform 3`] = `
+exports[`projectSpacingTokenHandler getTeamsMessage method for created notification should match snapshot when project platform is macos 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
@@ -108,7 +108,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for created notificat
 }
 `;
 
-exports[`projectSpacingTokenHandler getTeamsMessage method for created notification should match snapshot for every possible project platform 4`] = `
+exports[`projectSpacingTokenHandler getTeamsMessage method for created notification should match snapshot when project platform is web 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
@@ -216,7 +216,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for created notificat
 }
 `;
 
-exports[`projectSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot for every possible project platform 1`] = `
+exports[`projectSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot when project platform is android 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
@@ -252,7 +252,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for updated notificat
 }
 `;
 
-exports[`projectSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot for every possible project platform 2`] = `
+exports[`projectSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot when project platform is ios 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
@@ -288,7 +288,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for updated notificat
 }
 `;
 
-exports[`projectSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot for every possible project platform 3`] = `
+exports[`projectSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot when project platform is macos 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
@@ -324,7 +324,7 @@ exports[`projectSpacingTokenHandler getTeamsMessage method for updated notificat
 }
 `;
 
-exports[`projectSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot for every possible project platform 4`] = `
+exports[`projectSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot when project platform is web 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",

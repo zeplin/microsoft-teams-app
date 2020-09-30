@@ -69,7 +69,7 @@ describe("projectColorHandler", () => {
                 ProjectPlatform.IOS,
                 ProjectPlatform.MAC_OS,
                 ProjectPlatform.WEB
-            ])("should match snapshot for every possible project platform",
+            ])("should match snapshot when project platform is %s",
                 projectPlatform => {
                     expect(
                         projectColorHandler.getTeamsMessage([getDummyEvent({ projectPlatform })])
@@ -105,7 +105,7 @@ describe("projectColorHandler", () => {
                 ProjectPlatform.IOS,
                 ProjectPlatform.MAC_OS,
                 ProjectPlatform.WEB
-            ])("should match snapshot for every possible project platform",
+            ])("should match snapshot when project platform is %s",
                 projectPlatform => {
                     expect(
                         projectColorHandler.getTeamsMessage([

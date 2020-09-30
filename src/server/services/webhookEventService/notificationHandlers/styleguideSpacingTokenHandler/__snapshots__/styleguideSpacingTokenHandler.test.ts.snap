@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notification should match snapshot for every possible styleguide platform 1`] = `
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notification should match snapshot when styleguide platform is android 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
@@ -36,7 +36,7 @@ exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notifi
 }
 `;
 
-exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notification should match snapshot for every possible styleguide platform 2`] = `
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notification should match snapshot when styleguide platform is base 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
@@ -72,7 +72,7 @@ exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notifi
 }
 `;
 
-exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notification should match snapshot for every possible styleguide platform 3`] = `
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notification should match snapshot when styleguide platform is ios 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
@@ -108,7 +108,7 @@ exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notifi
 }
 `;
 
-exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notification should match snapshot for every possible styleguide platform 4`] = `
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notification should match snapshot when styleguide platform is macos 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
@@ -144,7 +144,7 @@ exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notifi
 }
 `;
 
-exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notification should match snapshot for every possible styleguide platform 5`] = `
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notification should match snapshot when styleguide platform is web 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
@@ -252,7 +252,7 @@ exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notifi
 }
 `;
 
-exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot for every possible styleguide platform 1`] = `
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot when styleguide platform is android 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
@@ -288,7 +288,7 @@ exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notifi
 }
 `;
 
-exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot for every possible styleguide platform 2`] = `
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot when styleguide platform is base 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
@@ -324,7 +324,7 @@ exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notifi
 }
 `;
 
-exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot for every possible styleguide platform 3`] = `
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot when styleguide platform is ios 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
@@ -360,7 +360,7 @@ exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notifi
 }
 `;
 
-exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot for every possible styleguide platform 4`] = `
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot when styleguide platform is macos 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
@@ -396,7 +396,7 @@ exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notifi
 }
 `;
 
-exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot for every possible styleguide platform 5`] = `
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot when styleguide platform is web 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
