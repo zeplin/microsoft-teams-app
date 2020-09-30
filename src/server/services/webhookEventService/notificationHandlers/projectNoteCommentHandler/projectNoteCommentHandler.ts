@@ -6,7 +6,7 @@ import {
 } from "../../../../adapters/zeplin/types";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
-import { getRedirectURLForMacApp, getWebAppURL } from "../zeplinURL";
+import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 
 class ProjectNoteCommentHandler extends NotificationHandler<NoteCommentCreateEvent> {
     delay = 0;
@@ -102,7 +102,7 @@ class ProjectNoteCommentHandler extends NotificationHandler<NoteCommentCreateEve
             cmids: commentId
         };
 
-        return getRedirectURLForMacApp("dot", searchParams);
+        return getRedirectURLForZeplinApp("dot", searchParams);
     }
 
     shouldHandleEvent(event: WebhookEvent): event is NoteCommentCreateEvent {

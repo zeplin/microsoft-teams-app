@@ -8,7 +8,7 @@ import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
-import { getRedirectURLForMacApp, getWebAppURL } from "../zeplinURL";
+import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 
 type Event = StyleguideTextStyleCreateEvent | StyleguideTextStyleUpdateEvent;
 
@@ -73,7 +73,7 @@ class StyleguideTextStyleHandler extends NotificationHandler<Event> {
             tsids: events.map(event => event.payload.resource.id)
         };
 
-        return getRedirectURLForMacApp("textStyles", searchParams);
+        return getRedirectURLForZeplinApp("textStyles", searchParams);
     }
 
     shouldHandleEvent(event: WebhookEvent): event is Event {

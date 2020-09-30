@@ -3,7 +3,7 @@ import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import { NoteCreateEvent, WebhookEvent } from "../../../../adapters/zeplin/types";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
-import { getRedirectURLForMacApp, getWebAppURL } from "../zeplinURL";
+import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 
 class ProjectNoteHandler extends NotificationHandler<NoteCreateEvent> {
     // We want to send project note events immediately
@@ -89,7 +89,7 @@ class ProjectNoteHandler extends NotificationHandler<NoteCreateEvent> {
             did: noteId
         };
 
-        return getRedirectURLForMacApp("dot", searchParams);
+        return getRedirectURLForZeplinApp("dot", searchParams);
     }
 
     shouldHandleEvent(event: WebhookEvent): event is NoteCreateEvent {
