@@ -6,7 +6,7 @@ import { ScreenVersionCreateEvent, WebhookEvent } from "../../../../adapters/zep
 import { MEDIUM_DELAY } from "../constants";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
-import { getRedirectURLForMacApp, getWebAppURL } from "../zeplinURL";
+import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 
 const IMAGE_LIMIT = 5;
 
@@ -100,7 +100,7 @@ class ProjectScreenVersionHandler extends NotificationHandler<ScreenVersionCreat
             };
         }
 
-        return getRedirectURLForMacApp(resource, searchParams);
+        return getRedirectURLForZeplinApp(resource, searchParams);
     }
 
     getGroupingKey(event: ScreenVersionCreateEvent): string {

@@ -7,7 +7,7 @@ import {
 import { MEDIUM_DELAY } from "../constants";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
-import { getRedirectURLForMacApp, getWebAppURL } from "../zeplinURL";
+import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 
 const IMAGE_LIMIT = 5;
 
@@ -80,7 +80,7 @@ class ProjectComponentHandler extends NotificationHandler<Event> {
             coids: events.map(event => event.payload.resource.id)
         };
 
-        return getRedirectURLForMacApp("components", searchParams);
+        return getRedirectURLForZeplinApp("components", searchParams);
     }
 
     getTeamsMessage(events: Event[]): MessageCard {

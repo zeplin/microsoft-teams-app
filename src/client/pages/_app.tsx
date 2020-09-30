@@ -7,6 +7,7 @@ import {
     ENVIRONMENT
 } from "../lib/config";
 import { AppProps } from "next/app";
+import "./globalStyles.css";
 
 if (SENTRY_DSN) {
     Sentry.init({

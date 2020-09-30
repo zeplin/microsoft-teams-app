@@ -1,0 +1,44 @@
+.zeplinAppRedirect {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 120px 0 24px;
+}
+
+.zeplinAppRedirect .integrationImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.zeplinAppRedirect h1 {
+    font-size: 36px;
+    font-weight: 300;
+    font-family: Roboto;
+    color: #554d56;
+    margin-bottom: 24px;
+}
+
+.zeplinAppRedirect .description {
+    max-width: 600px;
+    font-size: 15px;
+    font-family: Roboto;
+    color: #554d56;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.zeplinAppRedirect .lovePath {
+    margin: 0 6px;
+}
+
+.zeplinAppRedirect a {
+    font-weight: 500;
+    color: #554d56;
+    text-decoration: none;
+}
+
+.zeplinAppRedirect .downloadLink {
+    color: #419bf9;
+}

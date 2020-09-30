@@ -6,7 +6,7 @@ import {
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
-import { getRedirectURLForMacApp, getWebAppURL } from "../zeplinURL";
+import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
 import { getColorUpdateMessage } from "../getStyleUpdateMessage";
@@ -88,7 +88,7 @@ class ProjectColorHandler extends NotificationHandler<Event> {
             cids: events.map(event => event.payload.resource.id)
         };
 
-        return getRedirectURLForMacApp("colors", searchParams);
+        return getRedirectURLForZeplinApp("colors", searchParams);
     }
 
     shouldHandleEvent(event: WebhookEvent): event is Event {

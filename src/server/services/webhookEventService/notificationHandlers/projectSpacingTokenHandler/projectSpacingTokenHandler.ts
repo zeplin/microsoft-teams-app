@@ -8,7 +8,7 @@ import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
-import { getRedirectURLForMacApp, getWebAppURL } from "../zeplinURL";
+import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 import { getSpacingTokenUpdateMessage } from "../getStyleUpdateMessage";
 
 type Event = ProjectSpacingTokenCreateEvent | ProjectSpacingTokenUpdateEvent;
@@ -88,7 +88,7 @@ class ProjectSpacingTokenHandler extends NotificationHandler<Event> {
             sptids: events.map(event => event.payload.resource.id)
         };
 
-        return getRedirectURLForMacApp("spacing", searchParams);
+        return getRedirectURLForZeplinApp("spacing", searchParams);
     }
 
     shouldHandleEvent(event: WebhookEvent): event is Event {

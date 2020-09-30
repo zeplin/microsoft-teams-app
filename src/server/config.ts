@@ -36,7 +36,7 @@ export const {
     NEXT_PRIVATE_MONGO_URL: MONGO_URL = "mongodb://localhost:27017/zeplin-microsoft-teams-app",
     NEXT_PRIVATE_BASE_URL: BASE_URL = "https://msteams-app.zeplin.io",
     NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL: ZEPLIN_WEB_APP_BASE_URL = "https://app.zeplin.io",
-    NEXT_PRIVATE_ZEPLIN_MAC_APP_URL_SCHEME: ZEPLIN_MAC_APP_URL_SCHEME = "zpl"
+    NEXT_PUBLIC_ZEPLIN_APP_URI_SCHEME: ZEPLIN_APP_URI_SCHEME = "zpl"
 } = process.env;
 
 export const IS_DEV = process.env.NODE_ENV !== "production";

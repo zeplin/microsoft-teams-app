@@ -1,4 +1,4 @@
-import { BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME, ZEPLIN_WEB_APP_BASE_URL } from "../../../config";
+import { BASE_URL, ZEPLIN_APP_URI_SCHEME, ZEPLIN_WEB_APP_BASE_URL } from "../../../config";
 
 const REFERER_PARAM_NAME = "ref";
 const REFERER_PARAM_VALUE = "microsoft-teams";
@@ -24,12 +24,12 @@ export function getWebAppURL(
     return webappURL.toString();
 }
 
-export function getRedirectURLForMacApp(
+export function getRedirectURLForZeplinApp(
     resource: string,
     searchParams: { [key: string]: string | string[] } = {}
 ): string {
-    let macAppURI = `${ZEPLIN_MAC_APP_URL_SCHEME}://${resource}`;
-    macAppURI += `?${Object.entries(searchParams).map(
+    let appURI = `${ZEPLIN_APP_URI_SCHEME}://${resource}`;
+    appURI += `?${Object.entries(searchParams).map(
         ([name, value]) => {
             if (Array.isArray(value)) {
                 return `${name}=${value.join(",")}`;
@@ -39,11 +39,11 @@ export function getRedirectURLForMacApp(
         }
     ).join("&")}`;
 
-    macAppURI += `&${REFERER_PARAM_NAME}=${REFERER_PARAM_VALUE}`;
+    appURI += `&${REFERER_PARAM_NAME}=${REFERER_PARAM_VALUE}`;
 
     const redirectURL = new URL(BASE_URL);
     redirectURL.pathname = "api/app-redirect";
-    redirectURL.searchParams.set("uri", macAppURI);
+    redirectURL.searchParams.set("uri", appURI);
 
     return redirectURL.toString();
 }

@@ -4,7 +4,7 @@ import { ScreenCreateEvent, WebhookEvent } from "../../../../adapters/zeplin/typ
 import { MEDIUM_DELAY } from "../constants";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
-import { getRedirectURLForMacApp, getWebAppURL } from "../zeplinURL";
+import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 
 const IMAGE_LIMIT = 5;
 
@@ -97,7 +97,7 @@ class ProjectScreenHandler extends NotificationHandler<ScreenCreateEvent> {
             };
         }
 
-        return getRedirectURLForMacApp(resource, searchParams);
+        return getRedirectURLForZeplinApp(resource, searchParams);
     }
 
     getTeamsMessage(events: ScreenCreateEvent[]): MessageCard {

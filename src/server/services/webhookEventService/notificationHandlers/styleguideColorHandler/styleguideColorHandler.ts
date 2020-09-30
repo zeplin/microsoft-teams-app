@@ -8,7 +8,7 @@ import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
-import { getRedirectURLForMacApp, getWebAppURL } from "../zeplinURL";
+import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 import { getColorUpdateMessage } from "../getStyleUpdateMessage";
 
 type Event = StyleguideColorCreateEvent | StyleguideColorUpdateEvent;
@@ -88,7 +88,7 @@ class StyleguideColorHandler extends NotificationHandler<Event> {
             cids: events.map(event => event.payload.resource.id)
         };
 
-        return getRedirectURLForMacApp("colors", searchParams);
+        return getRedirectURLForZeplinApp("colors", searchParams);
     }
 
     shouldHandleEvent(event: WebhookEvent): event is Event {
