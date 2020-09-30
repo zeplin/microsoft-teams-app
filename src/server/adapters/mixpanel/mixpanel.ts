@@ -20,6 +20,8 @@ class Mixpanel {
     trackEvent(eventName: string, properties: mixpanelClient.PropertyDict): Promise<void> {
         return new Promise((resolve, reject): void => {
             if (!this.enabled) {
+                resolve();
+
                 return;
             }
 
