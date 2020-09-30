@@ -1,5 +1,185 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notification should match snapshot when styleguide platform is android 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**spacingTokenName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure \`spacing.xml\` is up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fstid%3DstyleguideId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/spacing?sptid=spacingTokenId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notification should match snapshot when styleguide platform is base 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**spacingTokenName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure your tokens are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fstid%3DstyleguideId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/spacing?sptid=spacingTokenId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notification should match snapshot when styleguide platform is ios 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**spacingTokenName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure your tokens are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fstid%3DstyleguideId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/spacing?sptid=spacingTokenId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notification should match snapshot when styleguide platform is macos 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**spacingTokenName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure your tokens are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fstid%3DstyleguideId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/spacing?sptid=spacingTokenId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notification should match snapshot when styleguide platform is web 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**spacingTokenName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure your tokens are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fstid%3DstyleguideId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/spacing?sptid=spacingTokenId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
 exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notification should match snapshot when there are more than 1 events 1`] = `
 {
   "@type": "MessageCard",
@@ -7,7 +187,7 @@ exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notifi
   "text": "**2 spacing tokens** are added to _styleguideName_! 🗞",
   "sections": [
     {
-      "text": "Make sure your stylesheets are up to date!",
+      "text": "Make sure your tokens are up to date!",
       "images": []
     }
   ],
@@ -43,7 +223,187 @@ exports[`styleguideSpacingTokenHandler getTeamsMessage method for created notifi
   "text": "**spacingTokenName** is added to _styleguideName_! 🗞",
   "sections": [
     {
-      "text": "Make sure your stylesheets are up to date!",
+      "text": "Make sure your tokens are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fstid%3DstyleguideId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/spacing?sptid=spacingTokenId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot when styleguide platform is android 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**spacingTokenName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure \`spacing.xml\` is up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fstid%3DstyleguideId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/spacing?sptid=spacingTokenId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot when styleguide platform is base 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**spacingTokenName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure your tokens are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fstid%3DstyleguideId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/spacing?sptid=spacingTokenId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot when styleguide platform is ios 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**spacingTokenName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure your tokens are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fstid%3DstyleguideId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/spacing?sptid=spacingTokenId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot when styleguide platform is macos 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**spacingTokenName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure your tokens are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fspacing%3Fstid%3DstyleguideId%26sptids%3DspacingTokenId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/spacing?sptid=spacingTokenId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notification should match snapshot when styleguide platform is web 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**spacingTokenName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure your tokens are up to date!",
       "images": []
     }
   ],
@@ -79,7 +439,7 @@ exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notifi
   "text": "**2 spacing tokens** are updated in _styleguideName_! 🗞",
   "sections": [
     {
-      "text": "Make sure your stylesheets are up to date!",
+      "text": "Make sure your tokens are up to date!",
       "images": []
     }
   ],
@@ -115,7 +475,7 @@ exports[`styleguideSpacingTokenHandler getTeamsMessage method for updated notifi
   "text": "**spacingTokenName** is updated in _styleguideName_! 🗞",
   "sections": [
     {
-      "text": "Make sure your stylesheets are up to date!",
+      "text": "Make sure your tokens are up to date!",
       "images": []
     }
   ],

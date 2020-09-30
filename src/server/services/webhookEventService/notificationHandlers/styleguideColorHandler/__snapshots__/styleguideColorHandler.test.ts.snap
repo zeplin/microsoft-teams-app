@@ -1,5 +1,185 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`styleguideColorHandler getTeamsMessage method for created notification should match snapshot when styleguide platform is android 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure \`colors.xml\` is up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fstid%3DstyleguideId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideColorHandler getTeamsMessage method for created notification should match snapshot when styleguide platform is base 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure your styles are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fstid%3DstyleguideId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideColorHandler getTeamsMessage method for created notification should match snapshot when styleguide platform is ios 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure \`UIColor\` category / extension is up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fstid%3DstyleguideId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideColorHandler getTeamsMessage method for created notification should match snapshot when styleguide platform is macos 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure \`NSColor\` category / extension is up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fstid%3DstyleguideId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideColorHandler getTeamsMessage method for created notification should match snapshot when styleguide platform is web 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure your stylesheets are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fstid%3DstyleguideId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
 exports[`styleguideColorHandler getTeamsMessage method for created notification should match snapshot when there are more than 1 events 1`] = `
 {
   "@type": "MessageCard",
@@ -37,6 +217,186 @@ exports[`styleguideColorHandler getTeamsMessage method for created notification 
 `;
 
 exports[`styleguideColorHandler getTeamsMessage method for created notification should match snapshot when there is only 1 event 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure your stylesheets are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fstid%3DstyleguideId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideColorHandler getTeamsMessage method for updated notification should match snapshot when styleguide platform is android 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure \`colors.xml\` is up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fstid%3DstyleguideId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideColorHandler getTeamsMessage method for updated notification should match snapshot when styleguide platform is base 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure your styles are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fstid%3DstyleguideId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideColorHandler getTeamsMessage method for updated notification should match snapshot when styleguide platform is ios 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure \`UIColor\` category / extension is up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fstid%3DstyleguideId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideColorHandler getTeamsMessage method for updated notification should match snapshot when styleguide platform is macos 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is added to _styleguideName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure \`NSColor\` category / extension is up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fstid%3DstyleguideId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`styleguideColorHandler getTeamsMessage method for updated notification should match snapshot when styleguide platform is web 1`] = `
 {
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",

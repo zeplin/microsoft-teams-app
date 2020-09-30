@@ -1,5 +1,149 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`projectColorHandler getTeamsMessage method for created notification should match snapshot when project platform is android 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is added to _projectName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure \`colors.xml\` is up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`projectColorHandler getTeamsMessage method for created notification should match snapshot when project platform is ios 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is added to _projectName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure \`UIColor\` category / extension is up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`projectColorHandler getTeamsMessage method for created notification should match snapshot when project platform is macos 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is added to _projectName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure \`NSColor\` category / extension is up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`projectColorHandler getTeamsMessage method for created notification should match snapshot when project platform is web 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is added to _projectName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure your stylesheets are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
 exports[`projectColorHandler getTeamsMessage method for created notification should match snapshot when there are more than 1 events 1`] = `
 {
   "@type": "MessageCard",
@@ -41,6 +185,150 @@ exports[`projectColorHandler getTeamsMessage method for created notification sho
   "@type": "MessageCard",
   "@context": "https://schema.org/extensions",
   "text": "**colorName** is added to _projectName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure your stylesheets are up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`projectColorHandler getTeamsMessage method for updated notification should match snapshot when project platform is android 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is updated in _projectName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure \`colors.xml\` is up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`projectColorHandler getTeamsMessage method for updated notification should match snapshot when project platform is ios 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is updated in _projectName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure \`UIColor\` category / extension is up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`projectColorHandler getTeamsMessage method for updated notification should match snapshot when project platform is macos 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is updated in _projectName_! 🗞",
+  "sections": [
+    {
+      "text": "Make sure \`NSColor\` category / extension is up to date!",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcolors%3Fpid%3DprojectId%26cids%3DcolorId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/styleguide/colors?cid=colorId&ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`projectColorHandler getTeamsMessage method for updated notification should match snapshot when project platform is web 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**colorName** is updated in _projectName_! 🗞",
   "sections": [
     {
       "text": "Make sure your stylesheets are up to date!",
