@@ -66,7 +66,7 @@ class StyleguideComponentHandler extends NotificationHandler<Event> {
         return getWebAppURL(pathname, searchParams);
     }
 
-    private getMacAppURL(events: Event[]): string {
+    private getZeplinAppURIURI(events: Event[]): string {
         const [{
             payload: {
                 context: {
@@ -90,7 +90,7 @@ class StyleguideComponentHandler extends NotificationHandler<Event> {
             images: this.getImages(events),
             links: [{
                 title: "Open in App",
-                url: this.getMacAppURL(events)
+                url: this.getZeplinAppURIURI(events)
             }, {
                 title: "Open in Web",
                 url: this.getWebappURL(events)

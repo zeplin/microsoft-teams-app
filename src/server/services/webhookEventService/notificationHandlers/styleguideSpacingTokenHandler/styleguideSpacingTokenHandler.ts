@@ -71,7 +71,7 @@ class StyleguideSpacingTokenHandler extends NotificationHandler<Event> {
         return getWebAppURL(pathname, searchParams);
     }
 
-    private getMacAppURL(
+    private getZeplinAppURI(
         events: Event[]
     ): string {
         const [{
@@ -105,7 +105,7 @@ class StyleguideSpacingTokenHandler extends NotificationHandler<Event> {
             },
             links: [{
                 title: "Open in App",
-                url: this.getMacAppURL(events)
+                url: this.getZeplinAppURI(events)
             }, {
                 title: "Open in Web",
                 url: this.getWebappURL(events)

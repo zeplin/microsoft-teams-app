@@ -18,7 +18,7 @@ exports[`projectNoteHandler getTeamsMessage should match snapshot 1`] = `
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fdot%3Fpid%3DprojectId%26sid%3DscreenId%26did%3DnoteId%26cmids%3DcommentId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fdot%3Fpid%3DprojectId%26sid%3DscreenId%26did%3DnoteId%26cmids%3DcommentId%26ref%3Dmicrosoft-teams"
         }
       ]
     },

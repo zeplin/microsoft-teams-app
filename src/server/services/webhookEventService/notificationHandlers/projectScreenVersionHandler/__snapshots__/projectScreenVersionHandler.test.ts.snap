@@ -26,7 +26,7 @@ exports[`projectScreenVersionHandler getTeamsMessage should match snapshot when 
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fproject%3Fpid%3DprojectId%26sids%3DscreenId%2CscreenId2%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fproject%3Fpid%3DprojectId%26sids%3DscreenId%2CscreenId2%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -68,7 +68,7 @@ exports[`projectScreenVersionHandler getTeamsMessage should match snapshot when 
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fscreen%3Fpid%3DprojectId%26sid%3DscreenId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fscreen%3Fpid%3DprojectId%26sid%3DscreenId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -108,7 +108,7 @@ exports[`projectScreenVersionHandler getTeamsMessage should match snapshot when 
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fscreen%3Fpid%3DprojectId%26sid%3DscreenId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fscreen%3Fpid%3DprojectId%26sid%3DscreenId%26ref%3Dmicrosoft-teams"
         }
       ]
     },

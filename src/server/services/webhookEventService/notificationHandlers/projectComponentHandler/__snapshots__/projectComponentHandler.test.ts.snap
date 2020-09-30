@@ -26,7 +26,7 @@ exports[`projectComponentHandler getTeamsMessage method for created event should
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fpid%3DprojectId%26coids%3DcomponentId%2CcomponentId2%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fpid%3DprojectId%26coids%3DcomponentId%2CcomponentId2%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -66,7 +66,7 @@ exports[`projectComponentHandler getTeamsMessage method for created event should
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fpid%3DprojectId%26coids%3DcomponentId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fpid%3DprojectId%26coids%3DcomponentId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -110,7 +110,7 @@ exports[`projectComponentHandler getTeamsMessage method for version_created even
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fpid%3DprojectId%26coids%3DcomponentId%2CcomponentId2%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fpid%3DprojectId%26coids%3DcomponentId%2CcomponentId2%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -150,7 +150,7 @@ exports[`projectComponentHandler getTeamsMessage method for version_created even
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fpid%3DprojectId%26coids%3DcomponentId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fpid%3DprojectId%26coids%3DcomponentId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
