@@ -6,7 +6,6 @@ on:
 name: Release Dev
 
 env:
-  TARBALL: microsoft-teams-app-dev-${{ github.sha }}.tar.gz
   S3_PATH: ${{ secrets.S3_PATH_DEV }}
   AWS_REGION: ${{ secrets.AWS_REGION_DEV }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
@@ -14,6 +13,11 @@ env:
   AWS_STACK_ID: ${{ secrets.AWS_STACK_ID_DEV }}
   AWS_LAYER_ID: ${{ secrets.AWS_LAYER_ID_DEV }}
   AWS_APP_ID: ${{ secrets.AWS_APP_ID_DEV }}
+  NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN_DEV }}
+  NEXT_PUBLIC_IS_SENTRY_ENABLED: ${{ secrets.NEXT_PUBLIC_IS_SENTRY_ENABLED_DEV }}
+  NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL: ${{ secrets.NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL_DEV }}
+  NEXT_PUBLIC_ZEPLIN_APP_URI_SCHEME: ${{ secrets.NEXT_PUBLIC_ZEPLIN_APP_URI_SCHEME_DEV }}
+  NEXT_PUBLIC_ENVIRONMENT: dev
 
 
 jobs:
@@ -24,6 +28,12 @@ jobs:
     steps:
       - name: SubscriptionCheckout
         uses: actions/checkout@v2
+
+      - name: Set `NEXT_PUBLIC_VERSION` variable
+        run: echo ::set-env name=NEXT_PUBLIC_VERSION::0.0.0-${GITHUB_SHA}
+
+      - name: Set `TARBALL` variable
+        run: echo ::set-env name=TARBALL::microsoft-teams-app-dev-${NEXT_PUBLIC_VERSION}.tar.gz
 
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
@@ -78,6 +88,12 @@ jobs:
           aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
+
+      - name: Set `NEXT_PUBLIC_VERSION` variable
+        run: echo ::set-env name=NEXT_PUBLIC_VERSION::0.0.0-${GITHUB_SHA}
+
+      - name: Set `TARBALL` variable
+        run: echo ::set-env name=TARBALL::microsoft-teams-app-dev-${NEXT_PUBLIC_VERSION}.tar.gz
 
       - name: Change latest release
         run: aws s3 cp $S3_PATH/$TARBALL $S3_PATH/microsoft-teams-app-dev-latest.tar.gz

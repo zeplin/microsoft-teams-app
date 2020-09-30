@@ -13,6 +13,11 @@ env:
   AWS_STACK_ID: ${{ secrets.AWS_STACK_ID_PROD }}
   AWS_LAYER_ID: ${{ secrets.AWS_LAYER_ID_PROD }}
   AWS_APP_ID: ${{ secrets.AWS_APP_ID_PROD }}
+  NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN_PROD }}
+  NEXT_PUBLIC_IS_SENTRY_ENABLED: ${{ secrets.NEXT_PUBLIC_IS_SENTRY_ENABLED_PROD }}
+  NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL: ${{ secrets.NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL_PROD }}
+  NEXT_PUBLIC_ZEPLIN_APP_URI_SCHEME: ${{ secrets.NEXT_PUBLIC_ZEPLIN_APP_URI_SCHEME_PROD }}
+  NEXT_PUBLIC_ENVIRONMENT: prod
 
 
 jobs:
@@ -24,8 +29,11 @@ jobs:
       - name: SubscriptionCheckout
         uses: actions/checkout@v2
 
+      - name: Set `NEXT_PUBLIC_VERSION` variable
+        run: echo ::set-env name=NEXT_PUBLIC_VERSION::${GITHUB_REF#refs/tags/v}
+
       - name: Set `TARBALL` variable
-        run: echo ::set-env name=TARBALL::microsoft-teams-app-prod--${GITHUB_REF#refs/tags/v}.tar.gz
+        run: echo ::set-env name=TARBALL::microsoft-teams-app-prod-${NEXT_PUBLIC_VERSION}.tar.gz
 
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
@@ -81,8 +89,11 @@ jobs:
           aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Set `NEXT_PUBLIC_VERSION` variable
+        run: echo ::set-env name=NEXT_PUBLIC_VERSION::${GITHUB_REF#refs/tags/v}
+
       - name: Set `TARBALL` variable
-        run: echo ::set-env name=TARBALL::microsoft-teams-app-prod--${GITHUB_REF#refs/tags/v}.tar.gz
+        run: echo ::set-env name=TARBALL::microsoft-teams-app-prod-${NEXT_PUBLIC_VERSION}.tar.gz
 
       - name: Change latest release
         run: aws s3 cp $S3_PATH/$TARBALL $S3_PATH/microsoft-teams-app-prod-latest.tar.gz
