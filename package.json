@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon",
     "dev:prod-build": "nodemon --config nodemon.prod.json",
+    "dev:start-services": "docker-compose -f docker-compose.yml --project-name zeplin_mta up -d",
+    "dev:stop-services": "docker-compose --project-name zeplin_mta down",
     "prebuild": "touch .env && cp .env src/client/.env",
     "build": "NODE_ENV=production next build src/client && tsc --project src/server/tsconfig.json --sourceMap",
     "test": "ENV_FILE=.env.test NODE_ENV=test jest",
