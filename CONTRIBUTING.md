@@ -51,7 +51,8 @@ Once you're done with bootstrapping, the next step is to run the app locally. In
 ### Configuring a Zeplin app
 You can create a Zeplin app in your profile page under the [Developer](https://app.zeplin.io/profile/developer) tab:
    - **Redirect URI**: `https://DOMAIN/zeplin/auth/end` where `DOMAIN` is the domain of your publicly accessible URL (e.g. `balloons.ngrok.io`).
-![](https://user-images.githubusercontent.com/721036/95142099-c11db280-0727-11eb-8721-a8cd86cb444c.png)
+
+![](https://user-images.githubusercontent.com/721036/95142373-659ff480-0728-11eb-9e65-a2c6ac1f5f29.png)
 
 Please note down the client id and secret of the app, you will need them later.
 ![](https://user-images.githubusercontent.com/721036/95141775-e78f1e00-0726-11eb-8609-d7a1706e3cad.png)
