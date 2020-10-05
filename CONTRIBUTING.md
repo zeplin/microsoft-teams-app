@@ -51,10 +51,10 @@ Once you're done with bootstrapping, the next step is to run the app locally. In
 ### Configuring a Zeplin app
 You can create a Zeplin app in your profile page under the [Developer](https://app.zeplin.io/profile/developer) tab:
    - **Redirect URI**: `https://DOMAIN/zeplin/auth/end` where `DOMAIN` is the domain of your publicly accessible URL (e.g. `balloons.ngrok.io`).
-![](https://user-images.githubusercontent.com/721036/95139896-67ff5000-0722-11eb-86ad-d760936be2fe.png)
+![](https://user-images.githubusercontent.com/721036/95142099-c11db280-0727-11eb-8721-a8cd86cb444c.png)
 
 Please note down the client id and secret of the app, you will need them later.
-![](https://user-images.githubusercontent.com/721036/95140586-18218880-0724-11eb-85db-230e22ef76f2.png)
+![](https://user-images.githubusercontent.com/721036/95141775-e78f1e00-0726-11eb-8609-d7a1706e3cad.png)
 
 ### Configuring an Office 365 connector
 Office 365 Connectors allow you to create a customized configuration page for your app to create incoming webhooks in Microsoft Teams. Microsoft Teams app use these incoming webhooks to post messages to the channels. 
@@ -63,7 +63,7 @@ You can create a connector via [Connectors Developer Dashboard](https://aka.ms/C
    - **Configuration page for your Connector**: `https://DOMAIN/`
    - **Valid domains**: Add `DOMAIN` to the list of valid domains for this connector
 
-![](https://user-images.githubusercontent.com/721036/95139905-6c2b6d80-0722-11eb-960b-79b52a286cd0.png)
+![](https://user-images.githubusercontent.com/721036/95142106-c4b13980-0727-11eb-8dfc-c3cc33b995f5.png)
 Please note down the ID of the connector, you will use it in the next step.
 
 You can visit Microsoft Teams' developer platform [docs](https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-creating) for more details.
