@@ -12,6 +12,7 @@ const zeplinSchema = Joi.object({
         id: Joi.string().regex(/^[0-9a-f]{24}$/i),
         type: Joi.string().valid(...Object.values(WebhookResourceType))
     }),
+    workspaceId: Joi.string().regex(/^([0-9a-f]{24}|personal)$/i),
     events: Joi.when("resource.type", {
         is: WebhookResourceType.PROJECT,
         then: Joi.array().items(Joi.string().valid(...Object.values(ProjectWebhookEventType))).unique().min(1),

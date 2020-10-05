@@ -5,10 +5,9 @@ import {
     ProjectComponentVersionCreateEvent
 } from "../../../../adapters/zeplin/types";
 import { MEDIUM_DELAY } from "../constants";
-import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../config";
-import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
+import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 
 const IMAGE_LIMIT = 5;
 
@@ -58,13 +57,15 @@ class ProjectComponentHandler extends NotificationHandler<Event> {
                 }
             }
         }] = events;
-        const webappURL = new URL(ZEPLIN_WEB_APP_BASE_URL);
-        webappURL.pathname = `project/${projectId}/styleguide/components`;
-        events.forEach(event => webappURL.searchParams.append("coid", event.payload.resource.id));
-        return webappURL.toString();
+        const pathname = `project/${projectId}/styleguide/components`;
+        const searchParams = {
+            coid: events.map(event => event.payload.resource.id)
+        };
+
+        return getWebAppURL(pathname, searchParams);
     }
 
-    private getMacAppURL(events: Event[]): string {
+    private getZeplinAppURIURI(events: Event[]): string {
         const [{
             payload: {
                 context: {
@@ -74,7 +75,12 @@ class ProjectComponentHandler extends NotificationHandler<Event> {
                 }
             }
         }] = events;
-        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://components?pid=${projectId}&coids=${events.map(event => event.payload.resource.id).join(",")}`);
+        const searchParams = {
+            pid: projectId,
+            coids: events.map(event => event.payload.resource.id)
+        };
+
+        return getRedirectURLForZeplinApp("components", searchParams);
     }
 
     getTeamsMessage(events: Event[]): MessageCard {
@@ -83,7 +89,7 @@ class ProjectComponentHandler extends NotificationHandler<Event> {
             images: this.getImages(events),
             links: [{
                 title: "Open in App",
-                url: this.getMacAppURL(events)
+                url: this.getZeplinAppURIURI(events)
             }, {
                 title: "Open in Web",
                 url: this.getWebappURL(events)

@@ -27,20 +27,22 @@ export const {
     NEXT_PUBLIC_ENVIRONMENT: ENVIRONMENT = "local",
     NEXT_PUBLIC_VERSION: VERSION = "1.0.0-local",
     NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
+    NEXT_PRIVATE_MIXPANEL_TOKEN: MIXPANEL_TOKEN,
     NEXT_PRIVATE_REDIS_URL: REDIS_URL = "redis://localhost:6379",
     NEXT_PRIVATE_WEBHOOK_SECRET: WEBHOOK_SECRET = "dummy-secret",
     NEXT_PRIVATE_ZEPLIN_URL: ZEPLIN_URL = "https://api.zeplin.dev",
     NEXT_PRIVATE_ZEPLIN_CLIENT_ID: ZEPLIN_CLIENT_ID,
     NEXT_PRIVATE_ZEPLIN_CLIENT_SECRET: ZEPLIN_CLIENT_SECRET,
     NEXT_PRIVATE_MONGO_URL: MONGO_URL = "mongodb://localhost:27017/zeplin-microsoft-teams-app",
-    NEXT_PRIVATE_BASE_URL: BASE_URL,
+    NEXT_PRIVATE_BASE_URL: BASE_URL = "https://msteams-app.zeplin.io",
     NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL: ZEPLIN_WEB_APP_BASE_URL = "https://app.zeplin.io",
-    NEXT_PRIVATE_ZEPLIN_MAC_APP_URL_SCHEME: ZEPLIN_MAC_APP_URL_SCHEME = "zpl"
+    NEXT_PUBLIC_ZEPLIN_APP_URI_SCHEME: ZEPLIN_APP_URI_SCHEME = "zpl"
 } = process.env;
 
 export const IS_DEV = process.env.NODE_ENV !== "production";
 export const IS_MONGO_DEBUG = getBooleanVariable("NEXT_PRIVATE_IS_MONGO_DEBUG", IS_DEV);
 export const IS_SENTRY_ENABLED = getBooleanVariable("NEXT_PUBLIC_IS_SENTRY_ENABLED", !IS_DEV);
+export const IS_MIXPANEL_ENABLED = getBooleanVariable("NEXT_PRIVATE_IS_MIXPANEL_ENABLED", !IS_DEV);
 
 export interface Config {
     IS_MONGO_DEBUG: boolean;
@@ -54,6 +56,8 @@ export interface Config {
     ZEPLIN_URL: string;
     SENTRY_DSN: string;
     IS_SENTRY_ENABLED: boolean;
+    MIXPANEL_TOKEN: string;
+    IS_MIXPANEL_ENABLED: boolean;
     VERSION: string;
     ZEPLIN_CLIENT_ID: string;
     ZEPLIN_CLIENT_SECRET: string;

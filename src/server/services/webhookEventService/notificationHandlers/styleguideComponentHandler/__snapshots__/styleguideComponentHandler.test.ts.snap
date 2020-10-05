@@ -26,7 +26,7 @@ exports[`styleguideComponentHandler getTeamsMessage method for created event sho
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fstid%3DstyleguideId%26coids%3DcomponentId%2CcomponentId2"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fstid%3DstyleguideId%26coids%3DcomponentId%2CcomponentId2%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -36,7 +36,7 @@ exports[`styleguideComponentHandler getTeamsMessage method for created event sho
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/styleguide/styleguideId/components?coid=componentId&coid=componentId2"
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/components?coid=componentId&coid=componentId2&ref=microsoft-teams"
         }
       ]
     }
@@ -66,7 +66,7 @@ exports[`styleguideComponentHandler getTeamsMessage method for created event sho
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fstid%3DstyleguideId%26coids%3DcomponentId"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fstid%3DstyleguideId%26coids%3DcomponentId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -76,7 +76,7 @@ exports[`styleguideComponentHandler getTeamsMessage method for created event sho
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/styleguide/styleguideId/components?coid=componentId"
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/components?coid=componentId&ref=microsoft-teams"
         }
       ]
     }
@@ -110,7 +110,7 @@ exports[`styleguideComponentHandler getTeamsMessage method for version_created e
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fstid%3DstyleguideId%26coids%3DcomponentId%2CcomponentId2"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fstid%3DstyleguideId%26coids%3DcomponentId%2CcomponentId2%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -120,7 +120,7 @@ exports[`styleguideComponentHandler getTeamsMessage method for version_created e
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/styleguide/styleguideId/components?coid=componentId&coid=componentId2"
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/components?coid=componentId&coid=componentId2&ref=microsoft-teams"
         }
       ]
     }
@@ -150,7 +150,7 @@ exports[`styleguideComponentHandler getTeamsMessage method for version_created e
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/api/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fstid%3DstyleguideId%26coids%3DcomponentId"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fcomponents%3Fstid%3DstyleguideId%26coids%3DcomponentId%26ref%3Dmicrosoft-teams"
         }
       ]
     },
@@ -160,7 +160,7 @@ exports[`styleguideComponentHandler getTeamsMessage method for version_created e
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/styleguide/styleguideId/components?coid=componentId"
+          "uri": "https://app.zeplin.io/styleguide/styleguideId/components?coid=componentId&ref=microsoft-teams"
         }
       ]
     }

@@ -1,19 +1,22 @@
 import { projectColorHandler } from "./projectColorHandler";
 import {
     ProjectColorCreateEvent,
-    ProjectColorUpdateEvent
+    ProjectColorUpdateEvent,
+    ProjectPlatform
 } from "../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     action?: string;
     colorId?: string;
     colorName?: string;
+    projectPlatform?: string;
 }
 
 function getDummyEvent({
     action = "created",
     colorId = "colorId",
-    colorName = "colorName"
+    colorName = "colorName",
+    projectPlatform = ProjectPlatform.WEB
 }: GetDummyEventParams = {}): ProjectColorCreateEvent | ProjectColorUpdateEvent {
     return {
         payload: {
@@ -21,7 +24,8 @@ function getDummyEvent({
             context: {
                 project: {
                     id: "projectId",
-                    name: "projectName"
+                    name: "projectName",
+                    platform: projectPlatform
                 }
             },
             resource: {
@@ -59,6 +63,19 @@ describe("projectColorHandler", () => {
                     ])
                 ).toMatchSnapshot();
             });
+
+            it.each([
+                ProjectPlatform.ANDROID,
+                ProjectPlatform.IOS,
+                ProjectPlatform.MAC_OS,
+                ProjectPlatform.WEB
+            ])("should match snapshot when project platform is %s",
+                projectPlatform => {
+                    expect(
+                        projectColorHandler.getTeamsMessage([getDummyEvent({ projectPlatform })])
+                    ).toMatchSnapshot();
+                }
+            );
         });
 
         describe("for updated notification", () => {
@@ -82,6 +99,24 @@ describe("projectColorHandler", () => {
                     ])
                 ).toMatchSnapshot();
             });
+
+            it.each([
+                ProjectPlatform.ANDROID,
+                ProjectPlatform.IOS,
+                ProjectPlatform.MAC_OS,
+                ProjectPlatform.WEB
+            ])("should match snapshot when project platform is %s",
+                projectPlatform => {
+                    expect(
+                        projectColorHandler.getTeamsMessage([
+                            getDummyEvent({
+                                action: "updated",
+                                projectPlatform
+                            })
+                        ])
+                    ).toMatchSnapshot();
+                }
+            );
         });
     });
 });

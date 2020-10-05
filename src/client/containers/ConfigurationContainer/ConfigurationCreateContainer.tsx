@@ -149,6 +149,7 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
         enabled: state.status === Status.CONFIGURATION,
         resource: state.status === Status.CONFIGURATION ? state.resource : undefined,
         events: state.status === Status.CONFIGURATION ? state.events : undefined,
+        workspaceId: state.status === Status.CONFIGURATION ? state.workspace : undefined,
         onError: errorMessage => {
             setState(prevState => ({
                 ...prevState,

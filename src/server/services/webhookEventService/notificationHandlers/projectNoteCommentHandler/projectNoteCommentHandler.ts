@@ -4,10 +4,9 @@ import {
     NoteCommentCreateEvent,
     WebhookEvent
 } from "../../../../adapters/zeplin/types";
-import { ZEPLIN_MAC_APP_URL_SCHEME, ZEPLIN_WEB_APP_BASE_URL } from "../../../../config";
-import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
+import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 
 class ProjectNoteCommentHandler extends NotificationHandler<NoteCommentCreateEvent> {
     delay = 0;
@@ -68,14 +67,16 @@ class ProjectNoteCommentHandler extends NotificationHandler<NoteCommentCreateEve
                 }
             }
         } = event;
-        const webappURL = new URL(ZEPLIN_WEB_APP_BASE_URL);
-        webappURL.pathname = `project/${projectId}/screen/${screenId}`;
-        webappURL.searchParams.set("did", noteId);
-        webappURL.searchParams.set("cmid", commentId);
-        return webappURL.toString();
+        const pathname = `project/${projectId}/screen/${screenId}`;
+        const searchParams = {
+            did: noteId,
+            cmid: commentId
+        };
+
+        return getWebAppURL(pathname, searchParams);
     }
 
-    private getMacAppURL(event: NoteCommentCreateEvent): string {
+    private getZeplinAppURI(event: NoteCommentCreateEvent): string {
         const {
             payload: {
                 context: {
@@ -94,7 +95,14 @@ class ProjectNoteCommentHandler extends NotificationHandler<NoteCommentCreateEve
                 }
             }
         } = event;
-        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://dot?pid=${projectId}&sid=${screenId}&did=${noteId}&cmids=${commentId}`);
+        const searchParams = {
+            pid: projectId,
+            sid: screenId,
+            did: noteId,
+            cmids: commentId
+        };
+
+        return getRedirectURLForZeplinApp("dot", searchParams);
     }
 
     shouldHandleEvent(event: WebhookEvent): event is NoteCommentCreateEvent {
@@ -114,7 +122,7 @@ class ProjectNoteCommentHandler extends NotificationHandler<NoteCommentCreateEve
             },
             links: [{
                 title: "Open in App",
-                url: this.getMacAppURL(event)
+                url: this.getZeplinAppURI(event)
             }, {
                 title: "Open in Web",
                 url: this.getWebappURL(event)

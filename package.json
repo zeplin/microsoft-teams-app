@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon",
     "dev:prod-build": "nodemon --config nodemon.prod.json",
+    "dev:start-services": "docker-compose -f docker-compose.yml --project-name zeplin_mta up -d",
+    "dev:stop-services": "docker-compose --project-name zeplin_mta down",
     "prebuild": "touch .env && cp .env src/client/.env",
     "build": "NODE_ENV=production next build src/client && tsc --project src/server/tsconfig.json --sourceMap",
     "test": "ENV_FILE=.env.test NODE_ENV=test jest",
@@ -36,6 +38,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http-status-codes": "^1.4.0",
+    "mixpanel": "^0.13.0",
     "mongodb": "^3.5.9",
     "mongoose": "^5.9.26",
     "next": "^9.4.4",

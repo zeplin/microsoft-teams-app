@@ -6,11 +6,10 @@ import {
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
-import { ZEPLIN_WEB_APP_BASE_URL, ZEPLIN_MAC_APP_URL_SCHEME } from "../../../../config";
-import { URL } from "url";
-import { getMacAppRedirectURL } from "../getMacAppRedirectURL";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
+import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
+import { getSpacingTokenUpdateMessage } from "../getStyleUpdateMessage";
 
 type Event = StyleguideSpacingTokenCreateEvent | StyleguideSpacingTokenUpdateEvent;
 
@@ -38,6 +37,20 @@ class StyleguideSpacingTokenHandler extends NotificationHandler<Event> {
             : md`**${events.length} spacing tokens** are ${actionText} _${styleguideName}_! ${getRandomEmoji()}`;
     }
 
+    private getSectionText(events: Event[]): string {
+        const [{
+            payload: {
+                context: {
+                    styleguide: {
+                        platform: styleguidePlatform
+                    }
+                }
+            }
+        }] = events;
+
+        return getSpacingTokenUpdateMessage(styleguidePlatform);
+    }
+
     private getWebappURL(
         events: Event[]
     ): string {
@@ -50,13 +63,15 @@ class StyleguideSpacingTokenHandler extends NotificationHandler<Event> {
                 }
             }
         }] = events;
-        const webappURL = new URL(ZEPLIN_WEB_APP_BASE_URL);
-        webappURL.pathname = `styleguide/${styleguideId}/spacing`;
-        events.forEach(event => webappURL.searchParams.append("sptid", event.payload.resource.id));
-        return webappURL.toString();
+        const pathname = `styleguide/${styleguideId}/spacing`;
+        const searchParams = {
+            sptid: events.map(event => event.payload.resource.id)
+        };
+
+        return getWebAppURL(pathname, searchParams);
     }
 
-    private getMacAppURL(
+    private getZeplinAppURI(
         events: Event[]
     ): string {
         const [{
@@ -68,7 +83,12 @@ class StyleguideSpacingTokenHandler extends NotificationHandler<Event> {
                 }
             }
         }] = events;
-        return getMacAppRedirectURL(`${ZEPLIN_MAC_APP_URL_SCHEME}://spacing?stid=${styleguideId}&sptids=${events.map(event => event.payload.resource.id).join(",")}`);
+        const searchParams = {
+            stid: styleguideId,
+            sptids: events.map(event => event.payload.resource.id)
+        };
+
+        return getRedirectURLForZeplinApp("spacing", searchParams);
     }
 
     shouldHandleEvent(event: WebhookEvent): event is Event {
@@ -81,11 +101,11 @@ class StyleguideSpacingTokenHandler extends NotificationHandler<Event> {
         return commonTeamsCard({
             text: this.getText(events),
             section: {
-                text: "Make sure your stylesheets are up to date!"
+                text: this.getSectionText(events)
             },
             links: [{
                 title: "Open in App",
-                url: this.getMacAppURL(events)
+                url: this.getZeplinAppURI(events)
             }, {
                 title: "Open in Web",
                 url: this.getWebappURL(events)
