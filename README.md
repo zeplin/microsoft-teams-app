@@ -1,38 +1,31 @@
-# Zeplin App for Microsoft Teams
+# Zeplin for Microsoft Teams
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![Website](https://img.shields.io/website?url=https%3A%2F%2Fmsteams-app.zeplin.io%2Fhealth)
 
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md)
 
-Node version: v12.10.0
+[Zeplin](https://zeplin.io) is an organized workspace for published designs, where the entire team can collaborate to ship beautiful products.
 
-NPM version: v6.14.5
+## About
+Zeplin for Microsoft Teams app brings all the important updates to Microsoft Teams to keep your teammates up-to-date with the changes happening in Zeplin. You can connect Microsoft Teams channels to related Zeplin projects. You can also pick and choose the type of notifications that flow from Zeplin to Microsoft Teams. If you want to start connecting your Zeplin projects or styleguides to Microsoft Teams channels, head over to [our guide](https://zpl.io/msteams-integration-help) for more details.
 
-## Development
+### Get notified of design changes
+Designers frequently iterate on designs. When they’re ready to be shared with the team, that’s when they publish their work to Zeplin. With this application, once a design is published to Zeplin, the rest of the team will automatically get notified in the Microsoft Teams channel.
 
-### Initial setup
+Not only do you get a preview of the design, you can also see the commit message where the designer describes what has changed. You can quickly open the design in Zeplin as well, either in the desktop app or the Web app, and start working.
 
-- Clone the repository.
-- Create [an envrionment at Microsoft Teams](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/build-and-test/prepare-your-o365-tenant). 
-- Run `nvm use` to set node version.
-- Install dependencies via `npm install`.
-- Run `npm run tunnel` to tunnel localhost.
-- Create an Office 365 Connector from [Connectors Developer Dashboard](https://aka.ms/ConnectorsDashboard).
-  - While creating connector, the value for `Configuration page for your Connector` should be the url of `ngrok` tunnel and the value for `Valid domains` should be domain of `ngrok` tunnel, like in example.
-  ![Sample config for connector](sample-config-for-connector.png "Sample config for connector") 
-- Run `cp .env.example .env` to create `.env` file.
-- Set the environment variables in `.env` file. You can check the comments to set the variables.
-- Run `npm run build:package` to create a zip file for Microsoft Teams.
-- Upload the `dist/package.zip` file from [admin panel of Microsoft Teams](https://admin.teams.microsoft.com/policies/manage-apps).
-- Run `npm run dev` to run the app locally.
-- Now, you can create a connector at [Microsoft Teams](https://teams.microsoft.com).
+<p align="center"><img width="683" src="https://user-images.githubusercontent.com/721036/94978371-f335d700-04d1-11eb-8317-630066467528.png" srcset="https://user-images.githubusercontent.com/721036/94978371-f335d700-04d1-11eb-8317-630066467528.png, https://user-images.githubusercontent.com/721036/94978377-f630c780-04d1-11eb-90ee-542a476f8f6d.png 2x, https://user-images.githubusercontent.com/721036/94978382-f761f480-04d1-11eb-9487-decef70c2c06.png 3x"></p>
 
-### Updating the url change of http tunnel
+### Follow the conversation happening in Zeplin
+Zeplin is also the place where the team communicates over the designs. You can add notes to a specific area of a design to ask questions, suggest changes and so on. As these conversations are happening in Zeplin, you can keep the rest of the team up-to-date using this application.
 
--  Change the URL of the configuration page and valid domains at [Connectors Developer Dashboard](https://aka.ms/ConnectorsDashboard).
-- Change environment variables at `.env` file.
-- Run `npm run build:package` to create a zip file for Microsoft Teams.
-- Find the app at [admin panel of Microsoft Teams](https://admin.teams.microsoft.com/policies/manage-apps) and update it by uploading `dist/package.zip`.
-- Check the [apps page at Microsoft Teams](https://teams.microsoft.com/_#/apps) the version updated. If not updated, redo the fifth step.
+<p align="center"><img width="683" src="https://user-images.githubusercontent.com/721036/94978443-398b3600-04d2-11eb-9a03-61189b05643e.png" srcset="https://user-images.githubusercontent.com/721036/94978443-398b3600-04d2-11eb-9a03-61189b05643e.png, https://user-images.githubusercontent.com/721036/94978444-3b54f980-04d2-11eb-8372-368229842136.png 2x, https://user-images.githubusercontent.com/721036/94978447-3c862680-04d2-11eb-846d-dfd36081cec3.png 3x"></p>
 
-## See also
-- [Exercise - Create and add Office 365 Connectors to teams](https://docs.microsoft.com/en-us/learn/modules/msteams-webhooks-connectors/7-exercise-o365-connectors)
-- [Developer platform of Microsoft Teams](https://docs.microsoft.com/en-us/microsoftteams/platform/overview)
+### Track changes for resources
+You can also track changes for components, colors, text styles, and spacing tokens. This way your team will be able to sync on the changes for core elements of design systems.  
+
+<p align="center"><img width="683" src="https://user-images.githubusercontent.com/721036/94978452-40b24400-04d2-11eb-9772-aa15601ff958.png" srcset="https://user-images.githubusercontent.com/721036/94978452-40b24400-04d2-11eb-9772-aa15601ff958.png, https://user-images.githubusercontent.com/721036/94978453-427c0780-04d2-11eb-9402-0f0d066b7593.png 2x, https://user-images.githubusercontent.com/721036/94978456-44de6180-04d2-11eb-832f-0d38f3cbecd5.png 3x"></p>
+
+## Contributing
+Check out the [contributing docs](CONTRIBUTING.md) for details.
+
+## License
+The project is available as open source under the terms of the [MIT License](LICENSE).
