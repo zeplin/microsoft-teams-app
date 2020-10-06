@@ -89,7 +89,7 @@ Now, you can add the app to the Microsoft Teams channels to configure Zeplin con
 
 ## Your first contribution
 
-We use [GitHub Flow](https://guides.github.com/introduction/flow/index.html), all code changes happen through pull requests.
+We use [trunk-based development workflow](https://trunkbaseddevelopment.com/5-min-overview/), all code changes happen through pull requests.
 
 - [Fork](https://github.com/zeplin/microsoft-teams-app/fork) the repository
 - Make sure the tests pass on your machine: `npm test`
