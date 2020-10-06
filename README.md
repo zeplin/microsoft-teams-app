@@ -1,4 +1,7 @@
 # Zeplin for Microsoft Teams
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![Website](https://img.shields.io/website?url=https%3A%2F%2Fmsteams-app.zeplin.io%2Fhealth)
+
+
 [Zeplin](https://zeplin.io) is an organized workspace for published designs, where the entire team can collaborate to ship beautiful products.
 
 ## About
