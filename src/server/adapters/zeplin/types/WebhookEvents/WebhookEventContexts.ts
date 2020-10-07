@@ -3,6 +3,7 @@ import { Styleguide } from "../Styleguide";
 import { Screen } from "../Screen";
 import { Note } from "../Note";
 import { ComponentVersionSummary } from "../ComponentVersionSummary";
+import { ScreenVersionSummary } from "../ScreenVersionSummary";
 
 export interface ProjectContext {
     project: Project;
@@ -10,6 +11,10 @@ export interface ProjectContext {
 
 export interface ComponentVersionContext {
     version: ComponentVersionSummary;
+}
+
+export interface ScreenVersionContext {
+    version: ScreenVersionSummary;
 }
 
 export interface ScreenContext {

@@ -1,5 +1,6 @@
 import { NotificationHandler } from "../NotificationHandler";
 import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
+import { createHash } from "crypto";
 import {
     ProjectComponentCreateEvent,
     ProjectComponentVersionCreateEvent
@@ -81,6 +82,25 @@ class ProjectComponentHandler extends NotificationHandler<Event> {
         };
 
         return getRedirectURLForZeplinApp("components", searchParams);
+    }
+
+    getGroupingKey(event: Event): string {
+        const {
+            webhookId,
+            payload: {
+                event: eventType,
+                action,
+                context: {
+                    version: {
+                        commit
+                    }
+                }
+            }
+        } = event;
+        const hashedCommit = commit?.message
+            ? createHash("md5").update(commit.message).digest("hex")
+            : "no-commit";
+        return `${webhookId}:${hashedCommit}:${eventType}:${action}`;
     }
 
     getTeamsMessage(events: Event[]): MessageCard {
