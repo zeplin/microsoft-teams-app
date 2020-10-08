@@ -10,6 +10,16 @@ export interface ComponentVersionSummary {
     id: string;
     created: number;
     creator?: User;
+    commit?: {
+        color: {
+            r: number;
+            g: number;
+            b: number;
+            a: number;
+        };
+        message?: string;
+        author?: User;
+    };
     image_url?: string;
     thumbnails?: Thumbnails;
     background_color?: {
