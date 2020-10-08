@@ -1,3 +1,4 @@
+import { createHash } from "crypto";
 import { NotificationHandler } from "../NotificationHandler";
 import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import { ScreenCreateEvent, WebhookEvent } from "../../../../adapters/zeplin/types";
@@ -98,6 +99,25 @@ class ProjectScreenHandler extends NotificationHandler<ScreenCreateEvent> {
         }
 
         return getRedirectURLForZeplinApp(resource, searchParams);
+    }
+
+    getGroupingKey(event: ScreenCreateEvent): string {
+        const {
+            webhookId,
+            payload: {
+                event: eventType,
+                action,
+                context: {
+                    version: {
+                        commit
+                    }
+                }
+            }
+        } = event;
+        const hashedCommit = commit?.message
+            ? createHash("md5").update(commit.message).digest("hex")
+            : "no-commit";
+        return `${webhookId}:${hashedCommit}:${eventType}:${action}`;
     }
 
     getTeamsMessage(events: ScreenCreateEvent[]): MessageCard {
