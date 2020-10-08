@@ -109,7 +109,7 @@ jobs:
         run: aws s3 cp $S3_PATH/$TARBALL $S3_PATH/microsoft-teams-app-prod-latest.tar.gz
 
       - name: Set environments
-        run: aws opsworks --region $AWS_REGION update-app --app-id $AWS_APP_ID --environment  $(env | grep -E "NEXT_(PRIVATE|PUBLIC)_.*" | awk -F "=" '{printf "KEY=%s,Value=%s,Secure=true ", $1, $2}')
+        run: aws opsworks --region $AWS_REGION update-app --app-id $AWS_APP_ID --environment "$(scripts/get_environment.js)"
 
       - name: Deploy
         run: >
