@@ -90,7 +90,7 @@ enum ConfigurationTrackingIntegrationType {
 
 interface ConfigurationTrackingParameters {
     userId: string;
-    workspaceType: ConfigurationWorkspaceType;
+    workspaceId: string;
     resourceType: WebhookResourceType;
     tenantId: string;
 }
@@ -255,7 +255,7 @@ class ConfigurationService {
     private async trackConfigurationCreate(params: ConfigurationTrackingParameters): Promise<void> {
         const {
             userId,
-            workspaceType,
+            workspaceId,
             resourceType,
             tenantId
         } = params;
@@ -266,7 +266,12 @@ class ConfigurationService {
 
         await mixpanel.trackEvent("Created Microsoft Teams integration", {
             "distinct_id": userId,
-            "Workspace Type": workspaceType,
+            ...(workspaceId === "personal" ? {
+                "Workspace Type": ConfigurationWorkspaceType.PERSONAL
+            } : {
+                "Workspace Type": ConfigurationWorkspaceType.ORGANIZATION,
+                "Organization ID": workspaceId
+            }),
             "Integration Type": integrationType,
             "Tenant ID": tenantId
         });
@@ -275,7 +280,7 @@ class ConfigurationService {
     private async trackConfigurationDelete(params: ConfigurationTrackingParameters): Promise<void> {
         const {
             userId,
-            workspaceType,
+            workspaceId,
             resourceType,
             tenantId
         } = params;
@@ -286,7 +291,12 @@ class ConfigurationService {
 
         await mixpanel.trackEvent("Removed Microsoft Teams integration", {
             "distinct_id": userId,
-            "Workspace Type": workspaceType,
+            ...(workspaceId === "personal" ? {
+                "Workspace Type": ConfigurationWorkspaceType.PERSONAL
+            } : {
+                "Workspace Type": ConfigurationWorkspaceType.ORGANIZATION,
+                "Organization ID": workspaceId
+            }),
             "Integration Type": integrationType,
             "Tenant ID": tenantId
         });
@@ -330,11 +340,7 @@ class ConfigurationService {
         await unlock();
         await this.trackConfigurationCreate({
             userId,
-            workspaceType: (
-                params.zeplin.workspaceId === "personal"
-                    ? ConfigurationWorkspaceType.PERSONAL
-                    : ConfigurationWorkspaceType.ORGANIZATION
-            ),
+            workspaceId: params.zeplin.workspaceId,
             resourceType: params.zeplin.resource.type,
             tenantId: params.microsoftTeams.tenantId
         });
@@ -357,11 +363,7 @@ class ConfigurationService {
             ]);
             await this.trackConfigurationDelete({
                 userId,
-                workspaceType: (
-                    configuration.zeplin.workspaceId === "personal"
-                        ? ConfigurationWorkspaceType.PERSONAL
-                        : ConfigurationWorkspaceType.ORGANIZATION
-                ),
+                workspaceId: configuration.zeplin.workspaceId,
                 resourceType: configuration.zeplin.resource.type,
                 tenantId: configuration.microsoftTeams.tenantId
             });
