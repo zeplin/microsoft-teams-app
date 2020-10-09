@@ -22,6 +22,8 @@ function getBooleanVariable(name: string, defaultValue: boolean): boolean {
 
 const DEFAULT_PORT = 3000;
 
+const IS_LOCAL = (process.env.NEXT_PUBLIC_ENVIRONMENT ?? "local") === "local";
+
 export const PORT = getNumberVariable("NEXT_PRIVATE_PORT", DEFAULT_PORT);
 export const {
     NEXT_PUBLIC_ENVIRONMENT: ENVIRONMENT = "local",
@@ -40,9 +42,9 @@ export const {
 } = process.env;
 
 export const IS_DEV = process.env.NODE_ENV !== "production";
-export const IS_MONGO_DEBUG = getBooleanVariable("NEXT_PRIVATE_IS_MONGO_DEBUG", IS_DEV);
-export const IS_SENTRY_ENABLED = getBooleanVariable("NEXT_PUBLIC_IS_SENTRY_ENABLED", !IS_DEV);
-export const IS_MIXPANEL_ENABLED = getBooleanVariable("NEXT_PRIVATE_IS_MIXPANEL_ENABLED", !IS_DEV);
+export const IS_MONGO_DEBUG = getBooleanVariable("NEXT_PRIVATE_IS_MONGO_DEBUG", IS_LOCAL);
+export const IS_SENTRY_ENABLED = getBooleanVariable("NEXT_PUBLIC_IS_SENTRY_ENABLED", !IS_LOCAL);
+export const IS_MIXPANEL_ENABLED = getBooleanVariable("NEXT_PRIVATE_IS_MIXPANEL_ENABLED", !IS_LOCAL);
 
 export interface Config {
     IS_MONGO_DEBUG: boolean;
