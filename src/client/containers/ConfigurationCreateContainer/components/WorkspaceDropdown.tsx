@@ -17,11 +17,13 @@ export const WorkspaceDropdown: FunctionComponent<WorkspaceDropdownProps> = ({
         loading={loading}
         loadingMessage="Loading…"
         checkable
-        items={workspaces.map(({ name, id }) => ({
-            key: id,
-            header: name,
-            onClick: (): void => onChange(id)
-        }))}
+        items={workspaces.map(({ name, id }) => ({ key: id, header: name }))}
+        onChange={(_, { value }): void => {
+            if (value) {
+                const { key } = value as { key: string };
+                onChange(key);
+            }
+        }}
         placeholder="Select Workspace"
     />
 );
