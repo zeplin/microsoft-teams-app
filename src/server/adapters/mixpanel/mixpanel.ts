@@ -14,7 +14,9 @@ class Mixpanel {
         enabled
     }: MixpanelInitParams): void {
         this.enabled = enabled;
-        this.mixpanelClient = mixpanelClient.init(apiToken);
+        if (enabled) {
+            this.mixpanelClient = mixpanelClient.init(apiToken);
+        }
     }
 
     trackEvent(eventName: string, properties: mixpanelClient.PropertyDict): Promise<void> {
