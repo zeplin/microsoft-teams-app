@@ -2,7 +2,7 @@
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![Website](https://img.shields.io/website?url=https%3A%2F%2Fmsteams-app.zeplin.io%2Fhealth)
 
 
-[Zeplin](https://zeplin.io) is an organized workspace for published designs, where the entire team can collaborate to ship beautiful products.
+Bring all the important updates from your Zeplin workspace to the Microsoft Teams conversations.
 
 ## About
 Zeplin for Microsoft Teams app brings all the important updates to Microsoft Teams to keep your teammates up-to-date with the changes happening in Zeplin. You can connect Microsoft Teams channels to related Zeplin projects. You can also pick and choose the type of notifications that flow from Zeplin to Microsoft Teams. If you want to start connecting your Zeplin projects or styleguides to Microsoft Teams channels, head over to [our guide](https://zpl.io/msteams-integration-help) for more details.
