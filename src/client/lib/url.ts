@@ -1,20 +1,14 @@
 class Url {
     get login(): string {
-        const loginUrl = new URL(window.location.href);
-        loginUrl.pathname = "/login";
-        return loginUrl.toString();
+        return `/login?${window.location.search}`;
     }
 
     get configurationCreate(): string {
-        const loginUrl = new URL(window.location.href);
-        loginUrl.pathname = "/configuration/create";
-        return loginUrl.toString();
+        return `/configuration/create?${window.location.search}`;
     }
 
     get configurationUpdate(): string {
-        const loginUrl = new URL(window.location.href);
-        loginUrl.pathname = "/configuration/create";
-        return loginUrl.toString();
+        return `/configuration/update?${window.location.search}`;
     }
 }
 
