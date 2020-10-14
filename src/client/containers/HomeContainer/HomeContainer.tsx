@@ -19,6 +19,9 @@ export const HomeContainer: FunctionComponent = () => {
     };
 
     useEffect(() => {
+        // Workaround: Microsoft Teams initialize two iframes
+        // One with real one and one with template url
+        // TODO: Find a robust solution to disable second iframe
         if (channel && channel !== "{channelName}") {
             replace(getUrl());
         }
