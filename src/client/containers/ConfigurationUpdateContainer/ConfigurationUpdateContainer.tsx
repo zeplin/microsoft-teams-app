@@ -4,16 +4,14 @@ import { useRouter } from "next/router";
 
 import { ResourceType, WebhookEventType } from "../../constants";
 import { ConfigurationUpdate } from "./components";
-import { storage } from "../../lib";
+import { storage, url } from "../../lib";
 import { useMe, useInitialize } from "../../hooks";
 import { useConfiguration, useConfigurationDelete, useConfigurationUpdate, useValidate } from "./hooks";
 
 export const ConfigurationUpdateContainer: FunctionComponent = () => {
     const { isInitializeLoading } = useInitialize();
 
-    const { query: { channel, id, resourceName, resourceType }, query, replace } = useRouter();
-    const searchParams = new URLSearchParams(query as Record<string, string>).toString();
-    const loginUrl = `/login?${searchParams}`;
+    const { query: { channel, id, resourceName, resourceType }, replace } = useRouter();
 
     const [events, setEvents] = useState<WebhookEventType[]>([]);
     const [configurationUpdateError, setConfigurationUpdateError] = useState<string|undefined>(undefined);
@@ -23,7 +21,7 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
     } = useMe({
         onError: isAuthorizationError => {
             if (isAuthorizationError) {
-                replace(loginUrl);
+                replace(url.login);
             }
         }
     });
@@ -39,7 +37,7 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
         configurationId: String(id),
         onError: isAuthorizationError => {
             if (isAuthorizationError) {
-                replace(loginUrl);
+                replace(url.login);
             }
         },
         onSuccess: result => setEvents(result.webhook.events)
@@ -93,7 +91,7 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
             onLogoutClick={(): void => {
                 storage.removeRefreshToken();
                 storage.removeAccessToken();
-                replace(loginUrl);
+                replace(url.login);
                 setConfigurationUpdateError(undefined);
             }}
         />

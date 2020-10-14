@@ -9,7 +9,7 @@ import {
     useWorkspaces,
     useConfigurationCreate
 } from "./hooks";
-import { storage } from "../../lib";
+import { storage, url } from "../../lib";
 import { useMe, useInitialize } from "../../hooks";
 import { ConfigurationCreate } from "./components";
 
@@ -24,12 +24,9 @@ type State = {
 };
 
 export const ConfigurationCreateContainer: FunctionComponent = () => {
-    const { query: { channel }, query, replace } = useRouter();
+    const { query: { channel }, replace } = useRouter();
 
     const { isInitializeLoading } = useInitialize();
-
-    const searchParams = new URLSearchParams(query as Record<string, string>).toString();
-    const loginUrl = `/login?${searchParams}`;
 
     const [
         {
@@ -53,7 +50,7 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
     } = useWorkspaces({
         onError: isAuthorizationError => {
             if (isAuthorizationError) {
-                replace(loginUrl);
+                replace(url.login);
             }
         }
     });
@@ -63,7 +60,7 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
     } = useMe({
         onError: isAuthorizationError => {
             if (isAuthorizationError) {
-                replace(loginUrl);
+                replace(url.login);
             }
         }
     });
@@ -104,7 +101,7 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
         },
         onError: isAuthorizationError => {
             if (isAuthorizationError) {
-                replace(loginUrl);
+                replace(url.login);
             }
         }
 
@@ -201,7 +198,7 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
             onLogoutClick={(): void => {
                 storage.removeRefreshToken();
                 storage.removeAccessToken();
-                replace(loginUrl);
+                replace(url.login);
             }}
         />
     );

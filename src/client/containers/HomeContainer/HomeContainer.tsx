@@ -2,20 +2,19 @@ import React, { FunctionComponent, useEffect } from "react";
 import { Loader } from "@fluentui/react-northstar";
 import { useRouter } from "next/router";
 
-import { storage } from "../../lib";
+import { storage, url } from "../../lib";
 
 export const HomeContainer: FunctionComponent = () => {
-    const { query: { channel, id }, query, replace } = useRouter();
+    const { query: { channel, id }, replace } = useRouter();
 
     const getUrl = (): string => {
-        const searchParams = new URLSearchParams(query as Record<string, string>).toString();
         if (!storage.getAccessToken()) {
-            return `/login?${searchParams}`;
+            return url.login;
         }
         if (id) {
-            return `/configuration/update?${searchParams}`;
+            return url.configurationUpdate;
         }
-        return `/configuration/create?${searchParams}`;
+        return url.configurationCreate;
     };
 
     useEffect(() => {

@@ -5,15 +5,14 @@ import { useLogin } from "./hooks";
 import { Login } from "./components";
 import { Loader } from "@fluentui/react-northstar";
 import { useRouter } from "next/router";
+import { url } from "../../lib";
 
 export const LoginContainer: FunctionComponent = () => {
-    const { query: { id }, query, replace } = useRouter();
+    const { query: { id }, replace } = useRouter();
     const { isInitializeLoading } = useInitialize();
     const [login, { loginError }] = useLogin({
         onSuccess: () => {
-            const searchParams = new URLSearchParams(query as Record<string, string>).toString();
-            const action = id ? "update" : "create";
-            replace(`/configuration/${action}?${searchParams}`);
+            replace(id ? url.configurationUpdate : url.configurationCreate);
         }
     });
 
