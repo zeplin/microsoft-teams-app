@@ -16,7 +16,6 @@ env:
   NEXT_PRIVATE_BASE_URL: ${{ secrets.NEXT_PRIVATE_BASE_URL_PROD }}
   NEXT_PRIVATE_DOMAIN: ${{ secrets.NEXT_PRIVATE_DOMAIN_PROD }}
   NEXT_PRIVATE_PORT: ${{ secrets.NEXT_PRIVATE_PORT_PROD }}
-  NEXT_PRIVATE_ZEPLIN_MAC_APP_URL_SCHEME: ${{ secrets.NEXT_PRIVATE_ZEPLIN_MAC_APP_URL_SCHEME_PROD }}
   NEXT_PRIVATE_REDIS_URL: ${{ secrets.NEXT_PRIVATE_REDIS_URL_PROD }}
   NEXT_PRIVATE_MONGO_URL: ${{ secrets.NEXT_PRIVATE_MONGO_URL_PROD }}
   NEXT_PRIVATE_IS_MONGO_DEBUG: ${{ secrets.NEXT_PRIVATE_IS_MONGO_DEBUG_PROD }}
@@ -27,6 +26,7 @@ env:
   NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN_PROD }}
   NEXT_PUBLIC_IS_SENTRY_ENABLED: ${{ secrets.NEXT_PUBLIC_IS_SENTRY_ENABLED_PROD }}
   NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL: ${{ secrets.NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL_PROD }}
+  NEXT_PUBLIC_ZEPLIN_APP_URI_SCHEME: ${{ secrets.NEXT_PUBLIC_ZEPLIN_APP_URI_SCHEME_PROD }}
   NEXT_PUBLIC_ENVIRONMENT: prod
 
 
@@ -114,5 +114,4 @@ jobs:
       - name: Deploy
         run: >
           aws opsworks --region $AWS_REGION create-deployment --stack-id $AWS_STACK_ID --layer-ids $AWS_LAYER_ID --app-id $AWS_APP_ID --command "{\"Name\":\"deploy\"}" --custom-json "{\"zeplin\": {\"app_shortname\":\"zeplin_microsoft_teams_app\"}}"
-
 
