@@ -37,7 +37,11 @@ const getItems = ({ projects, styleguides, loading }: ItemsGetParams): Shorthand
     if (projects.length > 0 && styleguides.length > 0) {
         result.push({
             key: "Seperator",
-            as: (): ReactElement => <Divider />,
+            as: (props: DropdownItemProps): ReactElement => (
+                <li {...props}>
+                    <Divider styles={{ flex: 1 }}/>
+                </li>
+            ),
             disabled: true
         });
     }
