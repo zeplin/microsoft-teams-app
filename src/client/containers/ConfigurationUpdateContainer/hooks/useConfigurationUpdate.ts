@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useMutation } from "react-query";
 import * as microsoftTeams from "@microsoft/teams-js";
 
-import { requester } from "../../../lib";
-import { Resource, ResourceType, WebhookEventType } from "../../../constants";
+import { requester, url } from "../../../lib";
+import { Resource, WebhookEventType } from "../../../constants";
 import { ClientError } from "../../../ClientError";
 
 const errorToText = (error: Error): string => {
@@ -33,22 +33,6 @@ const errorToText = (error: Error): string => {
             return "We're experiencing an issue here. Please try it later or let us know: support@zeplin.io.";
     }
 };
-
-function setSettings(configurationId: string, resourceName: string, resourceType: ResourceType): void {
-    const contentURL = new URL(window.location.href);
-    contentURL.pathname = "/";
-    contentURL.searchParams.set("id", configurationId);
-    contentURL.searchParams.set("theme", "{theme}");
-    contentURL.searchParams.set("channel", "{channelName}");
-    contentURL.searchParams.set("resourceName", resourceName);
-    contentURL.searchParams.set("resourceType", resourceType);
-
-    microsoftTeams.settings.setSettings({
-        entityId: configurationId,
-        configName: resourceName,
-        contentUrl: decodeURI(contentURL.toString())
-    } as unknown as microsoftTeams.settings.Settings);
-}
 
 interface UseConfigurationUpdateParams {
     configurationId: string;
@@ -103,7 +87,17 @@ export const useConfigurationUpdate = ({
                             }
                         });
 
-                    setSettings(configurationId, resource.name, resource.type);
+                    microsoftTeams.settings.setSettings({
+                        entityId: configurationId,
+                        configName: resource.name,
+                        contentUrl: decodeURI(`${window.location.origin}${url.getConfigurationUpdateUrl({
+                            id: configurationId,
+                            resourceName: resource.name,
+                            resourceType: resource.type,
+                            channel: "{channelName}",
+                            theme: "{theme}"
+                        })}`)
+                    } as microsoftTeams.settings.Settings);
 
                     saveEvent.notifySuccess();
                 } catch (error) {

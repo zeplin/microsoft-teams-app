@@ -1,14 +1,33 @@
+interface ConfigurationCreateUrlParams {
+    theme: string;
+    channel: string;
+}
+
+interface ConfigurationUpdateUrlParams {
+    theme: string;
+    channel: string;
+    id: string;
+    resourceName: string;
+    resourceType: string;
+}
+
+type UrlParams = ConfigurationCreateUrlParams | ConfigurationUpdateUrlParams;
+
 class Url {
-    get login(): string {
-        return `/login?${window.location.search}`;
+    getLoginUrl(params: UrlParams): string {
+        return `/login?${new URLSearchParams(Object.entries(params))}`;
     }
 
-    get configurationCreate(): string {
-        return `/configuration/create?${window.location.search}`;
+    getConfigurationCreateUrl(params: ConfigurationCreateUrlParams): string {
+        return `/configuration/create?${new URLSearchParams(Object.entries(params))}`;
     }
 
-    get configurationUpdate(): string {
-        return `/configuration/update?${window.location.search}`;
+    getConfigurationUpdateUrl(params: ConfigurationUpdateUrlParams): string {
+        return `/configuration/update?${new URLSearchParams(Object.entries(params))}`;
+    }
+
+    getHomeUrl(params: UrlParams): string {
+        return `/?${new URLSearchParams(Object.entries(params))}`;
     }
 }
 

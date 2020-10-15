@@ -11,7 +11,9 @@ import { useConfiguration, useConfigurationDelete, useConfigurationUpdate, useVa
 export const ConfigurationUpdateContainer: FunctionComponent = () => {
     const { isInitializeLoading } = useInitialize();
 
-    const { query: { channel, id, resourceName, resourceType }, replace } = useRouter();
+    const { query: {
+        channel, id, resourceName, resourceType, theme
+    }, replace } = useRouter();
 
     const [events, setEvents] = useState<WebhookEventType[]>([]);
     const [configurationUpdateError, setConfigurationUpdateError] = useState<string|undefined>(undefined);
@@ -21,7 +23,13 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
     } = useMe({
         onError: isAuthorizationError => {
             if (isAuthorizationError) {
-                replace(url.login);
+                replace(url.getLoginUrl({
+                    channel: channel as string,
+                    id: id as string,
+                    resourceName: resourceName as string,
+                    resourceType: resourceType as string,
+                    theme: theme as string
+                }));
             }
         }
     });
@@ -37,7 +45,13 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
         configurationId: String(id),
         onError: isAuthorizationError => {
             if (isAuthorizationError) {
-                replace(url.login);
+                replace(url.getLoginUrl({
+                    channel: channel as string,
+                    id: id as string,
+                    resourceName: resourceName as string,
+                    resourceType: resourceType as string,
+                    theme: theme as string
+                }));
             }
         },
         onSuccess: result => setEvents(result.webhook.events)
@@ -91,7 +105,13 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
             onLogoutClick={(): void => {
                 storage.removeRefreshToken();
                 storage.removeAccessToken();
-                replace(url.login);
+                replace(url.getLoginUrl({
+                    channel: channel as string,
+                    id: id as string,
+                    resourceName: resourceName as string,
+                    resourceType: resourceType as string,
+                    theme: theme as string
+                }));
                 setConfigurationUpdateError(undefined);
             }}
         />

@@ -24,7 +24,7 @@ type State = {
 };
 
 export const ConfigurationCreateContainer: FunctionComponent = () => {
-    const { query: { channel }, replace } = useRouter();
+    const { query: { channel, theme }, replace } = useRouter();
 
     const { isInitializeLoading } = useInitialize();
 
@@ -50,7 +50,10 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
     } = useWorkspaces({
         onError: isAuthorizationError => {
             if (isAuthorizationError) {
-                replace(url.login);
+                replace(url.getLoginUrl({
+                    channel: channel as string,
+                    theme: theme as string
+                }));
             }
         }
     });
@@ -60,7 +63,10 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
     } = useMe({
         onError: isAuthorizationError => {
             if (isAuthorizationError) {
-                replace(url.login);
+                replace(url.getLoginUrl({
+                    channel: channel as string,
+                    theme: theme as string
+                }));
             }
         }
     });
@@ -101,7 +107,10 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
         },
         onError: isAuthorizationError => {
             if (isAuthorizationError) {
-                replace(url.login);
+                replace(url.getLoginUrl({
+                    channel: channel as string,
+                    theme: theme as string
+                }));
             }
         }
 
@@ -198,7 +207,10 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
             onLogoutClick={(): void => {
                 storage.removeRefreshToken();
                 storage.removeAccessToken();
-                replace(url.login);
+                replace(url.getLoginUrl({
+                    channel: channel as string,
+                    theme: theme as string
+                }));
             }}
         />
     );

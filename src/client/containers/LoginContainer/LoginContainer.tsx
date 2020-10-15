@@ -8,11 +8,33 @@ import { useRouter } from "next/router";
 import { url } from "../../lib";
 
 export const LoginContainer: FunctionComponent = () => {
-    const { query: { id }, replace } = useRouter();
+    const {
+        query: {
+            channel,
+            id,
+            resourceName,
+            resourceType,
+            theme
+        },
+        replace
+    } = useRouter();
+
     const { isInitializeLoading } = useInitialize();
     const [login, { loginError }] = useLogin({
         onSuccess: () => {
-            replace(id ? url.configurationUpdate : url.configurationCreate);
+            replace(id
+                ? url.getConfigurationUpdateUrl({
+                    channel: channel as string,
+                    id: id as string,
+                    resourceName: resourceName as string,
+                    resourceType: resourceType as string,
+                    theme: theme as string
+                })
+                : url.getConfigurationCreateUrl({
+
+                    channel: channel as string,
+                    theme: theme as string
+                }));
         }
     });
 
