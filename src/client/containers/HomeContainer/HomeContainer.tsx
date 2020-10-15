@@ -2,23 +2,54 @@ import React, { FunctionComponent, useEffect } from "react";
 import { Loader } from "@fluentui/react-northstar";
 import { useRouter } from "next/router";
 
-import { storage } from "../../lib";
+import { storage, url } from "../../lib";
 
 export const HomeContainer: FunctionComponent = () => {
-    const { query: { channel, id }, query, replace } = useRouter();
+    const {
+        query: {
+            channel,
+            id,
+            resourceName,
+            resourceType,
+            theme
+        },
+        replace
+    } = useRouter();
 
     const getUrl = (): string => {
-        const searchParams = new URLSearchParams(query as Record<string, string>).toString();
         if (!storage.getAccessToken()) {
-            return `/login?${searchParams}`;
+            return url.getLoginUrl(id
+                ? {
+                    channel: channel as string,
+                    id: id as string,
+                    resourceName: resourceName as string,
+                    resourceType: resourceType as string,
+                    theme: theme as string
+                }
+                : {
+                    channel: channel as string,
+                    theme: theme as string
+                });
         }
         if (id) {
-            return `/configuration/update?${searchParams}`;
+            return url.getConfigurationUpdateUrl({
+                channel: channel as string,
+                id: id as string,
+                resourceName: resourceName as string,
+                resourceType: resourceType as string,
+                theme: theme as string
+            });
         }
-        return `/configuration/create?${searchParams}`;
+        return url.getConfigurationCreateUrl({
+            channel: channel as string,
+            theme: theme as string
+        });
     };
 
     useEffect(() => {
+        // Workaround: Microsoft Teams initialize two iframes
+        // One with real one and one with template url
+        // TODO: Find a robust solution to disable second iframe
         if (channel && channel !== "{channelName}") {
             replace(getUrl());
         }
