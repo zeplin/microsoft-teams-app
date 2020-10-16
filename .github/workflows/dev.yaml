@@ -13,6 +13,18 @@ env:
   AWS_STACK_ID: ${{ secrets.AWS_STACK_ID_DEV }}
   AWS_LAYER_ID: ${{ secrets.AWS_LAYER_ID_DEV }}
   AWS_APP_ID: ${{ secrets.AWS_APP_ID_DEV }}
+  NEXT_PRIVATE_BASE_URL: ${{ secrets.NEXT_PRIVATE_BASE_URL_DEV }}
+  NEXT_PRIVATE_DOMAIN: ${{ secrets.NEXT_PRIVATE_DOMAIN_DEV }}
+  NEXT_PRIVATE_PORT: ${{ secrets.NEXT_PRIVATE_PORT_DEV }}
+  NEXT_PRIVATE_REDIS_URL: ${{ secrets.NEXT_PRIVATE_REDIS_URL_DEV }}
+  NEXT_PRIVATE_MONGO_URL: ${{ secrets.NEXT_PRIVATE_MONGO_URL_DEV }}
+  NEXT_PRIVATE_IS_MONGO_DEBUG: ${{ secrets.NEXT_PRIVATE_IS_MONGO_DEBUG_DEV }}
+  NEXT_PRIVATE_ZEPLIN_URL: ${{ secrets.NEXT_PRIVATE_ZEPLIN_URL_DEV }}
+  NEXT_PRIVATE_ZEPLIN_CLIENT_ID: ${{ secrets.NEXT_PRIVATE_ZEPLIN_CLIENT_ID_DEV }}
+  NEXT_PRIVATE_ZEPLIN_CLIENT_SECRET: ${{ secrets.NEXT_PRIVATE_ZEPLIN_CLIENT_SECRET_DEV }}
+  NEXT_PRIVATE_WEBHOOK_SECRET: ${{ secrets.NEXT_PRIVATE_WEBHOOK_SECRET_DEV }}
+  NEXT_PRIVATE_MIXPANEL_TOKEN: ${{ secrets.NEXT_PRIVATE_MIXPANEL_TOKEN_DEV }}
+  NEXT_PRIVATE_IS_MIXPANEL_ENABLED: ${{ secrets.NEXT_PRIVATE_IS_MIXPANEL_ENABLED_DEV }}
   NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN_DEV }}
   NEXT_PUBLIC_IS_SENTRY_ENABLED: ${{ secrets.NEXT_PUBLIC_IS_SENTRY_ENABLED_DEV }}
   NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL: ${{ secrets.NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL_DEV }}
@@ -98,8 +110,10 @@ jobs:
       - name: Change latest release
         run: aws s3 cp $S3_PATH/$TARBALL $S3_PATH/microsoft-teams-app-dev-latest.tar.gz
 
+      - name: Set environments
+        run: aws opsworks --region $AWS_REGION update-app --app-id $AWS_APP_ID --environment "$(scripts/get_environment.js)"
+
       - name: Deploy
         run: >
           aws opsworks --region $AWS_REGION create-deployment --stack-id $AWS_STACK_ID --layer-ids $AWS_LAYER_ID --app-id $AWS_APP_ID --command "{\"Name\":\"deploy\"}" --custom-json "{\"zeplin\": {\"app_shortname\":\"zeplin_microsoft_teams_app\"}}"
-
 
