@@ -3,17 +3,17 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { Loader } from "@fluentui/react-northstar";
 
-import { Providers } from "../Providers";
+import { Providers } from "../../Providers";
 
-const HomeContainer = dynamic(
-    async () => (await import("../containers")).HomeContainer,
+const ConfigurationCreateContainer = dynamic(
+    async () => (await import("../../containers")).ConfigurationCreateContainer,
     {
         ssr: false,
         loading: () => <Loader styles={{ height: "100vh" }} />
     }
 );
 
-const HomePage: FunctionComponent = () => {
+const ConfigurationCreatePage: FunctionComponent = () => {
     const {
         query: {
             theme
@@ -22,9 +22,9 @@ const HomePage: FunctionComponent = () => {
 
     return (
         <Providers theme={String(theme)}>
-            <HomeContainer />
+            <ConfigurationCreateContainer />
         </Providers>
     );
 };
 
-export default HomePage;
+export default ConfigurationCreatePage;
