@@ -34,7 +34,7 @@ You can verify that Docker is running by running `docker run hello-world` in you
 
 First, install the dependencies and spin up services (Redis and MongoDB) by running:
 ```
-$ npm run dev:bootstrap
+$ npm run dev:bootstrap // YOOOOK
 ```
 
 You can verify the environment is setup properly by running:
