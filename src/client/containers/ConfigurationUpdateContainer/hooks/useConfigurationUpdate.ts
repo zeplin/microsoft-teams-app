@@ -35,6 +35,7 @@ const errorToText = (error: Error): string => {
 };
 
 interface UseConfigurationUpdateParams {
+    isInitialized: boolean;
     configurationId: string;
     resource?: Resource;
     workspaceId?: string;
@@ -43,6 +44,7 @@ interface UseConfigurationUpdateParams {
 }
 
 export const useConfigurationUpdate = ({
+    isInitialized,
     configurationId,
     workspaceId,
     resource,
@@ -58,52 +60,54 @@ export const useConfigurationUpdate = ({
     );
 
     useEffect(() => {
-        microsoftTeams.getContext(({
-            channelId,
-            channelName,
-            tid: tenantId
-        }) => {
-            microsoftTeams.settings.registerOnSaveHandler(async saveEvent => {
-                if (tenantId === undefined ||
-                            channelId === undefined ||
-                            channelName === undefined ||
-                            resource === undefined ||
-                            events === undefined ||
-                            workspaceId === undefined) {
-                    saveEvent.notifyFailure("params are not defined");
-                    return;
-                }
-                try {
-                    await updateConfiguration(
-                        {
-                            configurationId,
-                            zeplin: {
-                                resource: {
-                                    id: resource.id,
-                                    type: resource.type
-                                },
-                                workspaceId,
-                                events
-                            }
-                        });
+        if (isInitialized) {
+            microsoftTeams.getContext(({
+                channelId,
+                channelName,
+                tid: tenantId
+            }) => {
+                microsoftTeams.settings.registerOnSaveHandler(async saveEvent => {
+                    if (tenantId === undefined ||
+                        channelId === undefined ||
+                        channelName === undefined ||
+                        resource === undefined ||
+                        events === undefined ||
+                        workspaceId === undefined) {
+                        saveEvent.notifyFailure("params are not defined");
+                        return;
+                    }
+                    try {
+                        await updateConfiguration(
+                            {
+                                configurationId,
+                                zeplin: {
+                                    resource: {
+                                        id: resource.id,
+                                        type: resource.type
+                                    },
+                                    workspaceId,
+                                    events
+                                }
+                            });
 
-                    microsoftTeams.settings.setSettings({
-                        entityId: configurationId,
-                        configName: resource.name,
-                        contentUrl: decodeURI(`${window.location.origin}${url.getConfigurationUpdateUrl({
-                            id: configurationId,
-                            resourceName: resource.name,
-                            resourceType: resource.type,
-                            channel: "{channelName}",
-                            theme: "{theme}"
-                        })}`)
-                    } as microsoftTeams.settings.Settings);
+                        microsoftTeams.settings.setSettings({
+                            entityId: configurationId,
+                            configName: resource.name,
+                            contentUrl: decodeURI(`${window.location.origin}${url.getHomeUrl({
+                                id: configurationId,
+                                resourceName: resource.name,
+                                resourceType: resource.type,
+                                channel: "{channelName}",
+                                theme: "{theme}"
+                            })}`)
+                        } as microsoftTeams.settings.Settings);
 
-                    saveEvent.notifySuccess();
-                } catch (error) {
-                    saveEvent.notifyFailure(error?.message ?? error);
-                }
+                        saveEvent.notifySuccess();
+                    } catch (error) {
+                        saveEvent.notifyFailure(error?.message ?? error);
+                    }
+                });
             });
-        });
+        }
     }, [resource, events, workspaceId]);
 };

@@ -124,6 +124,7 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
     });
 
     useConfigurationCreate({
+        isInitialized: !isInitializeLoading,
         resource,
         events,
         workspaceId,

@@ -65,7 +65,8 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
     });
 
     useConfigurationUpdate({
-        configurationId: String(id),
+        isInitialized: !isInitializeLoading,
+        configurationId: id as string,
         resource: configuration?.resource,
         events,
         workspaceId: configuration?.workspaceId,
@@ -75,7 +76,8 @@ export const ConfigurationUpdateContainer: FunctionComponent = () => {
     });
 
     useConfigurationDelete({
-        configurationId: String(id)
+        isInitialized: !isInitializeLoading,
+        configurationId: id as string
     });
 
     if (isConfigurationLoading || isInitializeLoading) {
