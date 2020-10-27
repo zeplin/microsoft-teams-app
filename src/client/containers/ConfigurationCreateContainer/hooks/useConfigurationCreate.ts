@@ -119,5 +119,5 @@ export const useConfigurationCreate = ({
                 });
             });
         }
-    }, [resource, events]);
+    }, [resource, events, isInitialized]);
 };

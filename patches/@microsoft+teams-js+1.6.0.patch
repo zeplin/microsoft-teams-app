@@ -1,3 +1,8 @@
+The library doesn't allow to call `registerOnRemoveHandler` from the "settings" context. In connectors' case, this is the context when a connector is being managed (update or remove). This patch is to allow "settings" context for this function.
+
+See these issues for more details:
+https://github.com/OfficeDev/microsoft-teams-library-js/issues/435
+https://github.com/OfficeDev/microsoft-teams-library-js/issues/297
 diff --git a/node_modules/@microsoft/teams-js/dist/MicrosoftTeams.min.js b/node_modules/@microsoft/teams-js/dist/MicrosoftTeams.min.js
 index 1069768..ef91d65 100644
 --- a/node_modules/@microsoft/teams-js/dist/MicrosoftTeams.min.js

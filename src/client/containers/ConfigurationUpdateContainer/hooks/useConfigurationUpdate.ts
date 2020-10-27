@@ -109,5 +109,5 @@ export const useConfigurationUpdate = ({
                 });
             });
         }
-    }, [resource, events, workspaceId]);
+    }, [resource, events, workspaceId, isInitialized]);
 };
