@@ -37,6 +37,7 @@ const errorToText = (error: Error): string => {
 };
 
 interface UseConfigurationSaveParams {
+    isInitialized: boolean;
     resource?: Resource;
     workspaceId?: string;
     events?: WebhookEventType[];
@@ -44,6 +45,7 @@ interface UseConfigurationSaveParams {
 }
 
 export const useConfigurationCreate = ({
+    isInitialized,
     workspaceId,
     resource,
     events,
@@ -58,62 +60,64 @@ export const useConfigurationCreate = ({
     );
 
     useEffect(() => {
-        microsoftTeams.getContext(({
-            channelId,
-            channelName,
-            tid: tenantId
-        }) => {
-            microsoftTeams.settings.getSettings(settings => {
-                microsoftTeams.settings.registerOnSaveHandler(async saveEvent => {
-                    if (tenantId === undefined ||
+        if (isInitialized) {
+            microsoftTeams.getContext(({
+                channelId,
+                channelName,
+                tid: tenantId
+            }) => {
+                microsoftTeams.settings.getSettings(settings => {
+                    microsoftTeams.settings.registerOnSaveHandler(async saveEvent => {
+                        if (tenantId === undefined ||
                             channelId === undefined ||
                             channelName === undefined ||
                             resource === undefined ||
                             events === undefined ||
                             workspaceId === undefined) {
-                        saveEvent.notifyFailure("params are not defined");
-                        return;
-                    }
-                    const { webhookUrl } = settings as unknown as WebhookSettings;
-                    try {
-                        const configurationId = await createConfiguration(
-                            {
-                                zeplin: {
-                                    resource: {
-                                        id: resource.id,
-                                        type: resource.type
+                            saveEvent.notifyFailure("params are not defined");
+                            return;
+                        }
+                        const { webhookUrl } = settings as unknown as WebhookSettings;
+                        try {
+                            const configurationId = await createConfiguration(
+                                {
+                                    zeplin: {
+                                        resource: {
+                                            id: resource.id,
+                                            type: resource.type
+                                        },
+                                        workspaceId,
+                                        events
                                     },
-                                    workspaceId,
-                                    events
-                                },
-                                microsoftTeams: {
-                                    channel: {
-                                        id: channelId,
-                                        name: channelName
-                                    },
-                                    tenantId,
-                                    incomingWebhookUrl: webhookUrl
-                                }
-                            });
+                                    microsoftTeams: {
+                                        channel: {
+                                            id: channelId,
+                                            name: channelName
+                                        },
+                                        tenantId,
+                                        incomingWebhookUrl: webhookUrl
+                                    }
+                                });
 
-                        microsoftTeams.settings.setSettings({
-                            entityId: configurationId,
-                            configName: resource.name,
-                            contentUrl: decodeURI(`${window.location.origin}${url.getConfigurationUpdateUrl({
-                                id: configurationId,
-                                resourceName: resource.name,
-                                resourceType: resource.type,
-                                channel: "{channelName}",
-                                theme: "{theme}"
-                            })}`)
-                        } as microsoftTeams.settings.Settings);
+                            microsoftTeams.settings.setSettings({
+                                entityId: configurationId,
+                                configName: resource.name,
+                                contentUrl: decodeURI(`${window.location.origin}${url.getHomeUrl({
+                                    id: configurationId,
+                                    resourceName: resource.name,
+                                    resourceType: resource.type,
+                                    channel: "{channelName}",
+                                    theme: "{theme}"
+                                })}`)
+                            } as microsoftTeams.settings.Settings);
 
-                        saveEvent.notifySuccess();
-                    } catch (error) {
-                        saveEvent.notifyFailure(error?.message ?? error);
-                    }
+                            saveEvent.notifySuccess();
+                        } catch (error) {
+                            saveEvent.notifyFailure(error?.message ?? error);
+                        }
+                    });
                 });
             });
-        });
-    }, [resource, events]);
+        }
+    }, [resource, events, isInitialized]);
 };
