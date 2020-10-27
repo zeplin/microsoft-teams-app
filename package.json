@@ -14,7 +14,8 @@
     "tunnel": "ngrok http 3000 --host-header=localhost:3000",
     "build:package": "scripts/build_package.sh",
     "start": "pm2 startOrReload pm2.json --no-daemon",
-    "lint": "eslint \"./**/*{.ts,.tsx}\""
+    "lint": "eslint \"./**/*{.ts,.tsx}\"",
+    "postinstall": "patch-package"
   },
   "repository": {
     "type": "git",
@@ -42,6 +43,7 @@
     "mongodb": "^3.5.9",
     "mongoose": "^5.9.26",
     "next": "^9.4.4",
+    "patch-package": "^6.2.2",
     "pm2": "^4.4.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
