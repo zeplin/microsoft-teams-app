@@ -42,10 +42,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set `NEXT_PUBLIC_VERSION` variable
-        run: echo ::set-env name=NEXT_PUBLIC_VERSION::0.0.0-${GITHUB_SHA}
+        run: echo "NEXT_PUBLIC_VERSION=0.0.0-${GITHUB_SHA}" >> $GITHUB_ENV
 
       - name: Set `TARBALL` variable
-        run: echo ::set-env name=TARBALL::microsoft-teams-app-dev-${NEXT_PUBLIC_VERSION}.tar.gz
+        run: echo "TARBALL=microsoft-teams-app-dev-${NEXT_PUBLIC_VERSION}.tar.gz" >> $GITHUB_ENV
 
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
@@ -105,10 +105,10 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Set `NEXT_PUBLIC_VERSION` variable
-        run: echo ::set-env name=NEXT_PUBLIC_VERSION::0.0.0-${GITHUB_SHA}
+        run: echo "NEXT_PUBLIC_VERSION=0.0.0-${GITHUB_SHA}" >> $GITHUB_ENV
 
       - name: Set `TARBALL` variable
-        run: echo ::set-env name=TARBALL::microsoft-teams-app-dev-${NEXT_PUBLIC_VERSION}.tar.gz
+        run: echo "TARBALL=microsoft-teams-app-dev-${NEXT_PUBLIC_VERSION}.tar.gz" >> $GITHUB_ENV
 
       - name: Change latest release
         run: aws s3 cp $S3_PATH/$TARBALL $S3_PATH/microsoft-teams-app-dev-latest.tar.gz
