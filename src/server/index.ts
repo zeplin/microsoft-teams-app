@@ -2,6 +2,7 @@ import { app } from "./app";
 import * as config from "./config";
 import { sentry, closeAdapters } from "./adapters";
 import { ServerError } from "./errors";
+import { logger } from "./adapters/logger";
 
 async function drive(): Promise<void> {
     if (!config.validateConfig(config)) {
@@ -14,8 +15,7 @@ async function drive(): Promise<void> {
     // Listen for the requests
     await app.listen(config.PORT);
 
-    // eslint-disable-next-line no-console
-    console.log(`> Server listening at http://localhost:${config.PORT} in ${config.ENVIRONMENT} as ${config.IS_DEV ? "development" : "production"}`);
+    logger.info(`> Server listening at http://localhost:${config.PORT} in ${config.ENVIRONMENT} as ${config.IS_DEV ? "development" : "production"}`);
 }
 
 drive().catch(async error => {

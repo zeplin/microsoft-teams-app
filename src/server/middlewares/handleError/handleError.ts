@@ -8,5 +8,5 @@ export const handleError: ErrorRequestHandler = (err, req, res, next) => {
             title: err?.title ?? "Unexpected Error"
         });
     }
-    next(err);
+    next();
 };

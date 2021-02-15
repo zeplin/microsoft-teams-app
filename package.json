@@ -30,6 +30,7 @@
   "dependencies": {
     "@fluentui/react-northstar": "^0.50.0",
     "@hapi/joi": "^17.1.1",
+    "@logdna/logger": "^2.2.4",
     "@microsoft/teams-js": "^1.6.0",
     "@sentry/browser": "^5.22.3",
     "@sentry/node": "^5.22.3",

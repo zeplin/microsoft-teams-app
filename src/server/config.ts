@@ -38,7 +38,9 @@ export const {
     NEXT_PRIVATE_MONGO_URL: MONGO_URL = "mongodb://localhost:27018/zeplin-microsoft-teams-app",
     NEXT_PRIVATE_BASE_URL: BASE_URL = "https://msteams-app.zeplin.io",
     NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL: ZEPLIN_WEB_APP_BASE_URL = "https://app.zeplin.io",
-    NEXT_PUBLIC_ZEPLIN_APP_URI_SCHEME: ZEPLIN_APP_URI_SCHEME = "zpl"
+    NEXT_PUBLIC_ZEPLIN_APP_URI_SCHEME: ZEPLIN_APP_URI_SCHEME = "zpl",
+    NEXT_PRIVATE_LOG_DNA_KEY: LOG_DNA_KEY,
+    NEXT_PRIVATE_LOG_LEVEL: LOG_LEVEL
 } = process.env;
 
 export const IS_DEV = process.env.NODE_ENV !== "production";
@@ -57,6 +59,8 @@ export interface Config {
     WEBHOOK_SECRET: string;
     ZEPLIN_URL: string;
     SENTRY_DSN: string;
+    LOG_DNA_KEY: string;
+    LOG_LEVEL?: string;
     IS_SENTRY_ENABLED: boolean;
     MIXPANEL_TOKEN: string;
     IS_MIXPANEL_ENABLED: boolean;

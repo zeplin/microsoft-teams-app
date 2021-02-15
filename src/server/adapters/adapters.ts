@@ -5,8 +5,14 @@ import { mongo } from "./mongo";
 import { sentry } from "./sentry";
 import { messageQueue } from "./messageQueue";
 import { mixpanel } from "./mixpanel";
+import { logger } from "./logger";
 
 export async function initAdapters(config: Config): Promise<void> {
+    logger.init({
+        apiKey: config.LOG_DNA_KEY,
+        level: config.LOG_LEVEL,
+        environment: config.ENVIRONMENT
+    });
     sentry.init({
         dsn: config.SENTRY_DSN,
         environment: config.ENVIRONMENT,
@@ -26,4 +32,5 @@ export async function initAdapters(config: Config): Promise<void> {
 export async function closeAdapters(): Promise<void> {
     await mongo.close();
     await redis.close();
+    await logger.flush();
 }
