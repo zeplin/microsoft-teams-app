@@ -40,7 +40,7 @@ export const {
     NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL: ZEPLIN_WEB_APP_BASE_URL = "https://app.zeplin.io",
     NEXT_PUBLIC_ZEPLIN_APP_URI_SCHEME: ZEPLIN_APP_URI_SCHEME = "zpl",
     NEXT_PRIVATE_LOG_DNA_KEY: LOG_DNA_KEY,
-    NEXT_PRIVATE_LOG_LEVEL: LOG_LEVEL
+    NEXT_PRIVATE_LOG_LEVEL: LOG_LEVEL = IS_LOCAL ? "DISABLE" : "INFO"
 } = process.env;
 
 export const IS_DEV = process.env.NODE_ENV !== "production";

@@ -3,8 +3,8 @@ import { loggerContext } from "../../context";
 
 enum LogLevel {
     DISABLE,
-    INFO,
     ERROR,
+    INFO,
 }
 
 interface LoggerInitParams {
@@ -46,7 +46,7 @@ class Logger {
     }
 
     info(message: string, extra?: Extra): void {
-        if (this.level <= LogLevel.INFO) {
+        if (this.level >= LogLevel.INFO) {
             this.logger.info(
                 message,
                 {
