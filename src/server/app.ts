@@ -5,7 +5,7 @@ import { Config } from "./config";
 import { initAdapters, sentry } from "./adapters";
 import { router } from "./router";
 import path from "path";
-import { handleError } from "./middlewares";
+import { handleError, loggerMiddleware } from "./middlewares";
 import { ServerError } from "./errors";
 import { initializeQueueListener } from "./queueListener";
 
@@ -34,6 +34,7 @@ class App {
         this.expressApp.use(
             "/api",
             sentry.requestHandler,
+            loggerMiddleware,
             router,
             sentry.errorHandler,
             handleError

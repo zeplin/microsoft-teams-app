@@ -12,6 +12,7 @@ export type BaseWebhookEvent<
 > = {
     webhookId: string;
     deliveryId: string;
+    correlationId: string;
     signature: string;
     deliveryTimestamp: number;
     payload: {

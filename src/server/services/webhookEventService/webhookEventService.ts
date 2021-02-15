@@ -113,7 +113,11 @@ class WebhookEventService {
         await webhookEventRepo.addEventToGroup(groupingKey, event);
 
         await messageQueue.add(
-            { id: jobId, groupingKey },
+            {
+                id: jobId,
+                groupingKey,
+                correlationId: event.correlationId
+            },
             { delay: notificationHandler.delay }
         );
     }
