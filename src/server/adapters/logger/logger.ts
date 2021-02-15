@@ -1,4 +1,5 @@
 import { getLogProvider, LogProvider } from "./logProvider";
+import { loggerContext } from "../../context";
 
 enum LogLevel {
     DISABLE,
@@ -46,7 +47,15 @@ class Logger {
 
     info(message: string, extra?: Extra): void {
         if (this.level <= LogLevel.INFO) {
-            this.logger.info(message, { meta: extra?.meta });
+            this.logger.info(
+                message,
+                {
+                    meta: {
+                        ...extra?.meta,
+                        ...loggerContext.get()
+                    }
+                }
+            );
         }
     }
 

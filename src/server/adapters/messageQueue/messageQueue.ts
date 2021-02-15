@@ -9,6 +9,7 @@ type AddOptions = {
 interface MessageJobData {
     id: string;
     groupingKey: string;
+    correlationId: string;
 }
 
 class MessageQueue {
@@ -22,9 +23,7 @@ class MessageQueue {
     }
 
     async add(data: MessageJobData, { delay }: AddOptions): Promise<void> {
-        await this.bullQueue.add(data, {
-            delay
-        });
+        await this.bullQueue.add(data, { delay });
     }
 }
 

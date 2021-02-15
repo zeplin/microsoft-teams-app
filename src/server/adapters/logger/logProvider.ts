@@ -2,6 +2,8 @@ import { createLogger } from "@logdna/logger";
 import { once } from "events";
 import chalk from "chalk";
 
+const INDENT = 2;
+
 interface Extra {
     meta?: object;
 }
@@ -15,7 +17,7 @@ const getConsole = (): LogProvider => ({
     info: (message, { meta }): void => {
         const shouldLogMeta = meta && Object.keys(meta).length > 0;
         // eslint-disable-next-line no-console
-        console.log(chalk`[{cyan INFO}]: ${message}`, shouldLogMeta ? { meta } : "");
+        console.log(chalk`[{cyan INFO}]: ${message}\n${shouldLogMeta ? JSON.stringify({ meta }, null, INDENT) : ""}`);
     },
     flush: (): Promise<void> => Promise.resolve()
 });
