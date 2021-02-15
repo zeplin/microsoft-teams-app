@@ -37,6 +37,7 @@
     "@zeit/next-source-maps": "0.0.4-canary.1",
     "axios": "^0.19.2",
     "bull": "^3.16.0",
+    "chalk": "^4.1.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http-status-codes": "^1.4.0",

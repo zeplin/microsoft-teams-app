@@ -1,5 +1,4 @@
-import * as LogDNA from "@logdna/logger";
-import { once } from "events";
+import { getLogProvider, LogProvider } from "./logProvider";
 
 enum LogLevel {
     DISABLE,
@@ -18,7 +17,7 @@ interface Extra {
 }
 
 class Logger {
-    private logger?: LogDNA.Logger;
+    private logger!: LogProvider;
     private level!: LogLevel;
 
     private static toLogLevel(level?: string): LogLevel {
@@ -39,29 +38,20 @@ class Logger {
         environment
     }: LoggerInitParams): void {
         this.level = Logger.toLogLevel(level);
-        if (this.level > LogLevel.DISABLE) {
-            this.logger = LogDNA.createLogger(
-                apiKey,
-                {
-                    app: `microsoft-teams-app-${environment}`,
-                    env: environment,
-                    indexMeta: true
-                }
-            );
-        }
+        this.logger = getLogProvider({
+            logDNAApiKey: apiKey,
+            environment
+        });
     }
 
     info(message: string, extra?: Extra): void {
         if (this.level <= LogLevel.INFO) {
-            this.logger?.info(message, { meta: extra?.meta });
+            this.logger.info(message, { meta: extra?.meta });
         }
     }
 
-    async flush(): Promise<void> {
-        if (this.logger) {
-            this.logger?.flush();
-            await once(this.logger, "cleared");
-        }
+    flush(): Promise<void> {
+        return this.logger.flush();
     }
 }
 
