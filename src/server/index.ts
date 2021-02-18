@@ -1,3 +1,5 @@
+import "newrelic";
+
 import { app } from "./app";
 import * as config from "./config";
 import { sentry, closeAdapters } from "./adapters";
