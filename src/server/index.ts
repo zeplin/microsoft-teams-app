@@ -2,7 +2,7 @@ import "newrelic";
 
 import { app } from "./app";
 import * as config from "./config";
-import { sentry, closeAdapters } from "./adapters";
+import { closeAdapters } from "./adapters";
 import { ServerError } from "./errors";
 import { logger } from "./adapters/logger";
 
@@ -21,14 +21,13 @@ async function drive(): Promise<void> {
 }
 
 drive().catch(async error => {
+    logger.error(error);
+
     try {
         await closeAdapters();
     } catch (closeAdaptersError) {
-        sentry.captureException(closeAdaptersError);
+        logger.error(closeAdaptersError);
     }
-
-    sentry.captureException(error);
-    await sentry.flush();
 
     // eslint-disable-next-line no-process-exit
     process.exit(1);

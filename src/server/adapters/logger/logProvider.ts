@@ -1,7 +1,7 @@
 import { createLogger } from "@logdna/logger";
 import { once } from "events";
 import chalk from "chalk";
-
+/* eslint-disable no-console */
 const INDENT = 2;
 
 interface Extra {
@@ -15,9 +15,16 @@ interface LogDNAParams {
 
 const getConsole = (): LogProvider => ({
     info: (message, { meta }): void => {
-        const shouldLogMeta = meta && Object.keys(meta).length > 0;
-        // eslint-disable-next-line no-console
-        console.log(chalk`[{cyan INFO}]: ${message}\n${shouldLogMeta ? JSON.stringify({ meta }, null, INDENT) : ""}`);
+        console.log(chalk`[{cyan INFO}]: ${message}`);
+        if (meta && Object.keys(meta).length > 0) {
+            console.log(JSON.stringify({ meta }, null, INDENT));
+        }
+    },
+    error: (message, { meta }): void => {
+        console.log(chalk`[{red ERROR}]: ${message}`);
+        if (meta && Object.keys(meta).length > 0) {
+            console.log(JSON.stringify({ meta }, null, INDENT));
+        }
     },
     flush: (): Promise<void> => Promise.resolve()
 });
@@ -33,6 +40,7 @@ const getLogDNA = ({ apiKey, environment }: LogDNAParams): LogProvider => {
     );
     return {
         info: (message, { meta }): void => logger.info(message, { meta }),
+        error: (message, { meta }): void => logger.error(message, { meta }),
         flush: async (): Promise<void> => {
             logger.flush();
             await once(logger, "cleared");
@@ -53,6 +61,7 @@ export const getLogProvider = ({ logDNAApiKey, environment }: LogProviderGetPara
 
 export interface LogProvider {
     info(message: string, extra: Extra): void;
+    error(message: string, extra: Extra): void;
     flush: () => Promise<void> ;
 }
 

@@ -1,5 +1,7 @@
 import { getLogProvider, LogProvider } from "./logProvider";
 import { loggerContext } from "../../context";
+import { ServerError } from "../../errors";
+import { ErrorTracker, getErrorTracker } from "./errorTracker";
 
 enum LogLevel {
     DISABLE,
@@ -8,8 +10,10 @@ enum LogLevel {
 }
 
 interface LoggerInitParams {
-    apiKey: string;
+    logDNAApiKey?: string;
+    sentryDSN?: string;
     environment: string;
+    version: string;
     level?: string;
 }
 
@@ -20,6 +24,7 @@ interface Extra {
 class Logger {
     private logger!: LogProvider;
     private level!: LogLevel;
+    private errorTracker!: ErrorTracker;
 
     private static toLogLevel(level?: string): LogLevel {
         switch (level?.toLowerCase()) {
@@ -34,14 +39,22 @@ class Logger {
     }
 
     init({
-        apiKey,
+        logDNAApiKey,
+        sentryDSN,
+        version,
         level,
         environment
     }: LoggerInitParams): void {
         this.level = Logger.toLogLevel(level);
         this.logger = getLogProvider({
-            logDNAApiKey: apiKey,
+            logDNAApiKey,
             environment
+        });
+
+        this.errorTracker = getErrorTracker({
+            environment,
+            version,
+            sentryDSN
         });
     }
 
@@ -59,8 +72,32 @@ class Logger {
         }
     }
 
-    flush(): Promise<void> {
-        return this.logger.flush();
+    error(error: ServerError): void {
+        if (this.level >= LogLevel.ERROR) {
+            this.logger.error(
+                error.message,
+                {
+                    meta: {
+                        ...error.toMeta(),
+                        ...loggerContext.get()
+                    }
+                }
+            );
+        }
+
+        if (error.shouldCapture) {
+            this.errorTracker.captureError(
+                error,
+                {
+                    meta: error.toMeta(),
+                    context: loggerContext.get()
+                }
+            );
+        }
+    }
+    async flush(): Promise<void> {
+        await this.errorTracker.flush();
+        await this.logger.flush();
     }
 }
 

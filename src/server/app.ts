@@ -1,10 +1,12 @@
 import express, { Express, RequestHandler } from "express";
 import next from "next";
 import { parse } from "url";
-import { Config } from "./config";
-import { initAdapters, sentry } from "./adapters";
-import { router } from "./router";
+import * as SentryClient from "@sentry/node";
 import path from "path";
+
+import { Config } from "./config";
+import { initAdapters } from "./adapters";
+import { router } from "./router";
 import { handleError, loggerMiddleware } from "./middlewares";
 import { ServerError } from "./errors";
 import { initializeQueueListener } from "./queueListener";
@@ -33,10 +35,9 @@ class App {
 
         this.expressApp.use(
             "/api",
-            sentry.requestHandler,
+            SentryClient.Handlers.requestHandler(),
             loggerMiddleware,
             router,
-            sentry.errorHandler,
             handleError
         );
 
