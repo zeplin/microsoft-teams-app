@@ -12,12 +12,12 @@ interface MongoOptions {
 }
 
 const options: ConnectionOptions = {
-    autoReconnect: true,
     readPreference: ReadPreference.PRIMARY_PREFERRED,
     keepAlive: true,
     connectTimeoutMS: 30000,
     useNewUrlParser: true,
-    useFindAndModify: false
+    useFindAndModify: false,
+    useUnifiedTopology: true
 };
 
 class Mongo {
