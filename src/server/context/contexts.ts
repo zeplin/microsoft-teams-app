@@ -1,6 +1,6 @@
 import { Context } from "./context";
 
-interface LoggerContext {
+export interface LoggerContext {
     correlationId: string;
 }
 

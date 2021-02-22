@@ -1,4 +1,4 @@
-import { messageQueue, sentry } from "./adapters";
+import { messageQueue } from "./adapters";
 import { webhookEventService } from "./services";
 import { logger } from "./adapters/logger";
 import { loggerContext } from "./context";
@@ -20,8 +20,8 @@ export async function initializeQueueListener(): Promise<void> {
                                 }
                             }
                         );
-                    } catch (err) {
-                        sentry.captureException(err);
+                    } catch (error) {
+                        logger.error(error);
                     }
                 }
             )
