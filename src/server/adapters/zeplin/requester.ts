@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { ZeplinError } from "./ZeplinError";
+import { ServerError } from "../../errors";
 
 export class Requester {
     private instance: AxiosInstance;
@@ -10,9 +10,9 @@ export class Requester {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private throwZeplinError(error: any): never {
         if (error.response) {
-            throw new ZeplinError(error.response.data.message, { statusCode: error.response.status });
+            throw new ServerError(error.response.data.message, { statusCode: error.response.status });
         }
-        throw new ZeplinError(error?.message ?? String(error));
+        throw new ServerError(error?.message ?? String(error));
     }
 
     async delete(url: string, config?: AxiosRequestConfig): Promise<void> {

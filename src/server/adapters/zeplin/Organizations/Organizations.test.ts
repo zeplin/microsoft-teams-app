@@ -1,7 +1,7 @@
 import { BAD_REQUEST, OK } from "http-status-codes";
 import nock, { Interceptor } from "nock";
 
-import { ZeplinError } from "../ZeplinError";
+import { ServerError } from "../../../errors";
 import { Requester } from "../requester";
 import { OrganizationRole } from "../types";
 import { Organizations } from "./Organizations";
@@ -78,7 +78,7 @@ describe("Zeplin > organizations", () => {
                 organizations.list({
                     options: { authToken }
                 })
-            ).rejects.toEqual(new ZeplinError("Bad request", { statusCode: BAD_REQUEST }));
+            ).rejects.toEqual(new ServerError("Bad request", { statusCode: BAD_REQUEST }));
         });
     });
 });

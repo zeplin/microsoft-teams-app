@@ -1,6 +1,6 @@
 import { BAD_REQUEST, OK } from "http-status-codes";
 import nock, { Interceptor } from "nock";
-import { ZeplinError } from "../ZeplinError";
+import { ServerError } from "../../../errors";
 import { Requester } from "../requester";
 import { Projects } from "./Projects";
 import { ProjectStatus } from "../types";
@@ -111,7 +111,7 @@ describe("Zeplin > projects", () => {
                 projects.list({
                     options: { authToken }
                 })
-            ).rejects.toEqual(new ZeplinError("Bad request", { statusCode: BAD_REQUEST }));
+            ).rejects.toEqual(new ServerError("Bad request", { statusCode: BAD_REQUEST }));
         });
     });
 
@@ -195,7 +195,7 @@ describe("Zeplin > projects", () => {
                 projects.listMyProjects({
                     options: { authToken }
                 })
-            ).rejects.toEqual(new ZeplinError("Bad request", { statusCode: BAD_REQUEST }));
+            ).rejects.toEqual(new ServerError("Bad request", { statusCode: BAD_REQUEST }));
         });
     });
 });
