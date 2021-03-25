@@ -44,7 +44,7 @@
     "http-status-codes": "^1.4.0",
     "mixpanel": "^0.13.0",
     "mongodb": "^3.5.9",
-    "mongoose": "^5.9.26",
+    "mongoose": "^5.12.2",
     "newrelic": "^7.1.1",
     "next": "^10.0.7",
     "patch-package": "^6.2.2",
