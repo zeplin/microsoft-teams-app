@@ -1,6 +1,6 @@
 import { BAD_REQUEST, OK } from "http-status-codes";
 import nock, { Interceptor } from "nock";
-import { ZeplinError } from "../ZeplinError";
+import { ServerError } from "../../../errors";
 import { Requester } from "../requester";
 import { Styleguides } from "./Styleguides";
 import { StyleguideStatus } from "../types";
@@ -128,7 +128,7 @@ describe("Zeplin > styleguides", () => {
                 styleguides.list({
                     options: { authToken }
                 })
-            ).rejects.toEqual(new ZeplinError("Bad request", { statusCode: BAD_REQUEST }));
+            ).rejects.toEqual(new ServerError("Bad request", { statusCode: BAD_REQUEST }));
         });
     });
 
@@ -210,7 +210,7 @@ describe("Zeplin > styleguides", () => {
             mockInterceptor.reply(BAD_REQUEST, { message: "Bad request" });
             await expect(
                 styleguides.listMyStyleguides({ options: { authToken } })
-            ).rejects.toEqual(new ZeplinError("Bad request", { statusCode: BAD_REQUEST }));
+            ).rejects.toEqual(new ServerError("Bad request", { statusCode: BAD_REQUEST }));
         });
     });
 });

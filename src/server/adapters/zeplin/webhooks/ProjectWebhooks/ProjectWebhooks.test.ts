@@ -2,7 +2,7 @@ import { ProjectWebhooks } from "./ProjectWebhooks";
 import { ProjectWebhookEventType } from "../../types";
 import { BAD_REQUEST, OK } from "http-status-codes";
 import nock, { Interceptor } from "nock";
-import { ZeplinError } from "../../ZeplinError";
+import { ServerError } from "../../../../errors";
 import { Requester } from "../../requester";
 
 const authToken = "authToken";
@@ -68,7 +68,7 @@ describe("Zeplin > Webhooks > ProjectWebhooks", () => {
                     },
                     options: { authToken }
                 })
-            ).rejects.toEqual(new ZeplinError("Bad request", { statusCode: BAD_REQUEST }));
+            ).rejects.toEqual(new ServerError("Bad request", { statusCode: BAD_REQUEST }));
         });
     });
 });

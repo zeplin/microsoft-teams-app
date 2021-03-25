@@ -1,7 +1,7 @@
 import { Requester } from "../requester";
 import { Auth } from "./Auth";
 import { BAD_REQUEST, OK } from "http-status-codes";
-import { ZeplinError } from "../ZeplinError";
+import { ServerError } from "../../../errors";
 import nock, { Interceptor } from "nock";
 
 const accessToken = "accessToken";
@@ -70,7 +70,7 @@ describe("Zeplin > auth", () => {
                         redirectUri: "redirectUri"
                     }
                 })
-            ).rejects.toEqual(new ZeplinError("Bad request", { statusCode: BAD_REQUEST }));
+            ).rejects.toEqual(new ServerError("Bad request", { statusCode: 1 }));
         });
     });
 });
