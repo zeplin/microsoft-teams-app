@@ -47,9 +47,6 @@ jobs:
       - name: Set `NEXT_PUBLIC_VERSION` variable
         run: echo "NEXT_PUBLIC_VERSION=0.0.0-${GITHUB_SHA}" >> $GITHUB_ENV
 
-      - name: Set `TARBALL` variable
-        run: echo "TARBALL=microsoft-teams-app-dev-${NEXT_PUBLIC_VERSION}.tar.gz" >> $GITHUB_ENV
-
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
@@ -89,7 +86,7 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Upload release
-        run: aws s3 cp $TARBALL $S3_PATH/
+        run: aws s3 cp microsoft-teams-app-dev-latest.tar.gz $S3_PATH/
 
   deploy:
     name: Deploy
@@ -109,12 +106,6 @@ jobs:
 
       - name: Set `NEXT_PUBLIC_VERSION` variable
         run: echo "NEXT_PUBLIC_VERSION=0.0.0-${GITHUB_SHA}" >> $GITHUB_ENV
-
-      - name: Set `TARBALL` variable
-        run: echo "TARBALL=microsoft-teams-app-dev-${NEXT_PUBLIC_VERSION}.tar.gz" >> $GITHUB_ENV
-
-      - name: Change latest release
-        run: aws s3 cp $S3_PATH/$TARBALL $S3_PATH/microsoft-teams-app-dev-latest.tar.gz
 
       - name: Set environments
         run: aws opsworks --region $AWS_REGION update-app --app-id $AWS_APP_ID --environment "$(scripts/get_environment.js)"
