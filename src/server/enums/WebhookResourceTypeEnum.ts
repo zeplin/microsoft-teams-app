@@ -1,4 +1,4 @@
-export enum WebhookResourceType {
+export enum WebhookResourceTypeEnum {
     PROJECT = "Project",
     STYLEGUIDE = "Styleguide"
 }

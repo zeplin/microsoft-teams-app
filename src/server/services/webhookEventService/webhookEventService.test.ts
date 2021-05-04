@@ -1,9 +1,11 @@
-import { webhookEventService } from "./webhookEventService";
-import { messageQueue, requester, zeplin } from "../../adapters";
-import { WebhookEvent } from "../../adapters/zeplin/types";
+import { WebhookEvent } from "@zeplin/sdk";
+
+import { messageQueue, requester, Zeplin } from "../../adapters";
 import { configurationRepo, messageJobRepo, webhookEventRepo } from "../../repos";
 import { dummyConfiguration } from "../../test/helpers";
 import { ServerError } from "../../errors";
+
+import { webhookEventService } from "./webhookEventService";
 import { NotificationHandler } from "./notificationHandlers/NotificationHandler";
 
 jest.mock("../../adapters/messageQueue", () => ({
@@ -17,9 +19,10 @@ jest.mock("../../adapters/messageQueue", () => ({
 }));
 
 jest.mock("../../adapters/zeplin/zeplin", () => ({
-    zeplin: {
-        webhooks: {
-            verifyWebhookEvent: jest.fn().mockReturnValue(true)
+    Zeplin: {
+        Webhooks: {
+            verifyEvent: jest.fn().mockReturnValue(true),
+            transformPayloadToWebhookEvent: jest.fn().mockImplementation(val => val)
         }
     }
 }));
@@ -40,8 +43,24 @@ jest.mock("../../repos", () => ({
     }
 }));
 
+interface EventArrivedParams {
+    correlationId: string;
+    webhookId: string;
+    deliveryId: string;
+    signature: string;
+    deliveryTimestamp: number;
+    payload: unknown;
+}
+
 const getExampleEvent = ({ resourceId = "resource-id", timestamp = 1 } = {}): WebhookEvent => ({
-    webhookId: "webhook-id",
+    event: "project.color",
+    timestamp,
+    resource: {
+        id: resourceId
+    }
+}) as WebhookEvent;
+
+const getExampleArrivedEventParams = ({ resourceId = "resource-id", timestamp = 1 } = {}): EventArrivedParams => ({
     deliveryId: "delivery-id",
     payload: {
         event: "project.color",
@@ -50,7 +69,7 @@ const getExampleEvent = ({ resourceId = "resource-id", timestamp = 1 } = {}): We
             id: resourceId
         }
     }
-}) as WebhookEvent;
+}) as EventArrivedParams;
 
 const expectedGroupingKey = `webhook-id:others`;
 const expectedJobId = "delivery-id";
@@ -58,6 +77,7 @@ const expectedDelay = 5000;
 
 const exampleJobData = {
     id: "example-job-id",
+    webhookId: "example-webhook-id",
     groupingKey: "example-grouping-key"
 };
 
@@ -81,30 +101,32 @@ describe("webhookEventService", () => {
 
     describe("`handleEventArrived` function", () => {
         it("should throw error when the event signature doesn't match", async () => {
-            jest.spyOn(zeplin.webhooks, "verifyWebhookEvent").mockReturnValueOnce(false);
-            await expect(() => webhookEventService.handleEventArrived(getExampleEvent())).rejects.toThrow();
+            jest.spyOn(Zeplin.Webhooks, "verifyEvent").mockReturnValueOnce(false);
+            await expect(() => webhookEventService.handleEventArrived(getExampleArrivedEventParams()))
+                .rejects
+                .toThrow();
         });
 
         it("should throw error when there isn't any configuration for the webhook event", async () => {
             jest.spyOn(configurationRepo, "getByWebhookId").mockResolvedValueOnce(null);
-            await expect(() => webhookEventService.handleEventArrived(getExampleEvent())).rejects.toThrow(new ServerError("Event doesn't have configuration"));
+            await expect(() => webhookEventService.handleEventArrived(getExampleArrivedEventParams())).rejects.toThrow(new ServerError("Event doesn't have configuration"));
         });
 
         it("should update active job id for group", async () => {
             jest.spyOn(configurationRepo, "getByWebhookId").mockResolvedValueOnce(dummyConfiguration);
-            await webhookEventService.handleEventArrived(getExampleEvent());
+            await webhookEventService.handleEventArrived(getExampleArrivedEventParams());
             expect(messageJobRepo.setGroupActiveJobId).toBeCalledWith(expectedGroupingKey, expectedJobId);
         });
 
         it("should add event to events for group", async () => {
             jest.spyOn(configurationRepo, "getByWebhookId").mockResolvedValueOnce(dummyConfiguration);
-            await webhookEventService.handleEventArrived(getExampleEvent());
+            await webhookEventService.handleEventArrived(getExampleArrivedEventParams());
             expect(webhookEventRepo.addEventToGroup).toBeCalledWith(expectedGroupingKey, getExampleEvent());
         });
 
         it("should add a new job for the event group", async () => {
             jest.spyOn(configurationRepo, "getByWebhookId").mockResolvedValueOnce(dummyConfiguration);
-            await webhookEventService.handleEventArrived(getExampleEvent());
+            await webhookEventService.handleEventArrived(getExampleArrivedEventParams());
             expect(messageQueue.add).toBeCalledWith({
                 id: expectedJobId,
                 groupingKey: expectedGroupingKey
@@ -115,7 +137,7 @@ describe("webhookEventService", () => {
 
         it("should not handle event when notificationHandler.shouldReturnEvent returns false", async () => {
             mockNotificationHandler.shouldHandleEvent.mockReturnValueOnce(false);
-            await webhookEventService.handleEventArrived(getExampleEvent());
+            await webhookEventService.handleEventArrived(getExampleArrivedEventParams());
             expect(mockNotificationHandler.getGroupingKey).not.toBeCalled();
         });
     });

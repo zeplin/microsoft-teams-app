@@ -1,6 +1,7 @@
+import { PingEvent } from "@zeplin/sdk";
+
 import { NotificationHandler } from "../NotificationHandler";
 import { ServerError } from "../../../../errors";
-import { PingEvent } from "../../../../adapters/zeplin/types";
 
 class PingHandler extends NotificationHandler<PingEvent> {
     delay = 0;

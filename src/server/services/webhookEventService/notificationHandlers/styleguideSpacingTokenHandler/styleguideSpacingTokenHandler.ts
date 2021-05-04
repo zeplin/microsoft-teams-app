@@ -1,8 +1,9 @@
 import {
-    StyleguideSpacingTokenCreateEvent,
-    StyleguideSpacingTokenUpdateEvent,
+    StyleguideSpacingTokenCreatedEvent,
+    StyleguideSpacingTokenUpdatedEvent,
     WebhookEvent
-} from "../../../../adapters/zeplin/types";
+} from "@zeplin/sdk";
+
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
@@ -10,24 +11,23 @@ import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
 import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 import { getSpacingTokenUpdateMessage } from "../getStyleUpdateMessage";
+import { ProjectPlatformEnum } from "../../../../enums";
 
-type Event = StyleguideSpacingTokenCreateEvent | StyleguideSpacingTokenUpdateEvent;
+type Event = StyleguideSpacingTokenCreatedEvent | StyleguideSpacingTokenUpdatedEvent;
 
 class StyleguideSpacingTokenHandler extends NotificationHandler<Event> {
     delay = SHORT_DELAY;
     private getText(events: Event[]): string {
         const [{
-            payload: {
-                action,
-                context: {
-                    styleguide: {
-                        name: styleguideName
-                    }
-                },
-                resource: {
-                    data: {
-                        name: pivotSpacingTokenName
-                    }
+            action,
+            context: {
+                styleguide: {
+                    name: styleguideName
+                }
+            },
+            resource: {
+                data: {
+                    name: pivotSpacingTokenName
                 }
             }
         }] = events;
@@ -39,33 +39,29 @@ class StyleguideSpacingTokenHandler extends NotificationHandler<Event> {
 
     private getSectionText(events: Event[]): string {
         const [{
-            payload: {
-                context: {
-                    styleguide: {
-                        platform: styleguidePlatform
-                    }
+            context: {
+                styleguide: {
+                    platform: styleguidePlatform
                 }
             }
         }] = events;
 
-        return getSpacingTokenUpdateMessage(styleguidePlatform);
+        return getSpacingTokenUpdateMessage(styleguidePlatform as ProjectPlatformEnum);
     }
 
     private getWebappURL(
         events: Event[]
     ): string {
         const [{
-            payload: {
-                context: {
-                    styleguide: {
-                        id: styleguideId
-                    }
+            context: {
+                styleguide: {
+                    id: styleguideId
                 }
             }
         }] = events;
         const pathname = `styleguide/${styleguideId}/spacing`;
         const searchParams = {
-            sptid: events.map(event => event.payload.resource.id)
+            sptid: events.map(({ resource: { id } }) => id)
         };
 
         return getWebAppURL(pathname, searchParams);
@@ -75,24 +71,22 @@ class StyleguideSpacingTokenHandler extends NotificationHandler<Event> {
         events: Event[]
     ): string {
         const [{
-            payload: {
-                context: {
-                    styleguide: {
-                        id: styleguideId
-                    }
+            context: {
+                styleguide: {
+                    id: styleguideId
                 }
             }
         }] = events;
         const searchParams = {
             stid: styleguideId,
-            sptids: events.map(event => event.payload.resource.id)
+            sptids: events.map(({ resource: { id } }) => id)
         };
 
         return getRedirectURLForZeplinApp("spacing", searchParams);
     }
 
     shouldHandleEvent(event: WebhookEvent): event is Event {
-        return event.payload.action !== "deleted";
+        return event.action !== "deleted";
     }
 
     getTeamsMessage(

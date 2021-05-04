@@ -1,9 +1,12 @@
-import { User } from "../../adapters/zeplin/types";
-import { zeplin } from "../../adapters/zeplin";
+import { User } from "@zeplin/sdk";
+
+import { Zeplin } from "../../adapters/zeplin";
 
 class MeService {
-    get(authToken: string): Promise<User> {
-        return zeplin.me.get({ options: { authToken } });
+    async get(accessToken: string): Promise<User> {
+        const zeplin = new Zeplin({ accessToken });
+        const { data } = await zeplin.users.getCurrentUser();
+        return data;
     }
 }
 

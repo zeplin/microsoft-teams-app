@@ -1,8 +1,9 @@
 import { Router as createRouter } from "express";
 import Joi from "@hapi/joi";
+import { ProjectWebhookEventEnum, StyleguideWebhookEventEnum } from "@zeplin/sdk";
 
 import { validateRequest, JSONBodyParser } from "../../middlewares";
-import { ProjectWebhookEventType, StyleguideWebhookEventType, WebhookResourceType } from "../../adapters/zeplin/types";
+import { WebhookResourceTypeEnum } from "../../enums";
 import { configurationService } from "../../services";
 
 const configurationRouter = createRouter({ mergeParams: true });
@@ -10,13 +11,13 @@ const configurationRouter = createRouter({ mergeParams: true });
 const zeplinSchema = Joi.object({
     resource: Joi.object({
         id: Joi.string().regex(/^[0-9a-f]{24}$/i),
-        type: Joi.string().valid(...Object.values(WebhookResourceType))
+        type: Joi.string().valid(...Object.values(WebhookResourceTypeEnum))
     }),
     workspaceId: Joi.string().regex(/^([0-9a-f]{24}|personal)$/i),
     events: Joi.when("resource.type", {
-        is: WebhookResourceType.PROJECT,
-        then: Joi.array().items(Joi.string().valid(...Object.values(ProjectWebhookEventType))).unique().min(1),
-        otherwise: Joi.array().items(Joi.valid(...Object.values(StyleguideWebhookEventType))).unique().min(1)
+        is: WebhookResourceTypeEnum.PROJECT,
+        then: Joi.array().items(Joi.string().valid(...Object.values(ProjectWebhookEventEnum))).unique().min(1),
+        otherwise: Joi.array().items(Joi.valid(...Object.values(StyleguideWebhookEventEnum))).unique().min(1)
     })
 });
 
@@ -41,7 +42,7 @@ configurationRouter.post(
             const result = await configurationService.create(
                 req.body,
                 {
-                    authToken: String(req.headers.authorization)
+                    accessToken: String(req.headers.authorization)
                 }
             );
             res.json(result);
@@ -70,7 +71,7 @@ configurationRouter.put(
                     zeplin: req.body.zeplin
                 },
                 {
-                    authToken: String(req.headers.authorization)
+                    accessToken: String(req.headers.authorization)
                 }
             );
             res.json(result);
@@ -92,7 +93,7 @@ configurationRouter.delete(
             const result = await configurationService.delete(
                 req.params.configurationId,
                 {
-                    authToken: String(req.headers.authorization)
+                    accessToken: String(req.headers.authorization)
                 }
             );
             res.json(result);
@@ -114,7 +115,7 @@ configurationRouter.get(
             const result = await configurationService.get(
                 req.params.configurationId,
                 {
-                    authToken: String(req.headers.authorization)
+                    accessToken: String(req.headers.authorization)
                 }
             );
             res.json(result);

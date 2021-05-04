@@ -1,6 +1,6 @@
 import { redis } from "./redis";
 import { Config } from "../config";
-import { zeplin } from "./zeplin";
+import { Zeplin } from "./zeplin";
 import { mongo } from "./mongo";
 import { messageQueue } from "./messageQueue";
 import { mixpanel } from "./mixpanel";
@@ -15,7 +15,7 @@ export async function initAdapters(config: Config): Promise<void> {
         environment: config.ENVIRONMENT
     });
     redis.init(config.REDIS_URL);
-    zeplin.init({ url: config.ZEPLIN_URL });
+    Zeplin.init({ url: config.ZEPLIN_URL });
     messageQueue.init(config.REDIS_URL);
     mixpanel.init({
         apiToken: config.MIXPANEL_TOKEN,

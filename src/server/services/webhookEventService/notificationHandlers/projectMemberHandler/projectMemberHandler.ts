@@ -1,25 +1,24 @@
+import { ProjectMemberInvitedEvent, WebhookEvent } from "@zeplin/sdk";
+
 import { NotificationHandler } from "../NotificationHandler";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
-import { ProjectMemberInviteEvent, WebhookEvent } from "../../../../adapters/zeplin/types";
 import { LONG_DELAY } from "../constants";
 import { md } from "../md";
 
-class ProjectMemberHandler extends NotificationHandler<ProjectMemberInviteEvent> {
+class ProjectMemberHandler extends NotificationHandler<ProjectMemberInvitedEvent> {
     delay = LONG_DELAY;
 
-    private getText(events: ProjectMemberInviteEvent[]): string {
+    private getText(events: ProjectMemberInvitedEvent[]): string {
         const [{
-            payload: {
-                context: {
-                    project: {
-                        name: projectName
-                    }
-                },
-                resource: {
-                    data: {
-                        user: {
-                            username
-                        }
+            context: {
+                project: {
+                    name: projectName
+                }
+            },
+            resource: {
+                data: {
+                    user: {
+                        username
                     }
                 }
             }
@@ -29,7 +28,7 @@ class ProjectMemberHandler extends NotificationHandler<ProjectMemberInviteEvent>
             : md`**${events.length} teammates** just joined _${projectName}_`;
     }
 
-    getTeamsMessage(events: ProjectMemberInviteEvent[]): MessageCard {
+    getTeamsMessage(events: ProjectMemberInvitedEvent[]): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
             section: {
@@ -38,8 +37,8 @@ class ProjectMemberHandler extends NotificationHandler<ProjectMemberInviteEvent>
         });
     }
 
-    shouldHandleEvent(event: WebhookEvent): event is ProjectMemberInviteEvent {
-        return event.payload.action === "invited";
+    shouldHandleEvent(event: WebhookEvent): event is ProjectMemberInvitedEvent {
+        return event.action === "invited";
     }
 }
 

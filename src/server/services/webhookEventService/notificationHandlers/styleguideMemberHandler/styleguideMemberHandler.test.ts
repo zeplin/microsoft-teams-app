@@ -1,5 +1,5 @@
 import { styleguideMemberHandler } from "./styleguideMemberHandler";
-import { StyleguideMemberInviteEvent } from "../../../../adapters/zeplin/types";
+import { StyleguideMemberInvitedEvent } from "@zeplin/sdk";
 
 type GetDummyEventParams = {
     styleguideName?: string;
@@ -11,26 +11,24 @@ function getDummyEvent({
     styleguideName = "Styleguide Microsoft Teams Integration",
     userId = "userId",
     userName = "dirtybit"
-}: GetDummyEventParams = {}): StyleguideMemberInviteEvent {
+}: GetDummyEventParams = {}): StyleguideMemberInvitedEvent {
     return {
-        payload: {
-            action: "invited",
-            context: {
-                styleguide: {
-                    id: "styleguideId",
-                    name: styleguideName
-                }
-            },
-            resource: {
-                data: {
-                    user: {
-                        id: userId,
-                        username: userName
-                    }
+        action: "invited",
+        context: {
+            styleguide: {
+                id: "styleguideId",
+                name: styleguideName
+            }
+        },
+        resource: {
+            data: {
+                user: {
+                    id: userId,
+                    username: userName
                 }
             }
         }
-    } as StyleguideMemberInviteEvent;
+    } as StyleguideMemberInvitedEvent;
 }
 
 describe("styleguideMemberHandler", () => {

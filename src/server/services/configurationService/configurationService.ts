@@ -1,24 +1,25 @@
-import { configurationRepo } from "../../repos";
+import { NOT_FOUND, UNPROCESSABLE_ENTITY } from "http-status-codes";
 import {
-    ProjectWebhookEventType,
-    StyleguideWebhookEventType,
-    WebhookResourceType,
-    ProjectWebhook,
-    StyleguideWebhook,
     Project,
-    Styleguide
-} from "../../adapters/zeplin/types";
-import { mixpanel, redis, zeplin } from "../../adapters";
+    ProjectWebhook,
+    ProjectWebhookEventEnum,
+    Styleguide,
+    StyleguideWebhook,
+    StyleguideWebhookEventEnum
+} from "@zeplin/sdk";
+
+import { configurationRepo } from "../../repos";
+import { mixpanel, redis, Zeplin } from "../../adapters";
 import { BASE_URL, WEBHOOK_SECRET } from "../../config";
 import { ServerError } from "../../errors";
-import { NOT_FOUND, UNPROCESSABLE_ENTITY } from "http-status-codes";
+import { WebhookResourceTypeEnum } from "../../enums";
 
 interface ConfigurationResponse {
     id: string;
     zeplin: {
         webhook: ProjectWebhook | StyleguideWebhook;
         resource: (Project | Styleguide) & {
-            type: WebhookResourceType;
+            type: WebhookResourceTypeEnum;
         };
         workspaceId: string;
     };
@@ -35,17 +36,17 @@ interface ConfigurationResponse {
 interface ProjectParameters {
     resource: {
         id: string;
-        type: WebhookResourceType.PROJECT;
+        type: WebhookResourceTypeEnum.PROJECT;
     };
-    events: ProjectWebhookEventType[];
+    events: ProjectWebhookEventEnum[];
 }
 
 interface StyleguideParameters {
     resource: {
         id: string;
-        type: WebhookResourceType.STYLEGUIDE;
+        type: WebhookResourceTypeEnum.STYLEGUIDE;
     };
-    events: StyleguideWebhookEventType[];
+    events: StyleguideWebhookEventEnum[];
 }
 
 type ZeplinParameters = (ProjectParameters | StyleguideParameters) & {
@@ -70,12 +71,12 @@ interface ConfigurationUpdateParameters {
 }
 
 interface ConfigurationCommonOptions {
-    authToken: string;
+    accessToken: string;
 }
 
 interface ResourceParams {
     id: string;
-    type: WebhookResourceType;
+    type: WebhookResourceTypeEnum;
 }
 
 enum ConfigurationWorkspaceType {
@@ -91,165 +92,120 @@ enum ConfigurationTrackingIntegrationType {
 interface ConfigurationTrackingParameters {
     userId: string;
     workspaceId: string;
-    resourceType: WebhookResourceType;
+    resourceType: WebhookResourceTypeEnum;
     tenantId: string;
 }
 
 class ConfigurationService {
     private isProjectParameters(params: StyleguideParameters | ProjectParameters): params is ProjectParameters {
-        return params.resource.type === WebhookResourceType.PROJECT;
+        return params.resource.type === WebhookResourceTypeEnum.PROJECT;
     }
 
-    private createWebhook(
+    private async createWebhook(
         params: StyleguideParameters | ProjectParameters,
-        { authToken }: ConfigurationCommonOptions
+        { accessToken }: ConfigurationCommonOptions
     ): Promise<string> {
+        const zeplin = new Zeplin({ accessToken });
         if (this.isProjectParameters(params)) {
-            return zeplin.webhooks.projectWebhooks.create({
-                params: {
-                    projectId: params.resource.id
-                },
-                body: {
+            const { data: { id } } = await zeplin.webhooks.createProjectWebhooks(
+                params.resource.id,
+                {
                     url: `${BASE_URL}/api/webhook`,
                     secret: WEBHOOK_SECRET,
                     events: params.events
-                },
-                options: {
-                    authToken
                 }
-            });
+            );
+            return id;
         }
-        return zeplin.webhooks.styleguideWebhooks.create({
-            params: {
-                styleguideId: params.resource.id
-            },
-            body: {
+        const { data: { id } } = await zeplin.webhooks.createStyleguideWebhooks(
+            params.resource.id,
+            {
                 url: `${BASE_URL}/api/webhook`,
                 secret: WEBHOOK_SECRET,
                 events: params.events
-            },
-            options: {
-                authToken
             }
-        });
+        );
+        return id;
     }
 
     private async updateWebhook(
         webhookId: string,
         params: StyleguideParameters | ProjectParameters,
-        { authToken }: ConfigurationCommonOptions
+        { accessToken }: ConfigurationCommonOptions
     ): Promise<void> {
+        const zeplin = new Zeplin({ accessToken });
+
         if (this.isProjectParameters(params)) {
-            await zeplin.webhooks.projectWebhooks.update({
-                params: {
-                    projectId: params.resource.id,
-                    webhookId
-                },
-                body: {
+            await zeplin.webhooks.updateProjectWebhooks(
+                params.resource.id,
+                webhookId,
+                {
                     events: params.events
-                },
-                options: {
-                    authToken
                 }
-            });
+            );
         } else {
-            await zeplin.webhooks.styleguideWebhooks.update({
-                params: {
-                    styleguideId: params.resource.id,
-                    webhookId
-                },
-                body: {
+            await zeplin.webhooks.updateStyleguideWebhooks(
+                params.resource.id,
+                webhookId,
+                {
                     events: params.events
-                },
-                options: {
-                    authToken
                 }
-            });
+            );
         }
     }
 
-    private deleteWebhook(
+    private async deleteWebhook(
         webhookId: string,
         resource: ResourceParams,
-        { authToken }: ConfigurationCommonOptions
+        { accessToken }: ConfigurationCommonOptions
     ): Promise<void> {
-        if (resource.type === WebhookResourceType.PROJECT) {
-            return zeplin.webhooks.projectWebhooks.delete({
-                params: {
-                    projectId: resource.id,
-                    webhookId
-                },
-                options: {
-                    authToken
-                }
-            });
+        const zeplin = new Zeplin({ accessToken });
+        if (resource.type === WebhookResourceTypeEnum.PROJECT) {
+            await zeplin.webhooks.deleteProjectWebhook(resource.id, webhookId);
+        } else {
+            await zeplin.webhooks.deleteStyleguideWebhook(resource.id, webhookId);
         }
-        return zeplin.webhooks.styleguideWebhooks.delete({
-            params: {
-                styleguideId: resource.id,
-                webhookId
-            },
-            options: {
-                authToken
-            }
-        });
     }
 
-    private getWebhook(
+    private async getWebhook(
         webhookId: string,
         resource: ResourceParams,
-        { authToken }: ConfigurationCommonOptions
+        { accessToken }: ConfigurationCommonOptions
     ): Promise<ProjectWebhook | StyleguideWebhook> {
-        if (resource.type === WebhookResourceType.PROJECT) {
-            return zeplin.webhooks.projectWebhooks.get({
-                params: {
-                    projectId: resource.id,
-                    webhookId
-                },
-                options: {
-                    authToken
-                }
-            });
-        }
-        return zeplin.webhooks.styleguideWebhooks.get({
-            params: {
-                styleguideId: resource.id,
+        const zeplin = new Zeplin({ accessToken });
+        if (resource.type === WebhookResourceTypeEnum.PROJECT) {
+            const { data } = await zeplin.webhooks.getProjectWebhook(
+                resource.id,
                 webhookId
-            },
-            options: {
-                authToken
-            }
-        });
-    }
-
-    private getResource(
-        resource: ResourceParams,
-        { authToken }: ConfigurationCommonOptions
-    ): Promise<Project | Styleguide> {
-        if (resource.type === WebhookResourceType.PROJECT) {
-            return zeplin.projects.get({
-                params: {
-                    projectId: resource.id
-                },
-                options: {
-                    authToken
-                }
-            });
+            );
+            return data;
         }
-        return zeplin.styleguides.get({
-            params: {
-                styleguideId: resource.id
-            },
-            options: {
-                authToken
-            }
-        });
+        const { data } = await zeplin.webhooks.getStyleguideWebhook(
+            resource.id,
+            webhookId
+        );
+        return data;
     }
 
-    private async getUserId(options: ConfigurationCommonOptions): Promise<string> {
-        const user = await zeplin.me.get({ options });
+    private async getResource(
+        resource: ResourceParams,
+        { accessToken }: ConfigurationCommonOptions
+    ): Promise<Project | Styleguide> {
+        const zeplin = new Zeplin({ accessToken });
+        if (resource.type === WebhookResourceTypeEnum.PROJECT) {
+            const { data } = await zeplin.projects.getProject(resource.id);
+            return data;
+        }
+        const { data } = await zeplin.styleguides.getStyleguide(resource.id);
+        return data;
+    }
 
-        return user.id;
+    private async getUserId({ accessToken }: ConfigurationCommonOptions): Promise<string> {
+        const zeplin = new Zeplin({ accessToken });
+
+        const { data: { id } } = await zeplin.users.getCurrentUser();
+
+        return id;
     }
 
     private async trackConfigurationCreate(params: ConfigurationTrackingParameters): Promise<void> {
@@ -260,7 +216,7 @@ class ConfigurationService {
             tenantId
         } = params;
 
-        const integrationType = resourceType === WebhookResourceType.PROJECT
+        const integrationType = resourceType === WebhookResourceTypeEnum.PROJECT
             ? ConfigurationTrackingIntegrationType.PROJECT
             : ConfigurationTrackingIntegrationType.STYLEGUIDE;
 
@@ -285,7 +241,7 @@ class ConfigurationService {
             tenantId
         } = params;
 
-        const integrationType = resourceType === WebhookResourceType.PROJECT
+        const integrationType = resourceType === WebhookResourceTypeEnum.PROJECT
             ? ConfigurationTrackingIntegrationType.PROJECT
             : ConfigurationTrackingIntegrationType.STYLEGUIDE;
 

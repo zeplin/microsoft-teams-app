@@ -1,8 +1,9 @@
 import {
     WebhookEvent,
-    ProjectSpacingTokenCreateEvent,
-    ProjectSpacingTokenUpdateEvent
-} from "../../../../adapters/zeplin/types";
+    ProjectSpacingTokenCreatedEvent,
+    ProjectSpacingTokenUpdatedEvent
+} from "@zeplin/sdk";
+
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
@@ -10,24 +11,23 @@ import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
 import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 import { getSpacingTokenUpdateMessage } from "../getStyleUpdateMessage";
+import { ProjectPlatformEnum } from "../../../../enums";
 
-type Event = ProjectSpacingTokenCreateEvent | ProjectSpacingTokenUpdateEvent;
+type Event = ProjectSpacingTokenCreatedEvent | ProjectSpacingTokenUpdatedEvent;
 
 class ProjectSpacingTokenHandler extends NotificationHandler<Event> {
     delay = SHORT_DELAY;
     private getText(events: Event[]): string {
         const [{
-            payload: {
-                action,
-                context: {
-                    project: {
-                        name: projectName
-                    }
-                },
-                resource: {
-                    data: {
-                        name: pivotSpacingTokenName
-                    }
+            action,
+            context: {
+                project: {
+                    name: projectName
+                }
+            },
+            resource: {
+                data: {
+                    name: pivotSpacingTokenName
                 }
             }
         }] = events;
@@ -39,33 +39,29 @@ class ProjectSpacingTokenHandler extends NotificationHandler<Event> {
 
     private getSectionText(events: Event[]): string {
         const [{
-            payload: {
-                context: {
-                    project: {
-                        platform: projectPlatform
-                    }
+            context: {
+                project: {
+                    platform: projectPlatform
                 }
             }
         }] = events;
 
-        return getSpacingTokenUpdateMessage(projectPlatform);
+        return getSpacingTokenUpdateMessage(projectPlatform as ProjectPlatformEnum);
     }
 
     private getWebappURL(
         events: Event[]
     ): string {
         const [{
-            payload: {
-                context: {
-                    project: {
-                        id: projectId
-                    }
+            context: {
+                project: {
+                    id: projectId
                 }
             }
         }] = events;
         const pathname = `project/${projectId}/styleguide/spacing`;
         const searchParams = {
-            sptid: events.map(event => event.payload.resource.id)
+            sptid: events.map(({ resource: { id } }) => id)
         };
 
         return getWebAppURL(pathname, searchParams);
@@ -75,24 +71,22 @@ class ProjectSpacingTokenHandler extends NotificationHandler<Event> {
         events: Event[]
     ): string {
         const [{
-            payload: {
-                context: {
-                    project: {
-                        id: projectId
-                    }
+            context: {
+                project: {
+                    id: projectId
                 }
             }
         }] = events;
         const searchParams = {
             pid: projectId,
-            sptids: events.map(event => event.payload.resource.id)
+            sptids: events.map(({ resource: { id } }) => id)
         };
 
         return getRedirectURLForZeplinApp("spacing", searchParams);
     }
 
     shouldHandleEvent(event: WebhookEvent): event is Event {
-        return event.payload.action !== "deleted";
+        return event.action !== "deleted";
     }
 
     getTeamsMessage(

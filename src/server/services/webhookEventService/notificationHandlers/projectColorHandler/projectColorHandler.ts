@@ -1,8 +1,11 @@
 import {
     WebhookEvent,
-    ProjectColorCreateEvent,
-    ProjectColorUpdateEvent
-} from "../../../../adapters/zeplin/types";
+    ProjectColorCreatedEvent,
+    ProjectColorUpdatedEvent
+} from "@zeplin/sdk";
+
+import { ProjectPlatformEnum } from "../../../../enums";
+
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
@@ -11,23 +14,21 @@ import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
 import { getColorUpdateMessage } from "../getStyleUpdateMessage";
 
-type Event = ProjectColorCreateEvent | ProjectColorUpdateEvent;
+type Event = ProjectColorCreatedEvent | ProjectColorUpdatedEvent;
 
 class ProjectColorHandler extends NotificationHandler<Event> {
     delay = SHORT_DELAY;
     private getText(events: Event[]): string {
         const [{
-            payload: {
-                action,
-                context: {
-                    project: {
-                        name: projectName
-                    }
-                },
-                resource: {
-                    data: {
-                        name: pivotColorName
-                    }
+            action,
+            context: {
+                project: {
+                    name: projectName
+                }
+            },
+            resource: {
+                data: {
+                    name: pivotColorName
                 }
             }
         }] = events;
@@ -39,33 +40,29 @@ class ProjectColorHandler extends NotificationHandler<Event> {
 
     private getSectionText(events: Event[]): string {
         const [{
-            payload: {
-                context: {
-                    project: {
-                        platform: projectPlatform
-                    }
+            context: {
+                project: {
+                    platform: projectPlatform
                 }
             }
         }] = events;
 
-        return getColorUpdateMessage(projectPlatform);
+        return getColorUpdateMessage(projectPlatform as ProjectPlatformEnum);
     }
 
     private getWebappURL(
         events: Event[]
     ): string {
         const [{
-            payload: {
-                context: {
-                    project: {
-                        id: projectId
-                    }
+            context: {
+                project: {
+                    id: projectId
                 }
             }
         }] = events;
         const pathname = `project/${projectId}/styleguide/colors`;
         const searchParams = {
-            cid: events.map(event => event.payload.resource.id)
+            cid: events.map(({ resource: { id } }) => id)
         };
 
         return getWebAppURL(pathname, searchParams);
@@ -75,24 +72,22 @@ class ProjectColorHandler extends NotificationHandler<Event> {
         events: Event[]
     ): string {
         const [{
-            payload: {
-                context: {
-                    project: {
-                        id: projectId
-                    }
+            context: {
+                project: {
+                    id: projectId
                 }
             }
         }] = events;
         const searchParams = {
             pid: projectId,
-            cids: events.map(event => event.payload.resource.id)
+            cids: events.map(({ resource: { id } }) => id)
         };
 
         return getRedirectURLForZeplinApp("colors", searchParams);
     }
 
     shouldHandleEvent(event: WebhookEvent): event is Event {
-        return event.payload.action !== "deleted";
+        return event.action !== "deleted";
     }
 
     getTeamsMessage(

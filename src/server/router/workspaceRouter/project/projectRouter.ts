@@ -20,7 +20,7 @@ projectRouter.get(
         try {
             const result = await projectService.list({
                 workspace: req.params.workspace,
-                authToken: req.headers.authorization as string,
+                accessToken: req.headers.authorization as string,
                 channelId: req.query.channelId as string
             });
             res.json(result);

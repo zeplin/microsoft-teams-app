@@ -1,8 +1,8 @@
 import {
-    ProjectTextStyleCreateEvent,
-    ProjectTextStyleUpdateEvent,
+    ProjectTextStyleCreatedEvent,
+    ProjectTextStyleUpdatedEvent,
     WebhookEvent
-} from "../../../../adapters/zeplin/types";
+} from "@zeplin/sdk";
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
@@ -10,24 +10,23 @@ import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
 import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 import { getTextStyleUpdateMessage } from "../getStyleUpdateMessage";
+import { ProjectPlatformEnum } from "../../../../enums";
 
-type Event = ProjectTextStyleCreateEvent | ProjectTextStyleUpdateEvent;
+type Event = ProjectTextStyleCreatedEvent | ProjectTextStyleUpdatedEvent;
 
 class ProjectTextStyleHandler extends NotificationHandler<Event> {
     delay = SHORT_DELAY;
     private getText(events: Event[]): string {
         const [{
-            payload: {
-                action,
-                context: {
-                    project: {
-                        name: projectName
-                    }
-                },
-                resource: {
-                    data: {
-                        name: pivotTextStyleName
-                    }
+            action,
+            context: {
+                project: {
+                    name: projectName
+                }
+            },
+            resource: {
+                data: {
+                    name: pivotTextStyleName
                 }
             }
         }] = events;
@@ -39,33 +38,29 @@ class ProjectTextStyleHandler extends NotificationHandler<Event> {
 
     private getSectionText(events: Event[]): string {
         const [{
-            payload: {
-                context: {
-                    project: {
-                        platform: projectPlatform
-                    }
+            context: {
+                project: {
+                    platform: projectPlatform
                 }
             }
         }] = events;
 
-        return getTextStyleUpdateMessage(projectPlatform);
+        return getTextStyleUpdateMessage(projectPlatform as ProjectPlatformEnum);
     }
 
     private getWebappURL(
         events: Event[]
     ): string {
         const [{
-            payload: {
-                context: {
-                    project: {
-                        id: projectId
-                    }
+            context: {
+                project: {
+                    id: projectId
                 }
             }
         }] = events;
         const pathname = `project/${projectId}/styleguide/textstyles`;
         const searchParams = {
-            tsid: events.map(event => event.payload.resource.id)
+            tsid: events.map(({ resource: { id } }) => id)
         };
 
         return getWebAppURL(pathname, searchParams);
@@ -75,24 +70,22 @@ class ProjectTextStyleHandler extends NotificationHandler<Event> {
         events: Event[]
     ): string {
         const [{
-            payload: {
-                context: {
-                    project: {
-                        id: projectId
-                    }
+            context: {
+                project: {
+                    id: projectId
                 }
             }
         }] = events;
         const searchParams = {
             pid: projectId,
-            tsids: events.map(event => event.payload.resource.id)
+            tsids: events.map(({ resource: { id } }) => id)
         };
 
         return getRedirectURLForZeplinApp("textStyles", searchParams);
     }
 
     shouldHandleEvent(event: WebhookEvent): event is Event {
-        return event.payload.action !== "deleted";
+        return event.action !== "deleted";
     }
 
     getTeamsMessage(

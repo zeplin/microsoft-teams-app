@@ -1,8 +1,9 @@
-import { projectComponentHandler } from "./projectComponentHandler";
 import {
-    ProjectComponentCreateEvent,
-    ProjectComponentVersionCreateEvent
-} from "../../../../adapters/zeplin/types";
+    ProjectComponentCreatedEvent,
+    ProjectComponentVersionCreatedEvent
+} from "@zeplin/sdk";
+
+import { projectComponentHandler } from "./projectComponentHandler";
 
 type GetDummyEventParams = {
     action?: string;
@@ -18,31 +19,29 @@ function getDummyEvent({
     componentName = "componentName",
     imageUrl = "http://placehold.it/200",
     timestamp = 1
-}: GetDummyEventParams = {}): ProjectComponentCreateEvent | ProjectComponentVersionCreateEvent {
+}: GetDummyEventParams = {}): ProjectComponentCreatedEvent | ProjectComponentVersionCreatedEvent {
     return {
-        payload: {
-            timestamp,
-            action,
-            context: {
-                project: {
-                    id: "projectId",
-                    name: "projectName"
-                }
-            },
-            resource: {
+        timestamp,
+        action,
+        context: {
+            project: {
+                id: "projectId",
+                name: "projectName"
+            }
+        },
+        resource: {
+            id: componentId,
+            data: {
                 id: componentId,
-                data: {
-                    id: componentId,
-                    name: componentName,
-                    image: {
-                        thumbnails: {
-                            small: imageUrl
-                        }
+                name: componentName,
+                image: {
+                    thumbnails: {
+                        small: imageUrl
                     }
                 }
             }
         }
-    } as ProjectComponentCreateEvent | ProjectComponentVersionCreateEvent;
+    } as ProjectComponentCreatedEvent | ProjectComponentVersionCreatedEvent;
 }
 
 describe("projectComponentHandler", () => {

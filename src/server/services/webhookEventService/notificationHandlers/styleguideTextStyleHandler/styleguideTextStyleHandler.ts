@@ -1,8 +1,9 @@
 import {
-    StyleguideTextStyleCreateEvent,
-    StyleguideTextStyleUpdateEvent,
+    StyleguideTextStyleCreatedEvent,
+    StyleguideTextStyleUpdatedEvent,
     WebhookEvent
-} from "../../../../adapters/zeplin/types";
+} from "@zeplin/sdk";
+
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
@@ -10,23 +11,21 @@ import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
 import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 
-type Event = StyleguideTextStyleCreateEvent | StyleguideTextStyleUpdateEvent;
+type Event = StyleguideTextStyleCreatedEvent | StyleguideTextStyleUpdatedEvent;
 
 class StyleguideTextStyleHandler extends NotificationHandler<Event> {
     delay = SHORT_DELAY;
     private getText(events: Event[]): string {
         const [{
-            payload: {
-                action,
-                context: {
-                    styleguide: {
-                        name: styleguideName
-                    }
-                },
-                resource: {
-                    data: {
-                        name: pivotTextStyleName
-                    }
+            action,
+            context: {
+                styleguide: {
+                    name: styleguideName
+                }
+            },
+            resource: {
+                data: {
+                    name: pivotTextStyleName
                 }
             }
         }] = events;
@@ -40,17 +39,15 @@ class StyleguideTextStyleHandler extends NotificationHandler<Event> {
         events: Event[]
     ): string {
         const [{
-            payload: {
-                context: {
-                    styleguide: {
-                        id: styleguideId
-                    }
+            context: {
+                styleguide: {
+                    id: styleguideId
                 }
             }
         }] = events;
         const pathname = `styleguide/${styleguideId}/textstyles`;
         const searchParams = {
-            tsid: events.map(event => event.payload.resource.id)
+            tsid: events.map(({ resource: { id } }) => id)
         };
 
         return getWebAppURL(pathname, searchParams);
@@ -60,24 +57,22 @@ class StyleguideTextStyleHandler extends NotificationHandler<Event> {
         events: Event[]
     ): string {
         const [{
-            payload: {
-                context: {
-                    styleguide: {
-                        id: styleguideId
-                    }
+            context: {
+                styleguide: {
+                    id: styleguideId
                 }
             }
         }] = events;
         const searchParams = {
             stid: styleguideId,
-            tsids: events.map(event => event.payload.resource.id)
+            tsids: events.map(({ resource: { id } }) => id)
         };
 
         return getRedirectURLForZeplinApp("textStyles", searchParams);
     }
 
     shouldHandleEvent(event: WebhookEvent): event is Event {
-        return event.payload.action !== "deleted";
+        return event.action !== "deleted";
     }
 
     getTeamsMessage(

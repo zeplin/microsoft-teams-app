@@ -1,5 +1,6 @@
+import { ProjectMemberInvitedEvent } from "@zeplin/sdk";
+
 import { projectMemberHandler } from "./projectMemberHandler";
-import { ProjectMemberInviteEvent } from "../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     projectName?: string;
@@ -11,26 +12,24 @@ function getDummyEvent({
     projectName = "Project Microsoft Teams Integration",
     userId = "userId",
     userName = "dirtybit"
-}: GetDummyEventParams = {}): ProjectMemberInviteEvent {
+}: GetDummyEventParams = {}): ProjectMemberInvitedEvent {
     return {
-        payload: {
-            action: "invited",
-            context: {
-                project: {
-                    id: "projectId",
-                    name: projectName
-                }
-            },
-            resource: {
-                data: {
-                    user: {
-                        id: userId,
-                        username: userName
-                    }
+        action: "invited",
+        context: {
+            project: {
+                id: "projectId",
+                name: projectName
+            }
+        },
+        resource: {
+            data: {
+                user: {
+                    id: userId,
+                    username: userName
                 }
             }
         }
-    } as ProjectMemberInviteEvent;
+    } as ProjectMemberInvitedEvent;
 }
 
 describe("projectMemberHandler", () => {

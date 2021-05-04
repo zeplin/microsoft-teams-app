@@ -1,6 +1,8 @@
-import { mongo } from "../../adapters";
-import { WebhookResourceType } from "../../adapters/zeplin/types";
 import { Model } from "mongoose";
+
+import { mongo } from "../../adapters";
+import { WebhookResourceTypeEnum } from "../../enums";
+
 import { configurationSchema } from "./configurationSchema";
 import { ConfigurationDocument } from "./ConfigurationDocument";
 
@@ -9,7 +11,7 @@ interface ConfigurationCreateParameters {
         webhookId: string;
         resource: {
             id: string;
-            type: WebhookResourceType;
+            type: WebhookResourceTypeEnum;
         };
         workspaceId: string;
     };
@@ -57,7 +59,7 @@ class ConfigurationRepo {
     }
 
     listByResourceAndChannel(
-        resourceType: WebhookResourceType,
+        resourceType: WebhookResourceTypeEnum,
         resourceIds: string[],
         channelId: string
     ): Promise<Configuration[]> {
@@ -71,7 +73,7 @@ class ConfigurationRepo {
     }
 
     async getByResourceAndChannel(
-        resourceType: WebhookResourceType,
+        resourceType: WebhookResourceTypeEnum,
         resourceId: string,
         channelId: string
     ): Promise<Configuration | null> {

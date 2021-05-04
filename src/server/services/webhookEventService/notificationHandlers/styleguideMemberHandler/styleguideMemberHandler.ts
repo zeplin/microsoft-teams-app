@@ -1,25 +1,24 @@
+import { StyleguideMemberInvitedEvent, WebhookEvent } from "@zeplin/sdk";
+
 import { NotificationHandler } from "../NotificationHandler";
 import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
-import { StyleguideMemberInviteEvent, WebhookEvent } from "../../../../adapters/zeplin/types";
 import { LONG_DELAY } from "../constants";
 import { md } from "../md";
 
-class StyleguideMemberHandler extends NotificationHandler<StyleguideMemberInviteEvent> {
+class StyleguideMemberHandler extends NotificationHandler<StyleguideMemberInvitedEvent> {
     delay = LONG_DELAY;
 
-    private getText(events: StyleguideMemberInviteEvent[]): string {
+    private getText(events: StyleguideMemberInvitedEvent[]): string {
         const [{
-            payload: {
-                context: {
-                    styleguide: {
-                        name: styleguideName
-                    }
-                },
-                resource: {
-                    data: {
-                        user: {
-                            username
-                        }
+            context: {
+                styleguide: {
+                    name: styleguideName
+                }
+            },
+            resource: {
+                data: {
+                    user: {
+                        username
                     }
                 }
             }
@@ -29,7 +28,7 @@ class StyleguideMemberHandler extends NotificationHandler<StyleguideMemberInvite
             : md`**${events.length} teammates** just joined _${styleguideName}_`;
     }
 
-    getTeamsMessage(events: StyleguideMemberInviteEvent[]): MessageCard {
+    getTeamsMessage(events: StyleguideMemberInvitedEvent[]): MessageCard {
         return commonTeamsCard({
             text: this.getText(events),
             section: {
@@ -38,8 +37,8 @@ class StyleguideMemberHandler extends NotificationHandler<StyleguideMemberInvite
         });
     }
 
-    shouldHandleEvent(event: WebhookEvent): event is StyleguideMemberInviteEvent {
-        return event.payload.action === "invited";
+    shouldHandleEvent(event: WebhookEvent): event is StyleguideMemberInvitedEvent {
+        return event.action === "invited";
     }
 }
 

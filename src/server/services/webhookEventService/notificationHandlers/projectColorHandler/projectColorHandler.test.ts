@@ -1,9 +1,11 @@
-import { projectColorHandler } from "./projectColorHandler";
 import {
-    ProjectColorCreateEvent,
-    ProjectColorUpdateEvent,
-    ProjectPlatform
-} from "../../../../adapters/zeplin/types";
+    ProjectColorCreatedEvent,
+    ProjectColorUpdatedEvent
+} from "@zeplin/sdk";
+
+import { ProjectPlatformEnum } from "../../../../enums";
+
+import { projectColorHandler } from "./projectColorHandler";
 
 type GetDummyEventParams = {
     action?: string;
@@ -16,27 +18,25 @@ function getDummyEvent({
     action = "created",
     colorId = "colorId",
     colorName = "colorName",
-    projectPlatform = ProjectPlatform.WEB
-}: GetDummyEventParams = {}): ProjectColorCreateEvent | ProjectColorUpdateEvent {
+    projectPlatform = ProjectPlatformEnum.WEB
+}: GetDummyEventParams = {}): ProjectColorCreatedEvent | ProjectColorUpdatedEvent {
     return {
-        payload: {
-            action,
-            context: {
-                project: {
-                    id: "projectId",
-                    name: "projectName",
-                    platform: projectPlatform
-                }
-            },
-            resource: {
+        action,
+        context: {
+            project: {
+                id: "projectId",
+                name: "projectName",
+                platform: projectPlatform
+            }
+        },
+        resource: {
+            id: colorId,
+            data: {
                 id: colorId,
-                data: {
-                    id: colorId,
-                    name: colorName
-                }
+                name: colorName
             }
         }
-    } as ProjectColorCreateEvent | ProjectColorUpdateEvent;
+    } as ProjectColorCreatedEvent | ProjectColorUpdatedEvent;
 }
 
 describe("projectColorHandler", () => {
@@ -65,10 +65,10 @@ describe("projectColorHandler", () => {
             });
 
             it.each([
-                ProjectPlatform.ANDROID,
-                ProjectPlatform.IOS,
-                ProjectPlatform.MAC_OS,
-                ProjectPlatform.WEB
+                ProjectPlatformEnum.ANDROID,
+                ProjectPlatformEnum.IOS,
+                ProjectPlatformEnum.MAC_OS,
+                ProjectPlatformEnum.WEB
             ])("should match snapshot when project platform is %s",
                 projectPlatform => {
                     expect(
@@ -101,10 +101,10 @@ describe("projectColorHandler", () => {
             });
 
             it.each([
-                ProjectPlatform.ANDROID,
-                ProjectPlatform.IOS,
-                ProjectPlatform.MAC_OS,
-                ProjectPlatform.WEB
+                ProjectPlatformEnum.ANDROID,
+                ProjectPlatformEnum.IOS,
+                ProjectPlatformEnum.MAC_OS,
+                ProjectPlatformEnum.WEB
             ])("should match snapshot when project platform is %s",
                 projectPlatform => {
                     expect(

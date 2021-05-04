@@ -1,20 +1,31 @@
 import { GONE, UNAUTHORIZED } from "http-status-codes";
+import { WebhookEvent } from "@zeplin/sdk";
 
-import { PingEvent, WebhookEvent, WebhookEventType } from "../../adapters/zeplin/types";
-import { messageQueue, requester, zeplin } from "../../adapters";
+import { messageQueue, requester, Zeplin } from "../../adapters";
 import { configurationRepo, messageJobRepo, webhookEventRepo } from "../../repos";
 import { getNotificationHandler } from "./notificationHandlers";
 import { ServerError } from "../../errors";
 import { WEBHOOK_SECRET } from "../../config";
+import { isHandledWebhookEventTypeEnum } from "../../enums";
 
 interface JobData {
     groupingKey: string;
+    webhookId: string;
     id: string;
 }
 
+interface EventArrivedParams {
+    correlationId: string;
+    webhookId: string;
+    deliveryId: string;
+    signature: string;
+    deliveryTimestamp: number;
+    payload: unknown;
+}
+
 const isOlderEventOfSameResource = (a: WebhookEvent, b: WebhookEvent): boolean => {
-    if ("id" in a.payload.resource && "id" in b.payload.resource) {
-        return a.payload.resource.id === b.payload.resource.id && a.payload.timestamp < b.payload.timestamp;
+    if ("id" in a.resource && "id" in b.resource) {
+        return a.resource.id === b.resource.id && a.timestamp < b.timestamp;
     }
     return false;
 };
@@ -22,8 +33,6 @@ const isOlderEventOfSameResource = (a: WebhookEvent, b: WebhookEvent): boolean =
 const getRecentEventsOfSameResources = (events: WebhookEvent[]): WebhookEvent[] => events.filter(
     current => events.find(item => isOlderEventOfSameResource(current, item)) === undefined
 );
-
-const isPingEvent = (event: WebhookEvent): event is PingEvent => event.payload.event === WebhookEventType.PING;
 
 class WebhookEventService {
     async processJob(data: JobData): Promise<void> {
@@ -41,7 +50,7 @@ class WebhookEventService {
         }
 
         const configuration = await configurationRepo.getByWebhookId(
-            pivotEvent.webhookId
+            data.webhookId
         );
         if (!configuration) {
             throw new ServerError("There isn't any incoming webhook URL found for webhook", {
@@ -49,7 +58,13 @@ class WebhookEventService {
             });
         }
 
-        const notificationHandler = getNotificationHandler(pivotEvent.payload.event);
+        if (!isHandledWebhookEventTypeEnum(pivotEvent.event)) {
+            throw new ServerError("Unknown event", {
+                extra: { data, pivotEvent }
+            });
+        }
+
+        const notificationHandler = getNotificationHandler(pivotEvent.event);
         const distinctEvents = getRecentEventsOfSameResources(events);
         const message = notificationHandler.getTeamsMessage(distinctEvents);
 
@@ -64,38 +79,49 @@ class WebhookEventService {
         }
     }
 
-    async handleEventArrived(event: WebhookEvent): Promise<void> {
-        // TODO: remove if check when ping event is sent
-        if (!isPingEvent(event)) {
-            const isVerifiedEvent = zeplin.webhooks.verifyWebhookEvent({
-                signature: event.signature,
-                deliveryTimestamp: event.deliveryTimestamp,
-                secret: WEBHOOK_SECRET,
-                payload: event.payload
-            });
-            if (!isVerifiedEvent) {
-                throw new ServerError(
-                    "Event is not verified",
-                    {
-                        statusCode: UNAUTHORIZED,
-                        shouldCapture: true,
-                        extra: {
-                            event: JSON.stringify(event)
-                        }
+    async handleEventArrived({
+        correlationId,
+        webhookId,
+        deliveryId,
+        signature,
+        deliveryTimestamp,
+        payload
+    }: EventArrivedParams): Promise<void> {
+        if (!Zeplin.Webhooks.verifyEvent({
+            signature,
+            deliveryTimestamp,
+            secret: WEBHOOK_SECRET,
+            payload
+        })) {
+            throw new ServerError(
+                "Event is not verified",
+                {
+                    statusCode: UNAUTHORIZED,
+                    shouldCapture: true,
+                    extra: {
+                        event: JSON.stringify(payload)
                     }
-                );
-            }
+                }
+            );
+        }
+        const event = Zeplin.Webhooks.transformPayloadToWebhookEvent(payload);
+
+        if (!isHandledWebhookEventTypeEnum(event.event)) {
+            return;
         }
 
-        const notificationHandler = getNotificationHandler(event.payload.event);
+        const notificationHandler = getNotificationHandler(event.event);
         if (!notificationHandler.shouldHandleEvent(event)) {
             return;
         }
 
-        const groupingKey = notificationHandler.getGroupingKey(event);
-        const jobId = event.deliveryId;
+        const groupingKey = notificationHandler.getGroupingKey({
+            event,
+            webhookId,
+            deliveryId
+        });
 
-        const configuration = await configurationRepo.getByWebhookId(event.webhookId);
+        const configuration = await configurationRepo.getByWebhookId(webhookId);
         if (!configuration) {
             throw new ServerError(
                 "Event doesn't have configuration",
@@ -109,14 +135,15 @@ class WebhookEventService {
             );
         }
 
-        await messageJobRepo.setGroupActiveJobId(groupingKey, jobId);
+        await messageJobRepo.setGroupActiveJobId(groupingKey, deliveryId);
         await webhookEventRepo.addEventToGroup(groupingKey, event);
 
         await messageQueue.add(
             {
-                id: jobId,
+                id: deliveryId,
                 groupingKey,
-                correlationId: event.correlationId
+                webhookId,
+                correlationId
             },
             { delay: notificationHandler.delay }
         );

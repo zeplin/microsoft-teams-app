@@ -1,42 +1,42 @@
-import { projectTextStyleHandler } from "./projectTextStyleHandler";
 import {
-    ProjectPlatform,
-    ProjectTextStyleCreateEvent,
-    ProjectTextStyleUpdateEvent
-} from "../../../../adapters/zeplin/types";
+    ProjectTextStyleCreatedEvent,
+    ProjectTextStyleUpdatedEvent
+} from "@zeplin/sdk";
+
+import { ProjectPlatformEnum } from "../../../../enums";
+
+import { projectTextStyleHandler } from "./projectTextStyleHandler";
 
 type GetDummyEventParams = {
     action?: string;
     textStyleId?: string;
     textStyleName?: string;
-    projectPlatform?: ProjectPlatform;
+    projectPlatform?: ProjectPlatformEnum;
 }
 
 function getDummyEvent({
     action = "created",
     textStyleId = "textStyleId",
     textStyleName = "textStyleName",
-    projectPlatform = ProjectPlatform.WEB
-}: GetDummyEventParams = {}): ProjectTextStyleCreateEvent | ProjectTextStyleUpdateEvent {
+    projectPlatform = ProjectPlatformEnum.WEB
+}: GetDummyEventParams = {}): ProjectTextStyleCreatedEvent | ProjectTextStyleUpdatedEvent {
     return {
-        payload: {
-            action,
-            context: {
-                project: {
-                    id: "projectId",
-                    name: "projectName",
-                    platform: projectPlatform
-                }
-            },
-            resource: {
+        action,
+        context: {
+            project: {
+                id: "projectId",
+                name: "projectName",
+                platform: projectPlatform
+            }
+        },
+        resource: {
+            id: textStyleId,
+            data: {
                 id: textStyleId,
-                data: {
-                    id: textStyleId,
-                    name: textStyleName
-                }
+                name: textStyleName
             }
         }
-    } as ProjectTextStyleCreateEvent | ProjectTextStyleUpdateEvent;
+    } as ProjectTextStyleCreatedEvent | ProjectTextStyleUpdatedEvent;
 }
 
 describe("projectTextStyleHandler", () => {
@@ -65,10 +65,10 @@ describe("projectTextStyleHandler", () => {
             });
 
             it.each([
-                ProjectPlatform.ANDROID,
-                ProjectPlatform.IOS,
-                ProjectPlatform.MAC_OS,
-                ProjectPlatform.WEB
+                ProjectPlatformEnum.ANDROID,
+                ProjectPlatformEnum.IOS,
+                ProjectPlatformEnum.MAC_OS,
+                ProjectPlatformEnum.WEB
             ])("should match snapshot when project platform is %s",
                 projectPlatform => {
                     expect(
@@ -101,10 +101,10 @@ describe("projectTextStyleHandler", () => {
             });
 
             it.each([
-                ProjectPlatform.ANDROID,
-                ProjectPlatform.IOS,
-                ProjectPlatform.MAC_OS,
-                ProjectPlatform.WEB
+                ProjectPlatformEnum.ANDROID,
+                ProjectPlatformEnum.IOS,
+                ProjectPlatformEnum.MAC_OS,
+                ProjectPlatformEnum.WEB
             ])("should match snapshot when project platform is %s",
                 projectPlatform => {
                     expect(

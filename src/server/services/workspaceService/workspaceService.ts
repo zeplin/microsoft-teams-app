@@ -1,5 +1,4 @@
-import { zeplin } from "../../adapters";
-import { OrganizationRole } from "../../adapters/zeplin/types";
+import { Zeplin } from "../../adapters";
 
 interface Workspace {
     id: string;
@@ -7,18 +6,14 @@ interface Workspace {
 }
 
 class WorkspaceService {
-    async list(authToken: string): Promise<Workspace[]> {
-        const organizations = await zeplin.organizations.list({
-            query: {
-                role: [OrganizationRole.OWNER, OrganizationRole.ADMIN, OrganizationRole.EDITOR]
-            },
-            options: {
-                authToken
-            }
+    async list(accessToken: string): Promise<Workspace[]> {
+        const zeplin = new Zeplin({ accessToken });
+        const { data } = await zeplin.organizations.getOrganizations({
+            role: ["owner", "admin", "editor"]
         });
         return [
             { id: "personal", name: "Personal Workspace" },
-            ...organizations.map(({ id, name }) => ({ id, name: `${name}'s Workspace` }))
+            ...data.map(({ id, name }) => ({ id, name: `${name}'s Workspace` }))
         ];
     }
 }
