@@ -6,7 +6,6 @@ import { configurationRepo, messageJobRepo, webhookEventRepo } from "../../repos
 import { getNotificationHandler } from "./notificationHandlers";
 import { ServerError } from "../../errors";
 import { WEBHOOK_SECRET } from "../../config";
-import { isHandledWebhookEventTypeEnum } from "../../enums";
 
 interface JobData {
     groupingKey: string;
@@ -58,12 +57,6 @@ class WebhookEventService {
             });
         }
 
-        if (!isHandledWebhookEventTypeEnum(pivotEvent.event)) {
-            throw new ServerError("Unknown event", {
-                extra: { data, pivotEvent }
-            });
-        }
-
         const notificationHandler = getNotificationHandler(pivotEvent.event);
         const distinctEvents = getRecentEventsOfSameResources(events);
         const message = notificationHandler.getTeamsMessage(distinctEvents);
@@ -105,10 +98,6 @@ class WebhookEventService {
             );
         }
         const event = Zeplin.Webhooks.transformPayloadToWebhookEvent(payload);
-
-        if (!isHandledWebhookEventTypeEnum(event.event)) {
-            return;
-        }
 
         const notificationHandler = getNotificationHandler(event.event);
         if (!notificationHandler.shouldHandleEvent(event)) {
