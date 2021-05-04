@@ -6,6 +6,8 @@ import { validateRequest, JSONBodyParser } from "../../middlewares";
 import { WebhookResourceTypeEnum } from "../../enums";
 import { configurationService } from "../../services";
 
+const BEARER_PREFIX_LENGTH = 7;
+
 const configurationRouter = createRouter({ mergeParams: true });
 
 const zeplinSchema = Joi.object({
@@ -42,7 +44,7 @@ configurationRouter.post(
             const result = await configurationService.create(
                 req.body,
                 {
-                    accessToken: String(req.headers.authorization)
+                    accessToken: String(req.headers.authorization).slice(BEARER_PREFIX_LENGTH)
                 }
             );
             res.json(result);

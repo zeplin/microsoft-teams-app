@@ -1,8 +1,10 @@
+import Joi from "@hapi/joi";
 import { Router as createRouter } from "express";
 
 import { styleguideService } from "../../../services";
 import { validateRequest } from "../../../middlewares/validateRequest";
-import Joi from "@hapi/joi";
+
+const BEARER_PREFIX_LENGTH = 7;
 
 const styleguideRouter = createRouter({ mergeParams: true });
 
@@ -20,7 +22,7 @@ styleguideRouter.get(
         try {
             const result = await styleguideService.list({
                 workspace: req.params.workspace,
-                accessToken: req.headers.authorization as string,
+                accessToken: String(req.headers.authorization).slice(BEARER_PREFIX_LENGTH),
                 channelId: req.query.channelId as string
             });
             res.json(result);
