@@ -1,5 +1,5 @@
 import { getLogProvider, LogProvider } from "./logProvider";
-import { loggerContext } from "../../context";
+import { loggerContext } from "../context";
 import { ServerError } from "../../errors";
 import { ErrorTracker, getErrorTracker } from "./errorTracker";
 

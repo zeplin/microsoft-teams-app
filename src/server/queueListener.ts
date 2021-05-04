@@ -1,7 +1,5 @@
-import { messageQueue } from "./adapters";
+import { messageQueue, logger, loggerContext } from "./adapters";
 import { webhookEventService } from "./services";
-import { logger } from "./adapters/logger";
-import { loggerContext } from "./context";
 
 export async function initializeQueueListener(): Promise<void> {
     await messageQueue.process(

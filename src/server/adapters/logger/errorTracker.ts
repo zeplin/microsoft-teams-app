@@ -7,7 +7,7 @@ import {
 } from "@sentry/node";
 
 import { ServerError } from "../../errors";
-import { LoggerContext } from "../../context";
+import { LoggerContext } from "../context";
 /* eslint-disable no-console */
 const INDENT = 2;
 

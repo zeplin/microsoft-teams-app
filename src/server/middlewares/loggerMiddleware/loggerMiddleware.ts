@@ -1,6 +1,6 @@
 import { RequestHandler, Request, Response } from "express";
-import { logger } from "../../adapters/logger";
-import { loggerContext } from "../../context";
+import { logger, loggerContext } from "../../adapters";
+
 import crypto from "crypto";
 
 const ID_BYTE_SIZE = 16;
