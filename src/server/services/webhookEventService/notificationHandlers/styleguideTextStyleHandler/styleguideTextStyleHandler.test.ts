@@ -1,9 +1,8 @@
 import {
+    Styleguide,
     StyleguideTextStyleCreatedEvent,
     StyleguideTextStyleUpdatedEvent
 } from "@zeplin/sdk";
-
-import { StyleguidePlatformEnum } from "../../../../enums";
 
 import { styleguideTextStyleHandler } from "./styleguideTextStyleHandler";
 
@@ -11,14 +10,14 @@ type GetDummyEventParams = {
     action?: string;
     textStyleId?: string;
     textStyleName?: string;
-    styleguidePlatform?: string;
+    styleguidePlatform?: Styleguide["platform"];
 }
 
 function getDummyEvent({
     action = "created",
     textStyleId = "textStyleId",
     textStyleName = "textStyleName",
-    styleguidePlatform = StyleguidePlatformEnum.WEB
+    styleguidePlatform = "web"
 }: GetDummyEventParams = {}): StyleguideTextStyleCreatedEvent | StyleguideTextStyleUpdatedEvent {
     return {
         action,
@@ -64,12 +63,12 @@ describe("styleguideTextStyleHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                StyleguidePlatformEnum.ANDROID,
-                StyleguidePlatformEnum.IOS,
-                StyleguidePlatformEnum.MAC_OS,
-                StyleguidePlatformEnum.WEB,
-                StyleguidePlatformEnum.BASE
+            it.each<Styleguide["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web",
+                "base"
             ])("should match snapshot when styleguide platform is %s",
                 styleguidePlatform => {
                     expect(
@@ -101,12 +100,12 @@ describe("styleguideTextStyleHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                StyleguidePlatformEnum.ANDROID,
-                StyleguidePlatformEnum.IOS,
-                StyleguidePlatformEnum.MAC_OS,
-                StyleguidePlatformEnum.WEB,
-                StyleguidePlatformEnum.BASE
+            it.each<Styleguide["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web",
+                "base"
             ])("should match snapshot when styleguide platform is %s",
                 styleguidePlatform => {
                     expect(

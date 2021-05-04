@@ -1,9 +1,8 @@
 import {
+    Project,
     ProjectColorCreatedEvent,
     ProjectColorUpdatedEvent
 } from "@zeplin/sdk";
-
-import { ProjectPlatformEnum } from "../../../../enums";
 
 import { projectColorHandler } from "./projectColorHandler";
 
@@ -11,14 +10,14 @@ type GetDummyEventParams = {
     action?: string;
     colorId?: string;
     colorName?: string;
-    projectPlatform?: string;
+    projectPlatform?: Project["platform"];
 }
 
 function getDummyEvent({
     action = "created",
     colorId = "colorId",
     colorName = "colorName",
-    projectPlatform = ProjectPlatformEnum.WEB
+    projectPlatform = "web"
 }: GetDummyEventParams = {}): ProjectColorCreatedEvent | ProjectColorUpdatedEvent {
     return {
         action,
@@ -64,11 +63,11 @@ describe("projectColorHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                ProjectPlatformEnum.ANDROID,
-                ProjectPlatformEnum.IOS,
-                ProjectPlatformEnum.MAC_OS,
-                ProjectPlatformEnum.WEB
+            it.each<Project["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web"
             ])("should match snapshot when project platform is %s",
                 projectPlatform => {
                     expect(
@@ -100,11 +99,11 @@ describe("projectColorHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                ProjectPlatformEnum.ANDROID,
-                ProjectPlatformEnum.IOS,
-                ProjectPlatformEnum.MAC_OS,
-                ProjectPlatformEnum.WEB
+            it.each<Project["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web"
             ])("should match snapshot when project platform is %s",
                 projectPlatform => {
                     expect(

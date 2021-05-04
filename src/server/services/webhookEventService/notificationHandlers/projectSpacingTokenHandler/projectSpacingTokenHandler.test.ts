@@ -1,9 +1,8 @@
 import {
+    Project,
     ProjectSpacingTokenCreatedEvent,
     ProjectSpacingTokenUpdatedEvent
 } from "@zeplin/sdk";
-
-import { ProjectPlatformEnum } from "../../../../enums";
 
 import { projectSpacingTokenHandler } from "./projectSpacingTokenHandler";
 
@@ -11,14 +10,14 @@ type GetDummyEventParams = {
     action?: string;
     spacingTokenId?: string;
     spacingTokenName?: string;
-    projectPlatform?: ProjectPlatformEnum;
+    projectPlatform?: Project["platform"];
 }
 
 function getDummyEvent({
     action = "created",
     spacingTokenId = "spacingTokenId",
     spacingTokenName = "spacingTokenName",
-    projectPlatform = ProjectPlatformEnum.WEB
+    projectPlatform = "web"
 }: GetDummyEventParams = {}): ProjectSpacingTokenCreatedEvent | ProjectSpacingTokenUpdatedEvent {
     return {
         action,
@@ -64,11 +63,11 @@ describe("projectSpacingTokenHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                ProjectPlatformEnum.ANDROID,
-                ProjectPlatformEnum.IOS,
-                ProjectPlatformEnum.MAC_OS,
-                ProjectPlatformEnum.WEB
+            it.each<Project["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web"
             ])("should match snapshot when project platform is %s",
                 projectPlatform => {
                     expect(
@@ -100,11 +99,11 @@ describe("projectSpacingTokenHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                ProjectPlatformEnum.ANDROID,
-                ProjectPlatformEnum.IOS,
-                ProjectPlatformEnum.MAC_OS,
-                ProjectPlatformEnum.WEB
+            it.each<Project["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web"
             ])("should match snapshot when project platform is %s",
                 projectPlatform => {
                     expect(

@@ -1,9 +1,8 @@
 import {
+    Project,
     ProjectTextStyleCreatedEvent,
     ProjectTextStyleUpdatedEvent
 } from "@zeplin/sdk";
-
-import { ProjectPlatformEnum } from "../../../../enums";
 
 import { projectTextStyleHandler } from "./projectTextStyleHandler";
 
@@ -11,14 +10,14 @@ type GetDummyEventParams = {
     action?: string;
     textStyleId?: string;
     textStyleName?: string;
-    projectPlatform?: ProjectPlatformEnum;
+    projectPlatform?: Project["platform"];
 }
 
 function getDummyEvent({
     action = "created",
     textStyleId = "textStyleId",
     textStyleName = "textStyleName",
-    projectPlatform = ProjectPlatformEnum.WEB
+    projectPlatform = "web"
 }: GetDummyEventParams = {}): ProjectTextStyleCreatedEvent | ProjectTextStyleUpdatedEvent {
     return {
         action,
@@ -64,11 +63,11 @@ describe("projectTextStyleHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                ProjectPlatformEnum.ANDROID,
-                ProjectPlatformEnum.IOS,
-                ProjectPlatformEnum.MAC_OS,
-                ProjectPlatformEnum.WEB
+            it.each<Project["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web"
             ])("should match snapshot when project platform is %s",
                 projectPlatform => {
                     expect(
@@ -100,11 +99,11 @@ describe("projectTextStyleHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                ProjectPlatformEnum.ANDROID,
-                ProjectPlatformEnum.IOS,
-                ProjectPlatformEnum.MAC_OS,
-                ProjectPlatformEnum.WEB
+            it.each<Project["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web"
             ])("should match snapshot when project platform is %s",
                 projectPlatform => {
                     expect(

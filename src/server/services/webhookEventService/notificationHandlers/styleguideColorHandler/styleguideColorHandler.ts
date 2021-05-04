@@ -10,7 +10,6 @@ import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
 import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 import { getColorUpdateMessage } from "../getStyleUpdateMessage";
-import { StyleguidePlatformEnum } from "../../../../enums";
 
 type Event = StyleguideColorCreatedEvent | StyleguideColorUpdatedEvent;
 
@@ -45,7 +44,7 @@ class StyleguideColorHandler extends NotificationHandler<Event> {
             }
         }] = events;
 
-        return getColorUpdateMessage(styleguidePlatform as StyleguidePlatformEnum);
+        return getColorUpdateMessage(styleguidePlatform);
     }
 
     private getWebappURL(

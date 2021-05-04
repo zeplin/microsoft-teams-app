@@ -11,7 +11,6 @@ import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
 import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 import { getSpacingTokenUpdateMessage } from "../getStyleUpdateMessage";
-import { ProjectPlatformEnum } from "../../../../enums";
 
 type Event = ProjectSpacingTokenCreatedEvent | ProjectSpacingTokenUpdatedEvent;
 
@@ -46,7 +45,7 @@ class ProjectSpacingTokenHandler extends NotificationHandler<Event> {
             }
         }] = events;
 
-        return getSpacingTokenUpdateMessage(projectPlatform as ProjectPlatformEnum);
+        return getSpacingTokenUpdateMessage(projectPlatform);
     }
 
     private getWebappURL(

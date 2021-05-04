@@ -10,7 +10,6 @@ import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
 import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 import { getTextStyleUpdateMessage } from "../getStyleUpdateMessage";
-import { ProjectPlatformEnum } from "../../../../enums";
 
 type Event = ProjectTextStyleCreatedEvent | ProjectTextStyleUpdatedEvent;
 
@@ -45,7 +44,7 @@ class ProjectTextStyleHandler extends NotificationHandler<Event> {
             }
         }] = events;
 
-        return getTextStyleUpdateMessage(projectPlatform as ProjectPlatformEnum);
+        return getTextStyleUpdateMessage(projectPlatform);
     }
 
     private getWebappURL(

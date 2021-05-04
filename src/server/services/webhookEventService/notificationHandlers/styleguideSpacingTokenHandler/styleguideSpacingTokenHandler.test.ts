@@ -1,6 +1,4 @@
-import { StyleguideSpacingTokenCreatedEvent, StyleguideSpacingTokenUpdatedEvent } from "@zeplin/sdk";
-
-import { StyleguidePlatformEnum } from "../../../../enums";
+import { Styleguide, StyleguideSpacingTokenCreatedEvent, StyleguideSpacingTokenUpdatedEvent } from "@zeplin/sdk";
 
 import { styleguideSpacingTokenHandler } from "./styleguideSpacingTokenHandler";
 
@@ -8,14 +6,14 @@ type GetDummyEventParams = {
     action?: string;
     spacingTokenId?: string;
     spacingTokenName?: string;
-    styleguidePlatform?: string;
+    styleguidePlatform?: Styleguide["platform"];
 }
 
 function getDummyEvent({
     action = "created",
     spacingTokenId = "spacingTokenId",
     spacingTokenName = "spacingTokenName",
-    styleguidePlatform = StyleguidePlatformEnum.WEB
+    styleguidePlatform = "web"
 }: GetDummyEventParams = {}): StyleguideSpacingTokenCreatedEvent | StyleguideSpacingTokenUpdatedEvent {
     return {
         action,
@@ -61,12 +59,12 @@ describe("styleguideSpacingTokenHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                StyleguidePlatformEnum.ANDROID,
-                StyleguidePlatformEnum.IOS,
-                StyleguidePlatformEnum.MAC_OS,
-                StyleguidePlatformEnum.WEB,
-                StyleguidePlatformEnum.BASE
+            it.each<Styleguide["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web",
+                "base"
             ])("should match snapshot when styleguide platform is %s",
                 styleguidePlatform => {
                     expect(
@@ -98,12 +96,12 @@ describe("styleguideSpacingTokenHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                StyleguidePlatformEnum.ANDROID,
-                StyleguidePlatformEnum.IOS,
-                StyleguidePlatformEnum.MAC_OS,
-                StyleguidePlatformEnum.WEB,
-                StyleguidePlatformEnum.BASE
+            it.each<Styleguide["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web",
+                "base"
             ])("should match snapshot when styleguide platform is %s",
                 styleguidePlatform => {
                     expect(

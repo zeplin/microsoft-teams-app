@@ -4,8 +4,6 @@ import {
     ProjectColorUpdatedEvent
 } from "@zeplin/sdk";
 
-import { ProjectPlatformEnum } from "../../../../enums";
-
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
@@ -47,7 +45,7 @@ class ProjectColorHandler extends NotificationHandler<Event> {
             }
         }] = events;
 
-        return getColorUpdateMessage(projectPlatform as ProjectPlatformEnum);
+        return getColorUpdateMessage(projectPlatform);
     }
 
     private getWebappURL(

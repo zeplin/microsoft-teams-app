@@ -1,48 +1,45 @@
-import { ProjectPlatformEnum, StyleguidePlatformEnum } from "../../../enums";
+import { Project, Styleguide } from "@zeplin/sdk";
 
-export function getColorUpdateMessage(platform: ProjectPlatformEnum | StyleguidePlatformEnum): string {
+export function getColorUpdateMessage(platform: Project["platform"] | Styleguide["platform"]): string {
     switch (platform) {
-        case ProjectPlatformEnum.WEB:
-        case StyleguidePlatformEnum.WEB:
+        case "web":
             return "Make sure your stylesheets are up to date!";
-        case ProjectPlatformEnum.IOS:
-        case StyleguidePlatformEnum.IOS:
+        case "ios":
             return "Make sure `UIColor` category / extension is up to date!";
-        case ProjectPlatformEnum.MAC_OS:
-        case StyleguidePlatformEnum.MAC_OS:
+        case "macos":
             return "Make sure `NSColor` category / extension is up to date!";
-        case ProjectPlatformEnum.ANDROID:
-        case StyleguidePlatformEnum.ANDROID:
+        case "android":
             return "Make sure `colors.xml` is up to date!";
+        case "base":
         default:
             return "Make sure your styles are up to date!";
     }
 }
 
-export function getTextStyleUpdateMessage(platform: ProjectPlatformEnum | StyleguidePlatformEnum): string {
+export function getTextStyleUpdateMessage(platform: Project["platform"] | Styleguide["platform"]): string {
     switch (platform) {
-        case ProjectPlatformEnum.WEB:
-        case StyleguidePlatformEnum.WEB:
+        case "web":
             return "Make sure your stylesheets are up to date!";
-        case ProjectPlatformEnum.IOS:
-        case StyleguidePlatformEnum.IOS:
+        case "ios":
             return "Make sure `UIFont` category / extension is up to date!";
-        case ProjectPlatformEnum.MAC_OS:
-        case StyleguidePlatformEnum.MAC_OS:
+        case "macos":
             return "Make sure `NSFont` category / extension is up to date!";
-        case ProjectPlatformEnum.ANDROID:
-        case StyleguidePlatformEnum.ANDROID:
+        case "android":
             return "Make sure `fonts.xml` is up to date!";
+        case "base":
         default:
             return "Make sure your styles are up to date!";
     }
 }
 
-export function getSpacingTokenUpdateMessage(platform: ProjectPlatformEnum | StyleguidePlatformEnum): string {
+export function getSpacingTokenUpdateMessage(platform: Project["platform"] | Styleguide["platform"]): string {
     switch (platform) {
-        case ProjectPlatformEnum.ANDROID:
-        case StyleguidePlatformEnum.ANDROID:
+        case "android":
             return "Make sure `spacing.xml` is up to date!";
+        case "web":
+        case "ios":
+        case "macos":
+        case "base":
         default:
             return "Make sure your tokens are up to date!";
     }
