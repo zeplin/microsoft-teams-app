@@ -47,13 +47,13 @@
     "mongodb": "^3.5.9",
     "mongoose": "^5.12.2",
     "newrelic": "^7.1.1",
-    "next": "^10.0.7",
+    "next": "^10.2.3",
     "patch-package": "^6.2.2",
     "pm2": "^4.5.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-query": "^2.5.14",
-    "redis": "^3.0.2",
+    "redis": "^3.1.2",
     "redlock": "^4.1.0"
   },
   "devDependencies": {
