@@ -9,7 +9,7 @@ class WorkspaceService {
     async list(accessToken: string): Promise<Workspace[]> {
         const zeplin = new Zeplin({ accessToken });
         const { data } = await zeplin.organizations.getOrganizations({
-            role: ["owner", "admin", "editor"]
+            role: new Set(["owner", "admin", "editor"])
         });
         return [
             { id: "personal", name: "Personal Workspace" },

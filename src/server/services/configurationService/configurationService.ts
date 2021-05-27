@@ -112,7 +112,7 @@ class ConfigurationService {
                 {
                     url: `${BASE_URL}/api/webhook`,
                     secret: WEBHOOK_SECRET,
-                    events: params.events
+                    events: new Set(params.events)
                 }
             );
             return id;
@@ -122,7 +122,7 @@ class ConfigurationService {
             {
                 url: `${BASE_URL}/api/webhook`,
                 secret: WEBHOOK_SECRET,
-                events: params.events
+                events: new Set(params.events)
             }
         );
         return id;
@@ -140,7 +140,7 @@ class ConfigurationService {
                 params.resource.id,
                 webhookId,
                 {
-                    events: params.events
+                    events: new Set(params.events)
                 }
             );
         } else {
@@ -148,7 +148,7 @@ class ConfigurationService {
                 params.resource.id,
                 webhookId,
                 {
-                    events: params.events
+                    events: new Set(params.events)
                 }
             );
         }
