@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
 import { ObjectId } from "mongodb";
-import { WebhookResourceType } from "../../adapters/zeplin/types";
+import { WebhookResourceTypeEnum } from "../../enums";
 
 export interface ConfigurationDocument extends Document {
     _id: ObjectId;
@@ -8,7 +8,7 @@ export interface ConfigurationDocument extends Document {
         webhookId: string;
         resource: {
             id: string;
-            type: WebhookResourceType;
+            type: WebhookResourceTypeEnum;
         };
         workspaceId: string;
     };

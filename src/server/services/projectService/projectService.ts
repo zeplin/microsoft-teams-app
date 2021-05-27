@@ -1,6 +1,8 @@
-import { zeplin } from "../../adapters";
-import { ProjectStatus, WebhookResourceType } from "../../adapters/zeplin/types";
+import { ProjectStatusEnum } from "@zeplin/sdk";
+
+import { Zeplin } from "../../adapters";
 import { configurationRepo } from "../../repos";
+import { WebhookResourceTypeEnum } from "../../enums";
 
 interface Project {
     id: string;
@@ -10,51 +12,44 @@ interface Project {
 interface ProjectServiceListParams {
     workspace: string;
     channelId: string;
-    authToken: string;
+    accessToken: string;
 }
 
 interface ProjectServicePaginatedListParams {
     workspace: string;
-    authToken: string;
+    accessToken: string;
     limit: number;
     offset: number;
 }
 
 class ProjectService {
-    private listPaginated({
+    private async listPaginated({
         workspace,
-        authToken,
+        accessToken,
         limit,
         offset
     }: ProjectServicePaginatedListParams): Promise<Project[]> {
+        const zeplin = new Zeplin({ accessToken });
         if (workspace === "personal") {
-            return zeplin.projects.listMyProjects({
-                query: {
-                    limit,
-                    offset,
-                    status: ProjectStatus.ACTIVE
-                },
-                options: {
-                    authToken
-                }
-            });
-        }
-        return zeplin.projects.list({
-            query: {
-                workspace,
+            const { data } = await zeplin.users.getUserProjects({
                 limit,
                 offset,
-                status: ProjectStatus.ACTIVE
-            },
-            options: {
-                authToken
-            }
+                status: ProjectStatusEnum.ACTIVE
+            });
+            return data;
+        }
+        const { data } = await zeplin.projects.getProjects({
+            workspace,
+            limit,
+            offset,
+            status: ProjectStatusEnum.ACTIVE
         });
+        return data;
     }
 
     async list({
         workspace,
-        authToken,
+        accessToken,
         channelId
     }: ProjectServiceListParams): Promise<Project[]> {
         const projectsMap = new Map<string, Project>();
@@ -65,7 +60,7 @@ class ProjectService {
             workspace,
             limit,
             offset,
-            authToken
+            accessToken
         });
 
         while (projects.length > 0) {
@@ -84,7 +79,7 @@ class ProjectService {
                 workspace,
                 limit,
                 offset,
-                authToken
+                accessToken
             });
         }
 
@@ -93,7 +88,7 @@ class ProjectService {
         const projectIds = result.map(({ id }) => id);
 
         const configuredProjectIds = (
-            await configurationRepo.listByResourceAndChannel(WebhookResourceType.PROJECT, projectIds, channelId)
+            await configurationRepo.listByResourceAndChannel(WebhookResourceTypeEnum.PROJECT, projectIds, channelId)
         ).map(({ zeplin: { resource: { id } } }) => id);
 
         return result.filter(({ id }) => !configuredProjectIds.includes(id));

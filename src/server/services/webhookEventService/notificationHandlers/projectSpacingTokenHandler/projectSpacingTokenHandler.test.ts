@@ -1,42 +1,41 @@
-import { projectSpacingTokenHandler } from "./projectSpacingTokenHandler";
 import {
-    ProjectPlatform,
-    ProjectSpacingTokenCreateEvent,
-    ProjectSpacingTokenUpdateEvent
-} from "../../../../adapters/zeplin/types";
+    Project,
+    ProjectSpacingTokenCreatedEvent,
+    ProjectSpacingTokenUpdatedEvent
+} from "@zeplin/sdk";
+
+import { projectSpacingTokenHandler } from "./projectSpacingTokenHandler";
 
 type GetDummyEventParams = {
     action?: string;
     spacingTokenId?: string;
     spacingTokenName?: string;
-    projectPlatform?: ProjectPlatform;
+    projectPlatform?: Project["platform"];
 }
 
 function getDummyEvent({
     action = "created",
     spacingTokenId = "spacingTokenId",
     spacingTokenName = "spacingTokenName",
-    projectPlatform = ProjectPlatform.WEB
-}: GetDummyEventParams = {}): ProjectSpacingTokenCreateEvent | ProjectSpacingTokenUpdateEvent {
+    projectPlatform = "web"
+}: GetDummyEventParams = {}): ProjectSpacingTokenCreatedEvent | ProjectSpacingTokenUpdatedEvent {
     return {
-        payload: {
-            action,
-            context: {
-                project: {
-                    id: "projectId",
-                    name: "projectName",
-                    platform: projectPlatform
-                }
-            },
-            resource: {
+        action,
+        context: {
+            project: {
+                id: "projectId",
+                name: "projectName",
+                platform: projectPlatform
+            }
+        },
+        resource: {
+            id: spacingTokenId,
+            data: {
                 id: spacingTokenId,
-                data: {
-                    id: spacingTokenId,
-                    name: spacingTokenName
-                }
+                name: spacingTokenName
             }
         }
-    } as ProjectSpacingTokenCreateEvent | ProjectSpacingTokenUpdateEvent;
+    } as ProjectSpacingTokenCreatedEvent | ProjectSpacingTokenUpdatedEvent;
 }
 
 describe("projectSpacingTokenHandler", () => {
@@ -64,11 +63,11 @@ describe("projectSpacingTokenHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                ProjectPlatform.ANDROID,
-                ProjectPlatform.IOS,
-                ProjectPlatform.MAC_OS,
-                ProjectPlatform.WEB
+            it.each<Project["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web"
             ])("should match snapshot when project platform is %s",
                 projectPlatform => {
                     expect(
@@ -100,11 +99,11 @@ describe("projectSpacingTokenHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                ProjectPlatform.ANDROID,
-                ProjectPlatform.IOS,
-                ProjectPlatform.MAC_OS,
-                ProjectPlatform.WEB
+            it.each<Project["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web"
             ])("should match snapshot when project platform is %s",
                 projectPlatform => {
                     expect(

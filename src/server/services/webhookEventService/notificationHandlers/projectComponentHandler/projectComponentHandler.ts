@@ -1,10 +1,11 @@
-import { NotificationHandler } from "../NotificationHandler";
-import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import { createHash } from "crypto";
 import {
-    ProjectComponentCreateEvent,
-    ProjectComponentVersionCreateEvent
-} from "../../../../adapters/zeplin/types";
+    ProjectComponentCreatedEvent,
+    ProjectComponentVersionCreatedEvent
+} from "@zeplin/sdk";
+
+import { GroupingKeyParams, NotificationHandler } from "../NotificationHandler";
+import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import { MEDIUM_DELAY } from "../constants";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
@@ -12,24 +13,22 @@ import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 
 const IMAGE_LIMIT = 5;
 
-type Event = ProjectComponentCreateEvent | ProjectComponentVersionCreateEvent;
+type Event = ProjectComponentCreatedEvent | ProjectComponentVersionCreatedEvent;
 
 class ProjectComponentHandler extends NotificationHandler<Event> {
     delay = MEDIUM_DELAY;
 
     private getText(events: Event[]): string {
         const [{
-            payload: {
-                action,
-                context: {
-                    project: {
-                        name: projectName
-                    }
-                },
-                resource: {
-                    data: {
-                        name: componentName
-                    }
+            action,
+            context: {
+                project: {
+                    name: projectName
+                }
+            },
+            resource: {
+                data: {
+                    name: componentName
                 }
             }
         }] = events;
@@ -42,25 +41,23 @@ class ProjectComponentHandler extends NotificationHandler<Event> {
     private getImages(events: Event[]): string[] {
         // Take last 5 screen images
         return events
-            .sort((e1, e2) => e2.payload.timestamp - e1.payload.timestamp)
-            .map(event => event.payload.resource.data.image?.thumbnails?.small)
+            .sort((e1, e2) => e2.timestamp - e1.timestamp)
+            .map(event => event.resource.data.image?.thumbnails?.small)
             .filter((val): val is string => Boolean(val))
             .slice(0, IMAGE_LIMIT);
     }
 
     private getWebappURL(events: Event[]): string {
         const [{
-            payload: {
-                context: {
-                    project: {
-                        id: projectId
-                    }
+            context: {
+                project: {
+                    id: projectId
                 }
             }
         }] = events;
         const pathname = `project/${projectId}/styleguide/components`;
         const searchParams = {
-            coid: events.map(event => event.payload.resource.id)
+            coid: events.map(({ resource: { id } }) => id)
         };
 
         return getWebAppURL(pathname, searchParams);
@@ -68,35 +65,32 @@ class ProjectComponentHandler extends NotificationHandler<Event> {
 
     private getZeplinAppURIURI(events: Event[]): string {
         const [{
-            payload: {
-                context: {
-                    project: {
-                        id: projectId
-                    }
+            context: {
+                project: {
+                    id: projectId
                 }
             }
         }] = events;
         const searchParams = {
             pid: projectId,
-            coids: events.map(event => event.payload.resource.id)
+            coids: events.map(({ resource: { id } }) => id)
         };
 
         return getRedirectURLForZeplinApp("components", searchParams);
     }
 
-    getGroupingKey(event: Event): string {
-        const {
-            webhookId,
-            payload: {
-                event: eventType,
-                action,
-                context: {
-                    version: {
-                        commit
-                    }
+    getGroupingKey({
+        event: {
+            event: eventType,
+            action,
+            context: {
+                version: {
+                    commit
                 }
             }
-        } = event;
+        },
+        webhookId
+    }: GroupingKeyParams<Event>): string {
         const hashedCommit = commit?.message
             ? createHash("md5").update(commit.message).digest("hex")
             : "no-commit";
@@ -118,7 +112,7 @@ class ProjectComponentHandler extends NotificationHandler<Event> {
     }
 
     shouldHandleEvent(event: Event): event is Event {
-        return event.payload.action === "created" || event.payload.action === "version_created";
+        return event.action === "created" || event.action === "version_created";
     }
 }
 

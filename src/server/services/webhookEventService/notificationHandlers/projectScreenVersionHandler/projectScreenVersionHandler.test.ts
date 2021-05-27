@@ -1,5 +1,5 @@
 import { projectScreenVersionHandler } from "./projectScreenVersionHandler";
-import { ScreenVersionCreateEvent } from "../../../../adapters/zeplin/types";
+import { ProjectScreenVersionCreatedEvent } from "@zeplin/sdk";
 
 type GetDummyEventParams = {
     screenId?: string;
@@ -15,35 +15,33 @@ function getDummyEvent({
     imageUrl = "http://placehold.it/200",
     commitMessage = "",
     timestamp = 1
-}: GetDummyEventParams = {}): ScreenVersionCreateEvent {
+}: GetDummyEventParams = {}): ProjectScreenVersionCreatedEvent {
     return {
-        payload: {
-            action: "created",
-            timestamp,
-            context: {
-                screen: {
-                    id: screenId,
-                    name: screenName,
-                    image: {
-                        thumbnails: {
-                            small: imageUrl
-                        }
+        action: "created",
+        timestamp,
+        context: {
+            screen: {
+                id: screenId,
+                name: screenName,
+                image: {
+                    thumbnails: {
+                        small: imageUrl
                     }
-                },
-                project: {
-                    id: "projectId",
-                    name: "projectName"
                 }
             },
-            resource: {
-                data: {
-                    commit: {
-                        message: commitMessage
-                    }
+            project: {
+                id: "projectId",
+                name: "projectName"
+            }
+        },
+        resource: {
+            data: {
+                commit: {
+                    message: commitMessage
                 }
             }
         }
-    } as ScreenVersionCreateEvent;
+    } as ProjectScreenVersionCreatedEvent;
 }
 
 describe("projectScreenVersionHandler", () => {

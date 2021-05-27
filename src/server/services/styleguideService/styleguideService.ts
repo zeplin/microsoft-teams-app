@@ -1,6 +1,8 @@
-import { zeplin } from "../../adapters";
-import { StyleguideStatus, WebhookResourceType } from "../../adapters/zeplin/types";
-import { configurationRepo } from "../../repos/configurationRepo";
+import { StyleguideStatusEnum } from "@zeplin/sdk";
+
+import { Zeplin } from "../../adapters";
+import { configurationRepo } from "../../repos";
+import { WebhookResourceTypeEnum } from "../../enums";
 
 interface Styleguide {
     id: string;
@@ -10,51 +12,44 @@ interface Styleguide {
 interface StyleguideServiceListParams {
     workspace: string;
     channelId: string;
-    authToken: string;
+    accessToken: string;
 }
 
 interface StyleguideServicePaginatedListParams {
     workspace: string;
-    authToken: string;
+    accessToken: string;
     limit: number;
     offset: number;
 }
 
 class StyleguideService {
-    private listPaginated({
+    private async listPaginated({
         workspace,
-        authToken,
+        accessToken,
         limit,
         offset
     }: StyleguideServicePaginatedListParams): Promise<Styleguide[]> {
+        const zeplin = new Zeplin({ accessToken });
         if (workspace === "personal") {
-            return zeplin.styleguides.listMyStyleguides({
-                query: {
-                    limit,
-                    offset,
-                    status: StyleguideStatus.ACTIVE
-                },
-                options: {
-                    authToken
-                }
-            });
-        }
-        return zeplin.styleguides.list({
-            query: {
-                workspace,
+            const { data } = await zeplin.users.getUserStyleguides({
                 limit,
                 offset,
-                status: StyleguideStatus.ACTIVE
-            },
-            options: {
-                authToken
-            }
+                status: StyleguideStatusEnum.ACTIVE
+            });
+            return data;
+        }
+        const { data } = await zeplin.styleguides.getStyleguides({
+            workspace,
+            limit,
+            offset,
+            status: StyleguideStatusEnum.ACTIVE
         });
+        return data;
     }
 
     async list({
         workspace,
-        authToken,
+        accessToken,
         channelId
     }: StyleguideServiceListParams): Promise<Styleguide[]> {
         const styleguidesMap = new Map<string, Styleguide>();
@@ -65,7 +60,7 @@ class StyleguideService {
             workspace,
             limit,
             offset,
-            authToken
+            accessToken
         });
 
         while (styleguides.length > 0) {
@@ -83,7 +78,7 @@ class StyleguideService {
                 workspace,
                 limit,
                 offset,
-                authToken
+                accessToken
             });
         }
         const result = Array.from(styleguidesMap.values());
@@ -91,7 +86,11 @@ class StyleguideService {
         const styleguideIds = result.map(({ id }) => id);
 
         const configuredStyleguideIds = (
-            await configurationRepo.listByResourceAndChannel(WebhookResourceType.STYLEGUIDE, styleguideIds, channelId)
+            await configurationRepo.listByResourceAndChannel(
+                WebhookResourceTypeEnum.STYLEGUIDE,
+                styleguideIds,
+                channelId
+            )
         ).map(({ zeplin: { resource: { id } } }) => id);
 
         return result.filter(({ id }) => !configuredStyleguideIds.includes(id));

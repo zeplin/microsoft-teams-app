@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 
-import { WebhookResourceType } from "../../adapters/zeplin/types";
+import { WebhookResourceTypeEnum } from "../../enums";
 
 export const dummyConfiguration = {
     _id: new ObjectId("5f439cec8096ff7a262cbf47"),
@@ -8,7 +8,7 @@ export const dummyConfiguration = {
         webhookId: "webhookId",
         resource: {
             id: "resourceId",
-            type: WebhookResourceType.PROJECT
+            type: WebhookResourceTypeEnum.PROJECT
         },
         workspaceId: "workspaceId"
     },

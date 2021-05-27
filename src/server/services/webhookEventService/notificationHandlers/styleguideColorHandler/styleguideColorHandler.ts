@@ -1,8 +1,8 @@
 import {
     WebhookEvent,
-    StyleguideColorCreateEvent,
-    StyleguideColorUpdateEvent
-} from "../../../../adapters/zeplin/types";
+    StyleguideColorCreatedEvent,
+    StyleguideColorUpdatedEvent
+} from "@zeplin/sdk";
 import { NotificationHandler } from "../NotificationHandler";
 import { SHORT_DELAY } from "../constants";
 import { commonTeamsCard, MessageCard } from "../teamsCardTemplates";
@@ -11,23 +11,21 @@ import { getRandomEmoji } from "../getRandomEmoji";
 import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 import { getColorUpdateMessage } from "../getStyleUpdateMessage";
 
-type Event = StyleguideColorCreateEvent | StyleguideColorUpdateEvent;
+type Event = StyleguideColorCreatedEvent | StyleguideColorUpdatedEvent;
 
 class StyleguideColorHandler extends NotificationHandler<Event> {
     delay = SHORT_DELAY;
     private getText(events: Event[]): string {
         const [{
-            payload: {
-                action,
-                context: {
-                    styleguide: {
-                        name: styleguideName
-                    }
-                },
-                resource: {
-                    data: {
-                        name: pivotColorName
-                    }
+            action,
+            context: {
+                styleguide: {
+                    name: styleguideName
+                }
+            },
+            resource: {
+                data: {
+                    name: pivotColorName
                 }
             }
         }] = events;
@@ -39,11 +37,9 @@ class StyleguideColorHandler extends NotificationHandler<Event> {
 
     private getSectionText(events: Event[]): string {
         const [{
-            payload: {
-                context: {
-                    styleguide: {
-                        platform: styleguidePlatform
-                    }
+            context: {
+                styleguide: {
+                    platform: styleguidePlatform
                 }
             }
         }] = events;
@@ -55,17 +51,15 @@ class StyleguideColorHandler extends NotificationHandler<Event> {
         events: Event[]
     ): string {
         const [{
-            payload: {
-                context: {
-                    styleguide: {
-                        id: styleguideId
-                    }
+            context: {
+                styleguide: {
+                    id: styleguideId
                 }
             }
         }] = events;
         const pathname = `styleguide/${styleguideId}/colors`;
         const searchParams = {
-            cid: events.map(event => event.payload.resource.id)
+            cid: events.map(({ resource: { id } }) => id)
         };
 
         return getWebAppURL(pathname, searchParams);
@@ -75,24 +69,22 @@ class StyleguideColorHandler extends NotificationHandler<Event> {
         events: Event[]
     ): string {
         const [{
-            payload: {
-                context: {
-                    styleguide: {
-                        id: styleguideId
-                    }
+            context: {
+                styleguide: {
+                    id: styleguideId
                 }
             }
         }] = events;
         const searchParams = {
             stid: styleguideId,
-            cids: events.map(event => event.payload.resource.id)
+            cids: events.map(({ resource: { id } }) => id)
         };
 
         return getRedirectURLForZeplinApp("colors", searchParams);
     }
 
     shouldHandleEvent(event: WebhookEvent): event is Event {
-        return event.payload.action !== "deleted";
+        return event.action !== "deleted";
     }
 
     getTeamsMessage(

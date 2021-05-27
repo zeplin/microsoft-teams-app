@@ -9,6 +9,7 @@ type AddOptions = {
 interface MessageJobData {
     id: string;
     groupingKey: string;
+    webhookId: string;
     correlationId: string;
 }
 

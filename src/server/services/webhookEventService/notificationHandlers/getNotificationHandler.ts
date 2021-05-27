@@ -1,3 +1,5 @@
+import { WebhookEvent } from "@zeplin/sdk";
+
 import { projectColorHandler } from "./projectColorHandler";
 import { NotificationHandler } from "./NotificationHandler";
 import { styleguideColorHandler } from "./styleguideColorHandler";
@@ -14,26 +16,25 @@ import { styleguideComponentHandler } from "./styleguideComponentHandler";
 import { projectScreenHandler } from "./projectScreenHandler";
 import { projectScreenVersionHandler } from "./projectScreenVersionHandler";
 import { pingHandler } from "./pingHandler";
-import { WebhookEvent, WebhookEventType } from "../../../adapters/zeplin/types";
 
-const notificationMap: Record<WebhookEventType, NotificationHandler<WebhookEvent>> = {
-    [WebhookEventType.PING]: pingHandler,
-    [WebhookEventType.PROJECT_COLOR]: projectColorHandler,
-    [WebhookEventType.STYLEGUIDE_COLOR]: styleguideColorHandler,
-    [WebhookEventType.PROJECT_NOTE]: projectNoteHandler,
-    [WebhookEventType.PROJECT_NOTE_COMMENT]: projectNoteCommentHandler,
-    [WebhookEventType.PROJECT_TEXT_STYLE]: projectTextStyleHandler,
-    [WebhookEventType.STYLEGUIDE_TEXT_STYLE]: styleguideTextStyleHandler,
-    [WebhookEventType.PROJECT_SPACING_TOKEN]: projectSpacingTokenHandler,
-    [WebhookEventType.STYLEGUIDE_SPACING_TOKEN]: styleguideSpacingTokenHandler,
-    [WebhookEventType.PROJECT_MEMBER]: projectMemberHandler,
-    [WebhookEventType.STYLEGUIDE_MEMBER]: styleguideMemberHandler,
-    [WebhookEventType.PROJECT_COMPONENT]: projectComponentHandler,
-    [WebhookEventType.STYLEGUIDE_COMPONENT]: styleguideComponentHandler,
-    [WebhookEventType.PROJECT_SCREEN]: projectScreenHandler,
-    [WebhookEventType.PROJECT_SCREEN_VERSION]: projectScreenVersionHandler
+const notificationMap: Record<string, NotificationHandler<WebhookEvent>> = {
+    "ping": pingHandler,
+    "project.color": projectColorHandler,
+    "project.note": styleguideColorHandler,
+    "project.note.comment": projectNoteHandler,
+    "project.spacing_token": projectNoteCommentHandler,
+    "project.text_style": projectTextStyleHandler,
+    "project.member": styleguideTextStyleHandler,
+    "project.component": projectSpacingTokenHandler,
+    "project.screen": styleguideSpacingTokenHandler,
+    "project.screen.version": projectMemberHandler,
+    "styleguide.color": styleguideMemberHandler,
+    "styleguide.text_style": projectComponentHandler,
+    "styleguide.spacing_token": styleguideComponentHandler,
+    "styleguide.member": projectScreenHandler,
+    "styleguide.component": projectScreenVersionHandler
 } as const;
 
-export function getNotificationHandler(eventType: WebhookEventType): NotificationHandler<WebhookEvent> {
+export function getNotificationHandler(eventType: string): NotificationHandler<WebhookEvent> {
     return notificationMap[eventType];
 }

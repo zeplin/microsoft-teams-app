@@ -1,5 +1,6 @@
+import { ProjectNoteCommentCreatedEvent } from "@zeplin/sdk";
+
 import { projectNoteCommentHandler } from "./projectNoteCommentHandler";
-import { NoteCommentCreateEvent } from "../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     projectId?: string;
@@ -8,7 +9,7 @@ type GetDummyEventParams = {
     screenName?: string;
     username?: string;
     noteId?: string;
-    noteOrder?: string;
+    noteOrder?: number;
     commentId?: string;
     commentContent?: string;
 }
@@ -20,41 +21,39 @@ function getDummyEvent({
     screenName = "Manage Zeplin Connector",
     username = "sertac",
     noteId = "noteId",
-    noteOrder = "1",
+    noteOrder = 1,
     commentId = "commentId",
     commentContent = "cok guzel keyfimiz var"
-}: GetDummyEventParams = {}): NoteCommentCreateEvent {
+}: GetDummyEventParams = {}): ProjectNoteCommentCreatedEvent {
     return {
-        payload: {
-            action: "created",
-            context: {
-                screen: {
-                    id: screenId,
-                    name: screenName
-                },
-                project: {
-                    id: projectId,
-                    name: projectName
-                },
-                note: {
-                    id: noteId,
-                    order: noteOrder
-                }
+        action: "created",
+        context: {
+            screen: {
+                id: screenId,
+                name: screenName
             },
-            actor: {
-                user: {
-                    username
-                }
+            project: {
+                id: projectId,
+                name: projectName
             },
-            resource: {
+            note: {
+                id: noteId,
+                order: noteOrder
+            }
+        },
+        actor: {
+            user: {
+                username
+            }
+        },
+        resource: {
+            id: commentId,
+            data: {
                 id: commentId,
-                data: {
-                    id: commentId,
-                    content: commentContent
-                }
+                content: commentContent
             }
         }
-    } as NoteCommentCreateEvent;
+    } as ProjectNoteCommentCreatedEvent;
 }
 
 describe("projectNoteHandler", () => {

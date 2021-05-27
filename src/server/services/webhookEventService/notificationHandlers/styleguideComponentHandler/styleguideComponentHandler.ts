@@ -1,11 +1,12 @@
 import { createHash } from "crypto";
-import { NotificationHandler } from "../NotificationHandler";
-import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import {
-    StyleguideComponentVersionCreateEvent,
-    StyleguideComponentCreateEvent,
+    StyleguideComponentVersionCreatedEvent,
+    StyleguideComponentCreatedEvent,
     WebhookEvent
-} from "../../../../adapters/zeplin/types";
+} from "@zeplin/sdk";
+
+import { GroupingKeyParams, NotificationHandler } from "../NotificationHandler";
+import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import { MEDIUM_DELAY } from "../constants";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
@@ -13,24 +14,22 @@ import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 
 const IMAGE_LIMIT = 5;
 
-type Event = StyleguideComponentCreateEvent | StyleguideComponentVersionCreateEvent;
+type Event = StyleguideComponentCreatedEvent | StyleguideComponentVersionCreatedEvent;
 
 class StyleguideComponentHandler extends NotificationHandler<Event> {
     delay = MEDIUM_DELAY;
 
     private getText(events: Event[]): string {
         const [{
-            payload: {
-                action,
-                context: {
-                    styleguide: {
-                        name: styleguideName
-                    }
-                },
-                resource: {
-                    data: {
-                        name: componentName
-                    }
+            action,
+            context: {
+                styleguide: {
+                    name: styleguideName
+                }
+            },
+            resource: {
+                data: {
+                    name: componentName
                 }
             }
         }] = events;
@@ -43,25 +42,23 @@ class StyleguideComponentHandler extends NotificationHandler<Event> {
     private getImages(events: Event[]): string[] {
         // Take last 5 screen images
         return events
-            .sort((e1, e2) => e2.payload.timestamp - e1.payload.timestamp)
-            .map(event => event.payload.resource.data.image?.original_url)
+            .sort((e1, e2) => e2.timestamp - e1.timestamp)
+            .map(event => event.resource.data.image?.originalUrl)
             .filter((val): val is string => Boolean(val))
             .slice(0, IMAGE_LIMIT);
     }
 
     private getWebappURL(events: Event[]): string {
         const [{
-            payload: {
-                context: {
-                    styleguide: {
-                        id: styleguideId
-                    }
+            context: {
+                styleguide: {
+                    id: styleguideId
                 }
             }
         }] = events;
         const pathname = `styleguide/${styleguideId}/components`;
         const searchParams = {
-            coid: events.map(event => event.payload.resource.id)
+            coid: events.map(({ resource: { id } }) => id)
         };
 
         return getWebAppURL(pathname, searchParams);
@@ -69,35 +66,32 @@ class StyleguideComponentHandler extends NotificationHandler<Event> {
 
     private getZeplinAppURIURI(events: Event[]): string {
         const [{
-            payload: {
-                context: {
-                    styleguide: {
-                        id: styleguideId
-                    }
+            context: {
+                styleguide: {
+                    id: styleguideId
                 }
             }
         }] = events;
         const searchParams = {
             stid: styleguideId,
-            coids: events.map(event => event.payload.resource.id)
+            coids: events.map(({ resource: { id } }) => id)
         };
 
         return getRedirectURLForZeplinApp("components", searchParams);
     }
 
-    getGroupingKey(event: Event): string {
-        const {
-            webhookId,
-            payload: {
-                event: eventType,
-                action,
-                context: {
-                    version: {
-                        commit
-                    }
+    getGroupingKey({
+        webhookId,
+        event: {
+            event: eventType,
+            action,
+            context: {
+                version: {
+                    commit
                 }
             }
-        } = event;
+        }
+    }: GroupingKeyParams<Event>): string {
         const hashedCommit = commit?.message
             ? createHash("md5").update(commit.message).digest("hex")
             : "no-commit";
@@ -119,7 +113,7 @@ class StyleguideComponentHandler extends NotificationHandler<Event> {
     }
 
     shouldHandleEvent(event: WebhookEvent): event is Event {
-        return event.payload.action === "created" || event.payload.action === "version_created";
+        return event.action === "created" || event.action === "version_created";
     }
 }
 

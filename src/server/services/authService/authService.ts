@@ -1,4 +1,4 @@
-import { zeplin } from "../../adapters";
+import { Zeplin } from "../../adapters";
 import { ZEPLIN_CLIENT_ID, ZEPLIN_CLIENT_SECRET, BASE_URL } from "../../config";
 
 const REDIRECT_URI = `${BASE_URL}/zeplin/auth/end`;
@@ -15,33 +15,31 @@ interface AuthToken {
 }
 
 class AuthService {
+    zeplin = new Zeplin();
+
     getAuthorizationUrl(): string {
-        return zeplin.auth.getAuthorizationUrl({
-            query: {
-                redirectUri: REDIRECT_URI,
-                clientId: ZEPLIN_CLIENT_ID as string
-            }
+        return this.zeplin.authorization.getAuthorizationUrl({
+            redirectUri: REDIRECT_URI,
+            clientId: ZEPLIN_CLIENT_ID as string
         });
     }
 
-    createToken(params: TokenCreateParams): Promise<AuthToken> {
+    async createToken(params: TokenCreateParams): Promise<AuthToken> {
         if ("code" in params) {
-            return zeplin.auth.createToken({
-                body: {
-                    code: params.code,
-                    clientId: ZEPLIN_CLIENT_ID as string,
-                    clientSecret: ZEPLIN_CLIENT_SECRET as string,
-                    redirectUri: REDIRECT_URI
-                }
-            });
-        }
-        return zeplin.auth.refreshToken({
-            body: {
-                refreshToken: params.refreshToken,
+            const { data } = await this.zeplin.authorization.createToken({
+                code: params.code,
                 clientId: ZEPLIN_CLIENT_ID as string,
-                clientSecret: ZEPLIN_CLIENT_SECRET as string
-            }
+                clientSecret: ZEPLIN_CLIENT_SECRET as string,
+                redirectUri: REDIRECT_URI
+            });
+            return data;
+        }
+        const { data } = await this.zeplin.authorization.refreshToken({
+            refreshToken: params.refreshToken,
+            clientId: ZEPLIN_CLIENT_ID as string,
+            clientSecret: ZEPLIN_CLIENT_SECRET as string
         });
+        return data;
     }
 }
 

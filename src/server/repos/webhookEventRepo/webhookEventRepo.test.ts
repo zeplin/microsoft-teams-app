@@ -1,13 +1,10 @@
+import { WebhookEvent } from "@zeplin/sdk";
+
 import { webhookEventRepo } from "./webhookEventRepo";
 import { redis } from "../../adapters";
-import { WebhookEvent } from "../../adapters/zeplin/types";
 
 const exampleGroupingKey = "example-grouping-key";
-const exampleEvent = {
-    webhookId: "webhook-id",
-    deliveryId: "deliveryId",
-    payload: {}
-} as WebhookEvent;
+const exampleEvent = {} as WebhookEvent;
 
 describe("messageWebhookEventRepo", () => {
     describe("addEventToGroup function", () => {

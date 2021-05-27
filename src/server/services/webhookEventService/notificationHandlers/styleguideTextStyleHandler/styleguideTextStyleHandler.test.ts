@@ -1,42 +1,41 @@
-import { styleguideTextStyleHandler } from "./styleguideTextStyleHandler";
 import {
-    StyleguidePlatform,
-    StyleguideTextStyleCreateEvent,
-    StyleguideTextStyleUpdateEvent
-} from "../../../../adapters/zeplin/types";
+    Styleguide,
+    StyleguideTextStyleCreatedEvent,
+    StyleguideTextStyleUpdatedEvent
+} from "@zeplin/sdk";
+
+import { styleguideTextStyleHandler } from "./styleguideTextStyleHandler";
 
 type GetDummyEventParams = {
     action?: string;
     textStyleId?: string;
     textStyleName?: string;
-    styleguidePlatform?: string;
+    styleguidePlatform?: Styleguide["platform"];
 }
 
 function getDummyEvent({
     action = "created",
     textStyleId = "textStyleId",
     textStyleName = "textStyleName",
-    styleguidePlatform = StyleguidePlatform.WEB
-}: GetDummyEventParams = {}): StyleguideTextStyleCreateEvent | StyleguideTextStyleUpdateEvent {
+    styleguidePlatform = "web"
+}: GetDummyEventParams = {}): StyleguideTextStyleCreatedEvent | StyleguideTextStyleUpdatedEvent {
     return {
-        payload: {
-            action,
-            context: {
-                styleguide: {
-                    id: "styleguideId",
-                    name: "styleguideName",
-                    platform: styleguidePlatform
-                }
-            },
-            resource: {
+        action,
+        context: {
+            styleguide: {
+                id: "styleguideId",
+                name: "styleguideName",
+                platform: styleguidePlatform
+            }
+        },
+        resource: {
+            id: textStyleId,
+            data: {
                 id: textStyleId,
-                data: {
-                    id: textStyleId,
-                    name: textStyleName
-                }
+                name: textStyleName
             }
         }
-    } as StyleguideTextStyleCreateEvent | StyleguideTextStyleUpdateEvent;
+    } as StyleguideTextStyleCreatedEvent | StyleguideTextStyleUpdatedEvent;
 }
 
 describe("styleguideTextStyleHandler", () => {
@@ -64,12 +63,12 @@ describe("styleguideTextStyleHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                StyleguidePlatform.ANDROID,
-                StyleguidePlatform.IOS,
-                StyleguidePlatform.MAC_OS,
-                StyleguidePlatform.WEB,
-                StyleguidePlatform.BASE
+            it.each<Styleguide["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web",
+                "base"
             ])("should match snapshot when styleguide platform is %s",
                 styleguidePlatform => {
                     expect(
@@ -101,12 +100,12 @@ describe("styleguideTextStyleHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                StyleguidePlatform.ANDROID,
-                StyleguidePlatform.IOS,
-                StyleguidePlatform.MAC_OS,
-                StyleguidePlatform.WEB,
-                StyleguidePlatform.BASE
+            it.each<Styleguide["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web",
+                "base"
             ])("should match snapshot when styleguide platform is %s",
                 styleguidePlatform => {
                     expect(

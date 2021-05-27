@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { WebhookResourceType } from "../../adapters/zeplin/types";
+import { WebhookResourceTypeEnum } from "../../enums";
 
 export const configurationSchema = new Schema({
     zeplin: {
@@ -15,7 +15,7 @@ export const configurationSchema = new Schema({
             type: {
                 type: String,
                 required: true,
-                enum: Object.values(WebhookResourceType)
+                enum: Object.values(WebhookResourceTypeEnum)
             }
         },
         workspaceId: {

@@ -1,70 +1,65 @@
-import { NotificationHandler } from "../NotificationHandler";
-import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import {
-    NoteCommentCreateEvent,
+    ProjectNoteCommentCreatedEvent,
     WebhookEvent
-} from "../../../../adapters/zeplin/types";
+} from "@zeplin/sdk";
+
+import { GroupingKeyParams, NotificationHandler } from "../NotificationHandler";
+import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
 import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 
-class ProjectNoteCommentHandler extends NotificationHandler<NoteCommentCreateEvent> {
+class ProjectNoteCommentHandler extends NotificationHandler<ProjectNoteCommentCreatedEvent> {
     delay = 0;
 
-    private getText(event: NoteCommentCreateEvent): string {
+    private getText(event: ProjectNoteCommentCreatedEvent): string {
         const {
-            payload: {
-                context: {
-                    project: {
-                        name: projectName
-                    },
-                    screen: {
-                        name: screenName
-                    },
-                    note: {
-                        order
-                    }
+            context: {
+                project: {
+                    name: projectName
                 },
-                actor: {
-                    user: {
-                        username
-                    }
+                screen: {
+                    name: screenName
+                },
+                note: {
+                    order
+                }
+            },
+            actor: {
+                user: {
+                    username
                 }
             }
         } = event;
         return md`**${username as string}** replied to note _#${order}_ on _${screenName}_ screen in _${projectName}_. ${getRandomEmoji()}`;
     }
 
-    private getSectionText(event: NoteCommentCreateEvent): string {
+    private getSectionText(event: ProjectNoteCommentCreatedEvent): string {
         const {
-            payload: {
-                resource: {
-                    data: {
-                        content: commentContent
-                    }
+            resource: {
+                data: {
+                    content: commentContent
                 }
             }
         } = event;
         return commentContent;
     }
 
-    private getWebappURL(event: NoteCommentCreateEvent): string {
+    private getWebappURL(event: ProjectNoteCommentCreatedEvent): string {
         const {
-            payload: {
-                context: {
-                    screen: {
-                        id: screenId
-                    },
-                    project: {
-                        id: projectId
-                    },
-                    note: {
-                        id: noteId
-                    }
+            context: {
+                screen: {
+                    id: screenId
                 },
-                resource: {
-                    id: commentId
+                project: {
+                    id: projectId
+                },
+                note: {
+                    id: noteId
                 }
+            },
+            resource: {
+                id: commentId
             }
         } = event;
         const pathname = `project/${projectId}/screen/${screenId}`;
@@ -76,23 +71,21 @@ class ProjectNoteCommentHandler extends NotificationHandler<NoteCommentCreateEve
         return getWebAppURL(pathname, searchParams);
     }
 
-    private getZeplinAppURI(event: NoteCommentCreateEvent): string {
+    private getZeplinAppURI(event: ProjectNoteCommentCreatedEvent): string {
         const {
-            payload: {
-                context: {
-                    project: {
-                        id: projectId
-                    },
-                    screen: {
-                        id: screenId
-                    },
-                    note: {
-                        id: noteId
-                    }
+            context: {
+                project: {
+                    id: projectId
                 },
-                resource: {
-                    id: commentId
+                screen: {
+                    id: screenId
+                },
+                note: {
+                    id: noteId
                 }
+            },
+            resource: {
+                id: commentId
             }
         } = event;
         const searchParams = {
@@ -105,15 +98,15 @@ class ProjectNoteCommentHandler extends NotificationHandler<NoteCommentCreateEve
         return getRedirectURLForZeplinApp("dot", searchParams);
     }
 
-    shouldHandleEvent(event: WebhookEvent): event is NoteCommentCreateEvent {
-        return event.payload.action === "created";
+    shouldHandleEvent(event: WebhookEvent): event is ProjectNoteCommentCreatedEvent {
+        return event.action === "created";
     }
 
-    getGroupingKey(event: WebhookEvent): string {
-        return `${event.webhookId}:${event.deliveryId}`;
+    getGroupingKey({ webhookId, deliveryId }: GroupingKeyParams<ProjectNoteCommentCreatedEvent>): string {
+        return `${webhookId}:${deliveryId}`;
     }
 
-    getTeamsMessage(events: NoteCommentCreateEvent[]): MessageCard {
+    getTeamsMessage(events: ProjectNoteCommentCreatedEvent[]): MessageCard {
         const [event] = events;
         return commonTeamsCard({
             text: this.getText(event),

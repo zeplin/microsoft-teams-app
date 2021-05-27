@@ -1,42 +1,37 @@
+import { Styleguide, StyleguideColorCreatedEvent, StyleguideColorUpdatedEvent } from "@zeplin/sdk";
+
 import { styleguideColorHandler } from "./styleguideColorHandler";
-import {
-    StyleguideColorCreateEvent,
-    StyleguideColorUpdateEvent,
-    StyleguidePlatform
-} from "../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     action?: string;
     colorId?: string;
     colorName?: string;
-    styleguidePlatform?: string;
+    styleguidePlatform?: Styleguide["platform"];
 }
 
 function getDummyEvent({
     action = "created",
     colorId = "colorId",
     colorName = "colorName",
-    styleguidePlatform = StyleguidePlatform.WEB
-}: GetDummyEventParams = {}): StyleguideColorCreateEvent | StyleguideColorUpdateEvent {
+    styleguidePlatform = "web"
+}: GetDummyEventParams = {}): StyleguideColorCreatedEvent | StyleguideColorUpdatedEvent {
     return {
-        payload: {
-            action,
-            context: {
-                styleguide: {
-                    id: "styleguideId",
-                    name: "styleguideName",
-                    platform: styleguidePlatform
-                }
-            },
-            resource: {
+        action,
+        context: {
+            styleguide: {
+                id: "styleguideId",
+                name: "styleguideName",
+                platform: styleguidePlatform
+            }
+        },
+        resource: {
+            id: colorId,
+            data: {
                 id: colorId,
-                data: {
-                    id: colorId,
-                    name: colorName
-                }
+                name: colorName
             }
         }
-    } as StyleguideColorCreateEvent | StyleguideColorUpdateEvent;
+    } as StyleguideColorCreatedEvent | StyleguideColorUpdatedEvent;
 }
 
 describe("styleguideColorHandler", () => {
@@ -64,12 +59,12 @@ describe("styleguideColorHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                StyleguidePlatform.ANDROID,
-                StyleguidePlatform.IOS,
-                StyleguidePlatform.MAC_OS,
-                StyleguidePlatform.WEB,
-                StyleguidePlatform.BASE
+            it.each<Styleguide["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web",
+                "base"
             ])("should match snapshot when styleguide platform is %s",
                 styleguidePlatform => {
                     expect(
@@ -101,12 +96,12 @@ describe("styleguideColorHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                StyleguidePlatform.ANDROID,
-                StyleguidePlatform.IOS,
-                StyleguidePlatform.MAC_OS,
-                StyleguidePlatform.WEB,
-                StyleguidePlatform.BASE
+            it.each<Styleguide["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web",
+                "base"
             ])("should match snapshot when styleguide platform is %s",
                 styleguidePlatform => {
                     expect(

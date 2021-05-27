@@ -1,42 +1,37 @@
+import { Styleguide, StyleguideSpacingTokenCreatedEvent, StyleguideSpacingTokenUpdatedEvent } from "@zeplin/sdk";
+
 import { styleguideSpacingTokenHandler } from "./styleguideSpacingTokenHandler";
-import {
-    StyleguidePlatform,
-    StyleguideSpacingTokenCreateEvent,
-    StyleguideSpacingTokenUpdateEvent
-} from "../../../../adapters/zeplin/types";
 
 type GetDummyEventParams = {
     action?: string;
     spacingTokenId?: string;
     spacingTokenName?: string;
-    styleguidePlatform?: string;
+    styleguidePlatform?: Styleguide["platform"];
 }
 
 function getDummyEvent({
     action = "created",
     spacingTokenId = "spacingTokenId",
     spacingTokenName = "spacingTokenName",
-    styleguidePlatform = StyleguidePlatform.WEB
-}: GetDummyEventParams = {}): StyleguideSpacingTokenCreateEvent | StyleguideSpacingTokenUpdateEvent {
+    styleguidePlatform = "web"
+}: GetDummyEventParams = {}): StyleguideSpacingTokenCreatedEvent | StyleguideSpacingTokenUpdatedEvent {
     return {
-        payload: {
-            action,
-            context: {
-                styleguide: {
-                    id: "styleguideId",
-                    name: "styleguideName",
-                    platform: styleguidePlatform
-                }
-            },
-            resource: {
+        action,
+        context: {
+            styleguide: {
+                id: "styleguideId",
+                name: "styleguideName",
+                platform: styleguidePlatform
+            }
+        },
+        resource: {
+            id: spacingTokenId,
+            data: {
                 id: spacingTokenId,
-                data: {
-                    id: spacingTokenId,
-                    name: spacingTokenName
-                }
+                name: spacingTokenName
             }
         }
-    } as StyleguideSpacingTokenCreateEvent | StyleguideSpacingTokenUpdateEvent;
+    } as StyleguideSpacingTokenCreatedEvent | StyleguideSpacingTokenUpdatedEvent;
 }
 
 describe("styleguideSpacingTokenHandler", () => {
@@ -64,12 +59,12 @@ describe("styleguideSpacingTokenHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                StyleguidePlatform.ANDROID,
-                StyleguidePlatform.IOS,
-                StyleguidePlatform.MAC_OS,
-                StyleguidePlatform.WEB,
-                StyleguidePlatform.BASE
+            it.each<Styleguide["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web",
+                "base"
             ])("should match snapshot when styleguide platform is %s",
                 styleguidePlatform => {
                     expect(
@@ -101,12 +96,12 @@ describe("styleguideSpacingTokenHandler", () => {
                 ).toMatchSnapshot();
             });
 
-            it.each([
-                StyleguidePlatform.ANDROID,
-                StyleguidePlatform.IOS,
-                StyleguidePlatform.MAC_OS,
-                StyleguidePlatform.WEB,
-                StyleguidePlatform.BASE
+            it.each<Styleguide["platform"]>([
+                "android",
+                "ios",
+                "macos",
+                "web",
+                "base"
             ])("should match snapshot when styleguide platform is %s",
                 styleguidePlatform => {
                     expect(

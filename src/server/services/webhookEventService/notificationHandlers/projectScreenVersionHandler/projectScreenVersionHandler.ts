@@ -1,8 +1,8 @@
 import { createHash } from "crypto";
+import { ProjectScreenVersionCreatedEvent, WebhookEvent } from "@zeplin/sdk";
 
-import { NotificationHandler } from "../NotificationHandler";
+import { GroupingKeyParams, NotificationHandler } from "../NotificationHandler";
 import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
-import { ScreenVersionCreateEvent, WebhookEvent } from "../../../../adapters/zeplin/types";
 import { MEDIUM_DELAY } from "../constants";
 import { md } from "../md";
 import { getRandomEmoji } from "../getRandomEmoji";
@@ -10,19 +10,17 @@ import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 
 const IMAGE_LIMIT = 5;
 
-class ProjectScreenVersionHandler extends NotificationHandler<ScreenVersionCreateEvent> {
+class ProjectScreenVersionHandler extends NotificationHandler<ProjectScreenVersionCreatedEvent> {
     delay = MEDIUM_DELAY;
 
-    private getText(events: ScreenVersionCreateEvent[]): string {
+    private getText(events: ProjectScreenVersionCreatedEvent[]): string {
         const [{
-            payload: {
-                context: {
-                    screen: {
-                        name: screenName
-                    },
-                    project: {
-                        name: projectName
-                    }
+            context: {
+                screen: {
+                    name: screenName
+                },
+                project: {
+                    name: projectName
                 }
             }
         }] = events;
@@ -31,25 +29,23 @@ class ProjectScreenVersionHandler extends NotificationHandler<ScreenVersionCreat
             : md`**${events.length} screens** are updated in _${projectName}_! ${getRandomEmoji()}`;
     }
 
-    private getImages(events: ScreenVersionCreateEvent[]): string[] {
+    private getImages(events: ProjectScreenVersionCreatedEvent[]): string[] {
         // Take last 5 screen images
         return events
-            .sort((e1, e2) => e2.payload.timestamp - e1.payload.timestamp)
-            .map(event => event.payload.context.screen.image.thumbnails?.small)
+            .sort((e1, e2) => e2.timestamp - e1.timestamp)
+            .map(event => event.context.screen.image.thumbnails?.small)
             .filter((val): val is string => Boolean(val))
             .slice(0, IMAGE_LIMIT);
     }
 
-    private getWebappURL(events: ScreenVersionCreateEvent[]): string {
+    private getWebappURL(events: ProjectScreenVersionCreatedEvent[]): string {
         const [{
-            payload: {
-                context: {
-                    screen: {
-                        id: screenId
-                    },
-                    project: {
-                        id: projectId
-                    }
+            context: {
+                screen: {
+                    id: screenId
+                },
+                project: {
+                    id: projectId
                 }
             }
         }] = events;
@@ -62,23 +58,21 @@ class ProjectScreenVersionHandler extends NotificationHandler<ScreenVersionCreat
         } else {
             pathname = `project/${projectId}`;
             searchParams = {
-                sid: events.map(event => event.payload.context.screen.id)
+                sid: events.map(event => event.context.screen.id)
             };
         }
 
         return getWebAppURL(pathname, searchParams);
     }
 
-    private getZeplinAppURIURI(events: ScreenVersionCreateEvent[]): string {
+    private getZeplinAppURIURI(events: ProjectScreenVersionCreatedEvent[]): string {
         const [{
-            payload: {
-                context: {
-                    screen: {
-                        id: screenId
-                    },
-                    project: {
-                        id: projectId
-                    }
+            context: {
+                screen: {
+                    id: screenId
+                },
+                project: {
+                    id: projectId
                 }
             }
         }] = events;
@@ -96,39 +90,36 @@ class ProjectScreenVersionHandler extends NotificationHandler<ScreenVersionCreat
             resource = "project";
             searchParams = {
                 pid: projectId,
-                sids: events.map(event => event.payload.context.screen.id)
+                sids: events.map(event => event.context.screen.id)
             };
         }
 
         return getRedirectURLForZeplinApp(resource, searchParams);
     }
 
-    getGroupingKey(event: ScreenVersionCreateEvent): string {
-        const {
-            webhookId,
-            payload: {
-                event: eventType,
-                action,
-                resource: {
-                    data: {
-                        commit
-                    }
+    getGroupingKey({
+        webhookId,
+        event: {
+            event: eventType,
+            action,
+            resource: {
+                data: {
+                    commit
                 }
             }
-        } = event;
+        }
+    }: GroupingKeyParams<ProjectScreenVersionCreatedEvent>): string {
         const hashedCommit = commit?.message
             ? createHash("md5").update(commit.message).digest("hex")
             : "no-commit";
         return `${webhookId}:${hashedCommit}:${eventType}:${action}`;
     }
 
-    getTeamsMessage(events: ScreenVersionCreateEvent[]): MessageCard {
+    getTeamsMessage(events: ProjectScreenVersionCreatedEvent[]): MessageCard {
         const [{
-            payload: {
-                resource: {
-                    data: {
-                        commit
-                    }
+            resource: {
+                data: {
+                    commit
                 }
             }
         }] = events;
@@ -149,8 +140,8 @@ class ProjectScreenVersionHandler extends NotificationHandler<ScreenVersionCreat
         });
     }
 
-    shouldHandleEvent(event: WebhookEvent): event is ScreenVersionCreateEvent {
-        return event.payload.action === "created";
+    shouldHandleEvent(event: WebhookEvent): event is ProjectScreenVersionCreatedEvent {
+        return event.action === "created";
     }
 }
 
