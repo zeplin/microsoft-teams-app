@@ -4,6 +4,13 @@ import { ProjectScreenVersionCreatedEvent } from "@zeplin/sdk";
 type GetDummyEventParams = {
     screenId?: string;
     screenName?: string;
+    screenVariant?: {
+        value: string;
+        group: {
+            id: string;
+            name: string;
+        };
+    };
     imageUrl?: string;
     commitMessage?: string;
     timestamp?: number;
@@ -12,6 +19,7 @@ type GetDummyEventParams = {
 function getDummyEvent({
     screenId = "screenId",
     screenName = "screenName",
+    screenVariant = undefined,
     imageUrl = "http://placehold.it/200",
     commitMessage = "",
     timestamp = 1
@@ -27,7 +35,8 @@ function getDummyEvent({
                     thumbnails: {
                         small: imageUrl
                     }
-                }
+                },
+                variant: screenVariant
             },
             project: {
                 id: "projectId",
@@ -83,6 +92,20 @@ describe("projectScreenVersionHandler", () => {
             expect(projectScreenVersionHandler.getTeamsMessage([
                 getDummyEvent(),
                 getDummyEvent({ screenId: "screenId2" })
+            ])).toMatchSnapshot();
+        });
+
+        it("should match snapshot when there is screen variant", () => {
+            expect(projectScreenVersionHandler.getTeamsMessage([
+                getDummyEvent({
+                    screenVariant: {
+                        value: "Dark",
+                        group: {
+                            id: "screenVariantGroupId",
+                            name: "Manage Zeplin Connector"
+                        }
+                    }
+                })
             ])).toMatchSnapshot();
         });
     });

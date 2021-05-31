@@ -17,7 +17,8 @@ class ProjectNoteHandler extends NotificationHandler<ProjectNoteCreatedEvent> {
                     name: projectName
                 },
                 screen: {
-                    name: screenName
+                    name: screenName,
+                    variant: screenVariant
                 }
             },
             actor: {
@@ -26,7 +27,10 @@ class ProjectNoteHandler extends NotificationHandler<ProjectNoteCreatedEvent> {
                 }
             }
         } = event;
-        return md`**${username as string}** added a note on _${screenName}_ screen in _${projectName}_. ${getRandomEmoji()}`;
+
+        return (screenVariant)
+            ? md`**${username as string}** added a note on _${screenVariant.value}_ variant of _${screenVariant.group.name}_ in _${projectName}_. ${getRandomEmoji()}`
+            : md`**${username as string}** added a note on _${screenName}_ screen in _${projectName}_. ${getRandomEmoji()}`;
     }
 
     private getSectionText(event: ProjectNoteCreatedEvent): string {

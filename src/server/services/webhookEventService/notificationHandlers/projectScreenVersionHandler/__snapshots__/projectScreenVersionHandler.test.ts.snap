@@ -125,3 +125,43 @@ exports[`projectScreenVersionHandler getTeamsMessage should match snapshot when 
   ]
 }
 `;
+
+exports[`projectScreenVersionHandler getTeamsMessage should match snapshot when there is screen variant 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "**Dark** variant of **Manage Zeplin Connector** is updated in _projectName_! 🗞",
+  "sections": [
+    {
+      "images": [
+        {
+          "image": "http://placehold.it/200",
+          "title": "Section Image"
+        }
+      ]
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fscreen%3Fpid%3DprojectId%26sid%3DscreenId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId/screen/screenId?ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;

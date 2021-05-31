@@ -17,16 +17,21 @@ class ProjectScreenVersionHandler extends NotificationHandler<ProjectScreenVersi
         const [{
             context: {
                 screen: {
-                    name: screenName
+                    name: screenName,
+                    variant: screenVariant
                 },
                 project: {
                     name: projectName
                 }
             }
         }] = events;
-        return events.length === 1
-            ? md`**${screenName}** is updated in _${projectName}_! ${getRandomEmoji()}`
-            : md`**${events.length} screens** are updated in _${projectName}_! ${getRandomEmoji()}`;
+
+        if (events.length > 1) {
+            return md`**${events.length} screens** are updated in _${projectName}_! ${getRandomEmoji()}`;
+        }
+        return (screenVariant)
+            ? md`**${screenVariant.value}** variant of **${screenVariant.group.name}** is updated in _${projectName}_! ${getRandomEmoji()}`
+            : md`**${screenName}** is updated in _${projectName}_! ${getRandomEmoji()}`;
     }
 
     private getImages(events: ProjectScreenVersionCreatedEvent[]): string[] {

@@ -19,7 +19,8 @@ class ProjectNoteCommentHandler extends NotificationHandler<ProjectNoteCommentCr
                     name: projectName
                 },
                 screen: {
-                    name: screenName
+                    name: screenName,
+                    variant: screenVariant
                 },
                 note: {
                     order
@@ -31,7 +32,9 @@ class ProjectNoteCommentHandler extends NotificationHandler<ProjectNoteCommentCr
                 }
             }
         } = event;
-        return md`**${username as string}** replied to note _#${order}_ on _${screenName}_ screen in _${projectName}_. ${getRandomEmoji()}`;
+        return (screenVariant)
+            ? md`**${username as string}** replied to note _#${order}_ on _${screenVariant.value}_ variant of _${screenVariant.group.name}_ in _${projectName}_. ${getRandomEmoji()}`
+            : md`**${username as string}** replied to note _#${order}_ on _${screenName}_ screen in _${projectName}_. ${getRandomEmoji()}`;
     }
 
     private getSectionText(event: ProjectNoteCommentCreatedEvent): string {
