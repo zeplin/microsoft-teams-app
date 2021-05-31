@@ -20,19 +20,19 @@ import { pingHandler } from "./pingHandler";
 const notificationMap: Record<string, NotificationHandler<WebhookEvent>> = {
     "ping": pingHandler,
     "project.color": projectColorHandler,
-    "project.note": styleguideColorHandler,
-    "project.note.comment": projectNoteHandler,
-    "project.spacing_token": projectNoteCommentHandler,
+    "project.note": projectNoteHandler,
+    "project.note.comment": projectNoteCommentHandler,
+    "project.spacing_token": projectSpacingTokenHandler,
     "project.text_style": projectTextStyleHandler,
-    "project.member": styleguideTextStyleHandler,
-    "project.component": projectSpacingTokenHandler,
-    "project.screen": styleguideSpacingTokenHandler,
-    "project.screen.version": projectMemberHandler,
-    "styleguide.color": styleguideMemberHandler,
-    "styleguide.text_style": projectComponentHandler,
-    "styleguide.spacing_token": styleguideComponentHandler,
-    "styleguide.member": projectScreenHandler,
-    "styleguide.component": projectScreenVersionHandler
+    "project.member": projectMemberHandler,
+    "project.component": projectComponentHandler,
+    "project.screen": projectScreenHandler,
+    "project.screen.version": projectScreenVersionHandler,
+    "styleguide.color": styleguideColorHandler,
+    "styleguide.text_style": styleguideTextStyleHandler,
+    "styleguide.spacing_token": styleguideSpacingTokenHandler,
+    "styleguide.member": styleguideMemberHandler,
+    "styleguide.component": styleguideComponentHandler
 } as const;
 
 export function getNotificationHandler(eventType: string): NotificationHandler<WebhookEvent> {

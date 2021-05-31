@@ -73,7 +73,7 @@ configurationRouter.put(
                     zeplin: req.body.zeplin
                 },
                 {
-                    accessToken: String(req.headers.authorization)
+                    accessToken: String(req.headers.authorization).slice(BEARER_PREFIX_LENGTH)
                 }
             );
             res.json(result);
@@ -95,7 +95,7 @@ configurationRouter.delete(
             const result = await configurationService.delete(
                 req.params.configurationId,
                 {
-                    accessToken: String(req.headers.authorization)
+                    accessToken: String(req.headers.authorization).slice(BEARER_PREFIX_LENGTH)
                 }
             );
             res.json(result);
@@ -117,7 +117,7 @@ configurationRouter.get(
             const result = await configurationService.get(
                 req.params.configurationId,
                 {
-                    accessToken: String(req.headers.authorization)
+                    accessToken: String(req.headers.authorization).slice(BEARER_PREFIX_LENGTH)
                 }
             );
             res.json(result);
