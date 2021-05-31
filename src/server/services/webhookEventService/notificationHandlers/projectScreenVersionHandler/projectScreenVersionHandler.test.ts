@@ -108,5 +108,66 @@ describe("projectScreenVersionHandler", () => {
                 })
             ])).toMatchSnapshot();
         });
+
+        it("should match snapshot when there are more than one events from the same screen variant group", () => {
+            expect(projectScreenVersionHandler.getTeamsMessage([
+                getDummyEvent({
+                    screenVariant: {
+                        value: "Dark",
+                        group: {
+                            id: "screenVariantGroupId",
+                            name: "Manage Zeplin Connector"
+                        }
+                    }
+                }),
+                getDummyEvent({
+                    screenVariant: {
+                        value: "Mobile",
+                        group: {
+                            id: "screenVariantGroupId",
+                            name: "Manage Zeplin Connector"
+                        }
+                    }
+                })
+            ])).toMatchSnapshot();
+        });
+
+        it("should match snapshot when there are more than one events from different screen variant groups", () => {
+            expect(projectScreenVersionHandler.getTeamsMessage([
+                getDummyEvent({
+                    screenVariant: {
+                        value: "Dark",
+                        group: {
+                            id: "screenVariantGroupId",
+                            name: "Manage Zeplin Connector"
+                        }
+                    }
+                }),
+                getDummyEvent({
+                    screenVariant: {
+                        value: "Mobile",
+                        group: {
+                            id: "screenVariantGroup2Id",
+                            name: "Manage Zeplin Connector"
+                        }
+                    }
+                })
+            ])).toMatchSnapshot();
+        });
+
+        it("should match snapshot when there are more than one events from screen variant groups with one without a variant group", () => {
+            expect(projectScreenVersionHandler.getTeamsMessage([
+                getDummyEvent({
+                    screenVariant: {
+                        value: "Dark",
+                        group: {
+                            id: "screenVariantGroupId",
+                            name: "Manage Zeplin Connector"
+                        }
+                    }
+                }),
+                getDummyEvent()
+            ])).toMatchSnapshot();
+        });
     });
 });
