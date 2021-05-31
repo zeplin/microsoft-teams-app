@@ -17,7 +17,10 @@ import { WebhookResourceTypeEnum } from "../../enums";
 interface ConfigurationResponse {
     id: string;
     zeplin: {
-        webhook: ProjectWebhook | StyleguideWebhook;
+        webhook: Omit<ProjectWebhook | StyleguideWebhook, "events">
+        & {
+            events: (StyleguideWebhookEventEnum | ProjectWebhookEventEnum)[];
+        };
         resource: (Project | Styleguide) & {
             type: WebhookResourceTypeEnum;
         };
@@ -349,7 +352,10 @@ class ConfigurationService {
         return {
             id: configurationId,
             zeplin: {
-                webhook,
+                webhook: {
+                    ...webhook,
+                    events: [...webhook.events]
+                },
                 resource: {
                     ...resource,
                     type: configuration.zeplin.resource.type
