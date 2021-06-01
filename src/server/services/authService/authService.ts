@@ -15,18 +15,19 @@ interface AuthToken {
 }
 
 class AuthService {
-    zeplin = new Zeplin();
-
     getAuthorizationUrl(): string {
-        return this.zeplin.authorization.getAuthorizationUrl({
+        const zeplin = new Zeplin();
+        return zeplin.authorization.getAuthorizationUrl({
             redirectUri: REDIRECT_URI,
             clientId: ZEPLIN_CLIENT_ID as string
         });
     }
 
     async createToken(params: TokenCreateParams): Promise<AuthToken> {
+        const zeplin = new Zeplin();
+
         if ("code" in params) {
-            const { data } = await this.zeplin.authorization.createToken({
+            const { data } = await zeplin.authorization.createToken({
                 code: params.code,
                 clientId: ZEPLIN_CLIENT_ID as string,
                 clientSecret: ZEPLIN_CLIENT_SECRET as string,
@@ -34,7 +35,8 @@ class AuthService {
             });
             return data;
         }
-        const { data } = await this.zeplin.authorization.refreshToken({
+
+        const { data } = await zeplin.authorization.refreshToken({
             refreshToken: params.refreshToken,
             clientId: ZEPLIN_CLIENT_ID as string,
             clientSecret: ZEPLIN_CLIENT_SECRET as string
