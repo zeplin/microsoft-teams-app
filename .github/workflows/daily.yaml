@@ -5,6 +5,9 @@ on:
 
 name: Daily
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   audit:
     name: Audit
