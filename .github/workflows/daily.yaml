@@ -33,7 +33,7 @@ jobs:
           git config --global user.email zeplin-dev@users.noreply.github.com
 
       - name: Install dev-tools
-        run: npm i git+ssh://git@github.com/zeplin/dev-tools.git#v3.x.x
+        run: npm i -g git+ssh://git@github.com/zeplin/dev-tools.git#v3.x.x
 
       - name: Run audit fix
         run: npm run audit-fix
