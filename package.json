@@ -15,7 +15,8 @@
     "build:package": "scripts/build_package.sh",
     "start": "pm2 startOrReload pm2.json --no-daemon",
     "lint": "eslint \"./**/*{.ts,.tsx}\"",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "audit-fix": "HUSKY_SKIP_HOOKS=1 dev-tools npm-audit-fix --production --team-reviewers dx"
   },
   "repository": {
     "type": "git",

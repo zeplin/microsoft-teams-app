@@ -1,0 +1,35 @@
+on:
+  schedule:
+    - cron:  '0 0 * * *'
+
+name: Daily
+
+jobs:
+  audit:
+    name: Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Set SSH
+        uses: webfactory/ssh-agent@v0.5.2
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      - name: Set git config
+        run: |
+          git config --global user.name zeplin-dev
+          git config --global user.email zeplin-dev@users.noreply.github.com
+
+      - name: Install dev-tools
+        run: npm i git+ssh://git@github.com/zeplin/dev-tools.git#v3.x.x
+
+      - name: Run audit fix
+        run: npm run audit-fix

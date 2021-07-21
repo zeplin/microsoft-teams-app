@@ -2,8 +2,6 @@ on:
   push:
     branches:
       - '**'
-  schedule:
-      - cron:  '0 0 * * *'
 
 name: Check Code Quality
 
