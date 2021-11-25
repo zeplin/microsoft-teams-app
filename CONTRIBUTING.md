@@ -24,11 +24,11 @@ For each bug report, please try to include the following information:
 - Steps to reproduce
   - Be specific
   - Share sample text output/screenshot/recording if possible
-  
-## Getting started
-This app is written in [TypeScript](https://www.typescriptlang.org/) and runs on [Node.js](https://nodejs.org). Redis and MongoDB are required to run the app but, no worries, there's a docker configuration to start them up in your development environment. 
 
-Assuming you have Node.js v12+ and Docker installed on your system and you've cloned the repository, you can start with setting up the development environment.
+## Getting started
+This app is written in [TypeScript](https://www.typescriptlang.org/) and runs on [Node.js](https://nodejs.org). Redis and MongoDB are required to run the app but, no worries, there's a docker configuration to start them up in your development environment.
+
+Assuming you have Node.js v16+ and Docker installed on your system and you've cloned the repository, you can start with setting up the development environment.
 
 You can verify that Docker is running by running `docker run hello-world` in your terminal. This will test your Docker installation by running the [hello-world](https://hub.docker.com/_/hello-world/) image. If you hit any issues, you can get help from [this page](https://docs.docker.com/get-started/).
 
@@ -45,7 +45,7 @@ $ npm test
 Once you're done with bootstrapping, the next step is to run the app locally. In order to run the app on your development environment, you will need:
  - Zeplin app
  - Office 365 connector
- 
+
 ☝️ *For both your Zeplin app and Microsoft Teams connector, you will need a publicly available URL. [ngrok](https://ngrok.com/) (or any similar tool) helps a lot by tunneling traffic targeting a public URL to your development environment.*
 
 ### Configuring a Zeplin app
@@ -58,7 +58,7 @@ Please note down the client id and secret of the app, you will need them later.
 ![](https://user-images.githubusercontent.com/721036/95141775-e78f1e00-0726-11eb-8609-d7a1706e3cad.png)
 
 ### Configuring an Office 365 connector
-Office 365 Connectors allow you to create a customized configuration page for your app to create incoming webhooks in Microsoft Teams. Microsoft Teams app use these incoming webhooks to post messages to the channels. 
+Office 365 Connectors allow you to create a customized configuration page for your app to create incoming webhooks in Microsoft Teams. Microsoft Teams app use these incoming webhooks to post messages to the channels.
 
 You can create a connector via [Connectors Developer Dashboard](https://aka.ms/ConnectorsDashboard). Make sure you set the following parameters correctly:
    - **Configuration page for your Connector**: `https://DOMAIN/`
@@ -70,7 +70,7 @@ Please note down the ID of the connector, you will use it in the next step.
 You can visit Microsoft Teams' developer platform [docs](https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-creating) for more details.
 
 ### Running the app locally
-With a Zeplin app and an Office 365 Connector, you can follow the steps below to run the app locally now:  
+With a Zeplin app and an Office 365 Connector, you can follow the steps below to run the app locally now:
 
 1. Run `npm run dev:tunnel` to create a tunnel to localhost (i.e., `balloons.ngrok.io -> localhost` where `balloons.ngrok.io` is `DOMAIN`)
 2. Create the `.env` file by running: `cp .env.example .env`
@@ -81,7 +81,7 @@ With a Zeplin app and an Office 365 Connector, you can follow the steps below to
      - **NEXT_PRIVATE_ZEPLIN_CLIENT_ID**: Client secret of your Zeplin app.
      - **NEXT_PRIVATE_CONNECTOR_ID**: The connector ID that you get in the previous step.
      - **NEXT_PRIVATE_APPLICATION_ID**: A UUID (or GUID) generated for your application.
-4. Run `npm run dev` to start the application server locally. 
+4. Run `npm run dev` to start the application server locally.
 4. Next, run `npm run build:package` to create a zip package for Microsoft Teams.
 5. Upload the `dist/package.zip` package to your Microsoft Teams organization.
 
