@@ -50,10 +50,11 @@ jobs:
       - name: Set `TARBALL` variable
         run: echo "TARBALL=microsoft-teams-app-prod-${NEXT_PUBLIC_VERSION}.tar.gz" >> $GITHUB_ENV
 
-      - name: Use Node.js 12.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 16.x
+          cache: 'npm'
 
       - name: Install npm cache
         uses: actions/cache@v2
