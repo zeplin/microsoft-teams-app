@@ -25,6 +25,11 @@ interface SentryGetParams {
     version: string;
 }
 
+interface ErrorTracker {
+    captureError: (error: ServerError, extra: Extra) => void;
+    flush: () => Promise<void> ;
+}
+
 const getSentry = ({ sentryDSN, environment, version }: SentryGetParams): ErrorTracker => {
     init({
         dsn: sentryDSN,
@@ -92,13 +97,13 @@ interface ErrorTrackerGetParams {
     version: string;
 }
 
-export const getErrorTracker = ({ sentryDSN, environment, version }: ErrorTrackerGetParams): ErrorTracker => (
+const getErrorTracker = ({ sentryDSN, environment, version }: ErrorTrackerGetParams): ErrorTracker => (
     sentryDSN === undefined
         ? getConsoleTracker()
         : getSentry({ sentryDSN, environment, version })
 );
 
-export interface ErrorTracker {
-    captureError: (error: ServerError, extra: Extra) => void;
-    flush: () => Promise<void> ;
-}
+export {
+    getErrorTracker,
+    ErrorTracker
+};

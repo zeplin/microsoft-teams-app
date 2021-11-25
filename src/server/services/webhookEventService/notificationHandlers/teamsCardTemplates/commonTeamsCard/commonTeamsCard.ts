@@ -1,6 +1,11 @@
 import { MessageCard } from "../messageCardTypes";
 
-type CommonTeamsCardParams = {
+type SectionParams = {
+    title?: string;
+    text: string;
+};
+
+export type CommonTeamsCardParams = {
     title?: string;
     text: string;
     section?: SectionParams;
@@ -10,11 +15,6 @@ type CommonTeamsCardParams = {
         url: string;
     }[];
 }
-
-type SectionParams = {
-    title?: string;
-    text: string;
-};
 
 export function commonTeamsCard({
     title,

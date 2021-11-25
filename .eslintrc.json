@@ -28,12 +28,26 @@
     "rules": {
         "no-undefined": "off",
         "no-magic-numbers": "off",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["error"],
         "@typescript-eslint/no-magic-numbers": ["warn", { "ignore": [-1, 0, 1], "ignoreEnums": true }],
         "@typescript-eslint/no-unused-vars": "error",
         "no-unused-vars": "off", // @typescript-eslint/recommended have it
         "@typescript-eslint/no-for-in-array": "error",
         "no-console": "error",
-        "@typescript-eslint/interface-name-prefix": ["error", { "prefixWithI": "never" }],
+        "@typescript-eslint/naming-convention": [
+            "error",
+            {
+                "selector": "interface",
+                "format": [
+                    "PascalCase"
+                ],
+                "custom": {
+                    "regex": "^I[A-Z]",
+                    "match": false
+                }
+            }
+        ],
         "valid-jsdoc": "off",
         "@typescript-eslint/camelcase": "off",
         "class-methods-use-this": "off",
