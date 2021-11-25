@@ -16,7 +16,7 @@ class App {
 
     private handleHealthCheck: RequestHandler = (req, res) => {
         res.json({ status: "pass" });
-    }
+    };
 
     async init(config: Config): Promise<void> {
         await initAdapters(config);

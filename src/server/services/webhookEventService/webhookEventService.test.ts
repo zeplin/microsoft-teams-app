@@ -10,7 +10,7 @@ import { NotificationHandler } from "./notificationHandlers/NotificationHandler"
 
 jest.mock("../../adapters/messageQueue", () => ({
     messageQueue: {
-        process: jest.fn((handler: Function): Promise<void> => {
+        process: jest.fn((handler: (() => void)): Promise<void> => {
             handler();
             return Promise.resolve();
         }),

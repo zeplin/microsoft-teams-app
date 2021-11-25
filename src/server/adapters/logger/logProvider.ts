@@ -13,6 +13,12 @@ interface LogDNAParams {
     environment: string;
 }
 
+interface LogProvider {
+    info(message: string, extra: Extra): void;
+    error(message: string, extra: Extra): void;
+    flush: () => Promise<void> ;
+}
+
 const getConsole = (): LogProvider => ({
     info: (message, { meta }): void => {
         console.log(chalk`[{cyan INFO}]: ${message}`);
@@ -52,16 +58,15 @@ interface LogProviderGetParams {
     logDNAApiKey?: string;
     environment: string;
 }
-export const getLogProvider = ({ logDNAApiKey, environment }: LogProviderGetParams): LogProvider => {
+
+const getLogProvider = ({ logDNAApiKey, environment }: LogProviderGetParams): LogProvider => {
     if (logDNAApiKey) {
         return getLogDNA({ apiKey: logDNAApiKey, environment });
     }
     return getConsole();
 };
 
-export interface LogProvider {
-    info(message: string, extra: Extra): void;
-    error(message: string, extra: Extra): void;
-    flush: () => Promise<void> ;
-}
-
+export {
+    getLogProvider,
+    LogProvider
+};
