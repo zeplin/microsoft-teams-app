@@ -39,8 +39,8 @@ const getLogDNA = ({ apiKey, environment }: LogDNAParams): LogProvider => {
         }
     );
     return {
-        info: (message, { meta }): void => logger.info(message, { meta }),
-        error: (message, { meta }): void => logger.error(message, { meta }),
+        info: (message, { meta }): void => logger.info?.(message, { meta }),
+        error: (message, { meta }): void => logger.error?.(message, { meta }),
         flush: async (): Promise<void> => {
             logger.flush();
             await once(logger, "cleared");

@@ -34,7 +34,9 @@ export class Zeplin extends ZeplinApi {
                 basePath: Zeplin.baseURL
             }),
             Zeplin.baseURL,
-            axiosInstance
+            // TODO: Remove never when @zeplin/sdk updates its Axios version
+            // There is a mismatch between AxiosInstance type
+            axiosInstance as never
         );
     }
 }
