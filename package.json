@@ -61,6 +61,8 @@
     "redlock": "^4.1.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
     "@testing-library/react": "^10.4.7",
     "@types/bull": "^3.14.0",
     "@types/cls-hooked": "^4.3.3",
