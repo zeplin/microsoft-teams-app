@@ -25,7 +25,7 @@
 
 ### Code review
 
-- [ ] Pull request has a descriptibe title and it follows [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/) format and breaking change indicator if required (You can use the [Angular convention](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#type))
+- [ ] Pull request has a descriptive title and it follows [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/) format and breaking change indicator if required (You can use the [Angular convention](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#type))
 - [ ] Screenshots or screencasts are attached as necessary
 - [ ] "Ready for review" label attached and reviewers assigned
 - [ ] Changes have been reviewed by at least one other contributor
