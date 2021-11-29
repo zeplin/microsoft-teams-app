@@ -1,7 +1,11 @@
 on:
-  push:
+  workflow_run:
+    workflows:
+      - "Check Code Quality"
     branches:
-      - main
+      - "**"
+    types:
+      - completed
 
 name: Release Dev
 
@@ -43,6 +47,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
 
       - name: Set `NEXT_PUBLIC_VERSION` variable
         run: echo "NEXT_PUBLIC_VERSION=0.0.0-${GITHUB_SHA}" >> $GITHUB_ENV
