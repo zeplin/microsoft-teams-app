@@ -3,7 +3,7 @@ on:
     workflows:
       - "Check Code Quality"
     branches:
-      - "**"
+      - main
     types:
       - completed
 
