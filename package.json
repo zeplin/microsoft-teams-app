@@ -16,7 +16,10 @@
     "start": "pm2 startOrReload pm2.json --no-daemon",
     "lint": "eslint \"./**/*{.ts,.tsx}\"",
     "postinstall": "patch-package",
-    "audit-fix": "HUSKY_SKIP_HOOKS=1 dev-tools npm-audit-fix --production --team-reviewers dx"
+    "audit-fix": "HUSKY_SKIP_HOOKS=1 dev-tools npm-audit-fix --production --team-reviewers dx",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged",
+    "pre-push": "npm run test"
   },
   "repository": {
     "type": "git",
@@ -76,7 +79,7 @@
     "@zeplin/eslint-config": "^2.2.0",
     "eslint": "^8.3.0",
     "eslint-plugin-react": "^7.27.1",
-    "husky": "^4.2.5",
+    "husky": "^7.0.0",
     "jest": "^26.1.0",
     "lint-staged": "^10.2.11",
     "nock": "^13.0.3",
@@ -87,12 +90,6 @@
   },
   "lint-staged": {
     "**/*{.ts,.tsx}": "eslint --fix --max-warnings 0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run test"
-    }
   },
   "jest": {
     "projects": [
