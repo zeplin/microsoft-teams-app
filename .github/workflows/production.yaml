@@ -51,7 +51,7 @@ jobs:
         run: echo "TARBALL=microsoft-teams-app-prod-${NEXT_PUBLIC_VERSION}.tar.gz" >> $GITHUB_ENV
 
       - name: Use Node.js 16.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: 16.x
           cache: 'npm'
