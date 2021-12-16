@@ -50,4 +50,14 @@ export class ServerError extends Error {
         result.stack = error.stack;
         return result;
     }
+
+    static fromUnknown(error: unknown): ServerError {
+        if (error instanceof ServerError) {
+            return error;
+        }
+        if (error instanceof Error) {
+            return ServerError.fromError(error);
+        }
+        return new ServerError(`Unknown error: ${error}`);
+    }
 }

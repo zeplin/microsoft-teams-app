@@ -1,5 +1,6 @@
 import { messageQueue, logger, loggerContext } from "./adapters";
 import { webhookEventService } from "./services";
+import { ServerError } from "./errors";
 
 export async function initializeQueueListener(): Promise<void> {
     await messageQueue.process(
@@ -19,7 +20,7 @@ export async function initializeQueueListener(): Promise<void> {
                             }
                         );
                     } catch (error) {
-                        logger.error(error);
+                        logger.error(ServerError.fromUnknown(error));
                     }
                 }
             )

@@ -113,7 +113,7 @@ export const useConfigurationCreate = ({
 
                             saveEvent.notifySuccess();
                         } catch (error) {
-                            saveEvent.notifyFailure(error?.message ?? error);
+                            saveEvent.notifyFailure((error as Error)?.message ?? `Unknown error ${error}`);
                         }
                     });
                 });
