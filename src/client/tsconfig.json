@@ -4,5 +4,8 @@
     "./**/*.ts",
     "./**/*.tsx",
     "./next-env.d.ts"
-  ]
+  ],
+  "compilerOptions": {
+    "incremental": true
+  }
 }

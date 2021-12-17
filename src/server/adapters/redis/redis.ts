@@ -98,7 +98,9 @@ class Redis {
 
     async lock(key: string, ttl = DEFAULT_LOCK_TTL): Promise<() => Promise<void>> {
         const instance = await this.locker.lock(key, ttl);
-        return instance.unlock.bind(instance);
+        return async () => {
+            await instance.unlock();
+        };
     }
 }
 

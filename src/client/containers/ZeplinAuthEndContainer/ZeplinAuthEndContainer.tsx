@@ -25,12 +25,8 @@ export const ZeplinAuthEndContainer: FunctionComponent = () => {
                 storage.setAccessToken(accessToken);
                 storage.setRefreshToken(refreshToken);
                 microsoftTeams.authentication.notifySuccess();
-            } catch (e) {
-                if (e.response) {
-                    microsoftTeams.authentication.notifyFailure(e.response.data.message);
-                } else {
-                    microsoftTeams.authentication.notifyFailure(e?.message ?? String(e));
-                }
+            } catch (tokenError) {
+                microsoftTeams.authentication.notifyFailure((tokenError as Error)?.message ?? `Unknown error ${tokenError}`);
             }
         });
     }, []);

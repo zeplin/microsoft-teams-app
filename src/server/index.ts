@@ -2,9 +2,8 @@ import "newrelic";
 
 import { app } from "./app";
 import * as config from "./config";
-import { closeAdapters } from "./adapters";
+import { closeAdapters, logger } from "./adapters";
 import { ServerError } from "./errors";
-import { logger } from "./adapters/logger";
 
 async function drive(): Promise<void> {
     if (!config.validateConfig(config)) {
@@ -21,12 +20,12 @@ async function drive(): Promise<void> {
 }
 
 drive().catch(async error => {
-    logger.error(error);
+    logger.error(ServerError.fromUnknown(error));
 
     try {
         await closeAdapters();
     } catch (closeAdaptersError) {
-        logger.error(closeAdaptersError);
+        logger.error(ServerError.fromUnknown(closeAdaptersError));
     }
 
     // eslint-disable-next-line no-process-exit

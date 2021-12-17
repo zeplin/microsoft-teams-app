@@ -19,7 +19,7 @@ export const useConfigurationDelete = ({ configurationId, isInitialized }: UseCo
                     await deleteConfiguration(configurationId);
                     removeEvent.notifySuccess();
                 } catch (error) {
-                    removeEvent.notifyFailure(error?.message ?? error);
+                    removeEvent.notifyFailure((error as Error)?.message ?? `Unknown error ${error}`);
                 }
             });
         }
