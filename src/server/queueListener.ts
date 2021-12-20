@@ -9,6 +9,15 @@ export async function initializeQueueListener(): Promise<void> {
                 { correlationId: data.correlationId },
                 async () => {
                     try {
+                        logger.info(
+                            "Processing job",
+                            {
+                                meta: {
+                                    data,
+                                    id
+                                }
+                            }
+                        );
                         await webhookEventService.processJob(data);
                         logger.info(
                             "Job processed",
