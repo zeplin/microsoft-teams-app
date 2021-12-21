@@ -1,7 +1,7 @@
 import { GONE, UNAUTHORIZED } from "http-status-codes";
 import { WebhookEvent } from "@zeplin/sdk";
 
-import { messageQueue, requester, Zeplin } from "../../adapters";
+import { logger, messageQueue, requester, Zeplin } from "../../adapters";
 import { configurationRepo, messageJobRepo, webhookEventRepo } from "../../repos";
 import { getNotificationHandler } from "./notificationHandlers";
 import { ServerError } from "../../errors";
@@ -62,7 +62,9 @@ class WebhookEventService {
         const message = notificationHandler.getTeamsMessage(distinctEvents);
 
         try {
+            logger.info("Sending message to teams");
             await requester.post(configuration.microsoftTeams.incomingWebhookUrl, message);
+            logger.info("Message sent to teams");
         } catch (error) {
             if (error instanceof ServerError && error.statusCode === GONE) {
                 await configurationRepo.delete(configuration._id.toHexString());
@@ -125,7 +127,25 @@ class WebhookEventService {
         }
 
         await messageJobRepo.setGroupActiveJobId(groupingKey, deliveryId);
+        logger.info(
+            "Active job set",
+            {
+                meta: {
+                    groupingKey,
+                    deliveryId
+                }
+            }
+        );
         await webhookEventRepo.addEventToGroup(groupingKey, event);
+        logger.info(
+            "Event added to group",
+            {
+                meta: {
+                    groupingKey,
+                    deliveryId
+                }
+            }
+        );
 
         await messageQueue.add(
             {
@@ -135,6 +155,15 @@ class WebhookEventService {
                 correlationId
             },
             { delay: notificationHandler.delay }
+        );
+        logger.info(
+            "Message added to queue",
+            {
+                meta: {
+                    groupingKey,
+                    deliveryId
+                }
+            }
         );
     }
 }
