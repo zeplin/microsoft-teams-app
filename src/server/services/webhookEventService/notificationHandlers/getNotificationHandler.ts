@@ -1,6 +1,7 @@
 import { WebhookEvent } from "@zeplin/sdk";
 
 import { projectColorHandler } from "./projectColorHandler";
+import { projectBoardHandler } from "./projectBoardHandler";
 import { NotificationHandler } from "./NotificationHandler";
 import { styleguideColorHandler } from "./styleguideColorHandler";
 import { projectNoteHandler } from "./projectNoteHandler";
@@ -19,6 +20,7 @@ import { pingHandler } from "./pingHandler";
 
 const notificationMap: Record<string, NotificationHandler<WebhookEvent>> = {
     "ping": pingHandler,
+    "project.board": projectBoardHandler,
     "project.color": projectColorHandler,
     "project.note": projectNoteHandler,
     "project.note.comment": projectNoteCommentHandler,

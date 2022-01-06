@@ -1,20 +1,33 @@
-import { ProjectBoardCreatedEvent, WebhookEvent } from "@zeplin/sdk-berkay-board";
+import { ProjectBoardCreatedEvent, WebhookEvent } from "@zeplin/sdk";
 
-import { NotificationHandler } from "../NotificationHandler";
+import { GroupingKeyParams, NotificationHandler } from "../NotificationHandler";
 import { MessageCard, commonTeamsCard } from "../teamsCardTemplates";
 import { MEDIUM_DELAY } from "../constants";
 import { md } from "../md";
-import { getRandomEmoji } from "../getRandomEmoji";
 import { getRedirectURLForZeplinApp, getWebAppURL } from "../zeplinURL";
 
-class ProjectBoardHandler extends NotificationHandler<ProjectBoardCreatedEvent> {
+type Event = ProjectBoardCreatedEvent;
+
+class ProjectBoardHandler extends NotificationHandler<Event> {
     delay = MEDIUM_DELAY;
 
-    private getText(): string {
-        return md`**Added 5+ nodes, 4+ connectors** to board ! ${getRandomEmoji()}`;
+    private getText(event: Event): string {
+        const {
+            context: {
+                project: {
+                    name: projectName
+                }
+            },
+            actor: {
+                user: {
+                    username
+                }
+            }
+        } = event;
+        return md`${username} built the first flow for ${projectName}. ⤴️`;
     }
 
-    private getWebappURL(event: ProjectBoardCreatedEvent): string {
+    private getWebappURL(event: Event): string {
         const {
             context: {
                 project: {
@@ -26,7 +39,7 @@ class ProjectBoardHandler extends NotificationHandler<ProjectBoardCreatedEvent> 
         return getWebAppURL(`project/${projectId}`);
     }
 
-    private getZeplinAppURIURI(event: ProjectBoardCreatedEvent): string {
+    private getZeplinAppURI(event: Event): string {
         const {
             context: {
                 project: {
@@ -43,12 +56,13 @@ class ProjectBoardHandler extends NotificationHandler<ProjectBoardCreatedEvent> 
         return getRedirectURLForZeplinApp(resource, searchParams);
     }
 
-    getTeamsMessage(event: ProjectBoardCreatedEvent): MessageCard {
+    getTeamsMessage(events: Event[]): MessageCard {
+        const [event] = events;
         return commonTeamsCard({
-            text: this.getText(),
+            text: this.getText(event),
             links: [{
                 title: "Open in App",
-                url: this.getZeplinAppURIURI(event)
+                url: this.getZeplinAppURI(event)
             }, {
                 title: "Open in Web",
                 url: this.getWebappURL(event)
@@ -58,6 +72,11 @@ class ProjectBoardHandler extends NotificationHandler<ProjectBoardCreatedEvent> 
 
     shouldHandleEvent(event: WebhookEvent): event is ProjectBoardCreatedEvent {
         return event.action === "created";
+    }
+
+    // A unique grouping key so that it won't be grouped with any other events
+    getGroupingKey({ deliveryId, webhookId }: GroupingKeyParams<ProjectBoardCreatedEvent>): string {
+        return `${webhookId}:${deliveryId}`;
     }
 }
 
