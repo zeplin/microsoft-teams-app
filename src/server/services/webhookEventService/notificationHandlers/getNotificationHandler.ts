@@ -1,7 +1,6 @@
 import { WebhookEvent } from "@zeplin/sdk";
 
 import { projectColorHandler } from "./projectColorHandler";
-import { projectBoardHandler } from "./projectBoardHandler";
 import { NotificationHandler } from "./NotificationHandler";
 import { styleguideColorHandler } from "./styleguideColorHandler";
 import { projectNoteHandler } from "./projectNoteHandler";
@@ -17,10 +16,10 @@ import { styleguideComponentHandler } from "./styleguideComponentHandler";
 import { projectScreenHandler } from "./projectScreenHandler";
 import { projectScreenVersionHandler } from "./projectScreenVersionHandler";
 import { pingHandler } from "./pingHandler";
+import { projectFlowBoardHandler } from "./projectFlowBoardHandler";
 
 const notificationMap: Record<string, NotificationHandler<WebhookEvent>> = {
     "ping": pingHandler,
-    "project.board": projectBoardHandler,
     "project.color": projectColorHandler,
     "project.note": projectNoteHandler,
     "project.note.comment": projectNoteCommentHandler,
@@ -30,6 +29,7 @@ const notificationMap: Record<string, NotificationHandler<WebhookEvent>> = {
     "project.component": projectComponentHandler,
     "project.screen": projectScreenHandler,
     "project.screen.version": projectScreenVersionHandler,
+    "project.flow_board": projectFlowBoardHandler,
     "styleguide.color": styleguideColorHandler,
     "styleguide.text_style": styleguideTextStyleHandler,
     "styleguide.spacing_token": styleguideSpacingTokenHandler,

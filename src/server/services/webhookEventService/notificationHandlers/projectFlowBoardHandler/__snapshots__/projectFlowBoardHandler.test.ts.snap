@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`projectBoardHandler getTeamsMessage method for created notification should match snapshot when there is only 1 event 1`] = `
+{
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  "text": "testUsername built the first flow for projectName. ⤴️",
+  "sections": [
+    {
+      "text": "Flows in Zeplin provide a bird's-eye view of how screens in a project connect. Learn more.",
+      "images": []
+    }
+  ],
+  "potentialAction": [
+    {
+      "@type": "OpenUri",
+      "name": "Open in App",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fproject%3Fpid%3DprojectId%26ref%3Dmicrosoft-teams"
+        }
+      ]
+    },
+    {
+      "@type": "OpenUri",
+      "name": "Open in Web",
+      "targets": [
+        {
+          "os": "default",
+          "uri": "https://app.zeplin.io/project/projectId?ref=microsoft-teams"
+        }
+      ]
+    }
+  ]
+}
+`;

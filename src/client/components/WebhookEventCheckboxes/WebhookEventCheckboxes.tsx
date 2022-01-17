@@ -59,6 +59,11 @@ const webhookEventCheckboxes: WebhookEvent[] = [
         description: "Note added"
     },
     {
+        id: WebhookEventType.FLOW_BOARD,
+        title: "Flow Boards",
+        description: "Flow added"
+    },
+    {
         id: WebhookEventType.NOTE_COMMENT,
         title: "Replies",
         description: "Replied to note"
