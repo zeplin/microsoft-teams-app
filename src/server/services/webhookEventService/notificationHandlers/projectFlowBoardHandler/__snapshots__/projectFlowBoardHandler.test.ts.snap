@@ -7,7 +7,7 @@ exports[`projectBoardHandler getTeamsMessage method for created notification sho
   "text": "testUsername built the first flow for projectName. ⤴️",
   "sections": [
     {
-      "text": "Flows in Zeplin provide a bird's-eye view of how screens in a project connect. Learn more.",
+      "text": "Flows in Zeplin provide a bird's-eye view of how screens in a project connect. [Learn more.](https://zpl.io/flows)",
       "images": []
     }
   ],
