@@ -16,6 +16,7 @@ import { styleguideComponentHandler } from "./styleguideComponentHandler";
 import { projectScreenHandler } from "./projectScreenHandler";
 import { projectScreenVersionHandler } from "./projectScreenVersionHandler";
 import { pingHandler } from "./pingHandler";
+import { projectFlowBoardHandler } from "./projectFlowBoardHandler";
 
 const notificationMap: Record<string, NotificationHandler<WebhookEvent>> = {
     "ping": pingHandler,
@@ -28,6 +29,7 @@ const notificationMap: Record<string, NotificationHandler<WebhookEvent>> = {
     "project.component": projectComponentHandler,
     "project.screen": projectScreenHandler,
     "project.screen.version": projectScreenVersionHandler,
+    "project.flow_board": projectFlowBoardHandler,
     "styleguide.color": styleguideColorHandler,
     "styleguide.text_style": styleguideTextStyleHandler,
     "styleguide.spacing_token": styleguideSpacingTokenHandler,

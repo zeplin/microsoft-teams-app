@@ -19,6 +19,7 @@ export enum WebhookEventType {
     NOTE = "note",
     NOTE_COMMENT = "note.comment",
     MEMBER = "member",
+    FLOW_BOARD = "flow_board"
 }
 
 export const resourceBasedEvents = {
@@ -31,7 +32,8 @@ export const resourceBasedEvents = {
         WebhookEventType.SPACING_TOKEN,
         WebhookEventType.NOTE,
         WebhookEventType.NOTE_COMMENT,
-        WebhookEventType.MEMBER
+        WebhookEventType.MEMBER,
+        WebhookEventType.FLOW_BOARD
     ],
     [ResourceType.STYLEGUIDE]: [
         WebhookEventType.COMPONENT,
