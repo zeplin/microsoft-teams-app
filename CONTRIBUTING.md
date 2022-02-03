@@ -59,11 +59,11 @@ Please note down the client id and secret of the app, you will need them later.
 
 ### Configuring an Office 365 connector
 Office 365 Connectors allow you to create a customized configuration page for your app to create incoming webhooks in Microsoft Teams. Microsoft Teams app use these incoming webhooks to post messages to the channels.
-
+Easiest way to set up your Microsoft developer account is to create a developer sandbox account from [Microsoft Developer platform](https://developer.microsoft.com/en-us/)
 You can create a connector via [Connectors Developer Dashboard](https://aka.ms/ConnectorsDashboard). Make sure you set the following parameters correctly:
    - **Configuration page for your Connector**: `https://DOMAIN/`
    - **Valid domains**: Add `DOMAIN` to the list of valid domains for this connector
-
+   
 ![](https://user-images.githubusercontent.com/721036/95142106-c4b13980-0727-11eb-8dfc-c3cc33b995f5.png)
 Please note down the ID of the connector, you will use it in the next step.
 
@@ -78,7 +78,7 @@ With a Zeplin app and an Office 365 Connector, you can follow the steps below to
      - **NEXT_PRIVATE_BASE_URL**: `https://DOMAIN`
      - **NEXT_PRIVATE_DOMAIN**: `DOMAIN`
      - **NEXT_PRIVATE_ZEPLIN_CLIENT_ID**: Client id of your Zeplin app.
-     - **NEXT_PRIVATE_ZEPLIN_CLIENT_ID**: Client secret of your Zeplin app.
+     - **NEXT_PRIVATE_ZEPLIN_CLIENT_SECRET**: Client secret of your Zeplin app.
      - **NEXT_PRIVATE_CONNECTOR_ID**: The connector ID that you get in the previous step.
      - **NEXT_PRIVATE_APPLICATION_ID**: A UUID (or GUID) generated for your application.
 4. Run `npm run dev` to start the application server locally.
