@@ -35,7 +35,7 @@ const getSentry = ({ sentryDSN, environment, version }: SentryGetParams): ErrorT
         dsn: sentryDSN,
         environment,
         release: version,
-        normalizeDepth: 0,
+        normalizeDepth: 20,
         beforeBreadcrumb(breadcrumb) {
             const shouldIgnoreBreadcrumb = (
                 breadcrumb.type === SENTRY_HTTP_BREADCRUMB &&
