@@ -8,5 +8,8 @@
       "isolatedModules": false,
       "noEmit": false
     },
+    "ts-node": {
+      "files": true,
+    },
     "include": ["**/*.ts"]
   }

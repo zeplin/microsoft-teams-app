@@ -12,7 +12,8 @@ export async function initAdapters(config: Config): Promise<void> {
         sentryDSN: config.SENTRY_DSN,
         version: config.VERSION,
         level: config.LOG_LEVEL,
-        environment: config.ENVIRONMENT
+        environment: config.ENVIRONMENT,
+        logFilePath: config.LOG_FILE_PATH
     });
     redis.init(config.REDIS_URL);
     Zeplin.init({ url: config.ZEPLIN_URL });
