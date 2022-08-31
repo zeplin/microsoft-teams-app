@@ -70,9 +70,9 @@ const getPino = ({ logFilePath, environment }: PinoParams): LogProvider => {
     const pinoConf = {
         ...nrPinoConf,
         formatters: {
+            ...nrPinoConf.formatters,
             level: (label: string) => ({ level: label })
         },
-        timestamp: pino.stdTimeFunctions.isoTime,
         base: {
             service: environment === "prod" ? "microsoft-teams-app" : `microsoft-teams-app-${environment}`
         }
