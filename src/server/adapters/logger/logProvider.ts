@@ -3,7 +3,6 @@ import { once } from "events";
 import chalk from "chalk";
 import pino from "pino";
 import nrPino from "@newrelic/pino-enricher";
-import { SonicBoom } from "sonic-boom";
 /* eslint-disable no-console */
 const INDENT = 2;
 
@@ -77,17 +76,13 @@ const getPino = ({ logFilePath, environment }: PinoParams): LogProvider => {
             service: environment === "prod" ? "microsoft-teams-app" : `microsoft-teams-app-${environment}`
         }
     };
-    let stream: undefined | SonicBoom;
-    const isLocal = ["local", "docker-local"].includes(environment);
-
-    if (!isLocal) {
-        stream = pino.destination(logFilePath);
-
+    const stream = logFilePath ? pino.destination(logFilePath) : undefined;
+    if (stream) {
         /*
          This is required for pino to keep on writing logfile after log rotation.
          'SIGHUP' event be triggered by logrotate after log rotation.
          */
-        process.on("SIGHUP", () => (stream as SonicBoom).reopen());
+        process.on("SIGHUP", () => stream.reopen());
     }
 
     const logger = stream ? pino(pinoConf, stream) : pino(pinoConf);
