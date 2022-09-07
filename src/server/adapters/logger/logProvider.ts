@@ -123,9 +123,16 @@ interface LogProviderGetParams {
 }
 
 const getLogProvider = ({ logDNAApiKey, environment, logFilePath }: LogProviderGetParams): LogProvider => {
-    if (logDNAApiKey) {
-        return getMultipleLogger({ apiKey: logDNAApiKey, environment, logFilePath });
+    if (environment !== "local") {
+        if (logDNAApiKey && logFilePath) {
+            return getMultipleLogger({ apiKey: logDNAApiKey, environment, logFilePath });
+        } else if (logDNAApiKey) {
+            return getLogDNA({ apiKey: logDNAApiKey, environment });
+        } else if (logFilePath) {
+            return getPino({ logFilePath, environment });
+        }
     }
+
     return getConsole();
 };
 
