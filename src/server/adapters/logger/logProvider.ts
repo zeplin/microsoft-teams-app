@@ -76,16 +76,14 @@ const getPino = ({ logFilePath, environment }: PinoParams): LogProvider => {
             service: environment === "prod" ? "microsoft-teams-app" : `microsoft-teams-app-${environment}`
         }
     };
-    const stream = logFilePath ? pino.destination(logFilePath) : undefined;
-    if (stream) {
-        /*
-         This is required for pino to keep on writing logfile after log rotation.
-         'SIGHUP' event be triggered by logrotate after log rotation.
-         */
-        process.on("SIGHUP", () => stream.reopen());
-    }
+    const stream = pino.destination(logFilePath);
+    /*
+     This is required for pino to keep on writing logfile after log rotation.
+     'SIGHUP' event be triggered by logrotate after log rotation.
+     */
+    process.on("SIGHUP", () => stream.reopen());
 
-    const logger = stream ? pino(pinoConf, stream) : pino(pinoConf);
+    const logger = pino(pinoConf, stream);
 
     return {
         info: (message, { meta }): void => logger.info?.({ meta }, message),
@@ -123,16 +121,15 @@ interface LogProviderGetParams {
 }
 
 const getLogProvider = ({ logDNAApiKey, environment, logFilePath }: LogProviderGetParams): LogProvider => {
-    if (environment !== "local") {
-        if (logDNAApiKey && logFilePath) {
-            return getMultipleLogger({ apiKey: logDNAApiKey, environment, logFilePath });
-        } else if (logDNAApiKey) {
-            return getLogDNA({ apiKey: logDNAApiKey, environment });
-        } else if (logFilePath) {
-            return getPino({ logFilePath, environment });
-        }
+    if (logDNAApiKey && logFilePath) {
+        return getMultipleLogger({ apiKey: logDNAApiKey, environment, logFilePath });
     }
-
+    if (logDNAApiKey) {
+        return getLogDNA({ apiKey: logDNAApiKey, environment });
+    }
+    if (logFilePath) {
+        return getPino({ logFilePath, environment });
+    }
     return getConsole();
 };
 
