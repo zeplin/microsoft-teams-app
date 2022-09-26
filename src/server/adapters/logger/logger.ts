@@ -15,6 +15,7 @@ interface LoggerInitParams {
     environment: string;
     version: string;
     level?: string;
+    logFilePath:string
 }
 
 interface Extra {
@@ -43,12 +44,14 @@ class Logger {
         sentryDSN,
         version,
         level,
-        environment
+        environment,
+        logFilePath
     }: LoggerInitParams): void {
         this.level = Logger.toLogLevel(level);
         this.logger = getLogProvider({
             logDNAApiKey,
-            environment
+            environment,
+            logFilePath
         });
 
         this.errorTracker = getErrorTracker({

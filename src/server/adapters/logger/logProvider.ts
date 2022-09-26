@@ -1,6 +1,8 @@
 import { createLogger } from "@logdna/logger";
 import { once } from "events";
 import chalk from "chalk";
+import pino from "pino";
+import nrPino from "@newrelic/pino-enricher";
 /* eslint-disable no-console */
 const INDENT = 2;
 
@@ -12,6 +14,13 @@ interface LogDNAParams {
     apiKey: string;
     environment: string;
 }
+
+interface PinoParams {
+    logFilePath: string;
+    environment: string;
+}
+
+interface MultipleLogParams extends LogDNAParams, PinoParams {}
 
 interface LogProvider {
     info(message: string, extra: Extra): void;
@@ -54,14 +63,72 @@ const getLogDNA = ({ apiKey, environment }: LogDNAParams): LogProvider => {
     };
 };
 
+const getPino = ({ logFilePath, environment }: PinoParams): LogProvider => {
+    const nrPinoConf = nrPino();
+
+    const pinoConf = {
+        ...nrPinoConf,
+        formatters: {
+            ...nrPinoConf.formatters,
+            level: (label: string) => ({ level: label })
+        },
+        base: {
+            service: environment === "prod" ? "microsoft-teams-app" : `microsoft-teams-app-${environment}`
+        }
+    };
+    const stream = pino.destination(logFilePath);
+    /*
+     This is required for pino to keep on writing logfile after log rotation.
+     'SIGHUP' event be triggered by logrotate after log rotation.
+     */
+    process.on("SIGHUP", () => stream.reopen());
+
+    const logger = pino(pinoConf, stream);
+
+    return {
+        info: (message, { meta }): void => logger.info?.({ meta }, message),
+        error: (message, { meta }): void => logger.error?.({ meta }, message),
+        flush: async (): Promise<void> => {
+            logger.flush();
+            await once(logger, "cleared");
+        }
+    };
+};
+
+const getMultipleLogger = ({ apiKey: logDNAApiKey, environment, logFilePath }:MultipleLogParams): LogProvider => {
+    const logdnaLogger = getLogDNA({ apiKey: logDNAApiKey, environment });
+    const pinoLogger = getPino({ environment, logFilePath });
+    return {
+        info: (message:string, { meta }): void => {
+            logdnaLogger.info(message, { meta });
+            pinoLogger.info(message, { meta });
+        },
+        error: (message:string, { meta }): void => {
+            logdnaLogger.error(message, { meta });
+            pinoLogger.error(message, { meta });
+        },
+        flush: async (): Promise<void> => {
+            await logdnaLogger.flush();
+            await pinoLogger.flush();
+        }
+    };
+};
+
 interface LogProviderGetParams {
     logDNAApiKey?: string;
     environment: string;
+    logFilePath: string;
 }
 
-const getLogProvider = ({ logDNAApiKey, environment }: LogProviderGetParams): LogProvider => {
+const getLogProvider = ({ logDNAApiKey, environment, logFilePath }: LogProviderGetParams): LogProvider => {
+    if (logDNAApiKey && logFilePath) {
+        return getMultipleLogger({ apiKey: logDNAApiKey, environment, logFilePath });
+    }
     if (logDNAApiKey) {
         return getLogDNA({ apiKey: logDNAApiKey, environment });
+    }
+    if (logFilePath) {
+        return getPino({ logFilePath, environment });
     }
     return getConsole();
 };
