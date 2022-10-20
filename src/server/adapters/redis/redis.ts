@@ -1,5 +1,7 @@
 import { createClient, RedisClient } from "redis";
 import Redlock from "redlock";
+import { logger } from "../logger";
+import { ServerError } from "../../errors";
 
 const DEFAULT_LOCK_TTL = 5000;
 
@@ -9,6 +11,15 @@ class Redis {
 
     init(url: string): void {
         this.redis = createClient(url);
+
+        this.redis.on("error", err => {
+            logger.error(ServerError.fromError(err));
+        });
+
+        this.redis.on("ready", () => {
+            logger.info("Redis connection is established.");
+        });
+
         this.locker = new Redlock([this.redis]);
     }
 
