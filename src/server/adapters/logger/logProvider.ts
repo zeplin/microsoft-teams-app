@@ -68,6 +68,7 @@ const getPino = ({ logFilePath, environment }: PinoParams): LogProvider => {
 
     const pinoConf = {
         ...nrPinoConf,
+        timestamp: () => `,"timestamp": "${new Date().toISOString()}"`,
         formatters: {
             ...nrPinoConf.formatters,
             level: (label: string) => ({ level: label })
