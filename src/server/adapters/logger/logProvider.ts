@@ -1,4 +1,3 @@
-import { createLogger } from "@logdna/logger";
 import { once } from "events";
 import chalk from "chalk";
 import pino from "pino";
@@ -10,17 +9,10 @@ interface Extra {
     meta?: object;
 }
 
-interface LogDNAParams {
-    apiKey: string;
-    environment: string;
-}
-
 interface PinoParams {
     logFilePath: string;
     environment: string;
 }
-
-interface MultipleLogParams extends LogDNAParams, PinoParams {}
 
 interface LogProvider {
     info(message: string, extra: Extra): void;
@@ -43,25 +35,6 @@ const getConsole = (): LogProvider => ({
     },
     flush: (): Promise<void> => Promise.resolve()
 });
-
-const getLogDNA = ({ apiKey, environment }: LogDNAParams): LogProvider => {
-    const logger = createLogger(
-        apiKey,
-        {
-            app: `microsoft-teams-app-${environment}`,
-            env: environment,
-            indexMeta: true
-        }
-    );
-    return {
-        info: (message, { meta }): void => logger.info?.(message, { meta }),
-        error: (message, { meta }): void => logger.error?.(message, { meta }),
-        flush: async (): Promise<void> => {
-            logger.flush();
-            await once(logger, "cleared");
-        }
-    };
-};
 
 const getPino = ({ logFilePath, environment }: PinoParams): LogProvider => {
     const nrPinoConf = nrPino();
@@ -96,38 +69,12 @@ const getPino = ({ logFilePath, environment }: PinoParams): LogProvider => {
     };
 };
 
-const getMultipleLogger = ({ apiKey: logDNAApiKey, environment, logFilePath }:MultipleLogParams): LogProvider => {
-    const logdnaLogger = getLogDNA({ apiKey: logDNAApiKey, environment });
-    const pinoLogger = getPino({ environment, logFilePath });
-    return {
-        info: (message:string, { meta }): void => {
-            logdnaLogger.info(message, { meta });
-            pinoLogger.info(message, { meta });
-        },
-        error: (message:string, { meta }): void => {
-            logdnaLogger.error(message, { meta });
-            pinoLogger.error(message, { meta });
-        },
-        flush: async (): Promise<void> => {
-            await logdnaLogger.flush();
-            await pinoLogger.flush();
-        }
-    };
-};
-
 interface LogProviderGetParams {
-    logDNAApiKey?: string;
     environment: string;
     logFilePath: string;
 }
 
-const getLogProvider = ({ logDNAApiKey, environment, logFilePath }: LogProviderGetParams): LogProvider => {
-    if (logDNAApiKey && logFilePath) {
-        return getMultipleLogger({ apiKey: logDNAApiKey, environment, logFilePath });
-    }
-    if (logDNAApiKey) {
-        return getLogDNA({ apiKey: logDNAApiKey, environment });
-    }
+const getLogProvider = ({ environment, logFilePath }: LogProviderGetParams): LogProvider => {
     if (logFilePath) {
         return getPino({ logFilePath, environment });
     }
