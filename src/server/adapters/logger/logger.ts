@@ -10,7 +10,6 @@ enum LogLevel {
 }
 
 interface LoggerInitParams {
-    logDNAApiKey?: string;
     sentryDSN?: string;
     environment: string;
     version: string;
@@ -40,7 +39,6 @@ class Logger {
     }
 
     init({
-        logDNAApiKey,
         sentryDSN,
         version,
         level,
@@ -49,7 +47,6 @@ class Logger {
     }: LoggerInitParams): void {
         this.level = Logger.toLogLevel(level);
         this.logger = getLogProvider({
-            logDNAApiKey,
             environment,
             logFilePath
         });

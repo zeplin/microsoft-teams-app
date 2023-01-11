@@ -39,7 +39,6 @@ export const {
     NEXT_PRIVATE_BASE_URL: BASE_URL = "https://msteams-app.zeplin.io",
     NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL: ZEPLIN_WEB_APP_BASE_URL = "https://app.zeplin.io",
     NEXT_PUBLIC_ZEPLIN_APP_URI_SCHEME: ZEPLIN_APP_URI_SCHEME = "zpl",
-    NEXT_PRIVATE_LOG_DNA_KEY: LOG_DNA_KEY,
     NEXT_PRIVATE_LOG_FILE_PATH: LOG_FILE_PATH = IS_LOCAL ? undefined : "/var/log/zeplin-application.log",
     NEXT_PRIVATE_LOG_LEVEL: LOG_LEVEL = IS_LOCAL ? "DISABLE" : "INFO",
     NEXT_PRIVATE_NEW_RELIC_LOG_LEVEL: NEW_RELIC_LOG_LEVEL,
@@ -62,7 +61,6 @@ export interface Config {
     WEBHOOK_SECRET: string;
     ZEPLIN_URL: string;
     SENTRY_DSN: string;
-    LOG_DNA_KEY: string;
     LOG_LEVEL?: string;
     LOG_FILE_PATH: string;
     IS_SENTRY_ENABLED: boolean;

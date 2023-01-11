@@ -34,7 +34,6 @@
   "dependencies": {
     "@fluentui/react-northstar": "^0.50.0",
     "@hapi/joi": "^17.1.1",
-    "@logdna/logger": "^2.5.0",
     "@microsoft/teams-js": "^1.11.0",
     "@newrelic/pino-enricher": "1.0.0",
     "@sentry/browser": "^5.22.3",

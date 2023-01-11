@@ -8,7 +8,6 @@ import { logger } from "./logger";
 
 export async function initAdapters(config: Config): Promise<void> {
     logger.init({
-        logDNAApiKey: config.LOG_DNA_KEY,
         sentryDSN: config.SENTRY_DSN,
         version: config.VERSION,
         level: config.LOG_LEVEL,
