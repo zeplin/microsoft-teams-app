@@ -63,11 +63,12 @@ class ProjectScreenHandler extends NotificationHandler<ProjectScreenCreatedEvent
                 sid: events.map(({ resource: { id } }) => id)
             };
         }
+        const utmParams = { utmCampaign: "comment_reply" };
 
-        return getWebAppURL(pathname, searchParams);
+        return getWebAppURL(pathname, searchParams, utmParams);
     }
 
-    private getZeplinAppURIURI(events: ProjectScreenCreatedEvent[]): string {
+    private getZeplinAppURI(events: ProjectScreenCreatedEvent[]): string {
         const [{
             context: {
                 project: {
@@ -92,8 +93,9 @@ class ProjectScreenHandler extends NotificationHandler<ProjectScreenCreatedEvent
                 sids: events.map(({ resource: { id } }) => id)
             };
         }
+        const utmParams = { utmCampaign: "comment_reply" };
 
-        return getRedirectURLForZeplinApp(resource, searchParams);
+        return getRedirectURLForZeplinApp(resource, searchParams, utmParams);
     }
 
     getGroupingKey({
@@ -120,7 +122,7 @@ class ProjectScreenHandler extends NotificationHandler<ProjectScreenCreatedEvent
             images: this.getImages(events),
             links: [{
                 title: "Open in App",
-                url: this.getZeplinAppURIURI(events)
+                url: this.getZeplinAppURI(events)
             }, {
                 title: "Open in Web",
                 url: this.getWebappURL(events)
