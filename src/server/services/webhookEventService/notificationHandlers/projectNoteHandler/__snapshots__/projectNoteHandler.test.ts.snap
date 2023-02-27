@@ -18,7 +18,7 @@ exports[`projectNoteHandler getTeamsMessage should match snapshot 1`] = `
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fdot%3Fpid%3DprojectId%26sid%3DscreenId%26did%3DnoteId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fdot%3Fpid%3DprojectId%26sid%3DscreenId%26did%3DnoteId%26ref%3Dmicrosoft-teams%26utm_source%3Dzeplin%26utm_medium%3Dteams_integration%26utm_campaign%3Dcomment_reply"
         }
       ]
     },
@@ -28,7 +28,7 @@ exports[`projectNoteHandler getTeamsMessage should match snapshot 1`] = `
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/project/projectId/screen/screenId?did=noteId&ref=microsoft-teams"
+          "uri": "https://app.zeplin.io/project/projectId/screen/screenId?did=noteId&ref=microsoft-teams&utm_source=zeplin&utm_medium=teams_integration&utm_campaign=comment_reply"
         }
       ]
     }
@@ -54,7 +54,7 @@ exports[`projectNoteHandler getTeamsMessage should match snapshot with screen va
       "targets": [
         {
           "os": "default",
-          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fdot%3Fpid%3DprojectId%26sid%3DscreenId%26did%3DnoteId%26ref%3Dmicrosoft-teams"
+          "uri": "https://msteams-app.zeplin.io/zeplin/app-redirect?uri=zpl%3A%2F%2Fdot%3Fpid%3DprojectId%26sid%3DscreenId%26did%3DnoteId%26ref%3Dmicrosoft-teams%26utm_source%3Dzeplin%26utm_medium%3Dteams_integration%26utm_campaign%3Dcomment_reply"
         }
       ]
     },
@@ -64,7 +64,7 @@ exports[`projectNoteHandler getTeamsMessage should match snapshot with screen va
       "targets": [
         {
           "os": "default",
-          "uri": "https://app.zeplin.io/project/projectId/screen/screenId?did=noteId&ref=microsoft-teams"
+          "uri": "https://app.zeplin.io/project/projectId/screen/screenId?did=noteId&ref=microsoft-teams&utm_source=zeplin&utm_medium=teams_integration&utm_campaign=comment_reply"
         }
       ]
     }
