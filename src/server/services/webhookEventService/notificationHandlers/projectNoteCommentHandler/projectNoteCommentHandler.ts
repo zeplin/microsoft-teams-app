@@ -70,8 +70,9 @@ class ProjectNoteCommentHandler extends NotificationHandler<ProjectNoteCommentCr
             did: noteId,
             cmid: commentId
         };
+        const utmParams = { utmCampaign: "comment_reply" };
 
-        return getWebAppURL(pathname, searchParams);
+        return getWebAppURL(pathname, searchParams, utmParams);
     }
 
     private getZeplinAppURI(event: ProjectNoteCommentCreatedEvent): string {
@@ -97,8 +98,9 @@ class ProjectNoteCommentHandler extends NotificationHandler<ProjectNoteCommentCr
             did: noteId,
             cmids: commentId
         };
+        const utmParams = { utmCampaign: "comment_reply" };
 
-        return getRedirectURLForZeplinApp("dot", searchParams);
+        return getRedirectURLForZeplinApp("dot", searchParams, utmParams);
     }
 
     shouldHandleEvent(event: WebhookEvent): event is ProjectNoteCommentCreatedEvent {
