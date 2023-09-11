@@ -3,6 +3,7 @@ import next from "next";
 import { parse } from "url";
 import * as SentryClient from "@sentry/node";
 import path from "path";
+import helmet from "helmet";
 
 import { Config } from "./config";
 import { initAdapters } from "./adapters";
@@ -31,6 +32,8 @@ class App {
         });
         await nextApp.prepare();
 
+        this.expressApp.use(helmet.hsts());
+        this.expressApp.disable("x-powered-by");
         this.expressApp.get("/health", this.handleHealthCheck);
 
         this.expressApp.use(
