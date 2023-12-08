@@ -1,5 +1,5 @@
 import mongoose, {
-    ConnectionOptions,
+    ConnectOptions,
     Mongoose,
     Model,
     Schema,
@@ -11,13 +11,10 @@ interface MongoOptions {
     isDebug?: boolean;
 }
 
-const options: ConnectionOptions = {
+const options: ConnectOptions = {
     readPreference: ReadPreference.PRIMARY_PREFERRED,
     keepAlive: true,
-    connectTimeoutMS: 30000,
-    useNewUrlParser: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true
+    connectTimeoutMS: 30000
 };
 
 class Mongo {

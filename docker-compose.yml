@@ -2,7 +2,7 @@ version: '3'
 
 services:
   zeplin_mta_mongo:
-    image: mongo:4.0
+    image: mongo:5.0.20
     container_name: zeplin_mta_mongo
     restart: always
     ports:
