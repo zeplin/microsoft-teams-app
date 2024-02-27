@@ -21,7 +21,7 @@ class App {
     private server?: http.Server;
     private handleHealthCheck: RequestHandler = (req, res) => {
         if (healthCheckService.getHealthStatus()) {
-            res.status(OK).send();
+            res.status(OK).json({ status: "OK" });
             return;
         }
         res.status(SERVICE_UNAVAILABLE).send();
