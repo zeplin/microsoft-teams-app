@@ -12,7 +12,8 @@ export async function initAdapters(config: Config): Promise<void> {
         version: config.VERSION,
         level: config.LOG_LEVEL,
         environment: config.ENVIRONMENT,
-        logFilePath: config.LOG_FILE_PATH
+        logFilePath: config.LOG_FILE_PATH,
+        kubernetes: config.KUBERNETES
     });
     redis.init(config.REDIS_URL);
     Zeplin.init({ url: config.ZEPLIN_URL });
@@ -27,5 +28,5 @@ export async function initAdapters(config: Config): Promise<void> {
 export async function closeAdapters(): Promise<void> {
     await mongo.close();
     await redis.close();
-    await logger.flush();
+    await messageQueue.close();
 }

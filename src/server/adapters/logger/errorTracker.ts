@@ -3,7 +3,8 @@ import {
     init,
     captureException,
     withScope,
-    flush
+    flush,
+    close
 } from "@sentry/node";
 
 import { ServerError } from "../../errors";
@@ -28,6 +29,8 @@ interface SentryGetParams {
 interface ErrorTracker {
     captureError: (error: ServerError, extra: Extra) => void;
     flush: () => Promise<void> ;
+    close: (timeout?: number) => Promise<boolean>;
+    SENTRY_CLOSE_TIMEOUT?: number;
 }
 
 const getSentry = ({ sentryDSN, environment, version }: SentryGetParams): ErrorTracker => {
@@ -77,7 +80,9 @@ const getSentry = ({ sentryDSN, environment, version }: SentryGetParams): ErrorT
         },
         flush: async (): Promise<void> => {
             await flush();
-        }
+        },
+        close,
+        SENTRY_CLOSE_TIMEOUT: 2000
     };
 };
 
@@ -88,7 +93,8 @@ const getConsoleTracker = (): ErrorTracker => ({
             console.log(JSON.stringify({ meta }, null, INDENT));
         }
     },
-    flush: (): Promise<void> => Promise.resolve()
+    flush: (): Promise<void> => Promise.resolve(),
+    close: (): Promise<boolean> => Promise.resolve(true)
 });
 
 interface ErrorTrackerGetParams {
