@@ -28,11 +28,10 @@ drive().catch(async error => {
 
 async function shutdown(exitCode: number) {
     try {
-        await closeAdapters();
-
         logger.info("Closing server…");
         await app.close();
 
+        await closeAdapters();
         logger.info(`${exitCode > 0 ? "Unexpected" : "Graceful"} shutdown completed, exiting.`);
     } catch (err) {
         logger.error(ServerError.fromUnknown(err));
