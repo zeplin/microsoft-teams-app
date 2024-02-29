@@ -30,7 +30,7 @@ interface ErrorTracker {
     captureError: (error: ServerError, extra: Extra) => void;
     flush: () => Promise<void> ;
     close: (timeout?: number) => Promise<boolean>;
-    SENTRY_CLOSE_TIMEOUT?: number;
+    CLOSE_TIMEOUT?: number;
 }
 
 const getSentry = ({ sentryDSN, environment, version }: SentryGetParams): ErrorTracker => {
@@ -82,7 +82,7 @@ const getSentry = ({ sentryDSN, environment, version }: SentryGetParams): ErrorT
             await flush();
         },
         close,
-        SENTRY_CLOSE_TIMEOUT: 2000
+        CLOSE_TIMEOUT: 2000
     };
 };
 

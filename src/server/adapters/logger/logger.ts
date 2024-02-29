@@ -100,7 +100,7 @@ class Logger {
     }
 
     async close(): Promise<void> {
-        await this.errorTracker?.close(this.errorTracker.SENTRY_CLOSE_TIMEOUT).then(result => {
+        await this.errorTracker?.close(this.errorTracker.CLOSE_TIMEOUT).then(result => {
             if (!result) {
                 this.logProvider.error(
                     "Sentry could not be flushed, some error events may have been lost.",
