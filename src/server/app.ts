@@ -12,13 +12,12 @@ import { handleError, loggerMiddleware } from "./middlewares";
 import { ServerError } from "./errors";
 import { initializeQueueListener } from "./queueListener";
 import { healthCheckService } from "./utils/healthcheck";
-import * as http from "http";
 import { SERVICE_UNAVAILABLE, OK } from "http-status-codes";
-import { createHttpTerminator } from "http-terminator";
+import { createHttpTerminator, HttpTerminator } from "http-terminator";
 
 class App {
     private expressApp?: Express;
-    private server?: http.Server;
+    private httpTerminator?: HttpTerminator;
     private handleHealthCheck: RequestHandler = (req, res) => {
         if (healthCheckService.getHealthStatus()) {
             res.status(OK).json({ status: "OK" });
@@ -62,12 +61,12 @@ class App {
     listen(port: number): Promise<void> {
         return new Promise((resolve, reject) => {
             if (this.expressApp) {
-                this.server = this.expressApp.listen(port, err => {
+                const server = this.expressApp.listen(port, err => {
                     if (err) {
                         reject(err);
                         return;
                     }
-
+                    this.httpTerminator = createHttpTerminator({ server });
                     resolve();
                 });
             } else {
@@ -77,11 +76,10 @@ class App {
     }
 
     async close(): Promise<void> {
-        if (this.server) {
-            const httpTerminator = createHttpTerminator({ server: this.server });
-            await httpTerminator.terminate();
+        if (this.httpTerminator) {
+            await this.httpTerminator.terminate();
 
-            delete this.server;
+            delete this.httpTerminator;
         }
     }
 }
