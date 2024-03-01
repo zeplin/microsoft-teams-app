@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development NEW_RELIC_APP_NAME=msteams-local nodemon",
+    "dev": "NODE_ENV=development nodemon",
     "dev:prod-build": "nodemon --config nodemon.prod.json",
     "dev:start-services": "docker-compose -f docker-compose.yml --project-name zeplin_mta up -d",
     "dev:stop-services": "docker-compose --project-name zeplin_mta down",
