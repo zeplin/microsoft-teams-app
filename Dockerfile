@@ -1,4 +1,4 @@
-FROM node:v16.13.0
+FROM node:16.13.0
 RUN apt-get update && apt-get install tini
 RUN npm install pm2 -g
 
