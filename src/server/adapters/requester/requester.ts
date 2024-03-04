@@ -8,10 +8,10 @@ class Requester {
         } catch (err) {
             const error = err as AxiosError;
             const configExtra = {
-                url: error.config.url,
-                headers: error.config.headers,
-                data: error.config.data,
-                responseType: error.config.responseType
+                url: error.config?.url,
+                headers: error.config?.headers,
+                data: error.config?.data,
+                responseType: error.config?.responseType
             };
 
             if (error.response) {
