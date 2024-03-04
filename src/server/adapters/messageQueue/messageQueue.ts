@@ -26,6 +26,10 @@ class MessageQueue {
     async add(data: MessageJobData, { delay }: AddOptions): Promise<void> {
         await this.bullQueue.add(data, { delay, removeOnComplete: true });
     }
+
+    async close(): Promise<void> {
+        await this.bullQueue.close();
+    }
 }
 
 export const messageQueue = new MessageQueue();

@@ -1,6 +1,5 @@
-import { once } from "events";
 import chalk from "chalk";
-import pino from "pino";
+import pino, { Logger } from "pino";
 import nrPino from "@newrelic/pino-enricher";
 /* eslint-disable no-console */
 const INDENT = 2;
@@ -11,13 +10,14 @@ interface Extra {
 
 interface PinoParams {
     logFilePath: string;
+    kubernetes?: boolean;
     environment: string;
 }
 
 interface LogProvider {
     info(message: string, extra: Extra): void;
     error(message: string, extra: Extra): void;
-    flush: () => Promise<void> ;
+    flush: () => Promise<void>;
 }
 
 const getConsole = (): LogProvider => ({
@@ -36,7 +36,7 @@ const getConsole = (): LogProvider => ({
     flush: (): Promise<void> => Promise.resolve()
 });
 
-const getPino = ({ logFilePath, environment }: PinoParams): LogProvider => {
+const getPino = ({ logFilePath, kubernetes, environment }: PinoParams): LogProvider => {
     const nrPinoConf = nrPino();
 
     const pinoConf = {
@@ -50,33 +50,41 @@ const getPino = ({ logFilePath, environment }: PinoParams): LogProvider => {
             service: environment === "prod" ? "microsoft-teams-app" : `microsoft-teams-app-${environment}`
         }
     };
-    const stream = pino.destination(logFilePath);
-    /*
-     This is required for pino to keep on writing logfile after log rotation.
-     'SIGHUP' event be triggered by logrotate after log rotation.
-     */
-    process.on("SIGHUP", () => stream.reopen());
 
-    const logger = pino(pinoConf, stream);
+    let logger: Logger;
+    if (!kubernetes && logFilePath) {
+        const stream = pino.destination(logFilePath);
+
+        /*
+         This is required for pino to keep on writing logfile after log rotation.
+         'SIGHUP' event be triggered by logrotate after log rotation.
+         */
+        process.on("SIGHUP", () => stream.reopen());
+        logger = pino(pinoConf, stream);
+    } else {
+        logger = pino(pinoConf);
+    }
 
     return {
         info: (message, { meta }): void => logger.info?.({ meta }, message),
         error: (message, { meta }): void => logger.error?.({ meta }, message),
-        flush: async (): Promise<void> => {
-            logger.flush();
-            await once(logger, "cleared");
-        }
+        flush: (): Promise<void> => new Promise(resolve => {
+            logger.flush(() => {
+                resolve();
+            });
+        })
     };
 };
 
 interface LogProviderGetParams {
     environment: string;
     logFilePath: string;
+    kubernetes?: boolean;
 }
 
-const getLogProvider = ({ environment, logFilePath }: LogProviderGetParams): LogProvider => {
-    if (logFilePath) {
-        return getPino({ logFilePath, environment });
+const getLogProvider = ({ environment, kubernetes, logFilePath }: LogProviderGetParams): LogProvider => {
+    if (logFilePath || kubernetes) {
+        return getPino({ logFilePath, kubernetes, environment });
     }
     return getConsole();
 };

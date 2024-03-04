@@ -11,18 +11,25 @@ import { router } from "./router";
 import { handleError, loggerMiddleware } from "./middlewares";
 import { ServerError } from "./errors";
 import { initializeQueueListener } from "./queueListener";
+import { healthCheckService } from "./utils/healthcheck";
+import { SERVICE_UNAVAILABLE, OK } from "http-status-codes";
+import { createHttpTerminator, HttpTerminator } from "http-terminator";
 
 class App {
     private expressApp?: Express;
-
+    private httpTerminator?: HttpTerminator;
     private handleHealthCheck: RequestHandler = (req, res) => {
-        res.json({ status: "pass" });
+        if (healthCheckService.getHealthStatus()) {
+            res.status(OK).json({ status: "OK" });
+            return;
+        }
+        res.status(SERVICE_UNAVAILABLE).send();
     };
 
     async init(config: Config): Promise<void> {
         await initAdapters(config);
 
-        initializeQueueListener();
+        await initializeQueueListener();
 
         this.expressApp = express();
 
@@ -54,18 +61,26 @@ class App {
     listen(port: number): Promise<void> {
         return new Promise((resolve, reject) => {
             if (this.expressApp) {
-                this.expressApp.listen(port, err => {
+                const server = this.expressApp.listen(port, err => {
                     if (err) {
                         reject(err);
                         return;
                     }
-
+                    this.httpTerminator = createHttpTerminator({ server });
                     resolve();
                 });
             } else {
                 reject(new ServerError("App is tried to be listened before initialized"));
             }
         });
+    }
+
+    async close(): Promise<void> {
+        if (this.httpTerminator) {
+            await this.httpTerminator.terminate();
+
+            delete this.httpTerminator;
+        }
     }
 }
 

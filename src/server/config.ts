@@ -22,6 +22,8 @@ function getBooleanVariable(name: string, defaultValue: boolean): boolean {
 
 const DEFAULT_PORT = 3000;
 
+const DEFAULT_SHUTDOWN_DELAY = 11000;
+
 const IS_LOCAL = (process.env.NEXT_PUBLIC_ENVIRONMENT ?? "local") === "local";
 
 export const PORT = getNumberVariable("NEXT_PRIVATE_PORT", DEFAULT_PORT);
@@ -50,6 +52,9 @@ export const IS_MONGO_DEBUG = getBooleanVariable("NEXT_PRIVATE_IS_MONGO_DEBUG", 
 export const IS_SENTRY_ENABLED = getBooleanVariable("NEXT_PUBLIC_IS_SENTRY_ENABLED", !IS_LOCAL);
 export const IS_MIXPANEL_ENABLED = getBooleanVariable("NEXT_PRIVATE_IS_MIXPANEL_ENABLED", !IS_LOCAL);
 
+export const KUBERNETES = getBooleanVariable("KUBERNETES", false);
+export const SHUTDOWN_DELAY = getNumberVariable("SHUTDOWN_DELAY", DEFAULT_SHUTDOWN_DELAY);
+
 export interface Config {
     IS_MONGO_DEBUG: boolean;
     MONGO_URL: string;
@@ -69,6 +74,7 @@ export interface Config {
     VERSION: string;
     ZEPLIN_CLIENT_ID: string;
     ZEPLIN_CLIENT_SECRET: string;
+    KUBERNETES: boolean;
 }
 
 export function validateConfig(value: Partial<Config>): value is Config {

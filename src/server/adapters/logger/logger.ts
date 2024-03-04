@@ -15,6 +15,7 @@ interface LoggerInitParams {
     version: string;
     level?: string;
     logFilePath:string
+    kubernetes?: boolean;
 }
 
 interface Extra {
@@ -22,7 +23,7 @@ interface Extra {
 }
 
 class Logger {
-    private logger!: LogProvider;
+    private logProvider!: LogProvider;
     private level!: LogLevel;
     private errorTracker!: ErrorTracker;
 
@@ -43,11 +44,13 @@ class Logger {
         version,
         level,
         environment,
-        logFilePath
+        logFilePath,
+        kubernetes
     }: LoggerInitParams): void {
         this.level = Logger.toLogLevel(level);
-        this.logger = getLogProvider({
+        this.logProvider = getLogProvider({
             environment,
+            kubernetes,
             logFilePath
         });
 
@@ -60,7 +63,7 @@ class Logger {
 
     info(message: string, extra?: Extra): void {
         if (this.level >= LogLevel.INFO) {
-            this.logger.info(
+            this.logProvider.info(
                 message,
                 {
                     meta: {
@@ -74,7 +77,7 @@ class Logger {
 
     error(error: ServerError): void {
         if (this.level >= LogLevel.ERROR) {
-            this.logger.error(
+            this.logProvider.error(
                 error.message,
                 {
                     meta: {
@@ -95,9 +98,16 @@ class Logger {
             );
         }
     }
-    async flush(): Promise<void> {
-        await this.errorTracker.flush();
-        await this.logger.flush();
+
+    async close(): Promise<void> {
+        await this.errorTracker?.close(this.errorTracker.CLOSE_TIMEOUT).then(result => {
+            if (!result) {
+                this.logProvider.error(
+                    "Sentry could not be flushed, some error events may have been lost.",
+                    { meta: loggerContext.get() });
+            }
+        });
+        await this.logProvider.flush();
     }
 }
 
