@@ -6,7 +6,8 @@
             "exec_mode": "cluster",
             "env": {
                 "NODE_ENV": "production"
-            }
+            },
+            "log_file": "dev/stdout"
         }
     ]
 }

@@ -14,6 +14,7 @@ import { initializeQueueListener } from "./queueListener";
 import { healthCheckService } from "./utils/healthcheck";
 import { SERVICE_UNAVAILABLE, OK } from "http-status-codes";
 import { createHttpTerminator, HttpTerminator } from "http-terminator";
+import { logger } from "./adapters/logger";
 
 class App {
     private expressApp?: Express;
@@ -67,6 +68,7 @@ class App {
                         return;
                     }
                     this.httpTerminator = createHttpTerminator({ server });
+                    logger.info(`Webserver is listening on port ${port}`);
                     resolve();
                 });
             } else {
