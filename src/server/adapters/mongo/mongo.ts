@@ -6,6 +6,7 @@ import mongoose, {
     Document
 } from "mongoose";
 import { ReadPreference } from "mongodb";
+import { logger } from "../logger";
 
 interface MongoOptions {
     isDebug?: boolean;
@@ -24,6 +25,7 @@ class Mongo {
         mongoose.set("debug", isDebug);
 
         this.mongoose = await mongoose.connect(uri, options);
+        logger.info("Mongodb connection is established.");
     }
 
     createModel<D extends Document>(modelName: string, schema: Schema): Model<D> {
