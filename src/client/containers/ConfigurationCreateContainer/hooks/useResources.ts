@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { INTERNAL_SERVER_ERROR, UNAUTHORIZED } from "http-status-codes";
-import * as microsoftTeams from "@microsoft/teams-js";
+import { app } from "@microsoft/teams-js";
 
 import { requester } from "../../../lib";
 import { Project, Styleguide } from "../../../constants";
@@ -25,9 +25,7 @@ interface UseWorkspacesResultParams {
     onStyleguidesSuccess: (styleguides: Styleguide[]) => void;
 }
 
-const getChannelId = (): Promise<string> => new Promise(resolve => {
-    microsoftTeams.getContext(({ channelId }) => resolve(channelId as string));
-});
+const getChannelId = (): Promise<string> => app.getContext().then(context => context.channel!.id);
 
 export const useResources = ({
     workspaceId,
