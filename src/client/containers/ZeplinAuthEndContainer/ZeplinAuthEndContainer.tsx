@@ -18,11 +18,7 @@ export const ZeplinAuthEndContainer: FunctionComponent = () => {
                 return;
             }
 
-            try {
-                microsoftTeams.authentication.notifySuccess(code as string);
-            } catch (tokenError) {
-                microsoftTeams.authentication.notifyFailure((tokenError as Error)?.message ?? `Unknown error ${tokenError}`);
-            }
+            microsoftTeams.authentication.notifySuccess(code as string);
         });
     }, []);
 

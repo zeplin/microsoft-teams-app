@@ -22,9 +22,13 @@ export const LoginContainer: FunctionComponent = () => {
     const { isInitializeLoading } = useInitialize();
     const [login, { loginError }] = useLogin({
         onSuccess: async (code?: string) => {
-            const { accessToken, refreshToken } = await requester.createAuthToken(String(code));
-            storage.setAccessToken(accessToken);
-            storage.setRefreshToken(refreshToken);
+            try {
+                const { accessToken, refreshToken } = await requester.createAuthToken(String(code));
+                storage.setAccessToken(accessToken);
+                storage.setRefreshToken(refreshToken);
+            } catch (err) {
+                // TODO: log to sentry
+            }
             replace(id
                 ? url.getConfigurationUpdateUrl({
                     channel: channel as string,
