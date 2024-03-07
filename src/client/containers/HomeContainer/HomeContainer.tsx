@@ -3,6 +3,7 @@ import { Loader } from "@fluentui/react-northstar";
 import { useRouter } from "next/router";
 
 import { storage, url } from "../../lib";
+import { app } from "@microsoft/teams-js";
 
 export const HomeContainer: FunctionComponent = () => {
     const {
@@ -47,6 +48,13 @@ export const HomeContainer: FunctionComponent = () => {
     };
 
     useEffect(() => {
+        console.log("useEffect", channel);
+
+        app.initialize().then(() => {
+            app.getContext().then(context => {
+                console.log(JSON.stringify(context));
+            });
+        });
         // Workaround: Microsoft Teams initialize two iframes
         // One with real one and one with template url
         // TODO: Find a robust solution to disable second iframe

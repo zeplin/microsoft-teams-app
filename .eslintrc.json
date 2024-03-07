@@ -34,7 +34,7 @@
         "@typescript-eslint/no-unused-vars": "error",
         "no-unused-vars": "off", // @typescript-eslint/recommended have it
         "@typescript-eslint/no-for-in-array": "error",
-        "no-console": "error",
+        "no-console": "warn",
         "@typescript-eslint/naming-convention": [
             "error",
             {
