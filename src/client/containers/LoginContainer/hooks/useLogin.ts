@@ -2,7 +2,7 @@ import * as microsoftTeams from "@microsoft/teams-js";
 import { useCallback, useState } from "react";
 
 interface UseLoginParams {
-    onSuccess: () => void;
+    onSuccess: (code?: string) => Promise<void>;
 }
 
 type UseLoginResult = [

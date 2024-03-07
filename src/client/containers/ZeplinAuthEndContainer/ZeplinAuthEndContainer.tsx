@@ -3,8 +3,6 @@ import { useRouter } from "next/router";
 import * as microsoftTeams from "@microsoft/teams-js";
 import { Loader } from "@fluentui/react-northstar";
 
-import { requester, storage } from "../../lib";
-
 export const ZeplinAuthEndContainer: FunctionComponent = () => {
     const {
         query: {
@@ -14,20 +12,13 @@ export const ZeplinAuthEndContainer: FunctionComponent = () => {
     } = useRouter();
 
     useEffect(() => {
-        microsoftTeams.initialize(async () => {
+        microsoftTeams.initialize(() => {
             if (error) {
                 microsoftTeams.authentication.notifyFailure(String(error));
                 return;
             }
 
-            try {
-                const { accessToken, refreshToken } = await requester.createAuthToken(String(code));
-                storage.setAccessToken(accessToken);
-                storage.setRefreshToken(refreshToken);
-                microsoftTeams.authentication.notifySuccess();
-            } catch (tokenError) {
-                microsoftTeams.authentication.notifyFailure((tokenError as Error)?.message ?? `Unknown error ${tokenError}`);
-            }
+            microsoftTeams.authentication.notifySuccess(code as string);
         });
     }, []);
 

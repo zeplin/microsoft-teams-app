@@ -5,7 +5,7 @@ import { useLogin } from "./hooks";
 import { Login } from "./components";
 import { Loader } from "@fluentui/react-northstar";
 import { useRouter } from "next/router";
-import { url } from "../../lib";
+import { url, requester, storage } from "../../lib";
 
 export const LoginContainer: FunctionComponent = () => {
     const {
@@ -21,7 +21,14 @@ export const LoginContainer: FunctionComponent = () => {
 
     const { isInitializeLoading } = useInitialize();
     const [login, { loginError }] = useLogin({
-        onSuccess: () => {
+        onSuccess: async (code?: string) => {
+            try {
+                const { accessToken, refreshToken } = await requester.createAuthToken(String(code));
+                storage.setAccessToken(accessToken);
+                storage.setRefreshToken(refreshToken);
+            } catch (err) {
+                // TODO: log to sentry
+            }
             replace(id
                 ? url.getConfigurationUpdateUrl({
                     channel: channel as string,
