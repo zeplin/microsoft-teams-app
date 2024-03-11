@@ -50,7 +50,7 @@ export const ConfigurationUpdate: FunctionComponent<ConfigurationUpdateProps> = 
             </Text>
             {username &&
                 <Text>
-                    You’re logged in to your Zelin account <Text weight="bold">{username}</Text>.
+                    You’re logged in to your Zeplin account <Text weight="bold">{username}</Text>.
                     If you prefer using another account, you can <Text
                         color="brand"
                         styles={{
