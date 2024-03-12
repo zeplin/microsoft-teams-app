@@ -53,5 +53,13 @@ export const LoginContainer: FunctionComponent = () => {
     microsoftTeams.settings.getSettings(settings => {
         console.log("Settings", JSON.stringify(settings, null, 4));
     });
+
+    // This works - sets content url as specified
+    microsoftTeams.settings.setSettings({
+        contentUrl: decodeURI(`${window.location.origin}${url.getHomeUrl({
+            channel: "MyRandomChannel",
+            theme: "{theme}"
+        })}`)
+    });
     return <Login onButtonClick={login} error={loginError} />;
 };

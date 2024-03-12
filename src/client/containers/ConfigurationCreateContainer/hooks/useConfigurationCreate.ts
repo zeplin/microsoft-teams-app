@@ -116,8 +116,7 @@ export const useConfigurationCreate = ({
                             microsoftTeams.settings.setSettings({
                                 entityId: configurationId,
                                 configName: resource.name,
-                                contentUrl,
-                                websiteUrl: contentUrl // did not work while trying to open up the update settings page
+                                contentUrl
                             } as microsoftTeams.settings.Settings, (status, reason) => {
                                 console.log("Set Settings", status, reason);
                             });
