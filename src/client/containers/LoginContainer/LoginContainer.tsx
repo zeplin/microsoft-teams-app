@@ -6,6 +6,7 @@ import { Login } from "./components";
 import { Loader } from "@fluentui/react-northstar";
 import { useRouter } from "next/router";
 import { url, requester, storage } from "../../lib";
+import * as microsoftTeams from "@microsoft/teams-js";
 
 export const LoginContainer: FunctionComponent = () => {
     const {
@@ -48,5 +49,9 @@ export const LoginContainer: FunctionComponent = () => {
     if (isInitializeLoading) {
         return <Loader styles={{ height: "100vh" }} />;
     }
+
+    microsoftTeams.settings.getSettings(settings => {
+        console.log("Settings", JSON.stringify(settings, null, 4));
+    });
     return <Login onButtonClick={login} error={loginError} />;
 };
