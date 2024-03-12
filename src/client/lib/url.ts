@@ -9,7 +9,6 @@ interface ConfigurationUpdateUrlParams {
     id: string;
     resourceName: string;
     resourceType: string;
-    myCustomParam?: string;
 }
 
 type UrlParams = ConfigurationCreateUrlParams | ConfigurationUpdateUrlParams;

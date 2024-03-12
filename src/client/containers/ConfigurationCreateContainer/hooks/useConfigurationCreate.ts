@@ -109,16 +109,18 @@ export const useConfigurationCreate = ({
                                 resourceName: resource.name,
                                 resourceType: resource.type,
                                 channel: "{channelName}",
-                                theme: "{theme}",
-                                myCustomParam: "melisa"
+                                theme: "{theme}"
                             })}`);
                             console.log("useConfigCreate --> contentUrl:", contentUrl);
 
                             microsoftTeams.settings.setSettings({
                                 entityId: configurationId,
                                 configName: resource.name,
-                                contentUrl
-                            } as microsoftTeams.settings.Settings);
+                                contentUrl,
+                                websiteUrl: contentUrl // did not work while trying to open up the update settings page
+                            } as microsoftTeams.settings.Settings, (status, reason) => {
+                                console.log("Set Settings", status, reason);
+                            });
 
                             console.log("create - notify succcess - before");
                             saveEvent.notifySuccess();
