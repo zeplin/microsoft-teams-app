@@ -109,7 +109,8 @@ export const useConfigurationCreate = ({
                                 resourceName: resource.name,
                                 resourceType: resource.type,
                                 channel: "{channelName}",
-                                theme: "{theme}"
+                                theme: "{theme}",
+                                myCustomParam: "melisa"
                             })}`);
                             console.log("useConfigCreate --> contentUrl:", contentUrl);
 
