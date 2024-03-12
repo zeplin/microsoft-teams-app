@@ -19,7 +19,8 @@
     "audit-fix": "HUSKY_SKIP_HOOKS=1 dev-tools npm-audit-fix --production --team-reviewers dx",
     "prepare": "./scripts/install_husky.sh",
     "pre-commit": "lint-staged",
-    "pre-push": "npm run test"
+    "pre-push": "npm run test",
+    "clean": "rm -rf dist"
   },
   "repository": {
     "type": "git",

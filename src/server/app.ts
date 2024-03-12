@@ -54,6 +54,7 @@ class App {
 
         // Add NextJS app as the last middleware
         this.expressApp.use((req, res) => {
+            console.log(new Date(), "NEXTJS", req.url);
             const parsedUrl = parse(req.url, true);
             nextApp.getRequestHandler()(req, res, parsedUrl);
         });

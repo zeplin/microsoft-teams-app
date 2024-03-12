@@ -15,8 +15,8 @@
         "full": "Zeplin"
     },
     "description": {
-        "short": "Get updates from your Zeplin workspace",
-        "full": "Zeplin is an organized workspace where you can publish designs from design tools and the entire team can collaborate to ship beautiful products. With the Zeplin for Microsoft Teams app, you can connect Zeplin projects to channels and get notifications about design changes and conversations."
+        "short": "TEST --- Get updates from your Zeplin workspace",
+        "full": "TEST --- Zeplin is an organized workspace where you can publish designs from design tools and the entire team can collaborate to ship beautiful products. With the Zeplin for Microsoft Teams app, you can connect Zeplin projects to channels and get notifications about design changes and conversations."
     },
     "icons": {
         "outline": "icon-outline.png",
@@ -29,7 +29,7 @@
     "connectors": [
         {
             "connectorId": "${NEXT_PRIVATE_CONNECTOR_ID}",
-            "configurationUrl": "${NEXT_PRIVATE_BASE_URL}/?theme={theme}&channel={channelName}",
+            "configurationUrl": "${NEXT_PRIVATE_BASE_URL}/?theme={theme}&channel=General",
             "scopes": [
                 "team"
             ]

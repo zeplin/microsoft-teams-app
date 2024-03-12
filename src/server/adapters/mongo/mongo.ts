@@ -22,7 +22,7 @@ class Mongo {
     private mongoose!: Mongoose;
 
     async init(uri: string, { isDebug = false }: MongoOptions): Promise<void> {
-        mongoose.set("debug", isDebug);
+        // mongoose.set("debug", isDebug);
 
         this.mongoose = await mongoose.connect(uri, options);
         logger.info("Mongodb connection is established.");
