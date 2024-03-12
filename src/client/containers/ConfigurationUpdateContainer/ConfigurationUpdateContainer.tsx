@@ -11,9 +11,13 @@ import { useConfiguration, useConfigurationDelete, useConfigurationUpdate, useVa
 export const ConfigurationUpdateContainer: FunctionComponent = () => {
     const { isInitializeLoading } = useInitialize();
 
+    const routerParams = useRouter();
+
     const { query: {
         channel, id, resourceName, resourceType, theme
-    }, replace } = useRouter();
+    }, replace } = routerParams;
+
+    console.log("ConfigUpdateContainer --> routerParams:", JSON.stringify(routerParams, null, 4));
 
     const [events, setEvents] = useState<WebhookEventType[]>([]);
     const [configurationUpdateError, setConfigurationUpdateError] = useState<string|undefined>(undefined);

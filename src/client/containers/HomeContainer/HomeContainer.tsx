@@ -5,7 +5,9 @@ import { useRouter } from "next/router";
 import { storage, url } from "../../lib";
 
 export const HomeContainer: FunctionComponent = () => {
-    const {
+    const routerParam = useRouter();
+    console.log("HomeContainer - routerParam:", JSON.stringify(routerParam, null, 4));
+    let {
         query: {
             channel,
             id,
@@ -14,7 +16,7 @@ export const HomeContainer: FunctionComponent = () => {
             theme
         },
         replace
-    } = useRouter();
+    } = routerParam;
 
     const getUrl = (): string => {
         if (!storage.getAccessToken()) {
@@ -31,6 +33,8 @@ export const HomeContainer: FunctionComponent = () => {
                     theme: theme as string
                 });
         }
+
+        // id = id ? id : "65f0182c23b31fe60f2bd1bb";
         if (id) {
             return url.getConfigurationUpdateUrl({
                 channel: channel as string,

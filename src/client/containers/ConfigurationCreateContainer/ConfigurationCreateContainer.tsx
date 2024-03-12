@@ -24,8 +24,9 @@ type State = {
 };
 
 export const ConfigurationCreateContainer: FunctionComponent = () => {
-    const { query: { channel, theme }, replace } = useRouter();
-
+    const routerParams = useRouter();
+    console.log("ConfigCreateContainer --> routerParams:", JSON.stringify(routerParams, null, 4));
+    const { query: { channel, theme }, replace } = routerParams;
     const { isInitializeLoading } = useInitialize();
 
     const [

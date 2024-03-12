@@ -61,11 +61,13 @@ export const useConfigurationUpdate = ({
 
     useEffect(() => {
         if (isInitialized) {
-            microsoftTeams.getContext(({
-                channelId,
-                channelName,
-                tid: tenantId
-            }) => {
+            microsoftTeams.getContext(context => {
+                const {
+                    channelId,
+                    channelName = "General",
+                    tid: tenantId
+                } = context;
+                console.log("useConfigUpdate --> context:", JSON.stringify(context, null, 4));
                 microsoftTeams.settings.registerOnSaveHandler(async saveEvent => {
                     if (tenantId === undefined ||
                         channelId === undefined ||
@@ -73,6 +75,7 @@ export const useConfigurationUpdate = ({
                         resource === undefined ||
                         events === undefined ||
                         workspaceId === undefined) {
+                        console.log("useConfigUpdate --> failure:", channelName);
                         saveEvent.notifyFailure("params are not defined");
                         return;
                     }
@@ -90,20 +93,26 @@ export const useConfigurationUpdate = ({
                                 }
                             });
 
+                        console.log("useConfigUpdate --> configurationId:", configurationId);
+                        const contentUrl = decodeURI(`${window.location.origin}${url.getHomeUrl({
+                            id: configurationId,
+                            resourceName: resource.name,
+                            resourceType: resource.type,
+                            channel: "{channelName}",
+                            theme: "{theme}"
+                        })}`);
+                        console.log("useConfigUpdate --> contentUrl:", contentUrl);
                         microsoftTeams.settings.setSettings({
                             entityId: configurationId,
                             configName: resource.name,
-                            contentUrl: decodeURI(`${window.location.origin}${url.getHomeUrl({
-                                id: configurationId,
-                                resourceName: resource.name,
-                                resourceType: resource.type,
-                                channel: "{channelName}",
-                                theme: "{theme}"
-                            })}`)
+                            contentUrl
                         } as microsoftTeams.settings.Settings);
 
+                        console.log("update - notify succcess - before");
                         saveEvent.notifySuccess();
+                        console.log("update - notify succcess - after");
                     } catch (error) {
+                        console.log("update - error:", (error as Error)?.message);
                         saveEvent.notifyFailure((error as Error)?.message ?? `Unknown error ${error}`);
                     }
                 });
