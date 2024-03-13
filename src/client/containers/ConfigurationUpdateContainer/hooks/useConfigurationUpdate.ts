@@ -118,5 +118,6 @@ export const useConfigurationUpdate = ({
                 });
             });
         }
+        console.log("UseConfigurationUpdate --> NOT INITIALIZED");
     }, [resource, events, workspaceId, isInitialized]);
 };

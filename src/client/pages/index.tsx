@@ -14,11 +14,13 @@ const HomeContainer = dynamic(
 );
 
 const HomePage: FunctionComponent = () => {
+    const routerParam = useRouter();
     const {
         query: {
             theme
         }
-    } = useRouter();
+    } = routerParam;
+    console.log("HomePage routerParam:", JSON.stringify(routerParam, null, 4));
 
     return (
         <Providers theme={String(theme)}>

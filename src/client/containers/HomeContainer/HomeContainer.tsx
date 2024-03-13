@@ -17,7 +17,7 @@ export const HomeContainer: FunctionComponent = () => {
         },
         replace
     } = routerParam;
-    console.log("HOME - window:", JSON.stringify(window.location, null, 4));
+    // console.log("HOME - window:", JSON.stringify(window.location, null, 4));
 
     const getUrl = (): string => {
         if (!storage.getAccessToken()) {
