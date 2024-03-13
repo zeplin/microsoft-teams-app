@@ -29,7 +29,7 @@
     "connectors": [
         {
             "connectorId": "${NEXT_PRIVATE_CONNECTOR_ID}",
-            "configurationUrl": "${NEXT_PRIVATE_BASE_URL}/?theme={theme}&channel=General",
+            "configurationUrl": "${NEXT_PRIVATE_BASE_URL}/?theme={theme}&channel=General&group={groupId}&locale={locale}&entity={entityId}",
             "scopes": [
                 "team"
             ]
