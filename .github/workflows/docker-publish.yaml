@@ -94,44 +94,18 @@ jobs:
         run: |
           JSON_DATA=$(
             jq -n -c \
+              --arg a "${{ env.APP_NAME }}" \
               --arg b "${{ github.ref_name }}" \
               --arg t "${{ github.ref_name }}" \
               --arg v "${{ steps.get-version.outputs.version }}" \
               --arg c "${{ steps.get-commit-id.outputs.commit }}" \
               --arg e "${{ steps.set-environment.outputs.environment }}" \
-            '{"app-name": "microsoft-teams-app", "branch": $b, "version": $v, "tag": $t, "commit-id": $c, "environment": $e }'
+              --arg n "${{ vars.NEWRELIC_APPLICATION_GUID }}" \
+              --arg s "${{ env.APP_NAME }}" \
+            '{"app-name": $a, "branch": $b, "version": $v, "tag": $t, "commit-id": $c, "environment": $e, "newrelic-guid": $n, "sentry-project": $s }'
           )
           echo $JSON_DATA | gh workflow run deploy-app.yaml --repo zeplin/infra --json
           echo "Workflow is triggered: https://github.com/zeplin/infra/actions/workflows/deploy-app.yaml"
         env:
           GH_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-
-  post-deploy:
-    needs: build-and-push
-    name: Post Deploy Actions
-    environment: ${{ needs.build-and-push.outputs.environment }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Create New Relic deployment marker
-        uses: newrelic/deployment-marker-action@v2.5.0
-        with:
-          apiKey: ${{ secrets.NEWRELIC_API_KEY }}
-          guid: ${{ vars.NEWRELIC_APPLICATION_GUID }}
-          version: ${{ needs.build-and-push.outputs.version || needs.build-and-push.outputs.commit }}
-          commit: ${{ needs.build-and-push.outputs.commit }}
-          groupId: ${{ startsWith(github.ref, 'refs/tags/') && 'prod' || github.ref_name }}
-
-      - name: Create Sentry release
-        uses: getsentry/action-release@v1
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: zeplin
-          SENTRY_PROJECT: microsoft-teams-app
-        with:
-          environment: ${{ needs.build-and-push.outputs.environment }}
-          version: ${{ needs.build-and-push.outputs.version }}
+          APP_NAME: microsoft-teams-app
