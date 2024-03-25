@@ -6,7 +6,10 @@ ENV APP_HOME="/usr/src/app"
 
 WORKDIR ${APP_HOME}
 
-COPY . ${APP_HOME}/
+COPY node_modules ${APP_HOME}/node_modules
+COPY package.json ${APP_HOME}/package.json
+COPY pm2.json ${APP_HOME}/pm2.json
+COPY dist ${APP_HOME}/dist
 
 ENTRYPOINT ["tini", "--"]
 
