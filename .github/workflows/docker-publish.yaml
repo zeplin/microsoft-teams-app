@@ -6,12 +6,15 @@ on:
       - main
     types:
       - completed
+  release:
+    types:
+      - published
 
 name: Build and Push to ECR
 
 jobs:
   build-and-push:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event.action == 'published' }}
     name: Build and Push
     environment: ${{ startsWith(github.ref, 'refs/tags/') && 'prod' || 'dev' }}
     runs-on: ubuntu-latest
