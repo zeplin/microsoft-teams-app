@@ -1,4 +1,4 @@
-import * as microsoftTeams from "@microsoft/teams-js";
+import { authentication } from "@microsoft/teams-js";
 import { useCallback, useState } from "react";
 
 interface UseLoginParams {
@@ -26,13 +26,19 @@ export const useLogin = ({ onSuccess }: UseLoginParams): UseLoginResult => {
     const [loginError, setError] = useState<string|undefined>();
 
     const login = useCallback(
-        // TODO: Convert callback to promise, for more info, please refer to https://aka.ms/teamsfx-callback-to-promise.
-        () => microsoftTeams.authentication.authenticate({
-            height: 476,
-            successCallback: onSuccess,
-            failureCallback: value => setError(errorToText(value)),
-            url: "/api/auth/authorize"
-        }),
+        async () => {
+            try {
+                // TODO: Check output
+                const authenticateResult = await authentication.authenticate({
+                    height: 476,
+                    url: "/api/auth/authorize"
+                });
+                onSuccess();
+                return authenticateResult;
+            } catch (err: unknown) {
+                setError(errorToText((err as Error)?.message || "Authenticate Error"));
+            }
+        },
         []
     );
 
