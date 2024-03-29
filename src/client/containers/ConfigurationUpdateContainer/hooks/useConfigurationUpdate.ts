@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useMutation } from "react-query";
-import * as microsoftTeams from "@microsoft/teams-js";
+import { app, pages } from "@microsoft/teams-js";
 
 import { requester, url } from "../../../lib";
 import { Resource, WebhookEventType } from "../../../constants";
@@ -61,14 +61,17 @@ export const useConfigurationUpdate = ({
 
     useEffect(() => {
         if (isInitialized) {
-            // TODO: Convert callback to promise, for more info, please refer to https://aka.ms/teamsfx-callback-to-promise.
-            // TODO: Change the context interface, for more info, please refer to https://aka.ms/teamsfx-context-mapping.
-            microsoftTeams.app.getContext(({
-                channelId,
-                channelName,
-                tid: tenantId
+            app.getContext().then(({
+                channel,
+                user
             }) => {
-                microsoftTeams.pages.config.registerOnSaveHandler(async saveEvent => {
+                if (!channel || !user || !user.tenant) {
+                    // TODO: Handle undefined
+                    return;
+                }
+                const { id: channelId, displayName: channelName } = channel;
+                const { tenant: { id: tenantId } } = user;
+                pages.config.registerOnSaveHandler(async saveEvent => {
                     if (tenantId === undefined ||
                         channelId === undefined ||
                         channelName === undefined ||
@@ -92,10 +95,9 @@ export const useConfigurationUpdate = ({
                                 }
                             });
 
-                        // TODO: Convert callback to promise, for more info, please refer to https://aka.ms/teamsfx-callback-to-promise.
-                        microsoftTeams.pages.config.setConfig({
+                        await pages.config.setConfig({
                             entityId: configurationId,
-                            configName: resource.name,
+                            suggestedDisplayName: resource.name,
                             contentUrl: decodeURI(`${window.location.origin}${url.getHomeUrl({
                                 id: configurationId,
                                 resourceName: resource.name,
@@ -103,7 +105,7 @@ export const useConfigurationUpdate = ({
                                 channel: "{channelName}",
                                 theme: "{theme}"
                             })}`)
-                        } as microsoftTeams.pages.config.Config);
+                        });
 
                         saveEvent.notifySuccess();
                     } catch (error) {
