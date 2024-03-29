@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { INTERNAL_SERVER_ERROR, UNAUTHORIZED } from "http-status-codes";
-import * as microsoftTeams from "@microsoft/teams-js";
+import { app } from "@microsoft/teams-js";
 
 import { requester } from "../../../lib";
 import { Project, Styleguide } from "../../../constants";
@@ -25,10 +25,13 @@ interface UseWorkspacesResultParams {
     onStyleguidesSuccess: (styleguides: Styleguide[]) => void;
 }
 
-const getChannelId = (): Promise<string> => new Promise(resolve => {
-    // TODO: Convert callback to promise, for more info, please refer to https://aka.ms/teamsfx-callback-to-promise.
-    // TODO: Change the context interface, for more info, please refer to https://aka.ms/teamsfx-context-mapping.
-    microsoftTeams.app.getContext(({ channelId }) => resolve(channelId as string));
+const getChannelId = (): Promise<string> => new Promise((resolve, reject) => {
+    app.getContext().then(({ channel }) => {
+        if (channel) {
+            resolve(channel.id);
+        }
+        reject(new Error("Channel is not defined"));
+    });
 });
 
 export const useResources = ({

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useMutation } from "react-query";
-import * as microsoftTeams from "@microsoft/teams-js";
+import { app, pages } from "@microsoft/teams-js";
 
 import { requester, url } from "../../../lib";
 import { Resource, WebhookEventType } from "../../../constants";
@@ -61,16 +61,18 @@ export const useConfigurationCreate = ({
 
     useEffect(() => {
         if (isInitialized) {
-            // TODO: Convert callback to promise, for more info, please refer to https://aka.ms/teamsfx-callback-to-promise.
-            // TODO: Change the context interface, for more info, please refer to https://aka.ms/teamsfx-context-mapping.
-            microsoftTeams.app.getContext(({
-                channelId,
-                channelName,
-                tid: tenantId
-            }) => {
-                // TODO: Convert callback to promise, for more info, please refer to https://aka.ms/teamsfx-callback-to-promise.
-                microsoftTeams.pages.config.getConfig(settings => {
-                    microsoftTeams.pages.config.registerOnSaveHandler(async saveEvent => {
+            app.getContext().then(({
+                channel,
+                user
+            }: app.Context) => {
+                if (!channel || !user || !user.tenant) {
+                    // TODO: Handle undefined
+                    return;
+                }
+                const { displayName: channelName, id: channelId } = channel;
+                const { tenant: { id: tenantId } } = user;
+                pages.getConfig().then(settings => {
+                    pages.config.registerOnSaveHandler(async saveEvent => {
                         if (tenantId === undefined ||
                             channelId === undefined ||
                             channelName === undefined ||
@@ -102,10 +104,9 @@ export const useConfigurationCreate = ({
                                     }
                                 });
 
-                            // TODO: Convert callback to promise, for more info, please refer to https://aka.ms/teamsfx-callback-to-promise.
-                            microsoftTeams.pages.config.setConfig({
+                            await pages.config.setConfig({
                                 entityId: configurationId,
-                                configName: resource.name,
+                                suggestedDisplayName: resource.name,
                                 contentUrl: decodeURI(`${window.location.origin}${url.getHomeUrl({
                                     id: configurationId,
                                     resourceName: resource.name,
@@ -113,7 +114,7 @@ export const useConfigurationCreate = ({
                                     channel: "{channelName}",
                                     theme: "{theme}"
                                 })}`)
-                            } as microsoftTeams.pages.config.Config);
+                            });
 
                             saveEvent.notifySuccess();
                         } catch (error) {
