@@ -26,6 +26,7 @@ export const useLogin = ({ onSuccess }: UseLoginParams): UseLoginResult => {
     const [loginError, setError] = useState<string|undefined>();
 
     const login = useCallback(
+        // TODO: Convert callback to promise, for more info, please refer to https://aka.ms/teamsfx-callback-to-promise.
         () => microsoftTeams.authentication.authenticate({
             height: 476,
             successCallback: onSuccess,

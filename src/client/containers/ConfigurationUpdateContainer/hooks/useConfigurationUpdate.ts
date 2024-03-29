@@ -61,12 +61,14 @@ export const useConfigurationUpdate = ({
 
     useEffect(() => {
         if (isInitialized) {
-            microsoftTeams.getContext(({
+            // TODO: Convert callback to promise, for more info, please refer to https://aka.ms/teamsfx-callback-to-promise.
+            // TODO: Change the context interface, for more info, please refer to https://aka.ms/teamsfx-context-mapping.
+            microsoftTeams.app.getContext(({
                 channelId,
                 channelName,
                 tid: tenantId
             }) => {
-                microsoftTeams.settings.registerOnSaveHandler(async saveEvent => {
+                microsoftTeams.pages.config.registerOnSaveHandler(async saveEvent => {
                     if (tenantId === undefined ||
                         channelId === undefined ||
                         channelName === undefined ||
@@ -90,7 +92,8 @@ export const useConfigurationUpdate = ({
                                 }
                             });
 
-                        microsoftTeams.settings.setSettings({
+                        // TODO: Convert callback to promise, for more info, please refer to https://aka.ms/teamsfx-callback-to-promise.
+                        microsoftTeams.pages.config.setConfig({
                             entityId: configurationId,
                             configName: resource.name,
                             contentUrl: decodeURI(`${window.location.origin}${url.getHomeUrl({
@@ -100,7 +103,7 @@ export const useConfigurationUpdate = ({
                                 channel: "{channelName}",
                                 theme: "{theme}"
                             })}`)
-                        } as microsoftTeams.settings.Settings);
+                        } as microsoftTeams.pages.config.Config);
 
                         saveEvent.notifySuccess();
                     } catch (error) {

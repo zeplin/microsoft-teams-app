@@ -14,7 +14,7 @@ export const useConfigurationDelete = ({ configurationId, isInitialized }: UseCo
 
     useEffect(() => {
         if (isInitialized) {
-            microsoftTeams.settings.registerOnRemoveHandler(async removeEvent => {
+            microsoftTeams.pages.config.registerOnRemoveHandler(async removeEvent => {
                 try {
                     await deleteConfiguration(configurationId);
                     removeEvent.notifySuccess();

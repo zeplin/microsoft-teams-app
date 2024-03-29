@@ -12,8 +12,9 @@ interface UseInitializeResult {
 export const useInitialize = ({ onSuccess }: UseInitializeParams = {}): UseInitializeResult => {
     const [isInitializeLoading, setIsInitializeLoading] = useState(true);
     useEffect(() => {
-        microsoftTeams.initialize(() => {
-            microsoftTeams.appInitialization.notifySuccess();
+        // TODO: Convert callback to promise, for more info, please refer to https://aka.ms/teamsfx-callback-to-promise.
+        microsoftTeams.app.initialize(() => {
+            microsoftTeams.app.notifySuccess();
             setIsInitializeLoading(false);
             onSuccess?.();
         });

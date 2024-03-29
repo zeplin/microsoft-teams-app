@@ -26,7 +26,9 @@ interface UseWorkspacesResultParams {
 }
 
 const getChannelId = (): Promise<string> => new Promise(resolve => {
-    microsoftTeams.getContext(({ channelId }) => resolve(channelId as string));
+    // TODO: Convert callback to promise, for more info, please refer to https://aka.ms/teamsfx-callback-to-promise.
+    // TODO: Change the context interface, for more info, please refer to https://aka.ms/teamsfx-context-mapping.
+    microsoftTeams.app.getContext(({ channelId }) => resolve(channelId as string));
 });
 
 export const useResources = ({

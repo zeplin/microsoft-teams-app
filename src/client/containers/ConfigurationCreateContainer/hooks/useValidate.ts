@@ -24,7 +24,7 @@ export const useValidate = (params: UseValidateParams): void => {
     const valid = isValid(params);
     useEffect(() => {
         if (params.enabled) {
-            microsoftTeams.settings.setValidityState(valid);
+            microsoftTeams.pages.config.setValidityState(valid);
         }
     }, [valid, params.enabled]);
 };

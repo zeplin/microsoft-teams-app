@@ -12,7 +12,8 @@ export const ZeplinAuthEndContainer: FunctionComponent = () => {
     } = useRouter();
 
     useEffect(() => {
-        microsoftTeams.initialize(() => {
+        // TODO: Convert callback to promise, for more info, please refer to https://aka.ms/teamsfx-callback-to-promise.
+        microsoftTeams.app.initialize(() => {
             if (error) {
                 microsoftTeams.authentication.notifyFailure(String(error));
                 return;
