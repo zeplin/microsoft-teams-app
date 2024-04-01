@@ -65,12 +65,8 @@ export const useConfigurationUpdate = ({
                 channel,
                 user
             }) => {
-                if (!channel || !user || !user.tenant) {
-                    // TODO: Handle undefined
-                    return;
-                }
-                const { id: channelId, displayName: channelName } = channel;
-                const { tenant: { id: tenantId } } = user;
+                const { id: channelId, displayName: channelName } = channel ?? {};
+                const { tenant: { id: tenantId } = { id: undefined } } = user ?? {};
                 pages.config.registerOnSaveHandler(async saveEvent => {
                     if (tenantId === undefined ||
                         channelId === undefined ||

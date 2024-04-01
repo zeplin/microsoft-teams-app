@@ -65,12 +65,8 @@ export const useConfigurationCreate = ({
                 channel,
                 user
             }: app.Context) => {
-                if (!channel || !user || !user.tenant) {
-                    // TODO: Handle undefined
-                    return;
-                }
-                const { displayName: channelName, id: channelId } = channel;
-                const { tenant: { id: tenantId } } = user;
+                const { displayName: channelName, id: channelId } = channel ?? {};
+                const { tenant: { id: tenantId } = { id: undefined } } = user ?? {};
                 pages.getConfig().then(settings => {
                     pages.config.registerOnSaveHandler(async saveEvent => {
                         if (tenantId === undefined ||
