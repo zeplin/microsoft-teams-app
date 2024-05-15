@@ -39,7 +39,7 @@
     "@sentry/browser": "^5.22.3",
     "@sentry/node": "^5.22.3",
     "@zeit/next-source-maps": "0.0.4-canary.1",
-    "@zeplin/sdk": "1.10.0",
+    "@zeplin/sdk": "1.21.0",
     "axios": "^1.6.7",
     "bull": "^3.16.0",
     "chalk": "^4.1.0",
