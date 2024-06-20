@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useMutation } from "react-query";
-import * as microsoftTeams from "@microsoft/teams-js";
+import { app, pages } from "@microsoft/teams-js";
 
 import { requester, url } from "../../../lib";
 import { Resource, WebhookEventType } from "../../../constants";
@@ -61,12 +61,13 @@ export const useConfigurationUpdate = ({
 
     useEffect(() => {
         if (isInitialized) {
-            microsoftTeams.getContext(({
-                channelId,
-                channelName,
-                tid: tenantId
+            app.getContext().then(({
+                channel,
+                user
             }) => {
-                microsoftTeams.settings.registerOnSaveHandler(async saveEvent => {
+                const { id: channelId, displayName: channelName } = channel ?? {};
+                const { tenant: { id: tenantId } = { id: undefined } } = user ?? {};
+                pages.config.registerOnSaveHandler(async saveEvent => {
                     if (tenantId === undefined ||
                         channelId === undefined ||
                         channelName === undefined ||
@@ -90,7 +91,8 @@ export const useConfigurationUpdate = ({
                                 }
                             });
 
-                        microsoftTeams.settings.setSettings({
+                        // Although there is no 'configName' in the interface, not using it results in empty config name in edit connector menu
+                        await pages.config.setConfig({
                             entityId: configurationId,
                             configName: resource.name,
                             contentUrl: decodeURI(`${window.location.origin}${url.getHomeUrl({
@@ -100,7 +102,7 @@ export const useConfigurationUpdate = ({
                                 channel: "{channelName}",
                                 theme: "{theme}"
                             })}`)
-                        } as microsoftTeams.settings.Settings);
+                        } as pages.InstanceConfig);
 
                         saveEvent.notifySuccess();
                     } catch (error) {
