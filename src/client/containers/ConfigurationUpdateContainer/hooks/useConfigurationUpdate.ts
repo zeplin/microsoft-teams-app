@@ -91,9 +91,10 @@ export const useConfigurationUpdate = ({
                                 }
                             });
 
+                        // Although there is no 'configName' in the interface, not using it results in empty config name in edit connector menu
                         await pages.config.setConfig({
                             entityId: configurationId,
-                            suggestedDisplayName: resource.name,
+                            configName: resource.name,
                             contentUrl: decodeURI(`${window.location.origin}${url.getHomeUrl({
                                 id: configurationId,
                                 resourceName: resource.name,
@@ -101,7 +102,7 @@ export const useConfigurationUpdate = ({
                                 channel: "{channelName}",
                                 theme: "{theme}"
                             })}`)
-                        });
+                        } as pages.InstanceConfig);
 
                         saveEvent.notifySuccess();
                     } catch (error) {
