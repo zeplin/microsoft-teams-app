@@ -99,7 +99,7 @@ export const useConfigurationCreate = ({
                                     }
                                 });
 
-                            microsoftTeams.settings.setSettings({
+                            const newSettings = {
                                 entityId: configurationId,
                                 configName: resource.name,
                                 contentUrl: decodeURI(`${window.location.origin}${url.getHomeUrl({
@@ -109,10 +109,12 @@ export const useConfigurationCreate = ({
                                     channel: "{channelName}",
                                     theme: "{theme}"
                                 })}`)
-                            } as microsoftTeams.settings.Settings);
-
+                            };
+                            console.log(JSON.stringify(newSettings, null, 4));
+                            microsoftTeams.settings.setSettings(newSettings as microsoftTeams.settings.Settings);
                             saveEvent.notifySuccess();
                         } catch (error) {
+                            console.log("setSettings - error", error);
                             saveEvent.notifyFailure((error as Error)?.message ?? `Unknown error ${error}`);
                         }
                     });

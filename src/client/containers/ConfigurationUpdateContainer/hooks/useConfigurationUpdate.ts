@@ -90,6 +90,7 @@ export const useConfigurationUpdate = ({
                                 }
                             });
 
+                        console.log("SET SETTINGS - useConfigurationUpdate");
                         microsoftTeams.settings.setSettings({
                             entityId: configurationId,
                             configName: resource.name,

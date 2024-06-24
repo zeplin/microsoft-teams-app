@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState } from "react";
 import { Loader } from "@fluentui/react-northstar";
 import { useRouter } from "next/router";
+import * as microsoftTeams from "@microsoft/teams-js";
 
 import { Resource, ResourceType, WebhookEventType } from "../../constants";
 import {
@@ -139,6 +140,10 @@ export const ConfigurationCreateContainer: FunctionComponent = () => {
     if (isInitializeLoading) {
         return <Loader styles={{ height: "100vh" }} />;
     }
+    microsoftTeams.settings.getSettings(settings => {
+        console.log("Get Settings", JSON.stringify(settings, null, 4));
+    });
+
     return (
         <ConfigurationCreate
             channelName={String(channel)}
