@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useMutation } from "react-query";
-import * as microsoftTeams from "@microsoft/teams-js";
+import { app, pages } from "@microsoft/teams-js";
 
 import { requester, url } from "../../../lib";
 import { Resource, WebhookEventType } from "../../../constants";
@@ -61,13 +61,14 @@ export const useConfigurationCreate = ({
 
     useEffect(() => {
         if (isInitialized) {
-            microsoftTeams.getContext(({
-                channelId,
-                channelName,
-                tid: tenantId
-            }) => {
-                microsoftTeams.settings.getSettings(settings => {
-                    microsoftTeams.settings.registerOnSaveHandler(async saveEvent => {
+            app.getContext().then(({
+                channel,
+                user
+            }: app.Context) => {
+                const { displayName: channelName, id: channelId } = channel ?? {};
+                const { tenant: { id: tenantId } = { id: undefined } } = user ?? {};
+                pages.getConfig().then(settings => {
+                    pages.config.registerOnSaveHandler(async saveEvent => {
                         if (tenantId === undefined ||
                             channelId === undefined ||
                             channelName === undefined ||
@@ -99,7 +100,8 @@ export const useConfigurationCreate = ({
                                     }
                                 });
 
-                            microsoftTeams.settings.setSettings({
+                            // Although there is no 'configName' in the interface, not using it results in empty config name in edit connector menu
+                            await pages.config.setConfig({
                                 entityId: configurationId,
                                 configName: resource.name,
                                 contentUrl: decodeURI(`${window.location.origin}${url.getHomeUrl({
@@ -109,7 +111,7 @@ export const useConfigurationCreate = ({
                                     channel: "{channelName}",
                                     theme: "{theme}"
                                 })}`)
-                            } as microsoftTeams.settings.Settings);
+                            } as pages.InstanceConfig);
 
                             saveEvent.notifySuccess();
                         } catch (error) {
