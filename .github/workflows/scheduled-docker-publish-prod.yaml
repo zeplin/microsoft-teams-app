@@ -1,0 +1,34 @@
+on:
+  schedule:
+    - cron: '30 5 * * 3' # at 05:30 UTC every Wednesday
+
+name: Scheduled - Build and Push to ECR (prod)
+
+jobs:
+  get-latest-tag:
+    name: "Get latest tag"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Required due to the way Git works, without it this action won't be able to find any or the correct tags
+          fetch-depth: 0
+      - name: Get latest tag
+        id: get-latest-tag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        with:
+          prefix: v
+    outputs:
+      latest-tag: ${{ steps.get-latest-tag.outputs.tag }}
+  build-and-push:
+    needs: get-latest-tag
+    name: (prod) Scheduled Build and Push
+    uses: ./.github/workflows/reusable-docker-publish.yaml
+    with:
+      environment: "prod"
+      ref: ${{ needs.get-latest-tag.outputs.latest-tag }}
+      aws-region: ${{ vars.AWS_REGION }}
+      aws-account-id: ${{ vars.AWS_ACCOUNT_ID }}
+      newrelic-application-guid: ${{ vars.NEWRELIC_APPLICATION_GUID }}
+    secrets: inherit
