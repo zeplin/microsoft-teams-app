@@ -36,7 +36,7 @@ jobs:
       - name: Configure Node
         uses: actions/setup-node@v4
         with:
-          node-version: 16.13
+          node-version: 16.14
           registry-url: 'https://npm.pkg.github.com'
           scope: '@zeplin'
           cache: 'npm'
