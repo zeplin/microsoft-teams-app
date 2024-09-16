@@ -1,0 +1,16 @@
+on:
+  schedule:
+    - cron: '30 6 * * 0' # at 06:30 UTC every Sunday
+
+name: Scheduled - Build and Push to ECR (dev)
+
+jobs:
+  build-and-push:
+    name: (dev) Scheduled Build and Push
+    uses: ./.github/workflows/reusable-docker-publish.yaml
+    with:
+      environment: "dev"
+      aws-region: ${{ vars.AWS_REGION }}
+      aws-account-id: ${{ vars.AWS_ACCOUNT_ID }}
+      newrelic-application-guid: ${{ vars.NEWRELIC_APPLICATION_GUID }}
+    secrets: inherit
