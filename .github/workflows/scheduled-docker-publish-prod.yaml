@@ -5,7 +5,23 @@ on:
 name: Scheduled - Build and Push to ECR (prod)
 
 jobs:
+  # The workflow should work only in the first week of the month
+  check-first-week:
+    runs-on: ubuntu-latest
+    outputs:
+      is-first-week-of-month: ${{ steps.check-week.outputs.is-first-week }}
+    steps:
+      - name: Check if it's the first week of the month
+        id: check-week
+        run: |
+          if [ $(date +'%d' | sed 's/^0*//') -le 7 ]; then
+            echo "is-first-week=true" >> $GITHUB_OUTPUT
+          else
+            echo "is-first-week=false" >> $GITHUB_OUTPUT
+          fi
   get-latest-tag:
+    needs: check-first-week
+    if: ${{ needs.check-first-week.outputs.is-first-week-of-month == 'true' }}
     name: "Get latest tag"
     runs-on: ubuntu-latest
     steps:
