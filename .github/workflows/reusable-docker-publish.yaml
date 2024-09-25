@@ -9,16 +9,6 @@ on:
       ref:
         required: false
         type: string
-      aws-region:
-        required: true
-        type: string
-      aws-account-id:
-        required: false
-        type: string
-        default: '915497967985'
-      newrelic-application-guid:
-        required: true
-        type: string
 
 jobs:
   build-and-push:
@@ -38,7 +28,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ inputs.aws-region }}
+          aws-region: ${{ vars.AWS_REGION }}
 
       - name: Configure Node
         uses: actions/setup-node@v4
@@ -107,12 +97,12 @@ jobs:
 
       - name: Build and push Docker image to AWS ECR
         run: |
-          REPO="${{ inputs.aws-account-id }}.dkr.ecr.${{ inputs.aws-region }}.amazonaws.com"
+          REPO="${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com"
           IMAGE="$REPO/$APP_NAME:${{ env.version || env.commit-id }}"
           IMAGE_WITH_ENV_TAG="$REPO/$APP_NAME:${{ inputs.environment }}"
           docker build -t $IMAGE .
           docker tag $IMAGE $IMAGE_WITH_ENV_TAG
-          aws ecr get-login-password --region ${{ inputs.aws-region }} | docker login --username AWS --password-stdin $REPO
+          aws ecr get-login-password --region ${{ vars.AWS_REGION }} | docker login --username AWS --password-stdin $REPO
           docker push $IMAGE
           docker push $IMAGE_WITH_ENV_TAG
 
@@ -126,7 +116,7 @@ jobs:
               --arg v "${{ env.version }}" \
               --arg c "${{ env.commit-id }}" \
               --arg e "${{ inputs.environment }}" \
-              --arg n "${{ inputs.newrelic-application-guid }}" \
+              --arg n "${{ vars.NEWRELIC_APPLICATION_GUID }}" \
               --arg s "$APP_NAME" \
             '{"app-name": $a, "branch": $b, "version": $v, "tag": $t, "commit-id": $c, "environment": $e, "newrelic-guid": $n, "sentry-project": $s }'
           )

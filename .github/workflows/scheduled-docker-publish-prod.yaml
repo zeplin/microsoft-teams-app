@@ -44,7 +44,4 @@ jobs:
     with:
       environment: "prod"
       ref: ${{ needs.get-latest-tag.outputs.latest-tag }}
-      aws-region: ${{ vars.AWS_REGION }}
-      aws-account-id: ${{ vars.AWS_ACCOUNT_ID }}
-      newrelic-application-guid: ${{ vars.NEWRELIC_APPLICATION_GUID }}
     secrets: inherit

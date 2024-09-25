@@ -19,7 +19,4 @@ jobs:
     uses: ./.github/workflows/reusable-docker-publish.yaml
     with:
       environment: ${{ startsWith(github.ref, 'refs/tags/') && 'prod' || 'dev' }}
-      aws-region: ${{ vars.AWS_REGION }}
-      aws-account-id: ${{ vars.AWS_ACCOUNT_ID }}
-      newrelic-application-guid: ${{ vars.NEWRELIC_APPLICATION_GUID }}
     secrets: inherit
