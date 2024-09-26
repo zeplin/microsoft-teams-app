@@ -97,7 +97,7 @@ jobs:
 
       - name: Build and push Docker image to AWS ECR
         run: |
-          REPO="${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com"
+          REPO="${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com"
           IMAGE="$REPO/$APP_NAME:${{ env.version || env.commit-id }}"
           IMAGE_WITH_ENV_TAG="$REPO/$APP_NAME:${{ inputs.environment }}"
           docker build -t $IMAGE .
@@ -111,12 +111,12 @@ jobs:
           JSON_DATA=$(
             jq -n -c \
               --arg a "$APP_NAME" \
-              --arg b "${{ env.version || github.ref_name }}" \
-              --arg t "${{ env.version || github.ref_name }}" \
+              --arg b "$VERSION_NAME" \
+              --arg t "$VERSION_NAME" \
               --arg v "${{ env.version }}" \
               --arg c "${{ env.commit-id }}" \
               --arg e "${{ inputs.environment }}" \
-              --arg n "${{ vars.NEWRELIC_APPLICATION_GUID }}" \
+              --arg n "${{ secrets.NEWRELIC_APPLICATION_GUID }}" \
               --arg s "$APP_NAME" \
             '{"app-name": $a, "branch": $b, "version": $v, "tag": $t, "commit-id": $c, "environment": $e, "newrelic-guid": $n, "sentry-project": $s }'
           )
@@ -124,3 +124,4 @@ jobs:
           echo "Workflow is triggered: https://github.com/zeplin/infra/actions/workflows/deploy-app.yaml"
         env:
           GH_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          VERSION_NAME: ${{ env.version || github.ref_name }}
