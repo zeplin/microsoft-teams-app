@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APP_NAME: microsoft-teams-app
+      SENTRY_PROJECT: microsoft-teams-app
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -116,8 +117,8 @@ jobs:
               --arg v "${{ env.version }}" \
               --arg c "${{ env.commit-id }}" \
               --arg e "${{ inputs.environment }}" \
-              --arg n "${{ secrets.NEWRELIC_APPLICATION_GUID }}" \
-              --arg s "$APP_NAME" \
+              --arg n "${{ github.event_name != 'schedule' && secrets.NEWRELIC_APPLICATION_GUID || '' }}" \
+              --arg s "${{ github.event_name != 'schedule' && '$SENTRY_PROJECT' || '' }}" \
             '{"app-name": $a, "branch": $b, "version": $v, "tag": $t, "commit-id": $c, "environment": $e, "newrelic-guid": $n, "sentry-project": $s }'
           )
           echo $JSON_DATA | gh workflow run deploy-app.yaml --repo zeplin/infra --json
