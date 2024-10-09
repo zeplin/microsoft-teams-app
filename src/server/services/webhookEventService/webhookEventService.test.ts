@@ -52,16 +52,18 @@ interface EventArrivedParams {
     payload: unknown;
 }
 
-const getExampleEvent = ({ resourceId = "resource-id", timestamp = 1 } = {}): WebhookEvent => ({
+const getExampleEvent = ({ resourceId = "resource-id", timestamp = 1 } = {}): WebhookEvent => (({
     event: "project.color",
     timestamp,
+
     resource: {
         id: resourceId
     }
-}) as WebhookEvent;
+}) as WebhookEvent);
 
-const getExampleArrivedEventParams = ({ resourceId = "resource-id", timestamp = 1 } = {}): EventArrivedParams => ({
+const getExampleArrivedEventParams = ({ resourceId = "resource-id", timestamp = 1 } = {}): EventArrivedParams => (({
     deliveryId: "delivery-id",
+
     payload: {
         event: "project.color",
         timestamp,
@@ -69,7 +71,7 @@ const getExampleArrivedEventParams = ({ resourceId = "resource-id", timestamp = 
             id: resourceId
         }
     }
-}) as EventArrivedParams;
+}) as EventArrivedParams);
 
 const expectedGroupingKey = `webhook-id:others`;
 const expectedJobId = "delivery-id";
