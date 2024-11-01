@@ -1,0 +1,128 @@
+name: reusable / Docker Publish
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      ref:
+        required: false
+        type: string
+
+jobs:
+  build-and-push:
+    name: Build and Push
+    environment: ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    env:
+      APP_NAME: microsoft-teams-app
+      SENTRY_PROJECT: microsoft-teams-app
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }} 
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Configure Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16.14
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@zeplin'
+          cache: 'npm'
+
+      - id: get-commit-id
+        name: Get commit id
+        if: ${{ github.event_name != 'schedule' || inputs.environment == 'dev' }}
+        run: echo "commit-id=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - id: get-latest-sha
+        name: Get commit SHA of latest tag for prod (scheduled flow)
+        if: ${{ inputs.environment == 'prod' && github.event_name == 'schedule' }}
+        # use inputs.ref to get the commit id
+        run: |
+          LATEST_SHA=$(git rev-list -n 1 "${{ inputs.ref }}")
+          echo "commit-id=${LATEST_SHA::7}" >> $GITHUB_ENV
+
+      - name: Create revision file
+        run: echo $(date +%s)-${{ env.commit-id }} > ./revision.txt
+
+      - id: get-version
+        name: Get version
+        run: |
+          if [ "${{ github.event_name }}" == "schedule" ]; then
+            echo "version=${{ inputs.ref }}" >> $GITHUB_ENV
+          else
+            echo "version=${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || '' }}" >> $GITHUB_ENV
+          fi
+
+      - name: Set package version
+        if: ${{ env.version }}
+        run: |
+          version=${{ env.version }}
+          version=${version#v}
+          npm version $version --no-git-tag-version --allow-same-version
+
+      - name: Install all dependencies
+        run: npm ci --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+
+      - name: Run post install scripts of dependencies
+        run: npm rebuild && npm run prepare --if-present
+
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN_PROD }}
+          NEXT_PUBLIC_IS_SENTRY_ENABLED: ${{ secrets.NEXT_PUBLIC_IS_SENTRY_ENABLED_PROD }}
+          NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL: ${{ secrets.NEXT_PUBLIC_ZEPLIN_WEB_APP_BASE_URL_PROD }}
+          NEXT_PUBLIC_ZEPLIN_APP_URI_SCHEME: ${{ secrets.NEXT_PUBLIC_ZEPLIN_APP_URI_SCHEME_PROD }}
+          NEXT_PUBLIC_ENVIRONMENT: ${{ inputs.environment }}
+
+      - name: Install dependencies without devDependencies
+        run: npm ci --omit=dev --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+
+      - name: Run post install scripts of dependencies
+        run: npm rebuild && npm run prepare --if-present
+
+      - name: Build and push Docker image to AWS ECR
+        run: |
+          REPO="${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com"
+          IMAGE="$REPO/$APP_NAME:${{ env.version || env.commit-id }}"
+          IMAGE_WITH_ENV_TAG="$REPO/$APP_NAME:${{ inputs.environment }}"
+          docker build -t $IMAGE .
+          docker tag $IMAGE $IMAGE_WITH_ENV_TAG
+          aws ecr get-login-password --region ${{ vars.AWS_REGION }} | docker login --username AWS --password-stdin $REPO
+          docker push $IMAGE
+          docker push $IMAGE_WITH_ENV_TAG
+
+      - name: Trigger infra workflow to deploy new image version
+        run: |
+          JSON_DATA=$(
+            jq -n -c \
+              --arg a "$APP_NAME" \
+              --arg b "$VERSION_NAME" \
+              --arg t "$VERSION_NAME" \
+              --arg v "${{ env.version }}" \
+              --arg c "${{ env.commit-id }}" \
+              --arg e "${{ inputs.environment }}" \
+              --arg n "${{ github.event_name != 'schedule' && secrets.NEWRELIC_APPLICATION_GUID || '' }}" \
+              --arg s "${{ github.event_name != 'schedule' && '$SENTRY_PROJECT' || '' }}" \
+            '{"app-name": $a, "branch": $b, "version": $v, "tag": $t, "commit-id": $c, "environment": $e, "newrelic-guid": $n, "sentry-project": $s }'
+          )
+          echo $JSON_DATA | gh workflow run deploy-app.yaml --repo zeplin/infra --json
+          echo "Workflow is triggered: https://github.com/zeplin/infra/actions/workflows/deploy-app.yaml"
+        env:
+          GH_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          VERSION_NAME: ${{ env.version || github.ref_name }}
