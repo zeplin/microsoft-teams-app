@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useMutation } from "react-query";
-import { pages } from "@microsoft/teams-js";
+import * as microsoftTeams from "@microsoft/teams-js";
 
 import { requester } from "../../../lib";
 
@@ -14,7 +14,7 @@ export const useConfigurationDelete = ({ configurationId, isInitialized }: UseCo
 
     useEffect(() => {
         if (isInitialized) {
-            pages.config.registerOnRemoveHandler(async removeEvent => {
+            microsoftTeams.settings.registerOnRemoveHandler(async removeEvent => {
                 try {
                     await deleteConfiguration(configurationId);
                     removeEvent.notifySuccess();

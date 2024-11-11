@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { pages } from "@microsoft/teams-js";
+import * as microsoftTeams from "@microsoft/teams-js";
 import { Resource, resourceBasedEvents, WebhookEventType } from "../../../constants";
 
 interface UseValidateParams {
@@ -30,7 +30,7 @@ export const useValidate = (params: UseValidateParams): void => {
     const valid = isValid(params);
     useEffect(() => {
         if (params.enabled) {
-            pages.config.setValidityState(valid);
+            microsoftTeams.settings.setValidityState(valid);
         }
     }, [valid, params.enabled]);
 };

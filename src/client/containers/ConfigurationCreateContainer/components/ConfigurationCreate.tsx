@@ -135,7 +135,7 @@ export const ConfigurationCreate: FunctionComponent<ConfigurationCreateProps> = 
         {errorMessage && (<ErrorRow onRetryClick={onRetryClick} hideRetry={hideRetry} message={errorMessage} />)}
         <Flex fill column gap="gap.medium">
             <Text weight="semibold">
-                Select the events you would like to get a message for:
+                Select the events you want to get a message for:
             </Text>
             <div>
                 <WebhookEventCheckboxes

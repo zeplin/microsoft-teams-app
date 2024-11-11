@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useMutation } from "react-query";
-import { app, pages } from "@microsoft/teams-js";
+import * as microsoftTeams from "@microsoft/teams-js";
 
 import { requester, url } from "../../../lib";
 import { Resource, WebhookEventType } from "../../../constants";
@@ -61,13 +61,12 @@ export const useConfigurationUpdate = ({
 
     useEffect(() => {
         if (isInitialized) {
-            app.getContext().then(({
-                channel,
-                user
+            microsoftTeams.getContext(({
+                channelId,
+                channelName,
+                tid: tenantId
             }) => {
-                const { id: channelId, displayName: channelName } = channel ?? {};
-                const { tenant: { id: tenantId } = { id: undefined } } = user ?? {};
-                pages.config.registerOnSaveHandler(async saveEvent => {
+                microsoftTeams.settings.registerOnSaveHandler(async saveEvent => {
                     if (tenantId === undefined ||
                         channelId === undefined ||
                         channelName === undefined ||
@@ -91,8 +90,7 @@ export const useConfigurationUpdate = ({
                                 }
                             });
 
-                        // Although there is no 'configName' in the interface, not using it results in empty config name in edit connector menu
-                        await pages.config.setConfig({
+                        microsoftTeams.settings.setSettings({
                             entityId: configurationId,
                             configName: resource.name,
                             contentUrl: decodeURI(`${window.location.origin}${url.getHomeUrl({
@@ -102,7 +100,7 @@ export const useConfigurationUpdate = ({
                                 channel: "{channelName}",
                                 theme: "{theme}"
                             })}`)
-                        } as pages.InstanceConfig);
+                        } as microsoftTeams.settings.Settings);
 
                         saveEvent.notifySuccess();
                     } catch (error) {
