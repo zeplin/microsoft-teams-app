@@ -1,6 +1,6 @@
 import { Context } from "./context";
 
-export interface LoggerContext {
+export type LoggerContext = {
     correlationId: string;
 }
 

@@ -64,7 +64,7 @@ const getSentry = ({ sentryDSN, environment, version }: SentryGetParams): ErrorT
         captureError: (error, { meta, context }): void => {
             withScope(scope => {
                 if (meta) {
-                    scope.setContext("Meta", meta);
+                    scope.setContext("Meta", meta as Record<string, unknown>);
                 }
 
                 if (context) {
