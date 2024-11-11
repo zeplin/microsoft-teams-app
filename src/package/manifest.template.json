@@ -1,6 +1,6 @@
 {
-    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.12/MicrosoftTeams.schema.json",
-    "manifestVersion": "1.12",
+    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.6/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.6",
     "id": "${NEXT_PRIVATE_APPLICATION_ID}",
     "version": "${NEXT_PUBLIC_VERSION}",
     "packageName": "zeplin",

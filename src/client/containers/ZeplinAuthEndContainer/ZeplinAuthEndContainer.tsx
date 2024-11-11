@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { useRouter } from "next/router";
-import { app, authentication } from "@microsoft/teams-js";
+import * as microsoftTeams from "@microsoft/teams-js";
 import { Loader } from "@fluentui/react-northstar";
 
 export const ZeplinAuthEndContainer: FunctionComponent = () => {
@@ -12,13 +12,13 @@ export const ZeplinAuthEndContainer: FunctionComponent = () => {
     } = useRouter();
 
     useEffect(() => {
-        app.initialize().then(() => {
+        microsoftTeams.initialize(() => {
             if (error) {
-                authentication.notifyFailure(String(error));
+                microsoftTeams.authentication.notifyFailure(String(error));
                 return;
             }
 
-            authentication.notifySuccess(code as string);
+            microsoftTeams.authentication.notifySuccess(code as string);
         });
     }, []);
 
