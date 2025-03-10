@@ -7,6 +7,6 @@ module.exports = {
     snapshotSerializers: ["<rootDir>/test/helpers/messageCardSerializer.ts"],
     setupFiles: ["./test/helpers/setupMocks.ts"],
     moduleNameMapper: {
-        axios: "axios/dist/node/axios.cjs"
+        "^axios/": "axios/dist/node/axios.cjs"
     }
 };
